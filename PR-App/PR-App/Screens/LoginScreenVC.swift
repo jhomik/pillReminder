@@ -36,27 +36,23 @@ class LoginScreenVC: UIViewController {
             welcomeImage.centerYAnchor.constraint(equalTo: welcomeView.centerYAnchor),
             welcomeImage.widthAnchor.constraint(equalToConstant: 200),
             welcomeImage.heightAnchor.constraint(equalToConstant: 180)
-            
         ])
     }
     
     private func performAnimations() {
         
         welcomeImage.alpha = 0.0
-        UIView.animate(withDuration: 2, delay: 0, options: .curveEaseOut, animations: {
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
             self.welcomeImage.frame = CGRect(x: 0, y: -600, width: 200, height: 180)
             self.welcomeImage.alpha = 1.0
         }) { (finished) in
-            UIView.animate(withDuration: 2, delay: 1, options: .curveEaseOut, animations: {
+            UIView.animate(withDuration: 1.5, delay: 0.5, options: .curveEaseOut, animations: {
                 self.welcomeImage.alpha = 0.0
             }) { (finished) in
-                UIView.transition(with: self.welcomeView, duration: 1, options: .transitionCrossDissolve, animations: {
+                UIView.transition(with: self.welcomeView, duration: 2, options: .transitionCrossDissolve, animations: {
                     self.welcomeView.alpha = 0.0
                 }, completion: nil)
             }
         }
-        
-        
-        
     }
 }
