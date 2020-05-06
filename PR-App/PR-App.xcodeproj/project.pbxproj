@@ -80,10 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				5AFED6112461813400EF7C1A /* PR-App */,
+				5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */,
 				5AFED62B2461813500EF7C1A /* PR-AppTests */,
 				5AFED6362461813600EF7C1A /* PR-AppUITests */,
 				5AFED6102461813400EF7C1A /* Products */,
-				5AFED6512461A90800EF7C1A /* Supporting Files */,
 			);
 			sourceTree = "<group>";
 		};
@@ -101,8 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				5AFED6502461A90100EF7C1A /* Screens */,
-				5AFED6232461813500EF7C1A /* Info.plist */,
-				5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */,
+				5AFED6512461A90800EF7C1A /* Supporting Files */,
 			);
 			path = "PR-App";
 			sourceTree = "<group>";
@@ -136,10 +135,11 @@
 		5AFED6512461A90800EF7C1A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */,
-				5AFED61E2461813500EF7C1A /* Assets.xcassets */,
 				5AFED6122461813400EF7C1A /* AppDelegate.swift */,
 				5AFED6142461813400EF7C1A /* SceneDelegate.swift */,
+				5AFED61E2461813500EF7C1A /* Assets.xcassets */,
+				5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */,
+				5AFED6232461813500EF7C1A /* Info.plist */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -444,7 +444,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RTGVGP453;
-				INFOPLIST_FILE = "PR-App/Info.plist";
+				INFOPLIST_FILE = "PR-App/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -462,7 +462,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RTGVGP453;
-				INFOPLIST_FILE = "PR-App/Info.plist";
+				INFOPLIST_FILE = "PR-App/Supporting Files/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
