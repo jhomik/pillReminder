@@ -109,9 +109,12 @@
 				5AFED62B2461813500EF7C1A /* PR-AppTests */,
 				5AFED6362461813600EF7C1A /* PR-AppUITests */,
 				5AFED6102461813400EF7C1A /* Products */,
+<<<<<<< .merge_file_lGbtnE
 				5AFED6512461A90800EF7C1A /* Supporting Files */,
 				9619D881732EA8BAED18863A /* Pods */,
 				A7FB2848ADDC3C4EE612A961 /* Frameworks */,
+=======
+>>>>>>> .merge_file_ziglAo
 			);
 			sourceTree = "<group>";
 		};
@@ -168,11 +171,14 @@
 			children = (
 				5AFED6122461813400EF7C1A /* AppDelegate.swift */,
 				5AFED6142461813400EF7C1A /* SceneDelegate.swift */,
+<<<<<<< .merge_file_lGbtnE
 				ABF6E023246330AB00E47435 /* GoogleService-Info.plist */,
 				ABF726A32463A46100C903B7 /* UIView+Ext.swift */,
+=======
 				5AFED61E2461813500EF7C1A /* Assets.xcassets */,
 				5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */,
 				5AFED6232461813500EF7C1A /* Info.plist */,
+>>>>>>> .merge_file_ziglAo
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
