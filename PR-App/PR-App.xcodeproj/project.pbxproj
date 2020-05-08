@@ -9,10 +9,9 @@
 /* Begin PBXBuildFile section */
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
 		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
-		5ADE71352465D28E00D42025 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E72465D11F008AF20B /* Info.plist */; };
+		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
 		5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */; };
 		5AFED61F2461813500EF7C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED61E2461813500EF7C1A /* Assets.xcassets */; };
-		5AFED6222461813500EF7C1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */; };
 		5AFED62D2461813500EF7C1A /* PR_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED62C2461813500EF7C1A /* PR_AppTests.swift */; };
 		5AFED6382461813600EF7C1A /* PR_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED6372461813600EF7C1A /* PR_AppUITests.swift */; };
 		5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED64E2461A8F000EF7C1A /* LoginScreenVC.swift */; };
@@ -48,10 +47,10 @@
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E72465D11F008AF20B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "PR-App/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED61C2461813400EF7C1A /* PR_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PR_App.xcdatamodel; sourceTree = "<group>"; };
 		5AFED61E2461813500EF7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5AFED6212461813500EF7C1A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5AFED6282461813500EF7C1A /* PR-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PR-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED62C2461813500EF7C1A /* PR_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PR_AppTests.swift; sourceTree = "<group>"; };
 		5AFED62E2461813500EF7C1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -171,7 +170,7 @@
 				ABF6E023246330AB00E47435 /* GoogleService-Info.plist */,
 				ABF726A32463A46100C903B7 /* UIView+Ext.swift */,
 				5AFED61E2461813500EF7C1A /* Assets.xcassets */,
-				5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */,
+				5ADE71362465DED900D42025 /* LaunchScreen.storyboard */,
 				5A4BA9E72465D11F008AF20B /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -268,7 +267,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Jakub Homik";
 				TargetAttributes = {
 					5AFED60E2461813400EF7C1A = {
@@ -309,9 +308,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5ADE71352465D28E00D42025 /* Info.plist in Resources */,
-				5AFED6222461813500EF7C1A /* LaunchScreen.storyboard in Resources */,
 				5AFED61F2461813500EF7C1A /* Assets.xcassets in Resources */,
+				5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */,
 				ABF6E024246330AB00E47435 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -483,10 +481,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */ = {
+		5ADE71362465DED900D42025 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				5AFED6212461813500EF7C1A /* Base */,
+				5ADE71372465DED900D42025 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

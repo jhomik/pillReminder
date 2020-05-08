@@ -28,8 +28,6 @@ class LoginScreenVC: UIViewController {
         super.viewDidLoad()
         configureWelcomeView()
         performAnimations()
-        
-        view.backgroundColor = .systemPink
         configureButton()
         configureScrollView()
         configure()
@@ -120,9 +118,7 @@ class LoginScreenVC: UIViewController {
         isSignUp ? self.button.setTitle("Sign Up", for: .normal) : self.button.setTitle("Log In", for: .normal)
         
     }
-    
 
-    
     private func configureLogoImage() {
         let horizontalConstant  = UIScreen.main.bounds.width / 10
         let widthConstant       = UIScreen.main.bounds.width * 0.8
