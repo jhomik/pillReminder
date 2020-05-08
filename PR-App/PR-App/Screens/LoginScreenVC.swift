@@ -8,6 +8,7 @@
 
 import UIKit
 import FirebaseAuth
+
 class LoginScreenVC: UIViewController {
     
     let welcomeView = UIView()
@@ -29,6 +30,15 @@ class LoginScreenVC: UIViewController {
         performAnimations()
         
         view.backgroundColor = .systemPink
+        configureButton()
+        configureScrollView()
+        configure()
+        configureLogoImage()
+        configureSegmentedView()
+        configureUsernameInputField()
+        configurePasswordInputField()
+        configureConfirmInputField()
+        dismissKeyboard()
     }
     
     private func configureWelcomeView() {
@@ -66,17 +76,6 @@ class LoginScreenVC: UIViewController {
         }
     }
         
-        configureButton()
-        configureScrollView()
-        configure()
-        configureLogoImage()
-        configureSegmentedView()
-        configureUsernameInputField()
-        configurePasswordInputField()
-        configureConfirmInputField()
-        dismissKeyboard()
-
-    }
     
     private func configure() {
         view.backgroundColor = Constants.backgroundColor
