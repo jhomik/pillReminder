@@ -13,6 +13,14 @@ class LoginScreenVC: UIViewController {
     let welcomeView = UIView()
     let welcomeImage = UIImageView()
     
+<<<<<<< Updated upstream
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        configureWelcomeView()
+        performAnimations()
+        
+        view.backgroundColor = .systemPink
+=======
     var scrollView      : UIScrollView!
     var usernameInput   = CustomInputField(placeholderText: "Email Address", isPassword: false)
     var passwordInput   = CustomInputField(placeholderText: "Password", isPassword: true)
@@ -41,6 +49,7 @@ class LoginScreenVC: UIViewController {
         configurePasswordInputField()
         configureConfirmInputField()
         dismissKeyboard()
+>>>>>>> Stashed changes
     }
     
     private func configureWelcomeView() {
@@ -70,6 +79,8 @@ class LoginScreenVC: UIViewController {
                 }, completion: nil)
             }
         }
+<<<<<<< Updated upstream
+=======
     
     
     private func configure() {
@@ -245,6 +256,18 @@ extension LoginScreenVC : UITextFieldDelegate {
                 passwordInput.resignFirstResponder()
                 bestButtonPress()
             }
+        } else {
+            confirmInput.resignFirstResponder()
+            bestButtonPress()
         }
+        return true
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+    }
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+>>>>>>> Stashed changes
     }
 }

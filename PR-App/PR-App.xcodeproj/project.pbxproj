@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5AFED6132461813400EF7C1A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED6122461813400EF7C1A /* AppDelegate.swift */; };
-		5AFED6152461813400EF7C1A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED6142461813400EF7C1A /* SceneDelegate.swift */; };
+		5A2939C5246849ED00082127 /* LaunchScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2939C4246849ED00082127 /* LaunchScreenVC.swift */; };
+		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
+		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
+		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
 		5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */; };
 		5AFED61F2461813500EF7C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED61E2461813500EF7C1A /* Assets.xcassets */; };
 		5AFED6222461813500EF7C1A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED6202461813500EF7C1A /* LaunchScreen.storyboard */; };
@@ -35,6 +37,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1364D1C31385F8CE4E9C0974 /* Pods-PR-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App.release.xcconfig"; path = "Target Support Files/Pods-PR-App/Pods-PR-App.release.xcconfig"; sourceTree = "<group>"; };
+		5A2939C4246849ED00082127 /* LaunchScreenVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchScreenVC.swift; sourceTree = "<group>"; };
+		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
+		5A4BA9E72465D11F008AF20B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "PR-App/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED6122461813400EF7C1A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5AFED6142461813400EF7C1A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -128,6 +136,10 @@
 			isa = PBXGroup;
 			children = (
 				5AFED64E2461A8F000EF7C1A /* LoginScreenVC.swift */,
+				AB217B332461FD3100742EB1 /* CustomButton.swift */,
+				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
+				AB217B2F2461CF0B00742EB1 /* Constants.swift */,
+				5A2939C4246849ED00082127 /* LaunchScreenVC.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -276,8 +288,10 @@
 			files = (
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
-				5AFED6132461813400EF7C1A /* AppDelegate.swift in Sources */,
-				5AFED6152461813400EF7C1A /* SceneDelegate.swift in Sources */,
+				5A2939C5246849ED00082127 /* LaunchScreenVC.swift in Sources */,
+				AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */,
+				AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */,
+				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
