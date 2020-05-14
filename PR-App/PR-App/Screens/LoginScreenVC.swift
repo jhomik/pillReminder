@@ -99,6 +99,7 @@ class LoginScreenVC: UIViewController {
         segmentedController.selectedSegmentIndex                        = 0
         segmentedController.addTarget(self, action: #selector(segmentedControllerChange), for: .valueChanged)
         scrollView.addSubview(segmentedController)
+        
         NSLayoutConstraint.activate([
             segmentedController.leadingAnchor.constraint(equalTo: logoImage.leadingAnchor),
             segmentedController.trailingAnchor.constraint(equalTo: logoImage.trailingAnchor),
@@ -140,6 +141,7 @@ class LoginScreenVC: UIViewController {
         usernameInput.delegate = self
         scrollView.addSubview(usernameInput)
         NSLayoutConstraint.activate([
+            
             usernameInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             usernameInput.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 10),
             usernameInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
@@ -151,6 +153,7 @@ class LoginScreenVC: UIViewController {
         passwordInput.delegate = self
         scrollView.addSubview(passwordInput)
         NSLayoutConstraint.activate([
+            
             passwordInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             passwordInput.topAnchor.constraint(equalTo: usernameInput.bottomAnchor, constant: 20),
             passwordInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
@@ -165,6 +168,7 @@ class LoginScreenVC: UIViewController {
         view.addSubview(button)
         let horizontalConstant  = UIScreen.main.bounds.width / 10
         NSLayoutConstraint.activate([
+            
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalConstant),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalConstant),
             button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
@@ -174,16 +178,17 @@ class LoginScreenVC: UIViewController {
     
     private func configureConfirmInputField() {
         
+        confirmInput.isHidden = true
         confirmInput.delegate = self
         scrollView.addSubview(confirmInput)
         
         NSLayoutConstraint.activate([
+            
             confirmInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             confirmInput.topAnchor.constraint(equalTo: passwordInput.bottomAnchor, constant: 20),
             confirmInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
             confirmInput.heightAnchor.constraint(equalToConstant: 50)
         ])
-        confirmInput.isHidden = true
     }
     
     @objc private func bestButtonPress() {

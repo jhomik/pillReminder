@@ -17,6 +17,14 @@
 		5AFED62D2461813500EF7C1A /* PR_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED62C2461813500EF7C1A /* PR_AppTests.swift */; };
 		5AFED6382461813600EF7C1A /* PR_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED6372461813600EF7C1A /* PR_AppUITests.swift */; };
 		5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED64E2461A8F000EF7C1A /* LoginScreenVC.swift */; };
+		AB16BE51246C40B800EDF739 /* NewMedicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE50246C40B800EDF739 /* NewMedicationVC.swift */; };
+		AB16BE53246C42A200EDF739 /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE52246C42A200EDF739 /* InputTableViewCell.swift */; };
+		AB16BE55246C431D00EDF739 /* CustomCellLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE54246C431D00EDF739 /* CustomCellLabel.swift */; };
+		AB16BE57246CDC8400EDF739 /* StandardLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE56246CDC8400EDF739 /* StandardLabel.swift */; };
+		AB16BE59246CE55400EDF739 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE58246CE55400EDF739 /* HeaderView.swift */; };
+		AB16BE5B246CE7E700EDF739 /* CheckBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE5A246CE7E700EDF739 /* CheckBoxTableViewCell.swift */; };
+		AB16BE5D246CE97100EDF739 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE5C246CE97100EDF739 /* CheckBoxButton.swift */; };
+		AB16BE60246CEC1B00EDF739 /* Medicine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB16BE5F246CEC1B00EDF739 /* Medicine.swift */; };
 		AB217B302461CF0B00742EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B2F2461CF0B00742EB1 /* Constants.swift */; };
 		AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B312461D67E00742EB1 /* CustomInputField.swift */; };
 		AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B332461FD3100742EB1 /* CustomButton.swift */; };
@@ -67,6 +75,14 @@
 		A7084AF6F581216D47BCB1ED /* Pods_PR_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A77F5BA0637CE6A19CF9C06A /* Pods_PR_App_PR_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_App_PR_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAB2497878F4D145EE0D505C /* Pods-PR-App-PR-AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App-PR-AppUITests.release.xcconfig"; path = "Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests.release.xcconfig"; sourceTree = "<group>"; };
+		AB16BE50246C40B800EDF739 /* NewMedicationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationVC.swift; sourceTree = "<group>"; };
+		AB16BE52246C42A200EDF739 /* InputTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTableViewCell.swift; sourceTree = "<group>"; };
+		AB16BE54246C431D00EDF739 /* CustomCellLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellLabel.swift; sourceTree = "<group>"; };
+		AB16BE56246CDC8400EDF739 /* StandardLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardLabel.swift; sourceTree = "<group>"; };
+		AB16BE58246CE55400EDF739 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
+		AB16BE5A246CE7E700EDF739 /* CheckBoxTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxTableViewCell.swift; sourceTree = "<group>"; };
+		AB16BE5C246CE97100EDF739 /* CheckBoxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
+		AB16BE5F246CEC1B00EDF739 /* Medicine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Medicine.swift; sourceTree = "<group>"; };
 		AB217B2F2461CF0B00742EB1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AB217B312461D67E00742EB1 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
 		AB217B332461FD3100742EB1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -158,9 +174,12 @@
 			children = (
 				5AFED64E2461A8F000EF7C1A /* LoginScreenVC.swift */,
 				5A2939C4246849ED00082127 /* LaunchScreenVC.swift */,
-				AB217B332461FD3100742EB1 /* CustomButton.swift */,
-				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
 				AB217B2F2461CF0B00742EB1 /* Constants.swift */,
+				AB16BE50246C40B800EDF739 /* NewMedicationVC.swift */,
+				AB16BE58246CE55400EDF739 /* HeaderView.swift */,
+				AB16BE52246C42A200EDF739 /* InputTableViewCell.swift */,
+				AB16BE5E246CEAE500EDF739 /* Custom Objects */,
+				AB16BE5A246CE7E700EDF739 /* CheckBoxTableViewCell.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -190,6 +209,19 @@
 				1C4B5D5B33B2FB2861C668D4 /* Pods-PR-AppTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		AB16BE5E246CEAE500EDF739 /* Custom Objects */ = {
+			isa = PBXGroup;
+			children = (
+				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
+				AB217B332461FD3100742EB1 /* CustomButton.swift */,
+				AB16BE56246CDC8400EDF739 /* StandardLabel.swift */,
+				AB16BE5C246CE97100EDF739 /* CheckBoxButton.swift */,
+				AB16BE54246C431D00EDF739 /* CustomCellLabel.swift */,
+				AB16BE5F246CEC1B00EDF739 /* Medicine.swift */,
+			);
+			path = "Custom Objects";
 			sourceTree = "<group>";
 		};
 		AFBFC41C52A31F4F83B9CB50 /* Frameworks */ = {
@@ -442,14 +474,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
+				AB16BE60246CEC1B00EDF739 /* Medicine.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
+				AB16BE5D246CE97100EDF739 /* CheckBoxButton.swift in Sources */,
+				AB16BE5B246CE7E700EDF739 /* CheckBoxTableViewCell.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
 				AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */,
+				AB16BE57246CDC8400EDF739 /* StandardLabel.swift in Sources */,
 				AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */,
+				AB16BE55246C431D00EDF739 /* CustomCellLabel.swift in Sources */,
 				5A2939C5246849ED00082127 /* LaunchScreenVC.swift in Sources */,
+				AB16BE53246C42A200EDF739 /* InputTableViewCell.swift in Sources */,
+				AB16BE51246C40B800EDF739 /* NewMedicationVC.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
+				AB16BE59246CE55400EDF739 /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
