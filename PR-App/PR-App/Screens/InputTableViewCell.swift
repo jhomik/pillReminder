@@ -8,10 +8,14 @@
 
 import UIKit
 
+protocol TextPassBackDelegate : class {
+    func update(updatedValue: Double, tag: Int)
+}
+
 class InputTableViewCell: UITableViewCell {
-    
-    var inputField  = CustomInputField()
-    var label       : CustomCellLabel!
+    weak var textPassBackDelegate   : TextPassBackDelegate!
+    var inputField                  = CustomInputField()
+    var label                       : CustomCellLabel!
     
     static let reuseID = "InputTableViewCell"
 
@@ -36,15 +40,21 @@ class InputTableViewCell: UITableViewCell {
     private func configure() {
         label = CustomCellLabel()
         addSubview(inputField)
+        inputField.keyboardType = .decimalPad
+        inputField.addTarget(self, action: #selector(changingText), for: .editingChanged)
         addSubview(label)
+        let spacing : CGFloat = (UIScreen.main.bounds.width * 0.5) / 4
+        let width   : CGFloat = UIScreen.main.bounds.width / 6
+        let height  : CGFloat = UIScreen.main.bounds.width / 7
+
         NSLayoutConstraint.activate([
             
-            inputField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-            inputField.heightAnchor.constraint(equalToConstant: 40),
+            inputField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+            inputField.heightAnchor.constraint(equalToConstant: height),
             inputField.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            inputField.widthAnchor.constraint(equalToConstant: 60),
+            inputField.widthAnchor.constraint(equalToConstant: width),
             
-            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+            label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
             label.heightAnchor.constraint(equalToConstant: 40),
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             label.trailingAnchor.constraint(equalTo: inputField.leadingAnchor, constant: 10)
@@ -52,4 +62,16 @@ class InputTableViewCell: UITableViewCell {
         ])
         
     }
+    
+    @objc func changingText() {
+        if label.text == "Quantity Per Bottle" {
+            return
+        } else {
+            let newValue = Double(inputField.text!) ?? 0
+            textPassBackDelegate.update(updatedValue: newValue, tag: inputField.tag)
+        }
+
+        
+    }
 }
+

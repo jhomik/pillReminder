@@ -28,6 +28,7 @@
 		AB217B302461CF0B00742EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B2F2461CF0B00742EB1 /* Constants.swift */; };
 		AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B312461D67E00742EB1 /* CustomInputField.swift */; };
 		AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B332461FD3100742EB1 /* CustomButton.swift */; };
+		ABCDF886246E19CB0028E6F2 /* DoseScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABCDF885246E19CB0028E6F2 /* DoseScheduleCell.swift */; };
 		ABF6E024246330AB00E47435 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = ABF6E023246330AB00E47435 /* GoogleService-Info.plist */; };
 		ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF726A32463A46100C903B7 /* UIView+Ext.swift */; };
 		BBCBC75ED7607B075953F3C7 /* Pods_PR_App_PR_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A77F5BA0637CE6A19CF9C06A /* Pods_PR_App_PR_AppUITests.framework */; };
@@ -86,6 +87,7 @@
 		AB217B2F2461CF0B00742EB1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AB217B312461D67E00742EB1 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
 		AB217B332461FD3100742EB1 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		ABCDF885246E19CB0028E6F2 /* DoseScheduleCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseScheduleCell.swift; sourceTree = "<group>"; };
 		ABF6E023246330AB00E47435 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ABF726A32463A46100C903B7 /* UIView+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Ext.swift"; sourceTree = "<group>"; };
 		D72D656C9EE835B4A67B7E89 /* Pods-PR-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App.debug.xcconfig"; path = "Target Support Files/Pods-PR-App/Pods-PR-App.debug.xcconfig"; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				5A2939C4246849ED00082127 /* LaunchScreenVC.swift */,
 				AB217B2F2461CF0B00742EB1 /* Constants.swift */,
 				AB16BE50246C40B800EDF739 /* NewMedicationVC.swift */,
+				ABCDF885246E19CB0028E6F2 /* DoseScheduleCell.swift */,
 				AB16BE58246CE55400EDF739 /* HeaderView.swift */,
 				AB16BE52246C42A200EDF739 /* InputTableViewCell.swift */,
 				AB16BE5E246CEAE500EDF739 /* Custom Objects */,
@@ -488,6 +491,7 @@
 				5A2939C5246849ED00082127 /* LaunchScreenVC.swift in Sources */,
 				AB16BE53246C42A200EDF739 /* InputTableViewCell.swift in Sources */,
 				AB16BE51246C40B800EDF739 /* NewMedicationVC.swift in Sources */,
+				ABCDF886246E19CB0028E6F2 /* DoseScheduleCell.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
 				AB16BE59246CE55400EDF739 /* HeaderView.swift in Sources */,
 			);

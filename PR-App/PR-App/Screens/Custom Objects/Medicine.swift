@@ -14,5 +14,9 @@ struct Medicine {
     var dose                : Double
     var remindMeToTake      : Bool
     var quantityInBottle    : Double
+    var quantityOnHand      : Double
     var remindMeToRefill    : Bool
+    var morning             : Double
+    var midDay              : Double
+    var evening             : Double
 }

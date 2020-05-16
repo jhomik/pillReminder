@@ -32,14 +32,17 @@ class CheckBoxTableViewCell: UITableViewCell {
             label = CustomCellLabel()
             addSubview(checkBoxButton)
             addSubview(label)
+            let spacing : CGFloat = (UIScreen.main.bounds.width * 0.5) / 4
+            let width   : CGFloat = UIScreen.main.bounds.width / 6
+            let height  : CGFloat = UIScreen.main.bounds.width / 7
             NSLayoutConstraint.activate([
                 
-                checkBoxButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10),
-                checkBoxButton.heightAnchor.constraint(equalToConstant: 40),
+                checkBoxButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -spacing),
+                checkBoxButton.heightAnchor.constraint(equalToConstant: height),
                 checkBoxButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-                checkBoxButton.widthAnchor.constraint(equalToConstant: 60),
+                checkBoxButton.widthAnchor.constraint(equalToConstant: width),
                 
-                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
+                label.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: spacing),
                 label.heightAnchor.constraint(equalToConstant: 40),
                 label.centerYAnchor.constraint(equalTo: self.centerYAnchor),
                 label.trailingAnchor.constraint(equalTo: checkBoxButton.leadingAnchor, constant: 10)
