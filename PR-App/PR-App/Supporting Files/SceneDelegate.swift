@@ -18,8 +18,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginScreenVC()
+        window?.rootViewController = createNewMedVC()
         window?.makeKeyAndVisible()
+    }
+    
+    func createNewMedVC() -> UINavigationController {
+        let vc = NewMedicationVC()
+        return UINavigationController(rootViewController: vc)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
