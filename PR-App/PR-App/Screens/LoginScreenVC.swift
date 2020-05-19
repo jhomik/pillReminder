@@ -185,7 +185,12 @@ class LoginScreenVC: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
+<<<<<<< Updated upstream
                     self.navigationController?.pushViewController(TabBarController(), animated: true)
+=======
+                    let vc = LoginScreenVC()
+                    self.navigationController?.pushViewController(vc, animated: true)
+>>>>>>> Stashed changes
                     print("success!")
                 }
             }
