@@ -11,12 +11,22 @@
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
 		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
 		5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A118A2473D1FF006E4B2F /* TabBarController.swift */; };
+>>>>>>> Stashed changes
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 		5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomHeader.swift */; };
 		5AD3E498246DB20500882154 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E497246DB20500882154 /* CustomCell.swift */; };
 		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
 		5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */; };
 		5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE9EA80246AD0040090A1D2 /* ReminderForMedicationVC.swift */; };
+<<<<<<< HEAD
+		5AF5A98C2473E251007F6328 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF5A98B2473E251007F6328 /* TabBarController.swift */; };
+=======
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 		5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */; };
 		5AFED61F2461813500EF7C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED61E2461813500EF7C1A /* Assets.xcassets */; };
 		5AFED62D2461813500EF7C1A /* PR_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED62C2461813500EF7C1A /* PR_AppTests.swift */; };
@@ -57,12 +67,22 @@
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E72465D11F008AF20B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "PR-App/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+<<<<<<< HEAD
+=======
+<<<<<<< Updated upstream
+=======
+		5A6A118A2473D1FF006E4B2F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 		5AD3E495246D9EC700882154 /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		5AD3E497246DB20500882154 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoVC.swift; sourceTree = "<group>"; };
 		5AE9EA80246AD0040090A1D2 /* ReminderForMedicationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationVC.swift; sourceTree = "<group>"; };
+<<<<<<< HEAD
 		5AF5A98B2473E251007F6328 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+=======
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED61C2461813400EF7C1A /* PR_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PR_App.xcdatamodel; sourceTree = "<group>"; };
 		5AFED61E2461813500EF7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -118,7 +138,14 @@
 				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
 				5AD3E495246D9EC700882154 /* CustomHeader.swift */,
 				5AD3E497246DB20500882154 /* CustomCell.swift */,
+<<<<<<< HEAD
 				5AF5A98B2473E251007F6328 /* TabBarController.swift */,
+=======
+<<<<<<< Updated upstream
+=======
+				5A6A118A2473D1FF006E4B2F /* TabBarController.swift */,
+>>>>>>> Stashed changes
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -478,7 +505,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */,
+<<<<<<< HEAD
+				5AF5A98C2473E251007F6328 /* TabBarController.swift in Sources */,
+=======
+<<<<<<< Updated upstream
+=======
 				5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */,
+>>>>>>> Stashed changes
+>>>>>>> 8e10e11246bd8eef45e5edd3321fd6917c2c63fb
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
