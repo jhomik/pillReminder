@@ -21,6 +21,7 @@
 		5A582BA12474583700247D19 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B972474583600247D19 /* HeaderView.swift */; };
 		5A582BA22474583700247D19 /* DoseScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B982474583600247D19 /* DoseScheduleCell.swift */; };
 		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
+		5A582B8D2473FEFC00247D19 /* UIViewController+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */; };
 		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomHeader.swift */; };
 		5AD3E498246DB20500882154 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E497246DB20500882154 /* CustomCell.swift */; };
@@ -77,6 +78,7 @@
 		5A582B972474583600247D19 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderView.swift; path = "PR-App/Screens/HeaderView.swift"; sourceTree = SOURCE_ROOT; };
 		5A582B982474583600247D19 /* DoseScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoseScheduleCell.swift; path = "PR-App/Screens/DoseScheduleCell.swift"; sourceTree = SOURCE_ROOT; };
 		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EXT.swift"; sourceTree = "<group>"; };
 		5AD3E495246D9EC700882154 /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		5AD3E497246DB20500882154 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
@@ -171,6 +173,7 @@
 			isa = PBXGroup;
 			children = (
 				ABF726A32463A46100C903B7 /* UIView+Ext.swift */,
+				5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -531,8 +534,10 @@
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
 				5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
+				5A582B8D2473FEFC00247D19 /* UIViewController+EXT.swift in Sources */,
 				AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */,
 				AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */,
+				5A582B8B2473F3A300247D19 /* TabBarController.swift in Sources */,
 				5AD3E498246DB20500882154 /* CustomCell.swift in Sources */,
 				5A582B9A2474583700247D19 /* CustomCellLabel.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,

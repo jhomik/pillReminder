@@ -32,8 +32,8 @@ class CustomHeader: UICollectionReusableView {
         NSLayoutConstraint.activate([
             imageLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageLogo.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            imageLogo.widthAnchor.constraint(equalTo: self.widthAnchor),
-            imageLogo.heightAnchor.constraint(equalToConstant: 80),
+            imageLogo.widthAnchor.constraint(equalToConstant: frame.width / 1.5),
+            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / 1.5),
         ])
     }
 }

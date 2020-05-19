@@ -18,7 +18,6 @@ class UserMedicationInfoVC: UIViewController {
         configureCollectionView()
         configureViewController()
         collectionView?.backgroundColor = Constants.backgroundColor
-        
     }
     
     private func configureViewController() {
@@ -41,7 +40,7 @@ class UserMedicationInfoVC: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 20)
-        flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: 100)
+        flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: 80)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: "cell")

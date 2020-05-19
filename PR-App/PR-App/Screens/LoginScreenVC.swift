@@ -173,21 +173,20 @@ class LoginScreenVC: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        
         guard let email = usernameInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
             print("Form is not valid")
             return
         }
         
         if !isSignUp && !email.isEmpty && !password.isEmpty {
-            
             Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
+                
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
-
-                    self.navigationController?.pushViewController(TabBarController(), animated: true)
-
+                    self.showAlert(message: "Logged In!") {
+                        self.navigationController?.pushViewController(TabBarController(), animated: true)
+                    }
                     print("success!")
                 }
             }
@@ -195,12 +194,14 @@ class LoginScreenVC: UIViewController {
         } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty {
             
             if newPasswordCheck(passOne: password, passTwo: confirmPassword) {
-                
                 Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
                     
                     if error != nil {
                         print("error popup here")
                     } else {
+                        self.showAlert(message: "Check your email with activation link!") {
+
+                        }
                         print("success")
                     }
                 }
