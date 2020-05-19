@@ -11,6 +11,10 @@
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
 		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
+<<<<<<< Updated upstream
+=======
+		5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A118A2473D1FF006E4B2F /* TabBarController.swift */; };
+>>>>>>> Stashed changes
 		5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomHeader.swift */; };
 		5AD3E498246DB20500882154 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E497246DB20500882154 /* CustomCell.swift */; };
 		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
@@ -56,6 +60,10 @@
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E72465D11F008AF20B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "PR-App/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+<<<<<<< Updated upstream
+=======
+		5A6A118A2473D1FF006E4B2F /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+>>>>>>> Stashed changes
 		5AD3E495246D9EC700882154 /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		5AD3E497246DB20500882154 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
@@ -116,6 +124,10 @@
 				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
 				5AD3E495246D9EC700882154 /* CustomHeader.swift */,
 				5AD3E497246DB20500882154 /* CustomCell.swift */,
+<<<<<<< Updated upstream
+=======
+				5A6A118A2473D1FF006E4B2F /* TabBarController.swift */,
+>>>>>>> Stashed changes
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -475,6 +487,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */,
+<<<<<<< Updated upstream
+=======
+				5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */,
+>>>>>>> Stashed changes
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,

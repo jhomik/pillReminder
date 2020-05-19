@@ -74,6 +74,7 @@ class LoginScreenVC: UIViewController {
     
     private func configure() {
         view.backgroundColor = Constants.backgroundColor
+        navigationController?.isNavigationBarHidden = true
     }
     
     private func configureScrollView() {
@@ -184,8 +185,12 @@ class LoginScreenVC: UIViewController {
                 if let error = error {
                     print(error.localizedDescription)
                 } else {
+<<<<<<< Updated upstream
                     let vc = LoginScreenVC()
                     self.navigationController?.pushViewController(vc, animated: true)
+=======
+                    self.navigationController?.pushViewController(TabBarController(), animated: true)
+>>>>>>> Stashed changes
                     print("success!")
                 }
             }

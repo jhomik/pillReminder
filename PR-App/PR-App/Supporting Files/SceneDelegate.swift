@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = LoginScreenVC()
+        window?.rootViewController = UINavigationController(rootViewController: LoginScreenViewController()) 
         window?.makeKeyAndVisible()
     }
     
@@ -27,6 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return vc
     }
     
+<<<<<<< Updated upstream
     func UserMedicationInfoNavigationController() -> UINavigationController {
         let navBar = UserMedicationInfoVC()
         navBar.tabBarItem = UITabBarItem(title: "Medicine", image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
@@ -48,6 +49,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         return tabBar
     }
 
+=======
+>>>>>>> Stashed changes
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
