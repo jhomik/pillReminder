@@ -11,7 +11,17 @@
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
 		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
-		5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A6A118A2473D1FF006E4B2F /* TabBarController.swift */; };
+		5A582B992474583700247D19 /* CheckBoxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B8F2474583600247D19 /* CheckBoxButton.swift */; };
+		5A582B9A2474583700247D19 /* CustomCellLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B902474583600247D19 /* CustomCellLabel.swift */; };
+		5A582B9B2474583700247D19 /* Medicine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B912474583600247D19 /* Medicine.swift */; };
+		5A582B9C2474583700247D19 /* StandardLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B922474583600247D19 /* StandardLabel.swift */; };
+		5A582B9E2474583700247D19 /* CheckBoxTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B942474583600247D19 /* CheckBoxTableViewCell.swift */; };
+		5A582B9F2474583700247D19 /* InputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B952474583600247D19 /* InputTableViewCell.swift */; };
+		5A582BA02474583700247D19 /* NewMedicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B962474583600247D19 /* NewMedicationVC.swift */; };
+		5A582BA12474583700247D19 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B972474583600247D19 /* HeaderView.swift */; };
+		5A582BA22474583700247D19 /* DoseScheduleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B982474583600247D19 /* DoseScheduleCell.swift */; };
+		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
+		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomHeader.swift */; };
 		5AD3E498246DB20500882154 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E497246DB20500882154 /* CustomCell.swift */; };
 		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
@@ -57,12 +67,21 @@
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E72465D11F008AF20B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; name = Info.plist; path = "PR-App/Supporting Files/Info.plist"; sourceTree = SOURCE_ROOT; };
+		5A582B8F2474583600247D19 /* CheckBoxButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckBoxButton.swift; sourceTree = "<group>"; };
+		5A582B902474583600247D19 /* CustomCellLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomCellLabel.swift; sourceTree = "<group>"; };
+		5A582B912474583600247D19 /* Medicine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Medicine.swift; sourceTree = "<group>"; };
+		5A582B922474583600247D19 /* StandardLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StandardLabel.swift; sourceTree = "<group>"; };
+		5A582B942474583600247D19 /* CheckBoxTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CheckBoxTableViewCell.swift; path = "PR-App/Screens/CheckBoxTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		5A582B952474583600247D19 /* InputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InputTableViewCell.swift; path = "PR-App/Screens/InputTableViewCell.swift"; sourceTree = SOURCE_ROOT; };
+		5A582B962474583600247D19 /* NewMedicationVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewMedicationVC.swift; path = "PR-App/Screens/NewMedicationVC.swift"; sourceTree = SOURCE_ROOT; };
+		5A582B972474583600247D19 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HeaderView.swift; path = "PR-App/Screens/HeaderView.swift"; sourceTree = SOURCE_ROOT; };
+		5A582B982474583600247D19 /* DoseScheduleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoseScheduleCell.swift; path = "PR-App/Screens/DoseScheduleCell.swift"; sourceTree = SOURCE_ROOT; };
+		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5AD3E495246D9EC700882154 /* CustomHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomHeader.swift; sourceTree = "<group>"; };
 		5AD3E497246DB20500882154 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoVC.swift; sourceTree = "<group>"; };
 		5AE9EA80246AD0040090A1D2 /* ReminderForMedicationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationVC.swift; sourceTree = "<group>"; };
-		5AF5A98B2473E251007F6328 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED61C2461813400EF7C1A /* PR_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PR_App.xcdatamodel; sourceTree = "<group>"; };
 		5AFED61E2461813500EF7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -111,14 +130,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A582B8E2474583600247D19 /* Custom Objects */ = {
+			isa = PBXGroup;
+			children = (
+				5A582B8F2474583600247D19 /* CheckBoxButton.swift */,
+				5A582B902474583600247D19 /* CustomCellLabel.swift */,
+				5A582B912474583600247D19 /* Medicine.swift */,
+				5A582B922474583600247D19 /* StandardLabel.swift */,
+			);
+			name = "Custom Objects";
+			path = "PR-App/Screens/Custom Objects";
+			sourceTree = SOURCE_ROOT;
+		};
 		5AE9EA7B246ACAB60090A1D2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
 				AB217B332461FD3100742EB1 /* CustomButton.swift */,
+				5AD3E497246DB20500882154 /* CustomCell.swift */,
 				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
 				5AD3E495246D9EC700882154 /* CustomHeader.swift */,
-				5AD3E497246DB20500882154 /* CustomCell.swift */,
-				5AF5A98B2473E251007F6328 /* TabBarController.swift */,
+				5A582B942474583600247D19 /* CheckBoxTableViewCell.swift */,
+				5A582B8E2474583600247D19 /* Custom Objects */,
+				5A582B982474583600247D19 /* DoseScheduleCell.swift */,
+				5A582B972474583600247D19 /* HeaderView.swift */,
+				5A582B952474583600247D19 /* InputTableViewCell.swift */,
+				5A582BA32474596700247D19 /* TabBarController.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -197,6 +233,7 @@
 			children = (
 				5AFED64E2461A8F000EF7C1A /* LoginScreenVC.swift */,
 				5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */,
+				5A582B962474583600247D19 /* NewMedicationVC.swift */,
 				5AE9EA80246AD0040090A1D2 /* ReminderForMedicationVC.swift */,
 			);
 			path = Screens;
@@ -478,18 +515,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AD3E496246D9EC700882154 /* CustomHeader.swift in Sources */,
-				5A6A118B2473D1FF006E4B2F /* TabBarController.swift in Sources */,
+				5A6A118B2473D1FF006E4B2F /* (null) in Sources */,
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
+				5A582B992474583700247D19 /* CheckBoxButton.swift in Sources */,
+				5A582BA42474596700247D19 /* TabBarController.swift in Sources */,
+				5A582B9E2474583700247D19 /* CheckBoxTableViewCell.swift in Sources */,
+				5A582BA12474583700247D19 /* HeaderView.swift in Sources */,
+				5A582BA02474583700247D19 /* NewMedicationVC.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
+				5A582BA22474583700247D19 /* DoseScheduleCell.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
+				5A582B9B2474583700247D19 /* Medicine.swift in Sources */,
+				5A582B9F2474583700247D19 /* InputTableViewCell.swift in Sources */,
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
 				5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
 				AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */,
 				AB217B322461D67E00742EB1 /* CustomInputField.swift in Sources */,
 				5AD3E498246DB20500882154 /* CustomCell.swift in Sources */,
+				5A582B9A2474583700247D19 /* CustomCellLabel.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
+				5A582B9C2474583700247D19 /* StandardLabel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
