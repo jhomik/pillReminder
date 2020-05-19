@@ -1,5 +1,5 @@
 //
-//  CustomButton.swift
+//  CustomInputField.swift
 //  PR-App
 //
 //  Created by Tayler Moosa on 5/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomButton: UIButton {
+class CustomInputField: UITextField {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,20 +19,20 @@ class CustomButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(text: String) {
+    init(placeholderText: String, isPassword: Bool) {
         super.init(frame: .zero)
         configure()
-        setTitle(text, for: .normal)
+        placeholder = placeholderText
+        isSecureTextEntry = isPassword
     }
     
     private func configure() {
-        layer.cornerRadius  = 10
-        layer.borderColor   = Constants.mainColor.cgColor
-        layer.borderWidth   = 2
-        backgroundColor     = .white
-        setTitleColor(Constants.mainColor, for: .normal)
+        borderStyle = .roundedRect
+        backgroundColor = .white
+        textColor = .black
+        textAlignment = .center
         translatesAutoresizingMaskIntoConstraints = false
         
-    }
 
+    }
 }
