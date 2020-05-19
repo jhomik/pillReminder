@@ -18,13 +18,34 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        window?.rootViewController = createNewMedVC()
+        window?.rootViewController = LoginScreenVC()
         window?.makeKeyAndVisible()
     }
     
-    func createNewMedVC() -> UINavigationController {
-        let vc = NewMedicationVC()
-        return UINavigationController(rootViewController: vc)
+    func LoginScreenViewController() -> UIViewController {
+        let vc = LoginScreenVC()
+        return vc
+    }
+    
+    func UserMedicationInfoNavigationController() -> UINavigationController {
+        let navBar = UserMedicationInfoVC()
+        navBar.tabBarItem = UITabBarItem(title: "Medicine", image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
+        
+        return UINavigationController(rootViewController: navBar)
+    }
+    
+    func ReminderForMedicationNavigationController() -> UINavigationController {
+        let navBar = ReminderForMedicationVC()
+        navBar.tabBarItem = UITabBarItem(title: "Reminder", image: UIImage(systemName: "alarm.fill"), tag: 1)
+        
+        return UINavigationController(rootViewController: navBar)
+    }
+    
+    func TabBarController() -> UITabBarController {
+        let tabBar = UITabBarController()
+        tabBar.viewControllers = [UserMedicationInfoNavigationController(), ReminderForMedicationNavigationController()]
+        
+        return tabBar
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
