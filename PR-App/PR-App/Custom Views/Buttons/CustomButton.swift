@@ -1,14 +1,14 @@
 //
-//  CustomCellLabel.swift
+//  CustomButton.swift
 //  PR-App
 //
-//  Created by Tayler Moosa on 5/13/20.
+//  Created by Tayler Moosa on 5/5/20.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-class CustomCellLabel: UILabel {
+class CustomButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,12 +22,16 @@ class CustomCellLabel: UILabel {
     init(text: String) {
         super.init(frame: .zero)
         configure()
-        self.text = text
+        setTitle(text, for: .normal)
     }
     
     private func configure() {
-        translatesAutoresizingMaskIntoConstraints   = false
-        textAlignment                               = .left
+        layer.cornerRadius = 10
+        layer.borderColor = Constants.mainColor.cgColor
+        layer.borderWidth = 1
+        backgroundColor = .white
+        setTitleColor(Constants.mainColor, for: .normal)
+        translatesAutoresizingMaskIntoConstraints = false
         
     }
 

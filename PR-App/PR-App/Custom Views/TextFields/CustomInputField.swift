@@ -27,6 +27,7 @@ class CustomInputField: UITextField {
     }
     
     private func configure() {
+        autocapitalizationType = .none
         borderStyle = .roundedRect
         backgroundColor = .white
         textColor = .black

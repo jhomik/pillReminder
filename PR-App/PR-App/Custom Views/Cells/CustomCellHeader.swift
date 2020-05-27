@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomHeader: UICollectionReusableView {
+class CustomCellHeader: UICollectionReusableView {
     
     var imageLogo = UIImageView()
     
@@ -22,7 +22,6 @@ class CustomHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private func configure() {
         imageLogo.image = UIImage(named: "title-logo")

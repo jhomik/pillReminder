@@ -200,7 +200,6 @@ class LoginScreenVC: UIViewController {
                         print("error popup here")
                     } else {
                         self.showAlert(message: "Check your email with activation link!") {
-
                         }
                         print("success")
                     }

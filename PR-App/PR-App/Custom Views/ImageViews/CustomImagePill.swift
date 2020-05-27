@@ -1,14 +1,16 @@
 //
-//  StandardLabel.swift
+//  CustomImagePill.swift
 //  PR-App
 //
-//  Created by Tayler Moosa on 5/13/20.
+//  Created by Jakub Homik on 23/05/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-class StandardLabel: UILabel {
+class CustomImagePill: UIImageView {
+    
+    let pillImage = UIImage(systemName: "camera")
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -20,9 +22,10 @@ class StandardLabel: UILabel {
     }
     
     private func configure() {
-        textAlignment                               = .center
-        translatesAutoresizingMaskIntoConstraints   = false
-        
+        image = pillImage
+        clipsToBounds = true
+        backgroundColor = .systemGray
+        alpha = 0.4
+        layer.cornerRadius = 16
     }
-
 }
