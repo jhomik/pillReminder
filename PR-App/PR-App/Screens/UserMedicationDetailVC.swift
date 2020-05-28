@@ -32,6 +32,7 @@ class UserMedicationDetailVC: UIViewController {
         configureDoseAndCapacityView()
         configureStackView2()
         configureEditButton()
+        
         view.backgroundColor = Constants.backgroundColor
     }
     
@@ -43,7 +44,6 @@ class UserMedicationDetailVC: UIViewController {
     private func configureMedicationView() {
         view.addSubview(medicationView)
         medicationView.translatesAutoresizingMaskIntoConstraints = false
-//        medicationView.backgroundColor = .systemTeal
         
         NSLayoutConstraint.activate([
             medicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
@@ -56,7 +56,6 @@ class UserMedicationDetailVC: UIViewController {
     private func configureDoseAndCapacityView() {
         view.addSubview(doseAndCapacityView)
         doseAndCapacityView.translatesAutoresizingMaskIntoConstraints = false
-//        doseAndCapacityView.backgroundColor = .systemTeal
         
         NSLayoutConstraint.activate([
             doseAndCapacityView.topAnchor.constraint(equalTo: medicationView.bottomAnchor, constant: 30),
@@ -102,10 +101,6 @@ class UserMedicationDetailVC: UIViewController {
         stackView.distribution = .equalSpacing
         medicationView.addSubview(stackView)
         
-        //                pillNameView.backgroundColor = .systemOrange
-        //                packageCapacityView.backgroundColor = .systemYellow
-        //                pillDoseView.backgroundColor = .systemPink
-        
         NSLayoutConstraint.activate([
             stackView.topAnchor.constraint(equalTo: medicationView.topAnchor),
             stackView.leadingAnchor.constraint(equalTo: medicationButtonCamera.trailingAnchor, constant: 30),
@@ -136,6 +131,7 @@ class UserMedicationDetailVC: UIViewController {
     private func configureEditButton() {
         view.addSubview(editButton)
         editButton.translatesAutoresizingMaskIntoConstraints = false
+        editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             editButton.leadingAnchor.constraint(equalTo: doseAndCapacityView.leadingAnchor),
@@ -143,5 +139,10 @@ class UserMedicationDetailVC: UIViewController {
             editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30),
             editButton.heightAnchor.constraint(equalToConstant: 40),
         ])
+    }
+    
+    @objc private func editButtonTapped() {
+        let vc = NewMedicationVC()
+        present(vc, animated: true)
     }
 }
