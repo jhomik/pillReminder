@@ -33,7 +33,5 @@ class CustomInputField: UITextField {
         textColor = .black
         textAlignment = .center
         translatesAutoresizingMaskIntoConstraints = false
-        
-
     }
 }
