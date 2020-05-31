@@ -69,8 +69,8 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        cell.imageCell.image = Constants.cellImage
-        cell.newMedsTitle.text = Constants.cellText
+        cell.imageCell.image = UIImage(systemName: "plus.circle.fill")
+        cell.newMedsTitle.text = "Add medication"
         return cell
     }
     
@@ -81,8 +81,8 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destinationViewController = UserMedicationDetailVC()
-        navigationController?.pushViewController(destinationViewController, animated: true)
+        let destVC = UserMedicationDetailVC()
+        navigationController?.pushViewController(destVC, animated: true)
     }
 
 }

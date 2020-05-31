@@ -28,9 +28,9 @@ class UserMedicationDetailVC: UIViewController {
         super.viewDidLoad()
         configureMedicationView()
         configureMedicationImage()
-        pillStackView()
+        configureStackView()
         configureDoseAndCapacityView()
-        dosageStackView()
+        configureStackView2()
         configureEditButton()
         
         view.backgroundColor = Constants.backgroundColor
@@ -89,42 +89,42 @@ class UserMedicationDetailVC: UIViewController {
         print("button tapped")
     }
     
-    private func pillStackView() {
+    private func configureStackView() {
         medicationView.addSubview(pillNameView)
         medicationView.addSubview(packageCapacityView)
         medicationView.addSubview(pillDoseView)
         
         
-        let pillStackView = UIStackView(arrangedSubviews: [pillNameView, packageCapacityView, pillDoseView])
-        pillStackView.translatesAutoresizingMaskIntoConstraints = false
-        pillStackView.axis = .vertical
-        pillStackView.distribution = .equalSpacing
-        medicationView.addSubview(pillStackView)
+        let stackView = UIStackView(arrangedSubviews: [pillNameView, packageCapacityView, pillDoseView])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .vertical
+        stackView.distribution = .equalSpacing
+        medicationView.addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            pillStackView.topAnchor.constraint(equalTo: medicationView.topAnchor),
-            pillStackView.leadingAnchor.constraint(equalTo: medicationButtonCamera.trailingAnchor, constant: 30),
-            pillStackView.trailingAnchor.constraint(equalTo: medicationView.trailingAnchor),
-            pillStackView.heightAnchor.constraint(equalTo: medicationView.heightAnchor)
+            stackView.topAnchor.constraint(equalTo: medicationView.topAnchor),
+            stackView.leadingAnchor.constraint(equalTo: medicationButtonCamera.trailingAnchor, constant: 30),
+            stackView.trailingAnchor.constraint(equalTo: medicationView.trailingAnchor),
+            stackView.heightAnchor.constraint(equalTo: medicationView.heightAnchor)
         ])
     }
     
-    private func dosageStackView() {
+    private func configureStackView2() {
         doseAndCapacityView.addSubview(dosageView)
         doseAndCapacityView.addSubview(doseProgramView)
         doseAndCapacityView.addSubview(capacityPillsLeft)
         
-        let dosageStackView = UIStackView(arrangedSubviews: [dosageView, doseProgramView, capacityPillsLeft])
-        dosageStackView.translatesAutoresizingMaskIntoConstraints = false
-        dosageStackView.axis = .vertical
-        dosageStackView.distribution = .equalSpacing
-        doseAndCapacityView.addSubview(dosageStackView)
+        let stackView2 = UIStackView(arrangedSubviews: [dosageView, doseProgramView, capacityPillsLeft])
+        stackView2.translatesAutoresizingMaskIntoConstraints = false
+        stackView2.axis = .vertical
+        stackView2.distribution = .equalSpacing
+        doseAndCapacityView.addSubview(stackView2)
         
         NSLayoutConstraint.activate([
-            dosageStackView.topAnchor.constraint(equalTo: doseAndCapacityView.topAnchor),
-            dosageStackView.leadingAnchor.constraint(equalTo: doseAndCapacityView.leadingAnchor),
-            dosageStackView.trailingAnchor.constraint(equalTo: doseAndCapacityView.trailingAnchor),
-            dosageStackView.bottomAnchor.constraint(equalTo: doseAndCapacityView.bottomAnchor)
+            stackView2.topAnchor.constraint(equalTo: doseAndCapacityView.topAnchor),
+            stackView2.leadingAnchor.constraint(equalTo: doseAndCapacityView.leadingAnchor),
+            stackView2.trailingAnchor.constraint(equalTo: doseAndCapacityView.trailingAnchor),
+            stackView2.bottomAnchor.constraint(equalTo: doseAndCapacityView.bottomAnchor)
         ])
     }
     
@@ -142,7 +142,7 @@ class UserMedicationDetailVC: UIViewController {
     }
     
     @objc private func editButtonTapped() {
-        let newMedicationVC = UINavigationController(rootViewController: NewMedicationVC())
-        present(newMedicationVC, animated: true)
+        let vc = NewMedicationVC()
+        present(vc, animated: true)
     }
 }
