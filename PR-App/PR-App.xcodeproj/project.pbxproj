@@ -12,7 +12,6 @@
 		5A1AE7DA247E80FF0094F17B /* DoseProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7D9247E80FF0094F17B /* DoseProgramView.swift */; };
 		5A1AE7DC247E82F20094F17B /* CapacityAndLeftPillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DB247E82F20094F17B /* CapacityAndLeftPillsView.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationVC.swift */; };
-		5A1AE7E2248254CF0094F17B /* CustomMedicationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7E1248254CF0094F17B /* CustomMedicationTextField.swift */; };
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
 		5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E42465D105008AF20B /* AppDelegate.swift */; };
@@ -69,7 +68,6 @@
 		5A1AE7D9247E80FF0094F17B /* DoseProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseProgramView.swift; sourceTree = "<group>"; };
 		5A1AE7DB247E82F20094F17B /* CapacityAndLeftPillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacityAndLeftPillsView.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationVC.swift; sourceTree = "<group>"; };
-		5A1AE7E1248254CF0094F17B /* CustomMedicationTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomMedicationTextField.swift; sourceTree = "<group>"; };
 		5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
 		5A4BA9E42465D105008AF20B /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = "PR-App/Supporting Files/AppDelegate.swift"; sourceTree = SOURCE_ROOT; };
@@ -151,13 +149,6 @@
 			path = TabBars;
 			sourceTree = "<group>";
 		};
-		5A1AE7E32482C62E0094F17B /* Picker */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Picker;
-			sourceTree = "<group>";
-		};
 		5A65A73D247C2AE7003003B2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -183,7 +174,6 @@
 			isa = PBXGroup;
 			children = (
 				AB217B312461D67E00742EB1 /* CustomInputField.swift */,
-				5A1AE7E1248254CF0094F17B /* CustomMedicationTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -199,7 +189,6 @@
 		5AE9EA7B246ACAB60090A1D2 /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
-				5A1AE7E32482C62E0094F17B /* Picker */,
 				5A1AE7DE247E8D4C0094F17B /* TabBars */,
 				5A1AE7DD247E8D220094F17B /* Cells */,
 				5A65A73D247C2AE7003003B2 /* Views */,
@@ -576,7 +565,6 @@
 				5A65A73F247C2B03003003B2 /* PillNameView.swift in Sources */,
 				5A65A741247C3A5C003003B2 /* PackageCapacityView.swift in Sources */,
 				5A1AE7DA247E80FF0094F17B /* DoseProgramView.swift in Sources */,
-				5A1AE7E2248254CF0094F17B /* CustomMedicationTextField.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
 				5A65A743247C3A88003003B2 /* PillDoseView.swift in Sources */,

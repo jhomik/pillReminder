@@ -25,6 +25,8 @@ class CustomCell: UICollectionViewCell {
     }
     
     private func configureButtonImage() {
+        imageCell.image = UIImage(systemName: "plus.circle.fill")
+
         addSubview(imageCell)
         imageCell.translatesAutoresizingMaskIntoConstraints = false
         
@@ -41,10 +43,11 @@ class CustomCell: UICollectionViewCell {
     }
     
     private func configureMedsTitle() {
+        
         newMedsTitle.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         newMedsTitle.textAlignment = .center
         newMedsTitle.numberOfLines = 0
-
+        
         newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
         addSubview(newMedsTitle)
         
@@ -64,7 +67,7 @@ class CustomCell: UICollectionViewCell {
         backgroundColor = .secondarySystemFill
         layer.backgroundColor = UIColor.white.cgColor
         layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2.0)
+        layer.shadowOffset = CGSize(width: 0, height: 2.0)//CGSizeMake(0, 2.0);
         layer.shadowRadius = 10.0
         layer.shadowOpacity = 1.0
         layer.masksToBounds = false
