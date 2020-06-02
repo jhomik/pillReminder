@@ -10,9 +10,8 @@ import UIKit
 
 class CustomCellHeader: UICollectionReusableView {
     
-    var imageLogo = UIImageView()
-    
     static let reuseID = "headerView"
+    private var imageLogo = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

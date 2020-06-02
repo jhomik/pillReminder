@@ -4,7 +4,7 @@
 //
 //  Created by Jakub Homik on 05/05/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
-//
+// test
 
 import UIKit
 import FirebaseAuth
@@ -28,7 +28,6 @@ class LoginScreenVC: UIViewController {
         super.viewWillAppear(animated)
         configureWelcomeView()
         performAnimations()
-        
     }
     
     override func viewDidLoad() {

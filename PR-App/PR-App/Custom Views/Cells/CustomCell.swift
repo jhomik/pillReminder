@@ -10,6 +10,8 @@ import UIKit
 
 class CustomCell: UICollectionViewCell {
     
+    static let reuseId = "cell"
+    
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
     

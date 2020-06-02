@@ -25,8 +25,6 @@ class PillNameView: UIView {
     private func configure() {
         addSubview(titleLabel)
         addSubview(inputLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        inputLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 12),

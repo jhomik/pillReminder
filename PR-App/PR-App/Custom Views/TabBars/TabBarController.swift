@@ -12,18 +12,17 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         viewControllers = [UserMedicationInfoNavigationController(), ReminderForMedicationNavigationController()]
     }
     
-    func UserMedicationInfoNavigationController() -> UINavigationController {
+    private func UserMedicationInfoNavigationController() -> UINavigationController {
         let navBar = UserMedicationInfoVC()
         navBar.tabBarItem = UITabBarItem(title: "Medicine", image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
         
         return UINavigationController(rootViewController: navBar)
     }
     
-    func ReminderForMedicationNavigationController() -> UINavigationController {
+    private func ReminderForMedicationNavigationController() -> UINavigationController {
         let navBar = ReminderForMedicationVC()
         navBar.tabBarItem = UITabBarItem(title: "Reminder", image: UIImage(systemName: "alarm.fill"), tag: 1)
         
