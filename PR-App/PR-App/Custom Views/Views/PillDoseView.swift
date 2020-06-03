@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PillDoseView: UIView {
+final class PillDoseView: UIView {
     
     private var titleLabel = CustomLabel(text: "Dose", alignment: .left, size: 10, weight: .bold, color: .systemGray2)
     private var inputLabel = CustomLabel(text: "50 mg", alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)

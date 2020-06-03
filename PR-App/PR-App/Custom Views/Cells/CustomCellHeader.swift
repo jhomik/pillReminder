@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomCellHeader: UICollectionReusableView {
+final class CustomCellHeader: UICollectionReusableView {
     
     static let reuseID = "headerView"
     private var imageLogo = UIImageView()

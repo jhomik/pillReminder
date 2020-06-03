@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ReminderForMedicationVC: UIViewController {
+final class ReminderForMedicationVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

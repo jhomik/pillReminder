@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserMedicationInfoVC: UIViewController {
+final class UserMedicationInfoVC: UIViewController {
     
     var collectionView: UICollectionView?
     

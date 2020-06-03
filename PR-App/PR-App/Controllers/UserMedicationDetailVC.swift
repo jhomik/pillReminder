@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserMedicationDetailVC: UIViewController {
+final class UserMedicationDetailVC: UIViewController {
     
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()

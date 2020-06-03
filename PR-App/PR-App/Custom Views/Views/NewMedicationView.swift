@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewMedicationView: UIView {
+final class NewMedicationView: UIView {
     
     private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
     private let nameTextField = CustomMedicationTextField(placeholderText: Constants.nameMedication)
@@ -26,8 +26,6 @@ class NewMedicationView: UIView {
     
     private func configure() {
         translatesAutoresizingMaskIntoConstraints = false
-        layer.borderColor = UIColor.label.cgColor
-        layer.borderWidth = 1
         
         self.addSubview(addMedicationLbl)
         self.addSubview(nameTextField)

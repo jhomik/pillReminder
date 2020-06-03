@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PackageCapacityView: UIView {
+final class PackageCapacityView: UIView {
     
     private var titleLabel = CustomLabel(text: "Capacity", alignment: .left, size: 10, weight: .bold, color: .systemGray2)
     private var inputLabel = CustomLabel(text: "60 pills", alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomMedicationTextField: UITextField {
+final class CustomMedicationTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)

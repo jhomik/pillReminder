@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserMedicationDetailView: UIView {
+final class UserMedicationDetailView: UIView {
     
     private let pillNameView = PillNameView()
     private let packageCapacityView = PackageCapacityView()

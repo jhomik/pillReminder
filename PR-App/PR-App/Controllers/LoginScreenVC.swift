@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 import Firebase
 
-class LoginScreenVC: UIViewController {
+final class LoginScreenVC: UIViewController {
     
     let welcomeView = UIView()
     let welcomeImage = UIImageView()

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProgramMedicationView: UIView {
+final class ProgramMedicationView: UIView {
     
     private var dataForPicker = Data()
     private let setupProgramLbl = CustomLabel(text: "Setup Program", alignment: .left, size: 24, weight: .bold, color: .label)
@@ -29,9 +29,6 @@ class ProgramMedicationView: UIView {
     }
     
     private func configureProgramMedicationView() {
-        layer.borderColor = UIColor.label.cgColor
-        layer.borderWidth = 1
-        
         self.addSubview(setupProgramLbl)
         translatesAutoresizingMaskIntoConstraints = false
         

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CapacityAndLeftPillsView: UIView {
+final class CapacityAndLeftPillsView: UIView {
     
     private var titleLabel = CustomLabel(text: "Capacity", alignment: .left, size: 24, weight: .bold, color: .label)
     private var inputLabel = CustomLabel(text: "50 pills left", alignment: .left, size: 12, weight: .medium, color: .systemGray2)

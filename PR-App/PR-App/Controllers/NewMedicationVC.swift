@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewMedicationVC: UIViewController {
+final class NewMedicationVC: UIViewController {
     
     private let newMedicationView = NewMedicationView()
     private let programMedicationView = ProgramMedicationView()
