@@ -4,84 +4,64 @@
 //
 //  Created by Jakub Homik on 05/05/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
-//
+// 
 
 import UIKit
 import FirebaseAuth
 import Firebase
 
-class LoginScreenVC: UIViewController {
+final class LoginScreenVC: UIViewController {
     
-    let welcomeView = UIView()
-    let welcomeImage = UIImageView()
-    var scrollView: UIScrollView!
-    var usernameInput = CustomInputField(placeholderText: "Email Address", isPassword: false)
-    var passwordInput = CustomInputField(placeholderText: "Password", isPassword: true)
-    var confirmInput = CustomInputField(placeholderText: "Confirm Password", isPassword: true)
-    var button: CustomButton!
-    var logoImage = UIImageView(image: Constants.logoImage)
-    var toggleLabel = UILabel()
-    var isSignUp = false
-    var segmentedController: UISegmentedControl!
+    private let welcomeView = WelcomeView()
+    private var scrollView = UIScrollView()
+    
+    private let usernameInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
+    private let passwordInput = CustomTextField(placeholderText: "Password", isPassword: true)
+    private let confirmInput = CustomTextField(placeholderText: "Confirm Password", isPassword: true)
+    private let button = CustomButton(text: "Log in")
+    
+    private let logoImage = UIImageView(image: Constants.logoImage)
+    private var isSignUp = false
+    private var segmentedController = UISegmentedControl()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureWelcomeView()
-        performAnimations()
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureButton()
         configureScrollView()
-        configure()
+        configureViewController()
         configureLogoImage()
         configureSegmentedView()
         configureUsernameInputField()
         configurePasswordInputField()
         configureConfirmInputField()
-        dismissKeyboard()
+        
     }
     
     private func configureWelcomeView() {
         view.addSubview(welcomeView)
-        welcomeView.frame = view.bounds
-        welcomeView.backgroundColor = .systemBackground
-        
-        welcomeView.addSubview(welcomeImage)
-        welcomeImage.translatesAutoresizingMaskIntoConstraints = false
-        welcomeImage.image = UIImage(named: "logo-PR")
         
         NSLayoutConstraint.activate([
-            welcomeImage.centerXAnchor.constraint(equalTo: welcomeView.centerXAnchor),
-            welcomeImage.centerYAnchor.constraint(equalTo: welcomeView.centerYAnchor),
-            welcomeImage.widthAnchor.constraint(equalToConstant: 200),
-            welcomeImage.heightAnchor.constraint(equalToConstant: 180)
+            welcomeView.topAnchor.constraint(equalTo: view.topAnchor),
+            welcomeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            welcomeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            welcomeView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
-    private func performAnimations() {
-        
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
-            self.welcomeImage.alpha = 0.0
-        }) { (finished) in
-            UIView.transition(with: self.welcomeView, duration: 2, options: .transitionCrossDissolve, animations: {
-                self.welcomeView.alpha = 0.0
-            }, completion: nil)
-        }
-    }
-    
-    private func configure() {
+    private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
         navigationController?.isNavigationBarHidden = true
     }
     
     private func configureScrollView() {
-        scrollView = UIScrollView()
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.isScrollEnabled = false
         view.addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -92,7 +72,6 @@ class LoginScreenVC: UIViewController {
     }
     
     private func configureSegmentedView() {
-        
         segmentedController = UISegmentedControl(items: ["Sign In", "Create Account"])
         segmentedController.apportionsSegmentWidthsByContent = false
         segmentedController.selectedSegmentTintColor = Constants.mainColor
@@ -112,9 +91,9 @@ class LoginScreenVC: UIViewController {
     @objc private func segmentedControllerChange(sender: UISegmentedControl) {
         isSignUp.toggle()
         confirmInput.isHidden = !self.isSignUp
-        usernameInput.text? = ""
-        passwordInput.text? = ""
-        confirmInput.text? = ""
+//        usernameInput.text? = ""
+//        passwordInput.text? = ""
+//        confirmInput.text? = ""
         isSignUp ? (self.passwordInput.placeholder = "Create Password") : (self.passwordInput.placeholder = "Password")
         isSignUp ? self.button.setTitle("Sign Up", for: .normal) : self.button.setTitle("Log In", for: .normal)
         
@@ -124,6 +103,7 @@ class LoginScreenVC: UIViewController {
         let horizontalConstant = UIScreen.main.bounds.width / 10
         let widthConstant = UIScreen.main.bounds.width * 0.8
         let heightConstant = widthConstant * 0.9239
+        
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoImage)
         
@@ -132,13 +112,13 @@ class LoginScreenVC: UIViewController {
             logoImage.widthAnchor.constraint(equalToConstant: widthConstant),
             logoImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: horizontalConstant),
             logoImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
-            
         ])
     }
-
+    
     private func configureUsernameInputField() {
         usernameInput.delegate = self
         scrollView.addSubview(usernameInput)
+        
         NSLayoutConstraint.activate([
             usernameInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             usernameInput.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 10),
@@ -160,9 +140,9 @@ class LoginScreenVC: UIViewController {
     
     private func configureButton() {
         
-        button = CustomButton(text: "Log In")
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(button)
+        
         let horizontalConstant  = UIScreen.main.bounds.width / 10
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalConstant),
@@ -200,7 +180,6 @@ class LoginScreenVC: UIViewController {
                         print("error popup here")
                     } else {
                         self.showAlert(message: "Check your email with activation link!") {
-
                         }
                         print("success")
                     }
@@ -227,10 +206,6 @@ class LoginScreenVC: UIViewController {
         confirmInput.isHidden = true
     }
     
-    private func dismissKeyboard() {
-        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        self.view.addGestureRecognizer(tap)
-    }
     
     private func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
         if passOne == passTwo {
@@ -241,7 +216,7 @@ class LoginScreenVC: UIViewController {
         }
     }
     
-    private func textFieldsShaker(inputFields: [CustomInputField]) {
+    private func textFieldsShaker(inputFields: [CustomTextField]) {
         for x in inputFields {
             if x.text!.isEmpty {
                 x.shake()
@@ -250,7 +225,7 @@ class LoginScreenVC: UIViewController {
     }
 }
 
-extension LoginScreenVC : UITextFieldDelegate {
+extension LoginScreenVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == usernameInput {
@@ -274,5 +249,7 @@ extension LoginScreenVC : UITextFieldDelegate {
     }
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        self.view.addGestureRecognizer(tap)
     }
 }

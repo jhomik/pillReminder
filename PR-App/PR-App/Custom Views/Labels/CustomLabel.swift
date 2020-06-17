@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CustomCellLabel: UILabel {
+final class CustomLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,16 +19,15 @@ class CustomCellLabel: UILabel {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(text: String) {
-        super.init(frame: .zero)
-        configure()
+    convenience init(text: String, alignment: NSTextAlignment, size: CGFloat, weight: UIFont.Weight, color: UIColor) {
+        self.init(frame: .zero)
+        self.textAlignment = alignment
         self.text = text
+        self.font = UIFont.systemFont(ofSize: size, weight: weight)
+        self.textColor = color
     }
     
     private func configure() {
         translatesAutoresizingMaskIntoConstraints   = false
-        textAlignment                               = .left
-        
     }
-
 }

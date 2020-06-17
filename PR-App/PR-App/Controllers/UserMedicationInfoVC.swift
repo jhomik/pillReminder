@@ -8,16 +8,20 @@
 
 import UIKit
 
-class UserMedicationInfoVC: UIViewController {
+final class UserMedicationInfoVC: UIViewController {
     
     var collectionView: UICollectionView?
-    var logoView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         configureViewController()
         collectionView?.backgroundColor = Constants.backgroundColor
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tabBarController?.tabBar.isHidden = false
     }
     
     private func configureViewController() {
@@ -43,8 +47,8 @@ class UserMedicationInfoVC: UIViewController {
         flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: 80)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: "cell")
-        collectionView?.register(CustomHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "headerView")
+        collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
+        collectionView?.register(CustomCellHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CustomCellHeader.reuseID)
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
@@ -63,15 +67,21 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CustomCell
-        cell.addButtonImage.setImage(UIImage(systemName: "plus.circle.fill"), for: .normal)
-        cell.addNewMedsTitle.text = "Add medication"
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
+        cell.imageCell.image = Constants.cellImage
+        cell.newMedsTitle.text = Constants.addMedication
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomHeader.reuseID, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomCellHeader.reuseID, for: indexPath)
         
         return header
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let destVC = UserMedicationDetailVC()
+        navigationController?.pushViewController(destVC, animated: true)
+    }
+
 }

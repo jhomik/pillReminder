@@ -8,11 +8,10 @@
 
 import UIKit
 
-class CustomHeader: UICollectionReusableView {
-    
-    var imageLogo = UIImageView()
+final class CustomCellHeader: UICollectionReusableView {
     
     static let reuseID = "headerView"
+    private var imageLogo = UIImageView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,7 +21,6 @@ class CustomHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     private func configure() {
         imageLogo.image = UIImage(named: "title-logo")

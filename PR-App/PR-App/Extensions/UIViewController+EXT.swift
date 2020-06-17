@@ -18,5 +18,4 @@ extension UIViewController {
             alert.dismiss(animated: true, completion: completion)
         }
     }
-    
 }
