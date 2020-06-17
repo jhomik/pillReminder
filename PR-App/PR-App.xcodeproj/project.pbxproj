@@ -8,9 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		11A9607985818A40F1ED106B /* Pods_PR_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 25C985CC19C807DB6F119DB1 /* Pods_PR_App.framework */; };
-		5A1AE7D8247E7D510094F17B /* DosageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7D7247E7D510094F17B /* DosageView.swift */; };
-		5A1AE7DA247E80FF0094F17B /* DoseProgramView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7D9247E80FF0094F17B /* DoseProgramView.swift */; };
-		5A1AE7DC247E82F20094F17B /* CapacityAndLeftPillsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DB247E82F20094F17B /* CapacityAndLeftPillsView.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationVC.swift */; };
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
 		5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A4BA9E32465D105008AF20B /* SceneDelegate.swift */; };
@@ -18,17 +15,16 @@
 		5A582B8D2473FEFC00247D19 /* UIViewController+EXT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */; };
 		5A582B9A2474583700247D19 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B902474583600247D19 /* CustomLabel.swift */; };
 		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
-		5A65A73F247C2B03003003B2 /* PillNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A65A73E247C2B03003003B2 /* PillNameView.swift */; };
-		5A65A741247C3A5C003003B2 /* PackageCapacityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A65A740247C3A5C003003B2 /* PackageCapacityView.swift */; };
-		5A65A743247C3A88003003B2 /* PillDoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A65A742247C3A88003003B2 /* PillDoseView.swift */; };
 		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		5A893FD0249A2C5D008F69A5 /* CustomInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A893FCF249A2C5D008F69A5 /* CustomInformationView.swift */; };
 		5AA9D0A32477F80D007D85DA /* UserMedicationDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */; };
-		5AB59DE82487016200E78BD9 /* CustomMedicationTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE72487016200E78BD9 /* CustomMedicationTextField.swift */; };
-		5AB59DEA248701C400E78BD9 /* CustomInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE9248701C400E78BD9 /* CustomInputField.swift */; };
+		5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE9248701C400E78BD9 /* CustomTextField.swift */; };
+		5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */; };
 		5AD3E496246D9EC700882154 /* CustomCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomCellHeader.swift */; };
 		5AD3E498246DB20500882154 /* CustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E497246DB20500882154 /* CustomCell.swift */; };
+		5ADB92DA248E4FF80097F9E1 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */; };
 		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
-		5ADFC2C1248402FF008E9282 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C0248402FF008E9282 /* Data.swift */; };
+		5ADFC2C1248402FF008E9282 /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C0248402FF008E9282 /* ServiceManager.swift */; };
 		5ADFC2C324854870008E9282 /* NewMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C224854870008E9282 /* NewMedicationView.swift */; };
 		5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */; };
 		5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */; };
@@ -70,9 +66,6 @@
 		2CFA8C5FA8F8A684F0F92FBE /* Pods-PR-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-PR-AppTests/Pods-PR-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3D3A7F9A2F7401B836A70A3A /* Pods-PR-App-PR-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App-PR-AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		4EA5CF23897EDAEE8C7E78DB /* Pods-PR-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App.release.xcconfig"; path = "Target Support Files/Pods-PR-App/Pods-PR-App.release.xcconfig"; sourceTree = "<group>"; };
-		5A1AE7D7247E7D510094F17B /* DosageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DosageView.swift; sourceTree = "<group>"; };
-		5A1AE7D9247E80FF0094F17B /* DoseProgramView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseProgramView.swift; sourceTree = "<group>"; };
-		5A1AE7DB247E82F20094F17B /* CapacityAndLeftPillsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CapacityAndLeftPillsView.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationVC.swift; sourceTree = "<group>"; };
 		5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		5A4BA9E32465D105008AF20B /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "PR-App/Supporting Files/SceneDelegate.swift"; sourceTree = SOURCE_ROOT; };
@@ -81,16 +74,15 @@
 		5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EXT.swift"; sourceTree = "<group>"; };
 		5A582B902474583600247D19 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
-		5A65A73E247C2B03003003B2 /* PillNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillNameView.swift; sourceTree = "<group>"; };
-		5A65A740247C3A5C003003B2 /* PackageCapacityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackageCapacityView.swift; sourceTree = "<group>"; };
-		5A65A742247C3A88003003B2 /* PillDoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillDoseView.swift; sourceTree = "<group>"; };
+		5A893FCF249A2C5D008F69A5 /* CustomInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInformationView.swift; sourceTree = "<group>"; };
 		5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailVC.swift; sourceTree = "<group>"; };
-		5AB59DE72487016200E78BD9 /* CustomMedicationTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomMedicationTextField.swift; sourceTree = "<group>"; };
-		5AB59DE9248701C400E78BD9 /* CustomInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomInputField.swift; sourceTree = "<group>"; };
+		5AB59DE9248701C400E78BD9 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgramTextField.swift; sourceTree = "<group>"; };
 		5AD3E495246D9EC700882154 /* CustomCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellHeader.swift; sourceTree = "<group>"; };
 		5AD3E497246DB20500882154 /* CustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCell.swift; sourceTree = "<group>"; };
+		5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
-		5ADFC2C0248402FF008E9282 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		5ADFC2C0248402FF008E9282 /* ServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		5ADFC2C224854870008E9282 /* NewMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationView.swift; sourceTree = "<group>"; };
 		5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramMedicationView.swift; sourceTree = "<group>"; };
 		5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailView.swift; sourceTree = "<group>"; };
@@ -164,16 +156,12 @@
 		5A65A73D247C2AE7003003B2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5A65A73E247C2B03003003B2 /* PillNameView.swift */,
-				5A65A740247C3A5C003003B2 /* PackageCapacityView.swift */,
-				5A65A742247C3A88003003B2 /* PillDoseView.swift */,
-				5A1AE7D7247E7D510094F17B /* DosageView.swift */,
-				5A1AE7D9247E80FF0094F17B /* DoseProgramView.swift */,
-				5A1AE7DB247E82F20094F17B /* CapacityAndLeftPillsView.swift */,
+				5A893FCF249A2C5D008F69A5 /* CustomInformationView.swift */,
 				5ADFC2C224854870008E9282 /* NewMedicationView.swift */,
 				5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */,
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
 				5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */,
+				5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -189,8 +177,8 @@
 		5AA9D0A524780764007D85DA /* TextFields */ = {
 			isa = PBXGroup;
 			children = (
-				5AB59DE72487016200E78BD9 /* CustomMedicationTextField.swift */,
-				5AB59DE9248701C400E78BD9 /* CustomInputField.swift */,
+				5AB59DE9248701C400E78BD9 /* CustomTextField.swift */,
+				5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -206,7 +194,7 @@
 		5ADFC2BC2483FBE7008E9282 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5ADFC2C0248402FF008E9282 /* Data.swift */,
+				5ADFC2C0248402FF008E9282 /* ServiceManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -587,29 +575,25 @@
 				5A6A118B2473D1FF006E4B2F /* (null) in Sources */,
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
+				5ADB92DA248E4FF80097F9E1 /* WelcomeView.swift in Sources */,
 				5A582BA42474596700247D19 /* TabBarController.swift in Sources */,
 				5ADFC2C324854870008E9282 /* NewMedicationView.swift in Sources */,
-				5A65A73F247C2B03003003B2 /* PillNameView.swift in Sources */,
 				5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */,
-				5ADFC2C1248402FF008E9282 /* Data.swift in Sources */,
-				5A65A741247C3A5C003003B2 /* PackageCapacityView.swift in Sources */,
+				5ADFC2C1248402FF008E9282 /* ServiceManager.swift in Sources */,
 				5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */,
-				5A1AE7DA247E80FF0094F17B /* DoseProgramView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
+				5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */,
 				5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */,
-				5A65A743247C3A88003003B2 /* PillDoseView.swift in Sources */,
+				5A893FD0249A2C5D008F69A5 /* CustomInformationView.swift in Sources */,
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
-				5AB59DEA248701C400E78BD9 /* CustomInputField.swift in Sources */,
+				5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */,
 				5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */,
-				5AB59DE82487016200E78BD9 /* CustomMedicationTextField.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
 				5A582B8D2473FEFC00247D19 /* UIViewController+EXT.swift in Sources */,
 				5A1AE7E0247EAB510094F17B /* NewMedicationVC.swift in Sources */,
 				AB217B342461FD3100742EB1 /* CustomButton.swift in Sources */,
-				5A1AE7D8247E7D510094F17B /* DosageView.swift in Sources */,
 				5AD3E498246DB20500882154 /* CustomCell.swift in Sources */,
-				5A1AE7DC247E82F20094F17B /* CapacityAndLeftPillsView.swift in Sources */,
 				5A582B9A2474583700247D19 /* CustomLabel.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
 			);

@@ -1,25 +1,30 @@
 //
-//  DoseProgramView.swift
+//  CustomInformationView.swift
 //  PR-App
 //
-//  Created by Jakub Homik on 27/05/2020.
+//  Created by Jakub Homik on 17/06/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-final class DoseProgramView: UIView {
+final class CustomInformationView: UIView {
     
-    private var titleLabel = CustomLabel(text: "Program", alignment: .left, size: 24, weight: .bold, color: .label)
-    private var inputLabel = CustomLabel(text: "Everyday", alignment: .left, size: 12, weight: .medium, color: .systemGray2)
+    private var title: String = ""
+    private var input: String = ""
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private lazy var titleLabel: CustomLabel = {
+        return CustomLabel(text: self.title, alignment: .left, size: 10, weight: .bold, color: .systemGray2)
+    }()
+    private lazy var inputLabel: CustomLabel = {
+        return CustomLabel(text: self.input, alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)
+    }()
+    
+    convenience init(title: String, input: String) {
+        self.init(frame: .zero)
+        self.title = title
+        self.input = input
         configure()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     private func configure() {
@@ -32,12 +37,12 @@ final class DoseProgramView: UIView {
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: inputLabel.topAnchor, constant: -6),
+            titleLabel.bottomAnchor.constraint(equalTo: inputLabel.topAnchor),
             
             inputLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
             inputLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             inputLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            inputLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            inputLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12),
         ])
     }
 }

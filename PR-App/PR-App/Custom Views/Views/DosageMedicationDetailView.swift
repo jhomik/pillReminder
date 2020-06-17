@@ -10,9 +10,9 @@ import UIKit
 
 final class DosageMedicationDetailView: UIView {
     
-    private let dosageView = DosageView()
-    private let doseProgramView = DoseProgramView()
-    private let capacityPillsLeft = CapacityAndLeftPillsView()
+    private let dosageView = CustomInformationView(title: "Dose", input: "2 times a days | Morning, Evening")
+    private let doseProgramView = CustomInformationView(title: "Program", input: "Everyday")
+    private let capacityPillsLeft = CustomInformationView(title: "Capacity", input: "50 pills left")
     
     private let dosageMedicationStackView = UIStackView()
     

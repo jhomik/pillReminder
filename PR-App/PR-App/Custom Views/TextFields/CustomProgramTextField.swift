@@ -1,14 +1,14 @@
 //
-//  CustomMedicationTextField.swift
+//  CustomProgramTextField.swift
 //  PR-App
 //
-//  Created by Jakub Homik on 30/05/2020.
+//  Created by Jakub Homik on 03/06/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-final class CustomMedicationTextField: UITextField {
+final class CustomProgramTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -21,16 +21,16 @@ final class CustomMedicationTextField: UITextField {
     
     convenience init(placeholderText: String) {
         self.init(frame: .zero)
-        placeholder = placeholderText
+        self.placeholder = placeholderText
     }
     
     private func configure() {
-        font = UIFont.italicSystemFont(ofSize: 16)
+        self.font = UIFont.italicSystemFont(ofSize: 16)
         self.layer.backgroundColor = Constants.backgroundColor.cgColor
-        self.layer.shadowOffset  = CGSize(width: 0.0, height: 0.2)
-        self.layer.shadowOpacity  = 0.5
-        self.layer.shadowRadius  = 0.0
-        self.layer.shadowColor   = UIColor.label.cgColor
+        self.layer.borderWidth = 1
+        self.textAlignment = .center
+        self.layer.cornerRadius = 10
         translatesAutoresizingMaskIntoConstraints = false
+        autocapitalizationType = .none
     }
 }

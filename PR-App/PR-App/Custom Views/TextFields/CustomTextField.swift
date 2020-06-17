@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomInputField: UITextField {
+final class CustomTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -34,5 +34,6 @@ final class CustomInputField: UITextField {
         self.layer.shadowRadius  = 0.0
         self.layer.shadowColor   = UIColor.label.cgColor
         translatesAutoresizingMaskIntoConstraints = false
+        autocapitalizationType = .none
     }
 }

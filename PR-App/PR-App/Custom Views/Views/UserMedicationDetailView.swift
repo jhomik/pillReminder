@@ -10,9 +10,9 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    private let pillNameView = PillNameView()
-    private let packageCapacityView = PackageCapacityView()
-    private let pillDoseView = PillDoseView()
+    private let pillNameView = CustomInformationView(title: "Pill name", input: "Metocard")
+    private let packageCapacityView = CustomInformationView(title: "Capacity", input: "60 pills")
+    private let pillDoseView = CustomInformationView(title: "Dose", input: "50 mg")
     
     private var medicationButtonCamera = UIButton()
     private let medicationStackView = UIStackView()

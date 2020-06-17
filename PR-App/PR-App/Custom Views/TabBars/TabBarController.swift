@@ -16,16 +16,16 @@ final class TabBarController: UITabBarController {
     }
     
     private func UserMedicationInfoNavigationController() -> UINavigationController {
-        let navBar = UserMedicationInfoVC()
-        navBar.tabBarItem = UITabBarItem(title: "Medicine", image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
+        let userMedicationInfoVC = UserMedicationInfoVC()
+        userMedicationInfoVC.tabBarItem = UITabBarItem(title: "Medicine", image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
         
-        return UINavigationController(rootViewController: navBar)
+        return UINavigationController(rootViewController: userMedicationInfoVC)
     }
     
     private func ReminderForMedicationNavigationController() -> UINavigationController {
-        let navBar = ReminderForMedicationVC()
-        navBar.tabBarItem = UITabBarItem(title: "Reminder", image: UIImage(systemName: "alarm.fill"), tag: 1)
+        let reminderForMedication = ReminderForMedicationVC()
+        reminderForMedication.tabBarItem = UITabBarItem(title: "Reminder", image: UIImage(systemName: "alarm.fill"), tag: 1)
         
-        return UINavigationController(rootViewController: navBar)
+        return UINavigationController(rootViewController: reminderForMedication)
     }
 }

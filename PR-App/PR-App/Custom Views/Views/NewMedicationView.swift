@@ -11,9 +11,9 @@ import UIKit
 final class NewMedicationView: UIView {
     
     private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
-    private let nameTextField = CustomMedicationTextField(placeholderText: Constants.nameMedication)
-    private let capacityTextField = CustomMedicationTextField(placeholderText: Constants.packageMedication)
-    private let doseTextField = CustomMedicationTextField(placeholderText: Constants.doseMedication)
+    private let nameTextField = CustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
+    private let capacityTextField = CustomTextField(placeholderText: Constants.packageMedication, isPassword: false)
+    private let doseTextField = CustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -37,7 +37,7 @@ final class NewMedicationView: UIView {
             addMedicationLbl.topAnchor.constraint(equalTo: self.topAnchor),
             addMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             addMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            addMedicationLbl.heightAnchor.constraint(equalToConstant: 40),
+            addMedicationLbl.heightAnchor.constraint(equalToConstant: 20),
             
             nameTextField.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
             nameTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),

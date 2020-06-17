@@ -10,18 +10,25 @@ import UIKit
 
 final class ProgramMedicationView: UIView {
     
-    private var dataForPicker = Data()
+    private var dataForPicker = ServiceManager()
     private let setupProgramLbl = CustomLabel(text: "Setup Program", alignment: .left, size: 24, weight: .bold, color: .label)
+    private let infoProgramLbl = CustomLabel(text: "Choose program...", alignment: .left, size: 14, weight: .medium, color: .systemGray)
+    private let infoDayDosageLbl = CustomLabel(text: "and day dosage!", alignment: .left, size: 14, weight: .medium, color: .systemGray)
+    private let programTextField = CustomProgramTextField(placeholderText: "Which days?")
     
     private let morningPickerView = UIPickerView()
     private let noonPickerView = UIPickerView()
     private let eveningPickerView = UIPickerView()
+    private let programPickerView = UIPickerView()
+    
     private let pickerStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureProgramMedicationView()
+        configureProgramTextField()
         configurePickerStackView()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -30,13 +37,30 @@ final class ProgramMedicationView: UIView {
     
     private func configureProgramMedicationView() {
         self.addSubview(setupProgramLbl)
+        self.addSubview(infoProgramLbl)
         translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            setupProgramLbl.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            setupProgramLbl.topAnchor.constraint(equalTo: self.topAnchor, constant: 18),
             setupProgramLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             setupProgramLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             setupProgramLbl.heightAnchor.constraint(equalToConstant: 40),
+            
+            infoProgramLbl.topAnchor.constraint(equalTo: setupProgramLbl.bottomAnchor, constant: 10),
+            infoProgramLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            infoProgramLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            infoProgramLbl.heightAnchor.constraint(equalToConstant: 16),
+        ])
+    }
+    
+    private func configureProgramTextField() {
+        self.addSubview(programTextField)
+        
+        NSLayoutConstraint.activate([
+            programTextField.topAnchor.constraint(equalTo: infoProgramLbl.bottomAnchor, constant: 30),
+            programTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            programTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            programTextField.heightAnchor.constraint(equalToConstant: 26),
         ])
     }
     
@@ -59,10 +83,10 @@ final class ProgramMedicationView: UIView {
         pickerStackView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pickerStackView.topAnchor.constraint(equalTo: setupProgramLbl.bottomAnchor),
+            pickerStackView.topAnchor.constraint(equalTo: infoProgramLbl.bottomAnchor),
             pickerStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             pickerStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            pickerStackView.heightAnchor.constraint(equalToConstant: 200),
+            pickerStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 20),
             
             morningPickerView.heightAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
             morningPickerView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.3),
