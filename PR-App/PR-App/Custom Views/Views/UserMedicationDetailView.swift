@@ -10,9 +10,39 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    private let pillNameView = CustomInformationView(title: "Pill name", input: "Metocard")
-    private let packageCapacityView = CustomInformationView(title: "Capacity", input: "60 pills")
-    private let pillDoseView = CustomInformationView(title: "Dose", input: "50 mg")
+    private lazy var pillNameView = CustomInformationView(
+        title: NSAttributedString(string: "Pill name",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "Metocard",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var packageCapacityView = CustomInformationView(
+        title: NSAttributedString(string: "Capacity",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "60 pills",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var pillDoseView = CustomInformationView(
+        title: NSAttributedString(string: "Dose",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "50 mg",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var titleAttributes: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 10,
+                                         weight: .bold),
+                .foregroundColor: UIColor.systemGray2]
+    }()
+    
+    private lazy var inputAttributes: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 24,
+                                         weight: .medium),
+                .foregroundColor: Constants.mainColor]
+    }()
+    
+//    private let pillNameView = CustomInformationView(title: "Pill name", input: "Metocard")
+//    private let packageCapacityView = CustomInformationView(title: "Capacity", input: "60 pills")
+//    private let pillDoseView = CustomInformationView(title: "Dose", input: "50 mg")
     
     private var medicationButtonCamera = UIButton()
     private let medicationStackView = UIStackView()

@@ -10,9 +10,34 @@ import UIKit
 
 final class DosageMedicationDetailView: UIView {
     
-    private let dosageView = CustomInformationView(title: "Dose", input: "2 times a days | Morning, Evening")
-    private let doseProgramView = CustomInformationView(title: "Program", input: "Everyday")
-    private let capacityPillsLeft = CustomInformationView(title: "Capacity", input: "50 pills left")
+    private lazy var dosageView = CustomInformationView(
+        title: NSAttributedString(string: "Dose",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "2 times a days | Morning, Evening",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var doseProgramView = CustomInformationView(
+        title: NSAttributedString(string: "Program",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "Everyday",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var capacityPillsLeft = CustomInformationView(
+        title: NSAttributedString(string: "Capacity",
+                                  attributes: self.titleAttributes),
+        input: NSAttributedString(string: "50 pills left",
+                                  attributes: self.inputAttributes))
+    
+    private lazy var titleAttributes: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 24,
+                                         weight: .bold),
+                .foregroundColor: UIColor.label]
+    }()
+    
+    private lazy var inputAttributes: [NSAttributedString.Key: Any] = {
+        return [.font: UIFont.systemFont(ofSize: 10),
+                .foregroundColor: UIColor.secondaryLabel]
+    }()
     
     private let dosageMedicationStackView = UIStackView()
     

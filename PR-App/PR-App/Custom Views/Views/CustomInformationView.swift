@@ -10,17 +10,33 @@ import UIKit
 
 final class CustomInformationView: UIView {
     
-    private var title: String = ""
-    private var input: String = ""
+    private var title: NSAttributedString = NSAttributedString(string: "",
+                                                               attributes: [.font: UIFont.systemFont(ofSize: 10,
+                                                                                                     weight: .bold),
+                                                                            .foregroundColor: UIColor.systemGray2])
+    private var input: NSAttributedString = NSAttributedString(string: "",
+                                                               attributes: [.font: UIFont.systemFont(ofSize: 24,
+                                                                                                     weight: .medium),
+                                                                            .foregroundColor: Constants.mainColor])
     
     private lazy var titleLabel: CustomLabel = {
-        return CustomLabel(text: self.title, alignment: .left, size: 10, weight: .bold, color: .systemGray2)
+        return CustomLabel(text: self.title, alignment: .left)
     }()
     private lazy var inputLabel: CustomLabel = {
-        return CustomLabel(text: self.input, alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)
+        return CustomLabel(text: self.input, alignment: .left)
     }()
     
-    convenience init(title: String, input: String) {
+//    private var title: String = ""
+//    private var input: String = ""
+    
+//    private lazy var titleLabel: CustomLabel = {
+//        return CustomLabel(text: self.title, alignment: .left, size: 10, weight: .bold, color: .systemGray2)
+//    }()
+//    private lazy var inputLabel: CustomLabel = {
+//        return CustomLabel(text: self.input, alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)
+//    }()
+    
+    convenience init(title: NSAttributedString, input: NSAttributedString) {
         self.init(frame: .zero)
         self.title = title
         self.input = input
@@ -45,4 +61,5 @@ final class CustomInformationView: UIView {
             inputLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -12),
         ])
     }
+    
 }

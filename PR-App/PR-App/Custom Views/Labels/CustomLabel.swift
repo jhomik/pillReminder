@@ -27,6 +27,12 @@ final class CustomLabel: UILabel {
         self.textColor = color
     }
     
+    convenience init(text: NSAttributedString, alignment: NSTextAlignment) {
+        self.init(frame: .zero)
+        self.attributedText = text
+        self.textAlignment = alignment
+    }
+    
     private func configure() {
         translatesAutoresizingMaskIntoConstraints   = false
     }
