@@ -9,7 +9,7 @@
 import UIKit
 
 final class UserMedicationInfoVC: UIViewController {
-    
+    var coordinator: UserMedicationInfoCoordinator?
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
@@ -22,6 +22,11 @@ final class UserMedicationInfoVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        coordinator?.didFinishUserMedication()
     }
     
     private func configureViewController() {
@@ -80,8 +85,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let destVC = UserMedicationDetailVC()
-        navigationController?.pushViewController(destVC, animated: true)
+//        coordinator?.userMedicationDetail()
+        print("test button")
     }
-
 }

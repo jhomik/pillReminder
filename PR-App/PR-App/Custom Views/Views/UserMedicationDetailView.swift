@@ -29,20 +29,12 @@ final class UserMedicationDetailView: UIView {
                                   attributes: self.inputAttributes))
     
     private lazy var titleAttributes: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 10,
-                                         weight: .bold),
-                .foregroundColor: UIColor.systemGray2]
+        return [.font: UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.systemGray2]
     }()
     
     private lazy var inputAttributes: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 24,
-                                         weight: .medium),
-                .foregroundColor: Constants.mainColor]
+        return [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: Constants.mainColor]
     }()
-    
-//    private let pillNameView = CustomInformationView(title: "Pill name", input: "Metocard")
-//    private let packageCapacityView = CustomInformationView(title: "Capacity", input: "60 pills")
-//    private let pillDoseView = CustomInformationView(title: "Dose", input: "50 mg")
     
     private var medicationButtonCamera = UIButton()
     private let medicationStackView = UIStackView()

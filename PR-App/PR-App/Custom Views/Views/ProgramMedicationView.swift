@@ -10,7 +10,7 @@ import UIKit
 
 final class ProgramMedicationView: UIView {
     
-    private var dataForPicker = ServiceManager()
+    private var dataForPicker = PillModel()
     private let setupProgramLbl = CustomLabel(text: "Setup Program", alignment: .left, size: 24, weight: .bold, color: .label)
     private let infoProgramLbl = CustomLabel(text: "Choose program...", alignment: .left, size: 14, weight: .medium, color: .systemGray)
     private let infoDayDosageLbl = CustomLabel(text: "and day dosage!", alignment: .left, size: 14, weight: .medium, color: .systemGray)

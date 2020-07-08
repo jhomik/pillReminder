@@ -10,6 +10,8 @@ import UIKit
 
 final class UserMedicationDetailVC: UIViewController {
     
+    var coordinator: UserMedicationDetailCoordinator?
+    
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = CustomButton(text: "Change settings")
@@ -25,6 +27,11 @@ final class UserMedicationDetailVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        coordinator?.didFinishUserMedicationDetail()
     }
     
     private func configureViewController() {

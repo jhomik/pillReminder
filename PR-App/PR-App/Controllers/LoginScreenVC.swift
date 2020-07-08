@@ -15,9 +15,13 @@ final class LoginScreenVC: UIViewController {
     private let welcomeView = WelcomeView()
     private var scrollView = UIScrollView()
     
-    private let usernameInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
+    weak var coordinator: MainCoordinator?
+    var viewModel = PillViewModel()
+    
+    private let emailInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
     private let passwordInput = CustomTextField(placeholderText: "Password", isPassword: true)
     private let confirmInput = CustomTextField(placeholderText: "Confirm Password", isPassword: true)
+    private let userNameInput = CustomTextField(placeholderText: "Provide your name", isPassword: false)
     private let button = CustomButton(text: "Log in")
     
     private let logoImage = UIImageView(image: Constants.logoImage)
@@ -36,7 +40,7 @@ final class LoginScreenVC: UIViewController {
         configureViewController()
         configureLogoImage()
         configureSegmentedView()
-        configureUsernameInputField()
+        configureEmailInputField()
         configurePasswordInputField()
         configureConfirmInputField()
         
@@ -62,6 +66,7 @@ final class LoginScreenVC: UIViewController {
         scrollView.isScrollEnabled = false
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.layer.borderWidth = 2
         
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -91,9 +96,9 @@ final class LoginScreenVC: UIViewController {
     @objc private func segmentedControllerChange(sender: UISegmentedControl) {
         isSignUp.toggle()
         confirmInput.isHidden = !self.isSignUp
-//        usernameInput.text? = ""
-//        passwordInput.text? = ""
-//        confirmInput.text? = ""
+        //        usernameInput.text? = ""
+        //        passwordInput.text? = ""
+        //        confirmInput.text? = ""
         isSignUp ? (self.passwordInput.placeholder = "Create Password") : (self.passwordInput.placeholder = "Password")
         isSignUp ? self.button.setTitle("Sign Up", for: .normal) : self.button.setTitle("Log In", for: .normal)
         
@@ -115,15 +120,15 @@ final class LoginScreenVC: UIViewController {
         ])
     }
     
-    private func configureUsernameInputField() {
-        usernameInput.delegate = self
-        scrollView.addSubview(usernameInput)
+    private func configureEmailInputField() {
+        emailInput.delegate = self
+        scrollView.addSubview(emailInput)
         
         NSLayoutConstraint.activate([
-            usernameInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            usernameInput.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 10),
-            usernameInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            usernameInput.heightAnchor.constraint(equalToConstant: 50)
+            emailInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
+            emailInput.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 10),
+            emailInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
+            emailInput.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -132,7 +137,7 @@ final class LoginScreenVC: UIViewController {
         scrollView.addSubview(passwordInput)
         NSLayoutConstraint.activate([
             passwordInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            passwordInput.topAnchor.constraint(equalTo: usernameInput.bottomAnchor, constant: 20),
+            passwordInput.topAnchor.constraint(equalTo: emailInput.bottomAnchor, constant: 10),
             passwordInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
             passwordInput.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -153,43 +158,58 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        guard let email = usernameInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
+        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
             print("Form is not valid")
             return
         }
         
         if !isSignUp && !email.isEmpty && !password.isEmpty {
-            Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
-                
-                if let error = error {
-                    print(error.localizedDescription)
-                } else {
-                    self.showAlert(message: "Logged In!") {
-                        self.navigationController?.pushViewController(TabBarController(), animated: true)
-                    }
-                    print("success!")
-                }
-            }
-            
+            signInUser()
         } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty {
+            createUser()
+        } else {
+            isSignUp ? viewModel.textFieldsShaker(inputFields: [emailInput, passwordInput, confirmInput]) : viewModel.textFieldsShaker(inputFields: [emailInput, passwordInput])
+        }
+    }
+    
+    private func signInUser() {
+        guard let email = emailInput.text, let password = passwordInput.text else {
+            print("Form is not valid")
+            return
+        }
+        
+        Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
             
-            if newPasswordCheck(passOne: password, passTwo: confirmPassword) {
-                Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                    
-                    if error != nil {
-                        print("error popup here")
-                    } else {
-                        self.showAlert(message: "Check your email with activation link!") {
-                        }
-                        print("success")
-                    }
-                }
-                
+            if let error = error {
+                print(error.localizedDescription)
             } else {
-                print("passwords don't match")
+                self.showAlert(message: "Logged In!") {
+                    self.coordinator?.userMedicationInfo()
+                }
+                print("success!")
+            }
+        }
+    }
+    
+    private func createUser() {
+        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
+            print("Form is not valid")
+            return
+        }
+        
+        if viewModel.newPasswordCheck(passOne: password, passTwo: confirmPassword) {
+            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
+                
+                if error != nil {
+                    print("error popup here")
+                } else {
+                    self.showAlert(message: "Check your email with activation link!") {
+                    }
+                    print("success")
+                }
             }
         } else {
-            isSignUp ? textFieldsShaker(inputFields: [usernameInput, passwordInput, confirmInput]) : textFieldsShaker(inputFields: [usernameInput, passwordInput])
+            print("passwords don't match")
         }
     }
     
@@ -199,7 +219,7 @@ final class LoginScreenVC: UIViewController {
         
         NSLayoutConstraint.activate([
             confirmInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            confirmInput.topAnchor.constraint(equalTo: passwordInput.bottomAnchor, constant: 20),
+            confirmInput.topAnchor.constraint(equalTo: passwordInput.bottomAnchor, constant: 10),
             confirmInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
             confirmInput.heightAnchor.constraint(equalToConstant: 50)
         ])
@@ -207,28 +227,12 @@ final class LoginScreenVC: UIViewController {
     }
     
     
-    private func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
-        if passOne == passTwo {
-            //any other password verification here
-            return true
-        } else {
-            return false
-        }
-    }
-    
-    private func textFieldsShaker(inputFields: [CustomTextField]) {
-        for x in inputFields {
-            if x.text!.isEmpty {
-                x.shake()
-            }
-        }
-    }
 }
 
 extension LoginScreenVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == usernameInput {
+        if textField == emailInput {
             passwordInput.becomeFirstResponder()
         } else if textField == passwordInput {
             if isSignUp {
@@ -247,9 +251,11 @@ extension LoginScreenVC: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
     }
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         self.view.addGestureRecognizer(tap)
     }
 }
+

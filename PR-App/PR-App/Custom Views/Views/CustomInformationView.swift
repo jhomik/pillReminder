@@ -10,14 +10,9 @@ import UIKit
 
 final class CustomInformationView: UIView {
     
-    private var title: NSAttributedString = NSAttributedString(string: "",
-                                                               attributes: [.font: UIFont.systemFont(ofSize: 10,
-                                                                                                     weight: .bold),
-                                                                            .foregroundColor: UIColor.systemGray2])
-    private var input: NSAttributedString = NSAttributedString(string: "",
-                                                               attributes: [.font: UIFont.systemFont(ofSize: 24,
-                                                                                                     weight: .medium),
-                                                                            .foregroundColor: Constants.mainColor])
+    private var title: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.systemGray2])
+    
+    private var input: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: Constants.mainColor])
     
     private lazy var titleLabel: CustomLabel = {
         return CustomLabel(text: self.title, alignment: .left)
