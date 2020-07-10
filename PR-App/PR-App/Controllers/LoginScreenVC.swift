@@ -12,11 +12,11 @@ import Firebase
 
 final class LoginScreenVC: UIViewController {
     
+    weak var coordinator: MainCoordinator?
+    var viewModel = LoginScreenViewModel()
+    
     private let welcomeView = WelcomeView()
     private var scrollView = UIScrollView()
-    
-    weak var coordinator: MainCoordinator?
-    var viewModel = PillViewModel()
     
     private let emailInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
     private let passwordInput = CustomTextField(placeholderText: "Password", isPassword: true)
@@ -66,7 +66,6 @@ final class LoginScreenVC: UIViewController {
         scrollView.isScrollEnabled = false
         view.addSubview(scrollView)
         scrollView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.layer.borderWidth = 2
         
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
@@ -158,59 +157,7 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        if !isSignUp && !email.isEmpty && !password.isEmpty {
-            signInUser()
-        } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty {
-            createUser()
-        } else {
-            isSignUp ? viewModel.textFieldsShaker(inputFields: [emailInput, passwordInput, confirmInput]) : viewModel.textFieldsShaker(inputFields: [emailInput, passwordInput])
-        }
-    }
-    
-    private func signInUser() {
-        guard let email = emailInput.text, let password = passwordInput.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
-            
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                self.showAlert(message: "Logged In!") {
-                    self.coordinator?.userMedicationInfo()
-                }
-                print("success!")
-            }
-        }
-    }
-    
-    private func createUser() {
-        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = passwordInput.text else {
-            print("Form is not valid")
-            return
-        }
-        
-        if viewModel.newPasswordCheck(passOne: password, passTwo: confirmPassword) {
-            Auth.auth().createUser(withEmail: email, password: password) { (result, error) in
-                
-                if error != nil {
-                    print("error popup here")
-                } else {
-                    self.showAlert(message: "Check your email with activation link!") {
-                    }
-                    print("success")
-                }
-            }
-        } else {
-            print("passwords don't match")
-        }
+        viewModel.loginButtonTapped()
     }
     
     private func configureConfirmInputField() {

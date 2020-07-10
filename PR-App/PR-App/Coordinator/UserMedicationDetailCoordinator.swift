@@ -9,9 +9,8 @@
 import UIKit
 
 final class UserMedicationDetailCoordinator: Coordinator {
-
-    weak var parentCoordinator: MainCoordinator?
-    var childCoordinator = [Coordinator]()
+    
+    private(set) var childCoordinator = [Coordinator]()
     var navigationController: UINavigationController
 
     init(navigationController: UINavigationController) {
@@ -20,11 +19,10 @@ final class UserMedicationDetailCoordinator: Coordinator {
 
     func start() {
         let vc = UserMedicationDetailVC()
+        let pillViewModel = LoginScreenViewModel()
         vc.coordinator = self
+        vc.viewModel = pillViewModel
         navigationController.pushViewController(vc, animated: true)
     }
-
-    func didFinishUserMedicationDetail() {
-        parentCoordinator?.childDidFinish(self)
-    }
 }
+ 

@@ -11,6 +11,7 @@ import UIKit
 final class UserMedicationDetailVC: UIViewController {
     
     var coordinator: UserMedicationDetailCoordinator?
+    var viewModel: LoginScreenViewModel?
     
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
@@ -29,10 +30,10 @@ final class UserMedicationDetailVC: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        coordinator?.didFinishUserMedicationDetail()
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+//        coordinator?.didFinishUserMedicationDetail()
+//    }
     
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor

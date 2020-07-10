@@ -17,7 +17,7 @@ protocol Coordinator: AnyObject {
 final class MainCoordinator: Coordinator {
 
     var navigationController: UINavigationController
-    var childCoordinator = [Coordinator]()
+    private(set) var childCoordinator = [Coordinator]()
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -29,18 +29,17 @@ final class MainCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func userMedicationInfo() {
-        let child = UserMedicationInfoCoordinator(navigationController: navigationController)
-        childCoordinator.append(child)
-        child.parentCoordinator = self
-        print(childCoordinator)
-        child.start()
+    func showUserMedicationInfo() {
+        let vc = UserMedicationInfoVC()
+        let pillViewModel = LoginScreenViewModel()
+        vc.coordinator = self
+        vc.viewModel = pillViewModel
+        navigationController.pushViewController(vc, animated: false)
     }
     
-    func userMedicationDetail() {
+    func showUserMedicationDetail() {
         let child = UserMedicationDetailCoordinator(navigationController: navigationController)
         childCoordinator.append(child)
-        child.parentCoordinator = self
         print(childCoordinator)
         child.start()
     }
