@@ -143,7 +143,6 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func configureButton() {
-        
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         view.addSubview(button)
         
@@ -157,7 +156,8 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        viewModel.loginButtonTapped()
+        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = confirmInput.text else { return }
+        viewModel.loginButtonTapped(email: email, password: password, confirmPassword: confirmPassword)
     }
     
     private func configureConfirmInputField() {

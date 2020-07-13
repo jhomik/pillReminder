@@ -15,7 +15,7 @@ class WelcomeView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureWelcomeView()
-        performAnimations()
+        performAnimations(view: welcomeImage)
     }
     
     required init?(coder: NSCoder) {
@@ -37,15 +37,5 @@ class WelcomeView: UIView {
             welcomeImage.widthAnchor.constraint(equalToConstant: 200),
             welcomeImage.heightAnchor.constraint(equalToConstant: 180)
         ])
-    }
-    
-    private func performAnimations() {
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
-            self.welcomeImage.alpha = 0.0
-        }) { (finished) in
-            UIView.transition(with: self, duration: 2, options: .transitionCrossDissolve, animations: {
-                self.alpha = 0.0
-            }, completion: nil)
-        }
     }
 }

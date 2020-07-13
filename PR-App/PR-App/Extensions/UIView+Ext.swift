@@ -19,4 +19,14 @@ extension UIView {
         animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
         self.layer.add(animation, forKey: "position")
     }
+    
+    func performAnimations(view: UIImageView) {
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
+            view.alpha = 0.0
+        }) { (finished) in
+            UIView.transition(with: self, duration: 2, options: .transitionCrossDissolve, animations: {
+                self.alpha = 0.0
+            }, completion: nil)
+        }
+    }
 }

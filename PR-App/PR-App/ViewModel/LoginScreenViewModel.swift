@@ -11,10 +11,7 @@ import Foundation
 final class LoginScreenViewModel {
     
     var coordinator: MainCoordinator?
-    var firebaseManager: FirebaseManager?
-    var emailInput: String?
-    var passwordInput: String?
-    var confirmPassword: String?
+    private let firebaseManager = FirebaseManager()
     var isSignUp: Bool = false
     
     func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
@@ -38,21 +35,16 @@ final class LoginScreenViewModel {
         }
     }
     
-   
-    
-    func loginButtonTapped() {
-        
-        guard let email = emailInput, let password = passwordInput, let confirmPassword = passwordInput else {
-                 print("Form is not valid")
-                 return
-             }
-             
+    func loginButtonTapped(email: String, password: String, confirmPassword: String) {
              if !isSignUp && !email.isEmpty && !password.isEmpty {
-                firebaseManager?.signInUser()
-             } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty {
-                firebaseManager?.createUser()
+                firebaseManager.signInUser(email: email, password: password) {
+                    self.coordinator?.showUserMedicationInfo()
+                }
+             } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && newPasswordCheck(passOne: password, passTwo: confirmPassword) == true {
+                firebaseManager.createUser(email: email, password: password, confirmPassword: confirmPassword)
              } else {
-                isSignUp ? textFieldsShaker(inputFields: [email, password, confirmPassword]) : textFieldsShaker(inputFields: [email, password])
+                print("error test")
+//                isSignUp ? textFieldsShaker(inputFields: [email, password, confirmPassword]) : textFieldsShaker(inputFields: [email, password])
              }
     }
 }
