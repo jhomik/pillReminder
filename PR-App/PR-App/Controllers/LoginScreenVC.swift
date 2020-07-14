@@ -7,8 +7,8 @@
 // 
 
 import UIKit
-import FirebaseAuth
 import Firebase
+import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
     
@@ -172,8 +172,6 @@ final class LoginScreenVC: UIViewController {
         ])
         confirmInput.isHidden = true
     }
-    
-    
 }
 
 extension LoginScreenVC: UITextFieldDelegate {

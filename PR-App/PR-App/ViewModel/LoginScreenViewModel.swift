@@ -10,7 +10,7 @@ import Foundation
 
 final class LoginScreenViewModel {
     
-    var coordinator: MainCoordinator?
+    weak var coordinator: MainCoordinator?
     private let firebaseManager = FirebaseManager()
     var isSignUp: Bool = false
     

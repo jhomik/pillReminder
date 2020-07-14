@@ -18,10 +18,7 @@ final class FirebaseManager: UIViewController {
                 
                 // TO DO: add alert with informations //
             } else {
-                self.showAlert(message: "Logged In") {
-                    completion?()
-                }
-                
+                self.showAlert(message: "Logged In", completion: completion)
             }
             print("User logged successfully")
         }
