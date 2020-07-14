@@ -177,11 +177,11 @@ final class LoginScreenVC: UIViewController {
 extension LoginScreenVC: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.coordinator?.showUserMedicationInfo()
+        self.coordinator?.didLogin()
     }
     
-    func onLoginFailure() {
-        
+    func onLoginFailure(error: Error) {
+        self.showAlert(message: error.localizedDescription, completion: nil)
     }
     
 }
