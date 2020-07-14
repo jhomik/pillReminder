@@ -19,9 +19,7 @@ final class UserMedicationDetailCoordinator: Coordinator {
 
     func start() {
         let vc = UserMedicationDetailVC()
-        let pillViewModel = LoginScreenViewModel()
         vc.coordinator = self
-        vc.viewModel = pillViewModel
         navigationController.pushViewController(vc, animated: true)
     }
 }

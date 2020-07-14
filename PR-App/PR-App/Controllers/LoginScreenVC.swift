@@ -13,7 +13,7 @@ import FirebaseAuth
 final class LoginScreenVC: UIViewController {
     
     weak var coordinator: MainCoordinator?
-    var viewModel = LoginScreenViewModel()
+    lazy var viewModel = LoginScreenViewModel(loginEvents: self)
     
     private let welcomeView = WelcomeView()
     private var scrollView = UIScrollView()
@@ -172,6 +172,18 @@ final class LoginScreenVC: UIViewController {
         ])
         confirmInput.isHidden = true
     }
+}
+
+extension LoginScreenVC: LoginScreenEvents {
+    
+    func onLoginSuccess() {
+        self.coordinator?.showUserMedicationInfo()
+    }
+    
+    func onLoginFailure() {
+        
+    }
+    
 }
 
 extension LoginScreenVC: UITextFieldDelegate {

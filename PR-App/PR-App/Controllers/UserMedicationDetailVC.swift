@@ -11,7 +11,6 @@ import UIKit
 final class UserMedicationDetailVC: UIViewController {
     
     var coordinator: UserMedicationDetailCoordinator?
-    var viewModel: LoginScreenViewModel?
     
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()

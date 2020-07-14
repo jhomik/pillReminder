@@ -83,6 +83,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        viewModel?.tappedOnMedication()
+        
     }
+    
 }

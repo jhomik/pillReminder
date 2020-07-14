@@ -8,11 +8,21 @@
 
 import Foundation
 
+protocol LoginScreenEvents: class {
+    func onLoginSuccess()
+    func onLoginFailure()
+}
+
 final class LoginScreenViewModel {
     
-    weak var coordinator: MainCoordinator?
     private let firebaseManager = FirebaseManager()
     var isSignUp: Bool = false
+    
+    private weak var loginEvents: LoginScreenEvents?
+    
+    init(loginEvents: LoginScreenEvents) {
+        self.loginEvents = loginEvents
+    }
     
     func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
         if passOne == passTwo {
@@ -20,11 +30,6 @@ final class LoginScreenViewModel {
         } else {
             return false
         }
-    }
-    
-    func tappedOnMedication() {
-        coordinator?.showUserMedicationDetail()
-        print("test")
     }
     
     func textFieldsShaker(inputFields: [CustomTextField]) {
@@ -38,7 +43,7 @@ final class LoginScreenViewModel {
     func loginButtonTapped(email: String, password: String, confirmPassword: String) {
              if !isSignUp && !email.isEmpty && !password.isEmpty {
                 firebaseManager.signInUser(email: email, password: password) {
-                    self.coordinator?.showUserMedicationInfo()
+                    self.loginEvents?.onLoginSuccess()
                 }
              } else if isSignUp && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && newPasswordCheck(passOne: password, passTwo: confirmPassword) == true {
                 firebaseManager.createUser(email: email, password: password, confirmPassword: confirmPassword)
