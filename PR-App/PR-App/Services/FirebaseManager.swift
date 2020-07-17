@@ -11,14 +11,14 @@ import Firebase
 
 final class FirebaseManager: UIViewController {
     
-    func signInUser(email: String, password: String, completion: (() -> Void)?) {
+    func signInUser(email: String, password: String, completion: ((Result<Void, Error>) -> Void)?) {
         Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
             if let error = error {
                 print(error.localizedDescription)
-                
+                completion?(.failure(error))
                 // TO DO: add alert with informations //
             } else {
-                self.showAlert(message: "Logged In", completion: completion)
+                completion?(.success(()))
             }
             print("User logged successfully")
         }

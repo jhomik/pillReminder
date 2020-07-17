@@ -29,7 +29,13 @@ final class MainCoordinator: Coordinator {
         navigationController.pushViewController(vc, animated: false)
     }
     
-    func showUserMedicationInfo() {
+    func didLogin() {
+        self.navigationController.showAlert(message: "Logged In") { [weak self] in
+            self?.showUserMedicationInfo()
+        }
+    }
+    
+    private func showUserMedicationInfo() {
         let vc = UserMedicationInfoVC()
         vc.coordinator = self
         navigationController.pushViewController(vc, animated: false)
