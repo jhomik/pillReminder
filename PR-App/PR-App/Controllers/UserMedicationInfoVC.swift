@@ -9,7 +9,6 @@
 import UIKit
 
 final class UserMedicationInfoVC: UIViewController {
-    var coordinator: MainCoordinator?
     
     var viewModel: LoginScreenViewModel?
     var collectionView: UICollectionView?
@@ -26,10 +25,6 @@ final class UserMedicationInfoVC: UIViewController {
         tabBarController?.tabBar.isHidden = false
     }
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        coordinator?.didFinishUserMedication()
-//    }
     
     private func configureViewController() {
         self.navigationItem.title = "Logged in UserName"
@@ -83,7 +78,8 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let vc = UserMedicationDetailVC()
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 }

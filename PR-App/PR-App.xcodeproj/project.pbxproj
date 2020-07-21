@@ -20,9 +20,7 @@
 		5AA9D0A32477F80D007D85DA /* UserMedicationDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */; };
 		5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE9248701C400E78BD9 /* CustomTextField.swift */; };
 		5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */; };
-		5ACB65AF24A9E69300F3D454 /* MainCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65AE24A9E69300F3D454 /* MainCoordinator.swift */; };
 		5ACB65B224AA41D800F3D454 /* LoginScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */; };
-		5ACB65B824AF54A600F3D454 /* UserMedicationDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65B724AF54A600F3D454 /* UserMedicationDetailCoordinator.swift */; };
 		5ACB65BC24B89DAC00F3D454 /* PillModelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65BB24B89DAC00F3D454 /* PillModelViewModel.swift */; };
 		5ACB65BF24B8A19900F3D454 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65BE24B8A19900F3D454 /* FirebaseManager.swift */; };
 		5AD3E496246D9EC700882154 /* CustomCellHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AD3E495246D9EC700882154 /* CustomCellHeader.swift */; };
@@ -83,9 +81,7 @@
 		5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailVC.swift; sourceTree = "<group>"; };
 		5AB59DE9248701C400E78BD9 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgramTextField.swift; sourceTree = "<group>"; };
-		5ACB65AE24A9E69300F3D454 /* MainCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCoordinator.swift; sourceTree = "<group>"; };
 		5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewModel.swift; sourceTree = "<group>"; };
-		5ACB65B724AF54A600F3D454 /* UserMedicationDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailCoordinator.swift; sourceTree = "<group>"; };
 		5ACB65BB24B89DAC00F3D454 /* PillModelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModelViewModel.swift; sourceTree = "<group>"; };
 		5ACB65BE24B8A19900F3D454 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
 		5AD3E495246D9EC700882154 /* CustomCellHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCellHeader.swift; sourceTree = "<group>"; };
@@ -201,15 +197,6 @@
 			path = Buttons;
 			sourceTree = "<group>";
 		};
-		5ACB65AB24A9E61600F3D454 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				5ACB65AE24A9E69300F3D454 /* MainCoordinator.swift */,
-				5ACB65B724AF54A600F3D454 /* UserMedicationDetailCoordinator.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
 		5ACB65B024AA00B500F3D454 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,7 +285,6 @@
 				5ADFC2BC2483FBE7008E9282 /* Model */,
 				5AE9EA7B246ACAB60090A1D2 /* Custom Views */,
 				5ACB65B024AA00B500F3D454 /* ViewModel */,
-				5ACB65AB24A9E61600F3D454 /* Coordinator */,
 				5AFED6502461A90100EF7C1A /* Controllers */,
 			);
 			path = "PR-App";
@@ -622,8 +608,6 @@
 				5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */,
 				5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */,
 				5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */,
-				5ACB65AF24A9E69300F3D454 /* MainCoordinator.swift in Sources */,
-				5ACB65B824AF54A600F3D454 /* UserMedicationDetailCoordinator.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
 				5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */,

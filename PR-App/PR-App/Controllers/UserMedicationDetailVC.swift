@@ -10,8 +10,6 @@ import UIKit
 
 final class UserMedicationDetailVC: UIViewController {
     
-    var coordinator: UserMedicationDetailCoordinator?
-    
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = CustomButton(text: "Change settings")

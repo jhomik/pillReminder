@@ -12,16 +12,16 @@ import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
     
-    weak var coordinator: MainCoordinator?
     lazy var viewModel = LoginScreenViewModel(loginEvents: self)
     
     private let welcomeView = WelcomeView()
     private var scrollView = UIScrollView()
+    private let stackViewLoginData = UIStackView()
     
+    private let userName = CustomTextField(placeholderText: "Your name", isPassword: false)
     private let emailInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
     private let passwordInput = CustomTextField(placeholderText: "Password", isPassword: true)
     private let confirmInput = CustomTextField(placeholderText: "Confirm Password", isPassword: true)
-    private let userNameInput = CustomTextField(placeholderText: "Provide your name", isPassword: false)
     private let button = CustomButton(text: "Log in")
     
     private let logoImage = UIImageView(image: Constants.logoImage)
@@ -40,10 +40,7 @@ final class LoginScreenVC: UIViewController {
         configureViewController()
         configureLogoImage()
         configureSegmentedView()
-        configureEmailInputField()
-        configurePasswordInputField()
-        configureConfirmInputField()
-        
+        configureStackViewLoginData()
     }
     
     private func configureWelcomeView() {
@@ -93,14 +90,11 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func segmentedControllerChange(sender: UISegmentedControl) {
-        isSignUp.toggle()
-        confirmInput.isHidden = !self.isSignUp
-        //        usernameInput.text? = ""
-        //        passwordInput.text? = ""
-        //        confirmInput.text? = ""
-        isSignUp ? (self.passwordInput.placeholder = "Create Password") : (self.passwordInput.placeholder = "Password")
-        isSignUp ? self.button.setTitle("Sign Up", for: .normal) : self.button.setTitle("Log In", for: .normal)
-        
+        self.isSignUp.toggle()
+        self.userName.isHidden = !self.isSignUp
+        self.confirmInput.isHidden = !self.isSignUp
+        self.passwordInput.placeholder = isSignUp ? "Create Password" : "Password"
+        self.button.setTitle(isSignUp ? "Sign Up" : "Log In", for: .normal)
     }
     
     private func configureLogoImage() {
@@ -119,26 +113,30 @@ final class LoginScreenVC: UIViewController {
         ])
     }
     
-    private func configureEmailInputField() {
+    private func configureStackViewLoginData() {
+        userName.isHidden = true
+        confirmInput.isHidden = true
+        userName.delegate = self
         emailInput.delegate = self
-        scrollView.addSubview(emailInput)
+        passwordInput.delegate = self
+        confirmInput.delegate = self
+        
+        stackViewLoginData.addArrangedSubview(userName)
+        stackViewLoginData.addArrangedSubview(emailInput)
+        stackViewLoginData.addArrangedSubview(passwordInput)
+        stackViewLoginData.addArrangedSubview(confirmInput)
+        stackViewLoginData.axis = .vertical
+        stackViewLoginData.distribution = .equalSpacing
+        stackViewLoginData.setCustomSpacing(20, after: emailInput)
+        
+        stackViewLoginData.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.addSubview(stackViewLoginData)
         
         NSLayoutConstraint.activate([
-            emailInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            emailInput.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 10),
-            emailInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            emailInput.heightAnchor.constraint(equalToConstant: 50)
-        ])
-    }
-    
-    private func configurePasswordInputField() {
-        passwordInput.delegate = self
-        scrollView.addSubview(passwordInput)
-        NSLayoutConstraint.activate([
-            passwordInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            passwordInput.topAnchor.constraint(equalTo: emailInput.bottomAnchor, constant: 10),
-            passwordInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            passwordInput.heightAnchor.constraint(equalToConstant: 50)
+            stackViewLoginData.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
+            stackViewLoginData.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
+            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 20),
+            
         ])
     }
     
@@ -156,40 +154,45 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func buttonTapped() {
-        guard let email = emailInput.text, let password = passwordInput.text, let confirmPassword = confirmInput.text else { return }
-        viewModel.loginButtonTapped(email: email, password: password, confirmPassword: confirmPassword)
-    }
-    
-    private func configureConfirmInputField() {
-        confirmInput.delegate = self
-        scrollView.addSubview(confirmInput)
+        guard let username = userName.text, let email = emailInput.text, let password = passwordInput.text, let confirmPassword = confirmInput.text else { return }
+        viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword)
         
-        NSLayoutConstraint.activate([
-            confirmInput.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            confirmInput.topAnchor.constraint(equalTo: passwordInput.bottomAnchor, constant: 10),
-            confirmInput.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            confirmInput.heightAnchor.constraint(equalToConstant: 50)
-        ])
-        confirmInput.isHidden = true
+        self.isSignUp ? self.textFieldsShaker(inputFields: [userName, emailInput, passwordInput, confirmInput]) : self.textFieldsShaker(inputFields: [emailInput, passwordInput])
+        
     }
 }
 
 extension LoginScreenVC: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.coordinator?.didLogin()
+        self.showAlert(message: "Logged in!") {
+            let vc = TabBarController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+        print("User logged successfully")
     }
     
     func onLoginFailure(error: Error) {
         self.showAlert(message: error.localizedDescription, completion: nil)
     }
     
+    func createUserSuccess() {
+        self.showAlert(message: "Check your email with activation link!") {
+            self.isSignUp.toggle()
+        }
+    }
+    
+    func createUserFailure(error: Error) {
+        self.showAlert(message: error.localizedDescription, completion: nil)
+    }
 }
 
 extension LoginScreenVC: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == emailInput {
+        if textField == userName {
+            emailInput.becomeFirstResponder()
+        } else if textField == emailInput{
             passwordInput.becomeFirstResponder()
         } else if textField == passwordInput {
             if isSignUp {

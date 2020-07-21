@@ -11,7 +11,6 @@ import Foundation
 final class PillModelViewModel {
     
     private var model = PillModel()
-    var coordinator: MainCoordinator?
     
     var morning: [String] {
         return model.morning

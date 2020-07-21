@@ -27,13 +27,13 @@ final class CustomTextField: UITextField {
     }
     
     private func configure() {
-        font = UIFont.italicSystemFont(ofSize: 16)
+        self.font = UIFont.italicSystemFont(ofSize: 18)
         self.layer.backgroundColor = Constants.backgroundColor.cgColor
         self.layer.shadowOffset  = CGSize(width: 0.0, height: 0.2)
         self.layer.shadowOpacity  = 0.5
         self.layer.shadowRadius  = 0.0
         self.layer.shadowColor   = UIColor.label.cgColor
-        translatesAutoresizingMaskIntoConstraints = false
-        autocapitalizationType = .none
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.autocapitalizationType = .none
     }
 }
