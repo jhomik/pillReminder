@@ -18,7 +18,6 @@ protocol LoginScreenEvents: class {
 final class LoginScreenViewModel {
     
     private let firebaseManager = FirebaseManager()
-    var isSignUp: Bool = false
     
     private weak var loginEvents: LoginScreenEvents?
     
@@ -34,7 +33,7 @@ final class LoginScreenViewModel {
         }
     }
     
-    func loginButtonTapped(userName: String, email: String, password: String, confirmPassword: String) {
+    func loginButtonTapped(userName: String, email: String, password: String, confirmPassword: String, isSignUp: Bool = false) {
         if !isSignUp && !email.isEmpty && !password.isEmpty {
             firebaseManager.signInUser(email: email, password: password) { [weak self] result in
                 DispatchQueue.main.async {
@@ -57,9 +56,6 @@ final class LoginScreenViewModel {
                     }
                 }
             })
-        } else {
-//            
         }
     }
 }
-

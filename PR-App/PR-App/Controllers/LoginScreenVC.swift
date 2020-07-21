@@ -7,8 +7,8 @@
 // 
 
 import UIKit
-import Firebase
-import FirebaseAuth
+//import Firebase
+//import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
     
@@ -90,7 +90,7 @@ final class LoginScreenVC: UIViewController {
     }
     
     @objc private func segmentedControllerChange(sender: UISegmentedControl) {
-        self.isSignUp.toggle()
+        isSignUp.toggle()
         self.userName.isHidden = !self.isSignUp
         self.confirmInput.isHidden = !self.isSignUp
         self.passwordInput.placeholder = isSignUp ? "Create Password" : "Password"
@@ -116,6 +116,7 @@ final class LoginScreenVC: UIViewController {
     private func configureStackViewLoginData() {
         userName.isHidden = true
         confirmInput.isHidden = true
+        
         userName.delegate = self
         emailInput.delegate = self
         passwordInput.delegate = self
@@ -155,7 +156,7 @@ final class LoginScreenVC: UIViewController {
     
     @objc private func buttonTapped() {
         guard let username = userName.text, let email = emailInput.text, let password = passwordInput.text, let confirmPassword = confirmInput.text else { return }
-        viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword)
+        viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword, isSignUp: isSignUp)
         
         self.isSignUp ? self.textFieldsShaker(inputFields: [userName, emailInput, passwordInput, confirmInput]) : self.textFieldsShaker(inputFields: [emailInput, passwordInput])
         
@@ -177,9 +178,7 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserSuccess() {
-        self.showAlert(message: "Check your email with activation link!") {
-            self.isSignUp.toggle()
-        }
+        self.showAlert(message: "Check your email with activation link!", completion: nil)
     }
     
     func createUserFailure(error: Error) {

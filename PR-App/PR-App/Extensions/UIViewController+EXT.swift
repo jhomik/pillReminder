@@ -14,7 +14,7 @@ extension UIViewController {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             alert.dismiss(animated: true, completion: completion)
         }
     }
