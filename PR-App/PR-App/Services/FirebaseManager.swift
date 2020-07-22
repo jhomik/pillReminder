@@ -22,16 +22,24 @@ final class FirebaseManager {
         }
     }
     
-    func createUser(email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
+    func createUser(username: String, email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
         Auth.auth().createUser(withEmail: email, password: password) { (data, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             } else {
                 completion?(.success(()))
-//                self.showAlert(message: "Check your email with activation link!", completion: nil)
+                
+                guard let uid = data?.user.uid else { return }
+                
+                let values = ["username": username, "email": email]
+                Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, data) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    print("User created successfully with: \(data)")
+                }
             }
-            print("User created successfully")
         }
     }
 }

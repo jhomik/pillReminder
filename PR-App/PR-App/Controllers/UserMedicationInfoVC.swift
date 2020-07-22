@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import Firebase
 
 final class UserMedicationInfoVC: UIViewController {
-    
-    var viewModel: LoginScreenViewModel?
+
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
@@ -27,7 +27,14 @@ final class UserMedicationInfoVC: UIViewController {
     
     
     private func configureViewController() {
-        self.navigationItem.title = "Logged in UserName"
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+         
+         Database.database().reference().child("users").child(uid).child("username").observeSingleEvent(of: .value) {
+             snapshot in
+             guard let username = snapshot.value as? String else { return }
+             self.navigationItem.title = "Hello, \(username)!"
+        }
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(setupNotification))
     }
     
@@ -81,5 +88,4 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         let vc = UserMedicationDetailVC()
         navigationController?.pushViewController(vc, animated: true)
     }
-    
 }

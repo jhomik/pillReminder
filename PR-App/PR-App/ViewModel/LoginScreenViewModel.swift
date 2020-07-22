@@ -8,6 +8,7 @@
 
 import Foundation
 
+
 protocol LoginScreenEvents: class {
     func onLoginSuccess()
     func onLoginFailure(error: Error)
@@ -46,7 +47,7 @@ final class LoginScreenViewModel {
                 }
             }
         } else if isSignUp && !userName.isEmpty && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && newPasswordCheck(passOne: password, passTwo: confirmPassword) == true {
-            firebaseManager.createUser(email: email, password: password, confirmPassword: confirmPassword, completion: { [weak self] result in
+            firebaseManager.createUser(username: userName, email: email, password: password, confirmPassword: confirmPassword, completion: { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
                     case .success:

@@ -7,8 +7,6 @@
 // 
 
 import UIKit
-//import Firebase
-//import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
     
@@ -159,7 +157,6 @@ final class LoginScreenVC: UIViewController {
         viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword, isSignUp: isSignUp)
         
         self.isSignUp ? self.textFieldsShaker(inputFields: [userName, emailInput, passwordInput, confirmInput]) : self.textFieldsShaker(inputFields: [emailInput, passwordInput])
-        
     }
 }
 
