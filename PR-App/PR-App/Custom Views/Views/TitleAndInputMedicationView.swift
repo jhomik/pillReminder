@@ -1,5 +1,5 @@
 //
-//  CustomInformationView.swift
+//  TitleAndInputMedicationView.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 17/06/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomInformationView: UIView {
+final class TitleAndInputMedicationView: UIView {
     
     private var title: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.systemGray2])
     

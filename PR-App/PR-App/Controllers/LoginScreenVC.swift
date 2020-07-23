@@ -135,7 +135,6 @@ final class LoginScreenVC: UIViewController {
             stackViewLoginData.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             stackViewLoginData.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
             stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 20),
-            
         ])
     }
     

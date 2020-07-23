@@ -10,15 +10,15 @@ import UIKit
 
 final class DosageMedicationDetailView: UIView {
     
-    private lazy var dosageView = CustomInformationView(
+    private lazy var dosageView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Dose", attributes: self.titleAttributes),
         input: NSAttributedString(string: "2 times a days | Morning, Evening", attributes: self.inputAttributes))
     
-    private lazy var doseProgramView = CustomInformationView(
+    private lazy var doseProgramView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Program", attributes: self.titleAttributes),
         input: NSAttributedString(string: "Everyday", attributes: self.inputAttributes))
     
-    private lazy var capacityPillsLeft = CustomInformationView(
+    private lazy var capacityPillsLeft = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Capacity", attributes: self.titleAttributes),
         input: NSAttributedString(string: "50 pills left", attributes: self.inputAttributes))
     

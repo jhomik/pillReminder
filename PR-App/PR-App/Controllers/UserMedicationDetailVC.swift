@@ -27,11 +27,6 @@ final class UserMedicationDetailVC: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-//        coordinator?.didFinishUserMedicationDetail()
-//    }
-    
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
     }

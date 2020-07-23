@@ -10,19 +10,19 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    private lazy var pillNameView = CustomInformationView(
+    private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Pill name",
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "Metocard",
                                   attributes: self.inputAttributes))
     
-    private lazy var packageCapacityView = CustomInformationView(
+    private lazy var packageCapacityView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Capacity",
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "60 pills",
                                   attributes: self.inputAttributes))
     
-    private lazy var pillDoseView = CustomInformationView(
+    private lazy var pillDoseView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Dose",
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "50 mg",

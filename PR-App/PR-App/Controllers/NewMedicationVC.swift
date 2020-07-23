@@ -41,10 +41,10 @@ final class NewMedicationVC: UIViewController {
         view.addSubview(newMedicationView)
         
         NSLayoutConstraint.activate([
-            newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            newMedicationView.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
             newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35),
+//            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35),
         ])
     }
     
