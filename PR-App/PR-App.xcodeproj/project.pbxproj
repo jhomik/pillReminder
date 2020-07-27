@@ -17,9 +17,9 @@
 		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
 		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
 		5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */; };
+		5A9440B024CA06D4000707FA /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9440AF24CA06D4000707FA /* HeaderView.swift */; };
 		5AA9D0A32477F80D007D85DA /* UserMedicationDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */; };
 		5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE9248701C400E78BD9 /* CustomTextField.swift */; };
-		5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */; };
 		5ACB65B224AA41D800F3D454 /* LoginScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */; };
 		5ACB65BC24B89DAC00F3D454 /* PillModelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65BB24B89DAC00F3D454 /* PillModelViewModel.swift */; };
 		5ACB65BF24B8A19900F3D454 /* FirebaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65BE24B8A19900F3D454 /* FirebaseManager.swift */; };
@@ -78,9 +78,9 @@
 		5A582B902474583600247D19 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndInputMedicationView.swift; sourceTree = "<group>"; };
+		5A9440AF24CA06D4000707FA /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailVC.swift; sourceTree = "<group>"; };
 		5AB59DE9248701C400E78BD9 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
-		5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgramTextField.swift; sourceTree = "<group>"; };
 		5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewModel.swift; sourceTree = "<group>"; };
 		5ACB65BB24B89DAC00F3D454 /* PillModelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModelViewModel.swift; sourceTree = "<group>"; };
 		5ACB65BE24B8A19900F3D454 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
@@ -168,6 +168,7 @@
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
 				5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */,
 				5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */,
+				5A9440AF24CA06D4000707FA /* HeaderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -184,7 +185,6 @@
 			isa = PBXGroup;
 			children = (
 				5AB59DE9248701C400E78BD9 /* CustomTextField.swift */,
-				5ABB84F424880E380037B7B5 /* CustomProgramTextField.swift */,
 			);
 			path = TextFields;
 			sourceTree = "<group>";
@@ -610,12 +610,12 @@
 				5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
-				5ABB84F524880E380037B7B5 /* CustomProgramTextField.swift in Sources */,
 				5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */,
 				5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */,
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
 				5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */,
 				5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */,
+				5A9440B024CA06D4000707FA /* HeaderView.swift in Sources */,
 				5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */,
 				5A582B8D2473FEFC00247D19 /* UIViewController+EXT.swift in Sources */,
 				5A1AE7E0247EAB510094F17B /* NewMedicationVC.swift in Sources */,

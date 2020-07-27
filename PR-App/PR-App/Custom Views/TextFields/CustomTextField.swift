@@ -23,7 +23,6 @@ final class CustomTextField: UITextField {
         self.init(frame: .zero)
         placeholder = placeholderText
         isSecureTextEntry = isPassword
-        
     }
     
     private func configure() {

@@ -14,7 +14,6 @@ final class ProgramMedicationView: UIView {
     private let setupProgramLbl = CustomLabel(text: "Setup Program", alignment: .left, size: 24, weight: .bold, color: .label)
     private let infoProgramLbl = CustomLabel(text: "Choose program...", alignment: .left, size: 14, weight: .medium, color: .systemGray)
     private let infoDayDosageLbl = CustomLabel(text: "and day dosage!", alignment: .left, size: 14, weight: .medium, color: .systemGray)
-    private let programTextField = CustomProgramTextField(placeholderText: "Which days?")
     
     private let morningPickerView = UIPickerView()
     private let noonPickerView = UIPickerView()
@@ -26,7 +25,6 @@ final class ProgramMedicationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureProgramMedicationView()
-        configureProgramTextField()
         configurePickerStackView()
         
     }
@@ -50,17 +48,6 @@ final class ProgramMedicationView: UIView {
             infoProgramLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             infoProgramLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             infoProgramLbl.heightAnchor.constraint(equalToConstant: 16),
-        ])
-    }
-    
-    private func configureProgramTextField() {
-        self.addSubview(programTextField)
-        
-        NSLayoutConstraint.activate([
-            programTextField.topAnchor.constraint(equalTo: infoProgramLbl.bottomAnchor, constant: 30),
-            programTextField.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            programTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            programTextField.heightAnchor.constraint(equalToConstant: 26),
         ])
     }
     

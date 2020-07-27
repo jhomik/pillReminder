@@ -9,7 +9,7 @@
 import UIKit
 
 final class UserMedicationDetailView: UIView {
-    
+
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Pill name",
                                   attributes: self.titleAttributes),

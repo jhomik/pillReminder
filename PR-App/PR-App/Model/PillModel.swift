@@ -13,5 +13,5 @@ struct PillModel {
     let morning = ["No pill", "1", "1/2", "1/4"]
     let noon = ["No pill", "1", "1/2", "1/4"]
     let evening = ["No pill", "1", "1/2", "1/4"]
-    let program = ["Everyday", "Every second day", "Every third day", "Once a week"]
+    let sections = ["How many times per day?", "What time?", "Dosage"]
 }

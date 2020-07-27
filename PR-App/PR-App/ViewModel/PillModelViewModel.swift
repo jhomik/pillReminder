@@ -21,7 +21,7 @@ final class PillModelViewModel {
     var evening: [String] {
         return model.evening
     }
-    var program: [String] {
-        return model.program
+    var sections: [String] {
+        return model.sections
     }
 }

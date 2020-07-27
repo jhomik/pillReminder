@@ -72,3 +72,9 @@ final class UserMedicationDetailVC: UIViewController {
         present(newMedicationVC, animated: true)
     }
 }
+
+extension UserMedicationDetailVC: UpdateTextFields {
+    func update(name: String, capacity: String, dose: String) {
+        
+    }
+}
