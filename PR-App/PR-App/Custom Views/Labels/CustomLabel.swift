@@ -36,4 +36,9 @@ final class CustomLabel: UILabel {
     private func configure() {
         translatesAutoresizingMaskIntoConstraints   = false
     }
+    
+    func updateText(_ text: NSAttributedString) {
+        self.attributedText = text
+    }
+    
 }

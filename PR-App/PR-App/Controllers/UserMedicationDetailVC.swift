@@ -75,6 +75,8 @@ final class UserMedicationDetailVC: UIViewController {
 
 extension UserMedicationDetailVC: UpdateTextFields {
     func update(name: String, capacity: String, dose: String) {
-        
+        self.medicationView.updatePillNameValue(name)
+        self.medicationView.updatePackageCapacityValue(capacity)
+        self.medicationView.updatePillDoseValue(dose)
     }
 }

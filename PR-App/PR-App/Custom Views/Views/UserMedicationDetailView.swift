@@ -9,6 +9,21 @@
 import UIKit
 
 final class UserMedicationDetailView: UIView {
+    
+    func updatePillNameValue(_ value: String) {
+        self.pillNameView.updateInputValue(NSAttributedString(string: value,
+        attributes: self.inputAttributes))
+    }
+    
+    func updatePackageCapacityValue(_ value: String) {
+        self.packageCapacityView.updateInputValue(NSAttributedString(string: value,
+        attributes: self.inputAttributes))
+    }
+    
+    func updatePillDoseValue(_ value: String) {
+        self.pillDoseView.updateInputValue(NSAttributedString(string: value,
+        attributes: self.inputAttributes))
+    }
 
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Pill name",
