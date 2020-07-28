@@ -9,9 +9,30 @@
 import UIKit
 import Firebase
 
+protocol UserNameObserver {
+    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void)
+}
+
+final class FirebaseUserNameObserver: UserNameObserver {
+    
+    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void) {
+        
+         Database.database().reference().child("users").child(userId).child("username").observeSingleEvent(of: .value) {
+             snapshot in
+             guard let username = snapshot.value as? String else {
+                completion(.failure(NSError(domain: "UserName not received", code: 0)))
+                return }
+            completion(.success(username))
+        }
+    }
+    
+}
+
 final class UserMedicationInfoVC: UIViewController {
 
     var collectionView: UICollectionView?
+    
+    var userNameObserver: UserNameObserver? = FirebaseUserNameObserver()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,12 +50,13 @@ final class UserMedicationInfoVC: UIViewController {
     private func configureViewController() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-         
-         Database.database().reference().child("users").child(uid).child("username").observeSingleEvent(of: .value) {
-             snapshot in
-             guard let username = snapshot.value as? String else { return }
-             self.navigationItem.title = "Hello, \(username)!"
+        self.userNameObserver?.observerUserName(for: uid) { [weak self] result in
+            switch result {
+            case let .success(userName):
+                self?.title = "Hello, " + userName
+            }
         }
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(setupNotification))
     }
     

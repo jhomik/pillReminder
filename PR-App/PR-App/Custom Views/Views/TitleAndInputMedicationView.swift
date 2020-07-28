@@ -57,4 +57,8 @@ final class TitleAndInputMedicationView: UIView {
         ])
     }
     
+    func updateInputValue(_ text: NSAttributedString) {
+        self.inputLabel.updateText(text)
+    }
+    
 }
