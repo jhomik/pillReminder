@@ -39,6 +39,7 @@ final class LoginScreenVC: UIViewController {
         configureLogoImage()
         configureSegmentedView()
         configureStackViewLoginData()
+        createDismisKeyboardTapGesture()
     }
     
     private func configureWelcomeView() {

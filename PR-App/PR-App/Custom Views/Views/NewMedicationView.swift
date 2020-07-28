@@ -11,16 +11,15 @@ import UIKit
 final class NewMedicationView: UIView {
     
     private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
-    private let nameTextField = CustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
-    private let capacityTextField = CustomTextField(placeholderText: Constants.packageMedication, isPassword: false)
-    private let doseTextField = CustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
-    private let newMedicationStackView = UIStackView()
+    var nameTextField = CustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
+    var capacityTextField = CustomTextField(placeholderText: Constants.packageMedication, isPassword: false)
+    var doseTextField = CustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
+    var newMedicationStackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureAddMedicationLbl()
         configureNewMedicationStackView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -42,8 +41,7 @@ final class NewMedicationView: UIView {
     }
     
     private func configureNewMedicationStackView() {
-        
-        
+    
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)
         newMedicationStackView.addArrangedSubview(doseTextField)

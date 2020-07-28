@@ -11,6 +11,17 @@ import Firebase
 
 final class FirebaseManager {
     
+    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void) {
+        
+         Database.database().reference().child("users").child(userId).child("username").observeSingleEvent(of: .value) {
+             snapshot in
+             guard let username = snapshot.value as? String else {
+                completion(.failure(NSError(domain: "UserName not received", code: 0)))
+                return }
+            completion(.success(username))
+        }
+    }
+    
     func signInUser(email: String, password: String, completion: ((Result<Void, Error>) -> Void)?) {
         Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
             if let error = error {

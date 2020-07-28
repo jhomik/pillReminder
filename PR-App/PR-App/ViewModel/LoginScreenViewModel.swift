@@ -19,7 +19,6 @@ protocol LoginScreenEvents: class {
 final class LoginScreenViewModel {
     
     private let firebaseManager = FirebaseManager()
-    
     private weak var loginEvents: LoginScreenEvents?
     
     init(loginEvents: LoginScreenEvents) {

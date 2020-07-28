@@ -26,6 +26,7 @@ final class NewMedicationVC: UIViewController {
         configureNavBar()
         configureMedicationView()
         configureTableView()
+        createDismisKeyboardTapGesture()
     }
     
     private func configureViewController() {
@@ -41,7 +42,8 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
-        delegate?.update(name: "test1", capacity: "test2", dose: "test3")
+        guard let name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
+        delegate?.update(name: name, capacity: capacity, dose: dose)
         dismiss(animated: true, completion: nil)
     }
     
@@ -51,8 +53,7 @@ final class NewMedicationVC: UIViewController {
         NSLayoutConstraint.activate([
             newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            //            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.35),
+            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
     }
     

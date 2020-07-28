@@ -9,30 +9,10 @@
 import UIKit
 import Firebase
 
-protocol UserNameObserver {
-    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void)
-}
-
-final class FirebaseUserNameObserver: UserNameObserver {
-    
-    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void) {
-        
-         Database.database().reference().child("users").child(userId).child("username").observeSingleEvent(of: .value) {
-             snapshot in
-             guard let username = snapshot.value as? String else {
-                completion(.failure(NSError(domain: "UserName not received", code: 0)))
-                return }
-            completion(.success(username))
-        }
-    }
-    
-}
-
 final class UserMedicationInfoVC: UIViewController {
 
-    var collectionView: UICollectionView?
-    
-    var userNameObserver: UserNameObserver? = FirebaseUserNameObserver()
+    private var collectionView: UICollectionView?
+    private var userNameObserver = FirebaseManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,15 +25,16 @@ final class UserMedicationInfoVC: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-    
-    
+
     private func configureViewController() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        self.userNameObserver?.observerUserName(for: uid) { [weak self] result in
+        userNameObserver.observeUserName(for: uid) { result in
             switch result {
-            case let .success(userName):
-                self?.title = "Hello, " + userName
+            case .success(let userName):
+                self.title = "Hello, " + userName + "!"
+            case .failure(let error):
+                print(error.localizedDescription)
             }
         }
         
@@ -107,7 +88,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let newMedicationVC = UINavigationController(rootViewController: UserMedicationDetailVC())
-        present(newMedicationVC, animated: true)
+        let userMedicationDetail = UserMedicationDetailVC()
+        self.navigationController?.pushViewController(userMedicationDetail, animated: true)
     }
 }
