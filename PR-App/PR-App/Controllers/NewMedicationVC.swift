@@ -8,17 +8,20 @@
 
 import UIKit
 
-protocol UpdateTextFields: AnyObject {
+protocol newMedicationDelegatesEvents: AnyObject {
     func update(name: String, capacity: String, dose: String)
+    func addNewMed()
 }
 
 final class NewMedicationVC: UIViewController {
     
-    weak var delegate: UpdateTextFields?
+    weak var delegate: newMedicationDelegatesEvents?
     private let newMedicationView = NewMedicationView()
     private let programMedicationView = ProgramMedicationView()
     private let tableView = UITableView()
     private let viewModel = PillModel()
+    
+    private var savingUserNameData = FirebaseManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,9 +45,23 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
-        guard let name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
+        guard var name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
+        
+        savingUserNameData.savingUserNameData(pillName: name, capacity: capacity, dose: dose) { (result) in
+            switch result {
+            case .success(let pillName):
+                name = pillName
+                print(pillName)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        
         delegate?.update(name: name, capacity: capacity, dose: dose)
-        dismiss(animated: true, completion: nil)
+        dismiss(animated: true) {
+            self.delegate?.addNewMed()
+        }
     }
     
     private func configureMedicationView() {

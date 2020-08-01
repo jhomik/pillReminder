@@ -19,6 +19,8 @@
 		5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */; };
 		5A9440B024CA06D4000707FA /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9440AF24CA06D4000707FA /* HeaderView.swift */; };
 		5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */; };
+		5AA21ACE24D32692000C6F47 /* UserMedicationDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21ACD24D32692000C6F47 /* UserMedicationDetailModel.swift */; };
+		5AA21AD024D326C3000C6F47 /* MedicationInfoCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21ACF24D326C3000C6F47 /* MedicationInfoCellModel.swift */; };
 		5AA9D0A32477F80D007D85DA /* UserMedicationDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */; };
 		5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AB59DE9248701C400E78BD9 /* CustomTextField.swift */; };
 		5ACB65B224AA41D800F3D454 /* LoginScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */; };
@@ -81,6 +83,8 @@
 		5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndInputMedicationView.swift; sourceTree = "<group>"; };
 		5A9440AF24CA06D4000707FA /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoViewModel.swift; sourceTree = "<group>"; };
+		5AA21ACD24D32692000C6F47 /* UserMedicationDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailModel.swift; sourceTree = "<group>"; };
+		5AA21ACF24D326C3000C6F47 /* MedicationInfoCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicationInfoCellModel.swift; sourceTree = "<group>"; };
 		5AA9D0A22477F80D007D85DA /* UserMedicationDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailVC.swift; sourceTree = "<group>"; };
 		5AB59DE9248701C400E78BD9 /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewModel.swift; sourceTree = "<group>"; };
@@ -221,6 +225,8 @@
 			isa = PBXGroup;
 			children = (
 				5ADFC2C0248402FF008E9282 /* PillModel.swift */,
+				5AA21ACF24D326C3000C6F47 /* MedicationInfoCellModel.swift */,
+				5AA21ACD24D32692000C6F47 /* UserMedicationDetailModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -614,7 +620,9 @@
 				5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
+				5AA21ACE24D32692000C6F47 /* UserMedicationDetailModel.swift in Sources */,
 				5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */,
+				5AA21AD024D326C3000C6F47 /* MedicationInfoCellModel.swift in Sources */,
 				5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */,
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
 				5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */,

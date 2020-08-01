@@ -26,8 +26,12 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    public func configure(with image: UIImage, title: String) {
+        self.imageCell.image = image
+        self.newMedsTitle.text = title
+    }
+    
     private func configureButtonImage() {
-        imageCell.image = Constants.cellImage
         addSubview(imageCell)
         imageCell.translatesAutoresizingMaskIntoConstraints = false
         
@@ -37,10 +41,6 @@ final class CustomCell: UICollectionViewCell {
             imageCell.widthAnchor.constraint(equalToConstant: 50),
             imageCell.heightAnchor.constraint(equalToConstant: 50),
         ])
-    }
-    
-    @objc private func buttonTapped() {
-        print("push a controller with userDetailInfoVC")
     }
     
     private func configureMedsTitle() {

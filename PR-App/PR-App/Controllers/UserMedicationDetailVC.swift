@@ -27,6 +27,7 @@ final class UserMedicationDetailVC: UIViewController {
         tabBarController?.tabBar.isHidden = true
     }
     
+    
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
     }
@@ -74,7 +75,11 @@ final class UserMedicationDetailVC: UIViewController {
     }
 }
 
-extension UserMedicationDetailVC: UpdateTextFields {
+extension UserMedicationDetailVC: newMedicationDelegatesEvents {
+    func addNewMed() {
+        
+    }
+    
     func update(name: String, capacity: String, dose: String) {
         self.medicationView.updatePillNameValue(name)
         self.medicationView.updatePackageCapacityValue(capacity)

@@ -10,9 +10,10 @@ import UIKit
 import Firebase
 
 final class UserMedicationInfoVC: UIViewController {
-
+    
     private var collectionView: UICollectionView?
     private var userNameObserver = FirebaseManager()
+    private var medications = ["dupa"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +26,14 @@ final class UserMedicationInfoVC: UIViewController {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
     }
-
+    
     private func configureViewController() {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
         userNameObserver.observeUserName(for: uid) { result in
             switch result {
             case .success(let userName):
-                self.title = "Hello, " + userName + "!"
+                self.navigationItem.title = "Hello, " + userName + "!"
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -71,13 +72,14 @@ final class UserMedicationInfoVC: UIViewController {
 extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 1
+        return medications.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
-        cell.imageCell.image = Constants.cellImage
-        cell.newMedsTitle.text = Constants.addMedication
+        cell.configure(with: Constants.cellImage, title: Constants.addMedication)
+        
         return cell
     }
     
@@ -88,7 +90,22 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let userMedicationDetail = UserMedicationDetailVC()
-        self.navigationController?.pushViewController(userMedicationDetail, animated: true)
+        let newMedication = UINavigationController(rootViewController: NewMedicationVC())
+        present(newMedication,animated: true)
     }
+}
+
+extension UserMedicationInfoVC: newMedicationDelegatesEvents {
+    func update(name: String, capacity: String, dose: String) {
+    }
+    
+    func addNewMed() {
+    
+        let indexPath = IndexPath(item: self.medications.count - 0, section: 0)
+        collectionView?.insertItems(at: [indexPath])
+        collectionView?.reloadData()
+        print(medications)
+    }
+    
+    
 }

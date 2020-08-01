@@ -15,3 +15,4 @@ struct PillModel {
     let evening = ["No pill", "1", "1/2", "1/4"]
     let sections = ["How many times per day?", "What time?", "Dosage"]
 }
+

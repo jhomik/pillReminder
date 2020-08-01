@@ -11,11 +11,28 @@ import Firebase
 
 final class FirebaseManager {
     
+    private var ref = Database.database().reference()
+    
+    func savingUserNameData(pillName: String, capacity: String, dose: String, completion: @escaping(Result<String, Error>) -> Void) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        let values: Dictionary = ["pillName": pillName, "capacity": capacity, "dose": dose]
+    
+        ref.child("users").child(uid).child("data").updateChildValues(values) { (error, data) in
+            if let error = error {
+                completion(.failure(error))
+                print(error.localizedDescription)
+            }
+            completion(.success("\(data)"))
+            print("Data saved: \(data)")
+        }
+    }
+    
     func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void) {
         
-         Database.database().reference().child("users").child(userId).child("username").observeSingleEvent(of: .value) {
-             snapshot in
-             guard let username = snapshot.value as? String else {
+        ref.child("users").child(userId).child("username").observeSingleEvent(of: .value) {
+            snapshot in
+            guard let username = snapshot.value as? String else {
                 completion(.failure(NSError(domain: "UserName not received", code: 0)))
                 return }
             completion(.success(username))
@@ -44,7 +61,7 @@ final class FirebaseManager {
                 guard let uid = data?.user.uid else { return }
                 
                 let values = ["username": username, "email": email]
-                Database.database().reference().child("users").child(uid).updateChildValues(values) { (error, data) in
+                self.ref.child("users").child(uid).updateChildValues(values) { (error, data) in
                     if let error = error {
                         print(error.localizedDescription)
                     }

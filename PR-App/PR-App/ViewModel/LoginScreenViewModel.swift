@@ -24,7 +24,7 @@ final class LoginScreenViewModel {
     init(loginEvents: LoginScreenEvents) {
         self.loginEvents = loginEvents
     }
-    
+
     func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
         if passOne == passTwo {
             return true

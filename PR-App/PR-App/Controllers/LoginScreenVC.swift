@@ -40,6 +40,7 @@ final class LoginScreenVC: UIViewController {
         configureSegmentedView()
         configureStackViewLoginData()
         createDismisKeyboardTapGesture()
+        
     }
     
     private func configureWelcomeView() {
@@ -88,7 +89,7 @@ final class LoginScreenVC: UIViewController {
         ])
     }
     
-    @objc private func segmentedControllerChange(sender: UISegmentedControl) {
+    @objc func segmentedControllerChange(sender: UISegmentedControl) {
         isSignUp.toggle()
         self.userName.isHidden = !self.isSignUp
         self.confirmInput.isHidden = !self.isSignUp
@@ -175,7 +176,12 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserSuccess() {
-        self.showAlert(message: "Check your email with activation link!", completion: nil)
+        self.showAlert(message: "Check your email with activation link!") {
+            self.segmentedController.selectedSegmentIndex = 0
+            self.isSignUp.toggle()
+            self.userName.isHidden = true
+            self.confirmInput.isHidden = true
+        }
     }
     
     func createUserFailure(error: Error) {

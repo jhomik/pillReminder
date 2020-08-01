@@ -10,9 +10,9 @@ import Foundation
 
 final class UserMedicationInfoViewModel {
     
-    private let firebaseManager = FirebaseManager()
-    
-    func observeUserName(forId id: String) {
-    
-    }
+    private var model: UserMedicationDetailModel?
+ 
+//    var pillName: String {
+//        return model?.pillName
+//    }
 }
