@@ -10,9 +10,19 @@ import Foundation
 
 final class UserMedicationInfoViewModel {
     
-    private var model: UserMedicationDetailModel?
+    private var model = UserMedicationDetailModel()
+    
+    var pillName: String {
+        return model.pillName
+    }
+    
+    var capacity: String {
+        return model.capacity
+    }
+    
+    var dose: String {
+        return model.dose
+    }
  
-//    var pillName: String {
-//        return model?.pillName
-//    }
+
 }

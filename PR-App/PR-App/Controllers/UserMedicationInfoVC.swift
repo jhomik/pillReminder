@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Firebase
 
 final class UserMedicationInfoVC: UIViewController {
     
@@ -29,8 +28,7 @@ final class UserMedicationInfoVC: UIViewController {
     
     private func configureViewController() {
         
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        userNameObserver.observeUserName(for: uid) { result in
+        userNameObserver.observeUserName() { result in
             switch result {
             case .success(let userName):
                 self.navigationItem.title = "Hello, " + userName + "!"
@@ -90,22 +88,22 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let newMedication = UINavigationController(rootViewController: NewMedicationVC())
-        present(newMedication,animated: true)
+        let userMedicationDetailVC = UserMedicationDetailVC()
+        navigationController?.pushViewController(userMedicationDetailVC, animated: true)
     }
 }
 
-extension UserMedicationInfoVC: newMedicationDelegatesEvents {
-    func update(name: String, capacity: String, dose: String) {
-    }
-    
-    func addNewMed() {
-    
-        let indexPath = IndexPath(item: self.medications.count - 0, section: 0)
-        collectionView?.insertItems(at: [indexPath])
-        collectionView?.reloadData()
-        print(medications)
-    }
-    
-    
-}
+//extension UserMedicationInfoVC: newMedicationDelegatesEvents {
+//    func update(name: UserMedicationDetailModel, capacity: UserMedicationDetailModel, dose: UserMedicationDetailModel) {
+//    }
+//    
+//    func addNewMed() {
+//    
+//        let indexPath = IndexPath(item: self.medications.count - 0, section: 0)
+//        collectionView?.insertItems(at: [indexPath])
+//        collectionView?.reloadData()
+//        print(medications)
+//    }
+//    
+//    
+//}

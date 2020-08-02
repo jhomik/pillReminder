@@ -11,14 +11,36 @@ import Firebase
 
 final class FirebaseManager {
     
+    private let users = "users"
+    private let username = "username"
+    private let data = "data"
+    
     private var ref = Database.database().reference()
     
-    func savingUserNameData(pillName: String, capacity: String, dose: String, completion: @escaping(Result<String, Error>) -> Void) {
+    var newData: [UserMedicationDetailModel] = []
+    
+    func observeMedicationInfo(completion: @escaping(Result<UserMedicationDetailModel, Error>) -> Void) {
         
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let values: Dictionary = ["pillName": pillName, "capacity": capacity, "dose": dose]
+        
+        ref.child(users).child(uid).child(data).observe(.value) { (snapshot) in
+            guard let medicationInfo = snapshot.value as? [String : AnyObject] else {
+                completion(.failure(NSError(domain: "Data not received", code: 0)))
+                return
+            }
+            
+            let data = UserMedicationDetailModel(dictionary: medicationInfo)
+            completion(.success(data))
+            }
+        }
     
-        ref.child("users").child(uid).child("data").updateChildValues(values) { (error, data) in
+    func savingMedicationInfo(pillName: String, capacity: String, dose: String, completion: @escaping (Result<String, Error>) -> Void) {
+        
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        let values: Dictionary = ["pillName": pillName, "capacity": capacity, "dose": dose ]
+        
+        ref.child(users).child(uid).child("data").updateChildValues(values) { (error, data) in
             if let error = error {
                 completion(.failure(error))
                 print(error.localizedDescription)
@@ -28,9 +50,11 @@ final class FirebaseManager {
         }
     }
     
-    func observeUserName(for userId: String, completion: @escaping(Result<String, Error>) -> Void) {
+    func observeUserName(completion: @escaping(Result<String, Error>) -> Void) {
         
-        ref.child("users").child(userId).child("username").observeSingleEvent(of: .value) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        ref.child("users").child(uid).child("username").observeSingleEvent(of: .value) {
             snapshot in
             guard let username = snapshot.value as? String else {
                 completion(.failure(NSError(domain: "UserName not received", code: 0)))

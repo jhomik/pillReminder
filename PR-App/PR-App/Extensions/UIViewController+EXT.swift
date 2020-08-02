@@ -20,24 +20,24 @@ extension UIViewController {
     }
     
     func createDismisKeyboardTapGesture() {
-          let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-          view.addGestureRecognizer(tap)
-      }
+        let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func performAnimations(view: UIView) {
+        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
+            self.view.alpha = 0.0
+        }) { (finished) in
+            UIView.transition(with: self.view, duration: 2, options: .transitionCrossDissolve, animations: {
+                self.view.alpha = 0.0
+            }, completion: nil)
+        }
+    }
     
     func textFieldsShaker(inputFields: [CustomTextField]) {
         for x in inputFields {
             if x.text!.isEmpty {
                 x.shake()
-                
-                func performAnimations(view: UIView) {
-                    UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
-                        self.view.alpha = 0.0
-                    }) { (finished) in
-                        UIView.transition(with: self.view, duration: 2, options: .transitionCrossDissolve, animations: {
-                            self.view.alpha = 0.0
-                        }, completion: nil)
-                    }
-                }
             }
         }
     }

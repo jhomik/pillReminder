@@ -8,20 +8,19 @@
 
 import UIKit
 
-protocol newMedicationDelegatesEvents: AnyObject {
-    func update(name: String, capacity: String, dose: String)
-    func addNewMed()
-}
+//protocol newMedicationDelegatesEvents: AnyObject {
+//    func update(name: String, capacity: String, dose: String)
+//}
 
 final class NewMedicationVC: UIViewController {
     
-    weak var delegate: newMedicationDelegatesEvents?
+//    weak var delegate: newMedicationDelegatesEvents?
     private let newMedicationView = NewMedicationView()
     private let programMedicationView = ProgramMedicationView()
     private let tableView = UITableView()
     private let viewModel = PillModel()
     
-    private var savingUserNameData = FirebaseManager()
+    private var firebaseManager = FirebaseManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,22 +44,23 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
-        guard var name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
+        guard let name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
         
-        savingUserNameData.savingUserNameData(pillName: name, capacity: capacity, dose: dose) { (result) in
+        let newData = UserMedicationDetailModel(pillName: name, capacity: capacity, dose: dose)
+        
+        firebaseManager.savingMedicationInfo(pillName: newData.pillName, capacity: newData.capacity, dose: newData.dose) { (result) in
             switch result {
-            case .success(let pillName):
-                name = pillName
-                print(pillName)
-                
+            case .success(let data):
+                print(data)
+
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
         
-        delegate?.update(name: name, capacity: capacity, dose: dose)
+//        delegate?.update(name: name, capacity: capacity, dose: dose)
         dismiss(animated: true) {
-            self.delegate?.addNewMed()
+//            self.delegate?.addNewMed()
         }
     }
     
