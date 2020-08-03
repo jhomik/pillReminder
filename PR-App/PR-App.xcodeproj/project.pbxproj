@@ -32,7 +32,6 @@
 		5ADE71382465DED900D42025 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5ADE71362465DED900D42025 /* LaunchScreen.storyboard */; };
 		5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C0248402FF008E9282 /* PillModel.swift */; };
 		5ADFC2C324854870008E9282 /* NewMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C224854870008E9282 /* NewMedicationView.swift */; };
-		5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */; };
 		5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */; };
 		5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */; };
 		5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */; };
@@ -96,7 +95,6 @@
 		5ADE71372465DED900D42025 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5ADFC2C0248402FF008E9282 /* PillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModel.swift; sourceTree = "<group>"; };
 		5ADFC2C224854870008E9282 /* NewMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationView.swift; sourceTree = "<group>"; };
-		5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgramMedicationView.swift; sourceTree = "<group>"; };
 		5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailView.swift; sourceTree = "<group>"; };
 		5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DosageMedicationDetailView.swift; sourceTree = "<group>"; };
 		5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoVC.swift; sourceTree = "<group>"; };
@@ -170,7 +168,6 @@
 			children = (
 				5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */,
 				5ADFC2C224854870008E9282 /* NewMedicationView.swift */,
-				5ADFC2C424855518008E9282 /* ProgramMedicationView.swift */,
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
 				5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */,
 				5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */,
@@ -617,7 +614,6 @@
 				5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */,
 				5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */,
 				5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */,
-				5ADFC2C524855518008E9282 /* ProgramMedicationView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenVC.swift in Sources */,
 				5AA21ACE24D32692000C6F47 /* UserMedicationDetailModel.swift in Sources */,

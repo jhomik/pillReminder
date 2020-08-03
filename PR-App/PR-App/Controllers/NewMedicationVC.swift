@@ -9,7 +9,7 @@
 import UIKit
 
 protocol NewMedicationCellDelegate {
-    func addNewMedicationCell(with medication: MedicationInfoCellModel)
+    func addNewMedicationCell()
 }
 
 final class NewMedicationVC: UIViewController {
@@ -76,8 +76,8 @@ final class NewMedicationVC: UIViewController {
         }
         dismiss(animated: true) {
             // add new cell with new medication
-            let newMeds = MedicationInfoCellModel(image: "test2", labelName: "test2")
-            self.delegate?.addNewMedicationCell(with: newMeds)
+//            let newMeds = MedicationInfoCellModel(image: "test2", labelName: "test2")
+            self.delegate?.addNewMedicationCell()
         }
     }
     

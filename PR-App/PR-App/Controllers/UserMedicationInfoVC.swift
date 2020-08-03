@@ -27,7 +27,6 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     private func configureViewController() {
-        
         userNameObserver.observeUserName() { result in
             switch result {
             case .success(let userName):
@@ -45,7 +44,6 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     private func configureCollectionView() {
-        
         let width = view.bounds.width
         let padding: CGFloat = 20
         let minimumItemSpacing: CGFloat = 10
@@ -71,7 +69,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return medications.count ?? 0 + 1
+        return medications.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -83,7 +81,6 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         } else {
             cell.configure(with: Constants.cellImage, title: Constants.addMedication)
         }
-        
         
         return cell
     }
@@ -102,12 +99,13 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
 }
 
 extension UserMedicationInfoVC: NewMedicationCellDelegate {
-    func addNewMedicationCell(with medication: MedicationInfoCellModel) {
-        if medications.isEmpty == true {
-            medications = [medication]
-        } else {
-            medications.append(medication)
-        }
-        self.collectionView?.reloadData()
+    func addNewMedicationCell() {
+        self.collectionView?.performBatchUpdates({
+            let newCell = MedicationInfoCellModel(image: "test3", labelName: "test5")
+            medications.append(newCell)
+            let indexPath = IndexPath(item: medications.count - 1, section: 0)
+            collectionView?.insertItems(at: [indexPath])
+            collectionView?.reloadData()
+        }, completion: nil)
     }
 }
