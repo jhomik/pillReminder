@@ -8,17 +8,16 @@
 
 import UIKit
 
-//protocol newMedicationDelegatesEvents: AnyObject {
-//    func update(name: String, capacity: String, dose: String)
-//}
+protocol NewMedicationCellDelegate {
+    func addNewMedicationCell(with medication: MedicationInfoCellModel)
+}
 
 final class NewMedicationVC: UIViewController {
     
-//    weak var delegate: newMedicationDelegatesEvents?
+    var delegate: NewMedicationCellDelegate?
     private let newMedicationView = NewMedicationView()
-    private let programMedicationView = ProgramMedicationView()
     private let tableView = UITableView()
-    private let viewModel = PillModel()
+    private let viewModel = PillModelViewModel()
     
     private var firebaseManager = FirebaseManager()
     
@@ -29,10 +28,25 @@ final class NewMedicationVC: UIViewController {
         configureMedicationView()
         configureTableView()
         createDismisKeyboardTapGesture()
+        observeUserSettings()
     }
     
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
+    }
+    
+    private func observeUserSettings() {
+        firebaseManager.observeMedicationInfo { (result) in
+            switch result {
+            case .success(let data):
+                self.newMedicationView.nameTextField.text = data.pillName
+                self.newMedicationView.capacityTextField.text = data.capacity
+                self.newMedicationView.doseTextField.text = data.dose
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
     
     private func configureNavBar() {
@@ -44,23 +58,26 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
+        
+        // change this to be delegate and try to not accessing newMedicationView file
+        
         guard let name = newMedicationView.nameTextField.text, let capacity = newMedicationView.capacityTextField.text, let dose = newMedicationView.doseTextField.text else { return }
         
         let newData = UserMedicationDetailModel(pillName: name, capacity: capacity, dose: dose)
         
-        firebaseManager.savingMedicationInfo(pillName: newData.pillName, capacity: newData.capacity, dose: newData.dose) { (result) in
+        firebaseManager.savingUserMedicationDetail(pillName: newData.pillName, capacity: newData.capacity, dose: newData.dose) { (result) in
             switch result {
             case .success(let data):
                 print(data)
-
+                
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-        
-//        delegate?.update(name: name, capacity: capacity, dose: dose)
         dismiss(animated: true) {
-//            self.delegate?.addNewMed()
+            // add new cell with new medication
+            let newMeds = MedicationInfoCellModel(image: "test2", labelName: "test2")
+            self.delegate?.addNewMedicationCell(with: newMeds)
         }
     }
     
@@ -114,6 +131,10 @@ extension NewMedicationVC: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionView = HeaderView(frame: .zero, titleLabel: viewModel.sections[section])
         return sectionView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

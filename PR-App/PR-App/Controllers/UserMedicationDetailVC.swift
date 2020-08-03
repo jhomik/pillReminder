@@ -11,8 +11,6 @@ import UIKit
 final class UserMedicationDetailVC: UIViewController {
     
     private let firebaseManager = FirebaseManager()
-    var newData: [UserMedicationDetailModel] = []
-    
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = CustomButton(text: "Change settings")
@@ -85,16 +83,6 @@ final class UserMedicationDetailVC: UIViewController {
     
     @objc private func editButtonTapped() {
         let newMedicationVC = NewMedicationVC()
-        //        newMedicationVC.delegate = self
         present(UINavigationController(rootViewController: newMedicationVC), animated: true)
     }
 }
-
-//extension UserMedicationDetailVC: newMedicationDelegatesEvents {
-//
-//    func update(name: String, capacity: String, dose: String) {
-//        self.medicationView.updatePillNameValue(name)
-//        self.medicationView.updatePackageCapacityValue(capacity)
-//        self.medicationView.updatePillDoseValue(dose)
-//    }
-//}

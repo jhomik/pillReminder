@@ -9,6 +9,11 @@
 import Foundation
 
 struct MedicationInfoCellModel {
-    var image: String
-    var label: String
+    var cellImage: String
+    var cellTitle: String
+    
+    init(image: String = "test", labelName: String = "Metocard") {
+        self.cellImage = image
+        self.cellTitle = labelName
+    }
 }
