@@ -8,10 +8,16 @@
 
 import UIKit
 
+protocol UserMedicationDetailDelegate {
+    func imagePickerEvent()
+}
+
 final class UserMedicationDetailView: UIView {
     
     var viewModel = UserMedicationInfoViewModel()
-
+    var delegate: UserMedicationDetailDelegate?
+    var pillImage = UIImageView()
+    
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Pill name",
                                   attributes: self.titleAttributes),
@@ -54,19 +60,18 @@ final class UserMedicationDetailView: UIView {
     
     func updatePillNameValue(_ value: String) {
         self.pillNameView.updateInputValue(NSAttributedString(string: value,
-        attributes: self.inputAttributes))
+                                                              attributes: self.inputAttributes))
     }
     
     func updatePackageCapacityValue(_ value: String) {
         self.packageCapacityView.updateInputValue(NSAttributedString(string: value,
-        attributes: self.inputAttributes))
+                                                                    attributes: self.inputAttributes))
     }
     
     func updatePillDoseValue(_ value: String) {
         self.pillDoseView.updateInputValue(NSAttributedString(string: value,
-        attributes: self.inputAttributes))
+                                                              attributes: self.inputAttributes))
     }
-
     
     private func configureMedicationView() {
         translatesAutoresizingMaskIntoConstraints = false
@@ -80,20 +85,29 @@ final class UserMedicationDetailView: UIView {
         medicationButtonCamera.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
         medicationButtonCamera.layer.cornerRadius = 16
         medicationButtonCamera.tintColor = .systemGray
+        pillImage.layer.masksToBounds = true
+        pillImage.layer.cornerRadius = 16
         
         addSubview(medicationButtonCamera)
+        medicationButtonCamera.addSubview(pillImage)
+        pillImage.translatesAutoresizingMaskIntoConstraints = false
         medicationButtonCamera.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             medicationButtonCamera.topAnchor.constraint(equalTo: self.topAnchor),
             medicationButtonCamera.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             medicationButtonCamera.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.4),
-            medicationButtonCamera.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            medicationButtonCamera.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            pillImage.topAnchor.constraint(equalTo: self.topAnchor),
+            pillImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            pillImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.4),
+            pillImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
     }
     
     @objc private func imageCameraButtonTapped() {
-        print("button tapped")
+        delegate?.imagePickerEvent()
     }
     
     private func configureMedicationStackView() {

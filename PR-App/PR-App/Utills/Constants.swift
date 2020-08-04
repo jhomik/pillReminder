@@ -15,9 +15,10 @@ struct Constants {
     static let logoImage = UIImage(named: "logo-PR")!
     static let cellImage = UIImage(systemName: "plus.circle.fill")!
     static let addMedication = "Add Medication"
-    static let nameMedication = "Name e.g. Metocard"
-    static let packageMedication = "Package capacity"
-    static let doseMedication = "Dose e.g. 50 (mg)"
+    static let placeHolderNameMedication = "Name e.g. Metocard"
+    static let placeHolderCapacityMedication = "Package capacity"
+    static let placeHolderDoseMedication = "Dose e.g. 50 (mg)"
+    static let changeSettings = "Change settings"
     
 }
 

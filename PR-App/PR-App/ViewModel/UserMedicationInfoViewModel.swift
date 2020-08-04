@@ -23,6 +23,6 @@ final class UserMedicationInfoViewModel {
     var dose: String {
         return model.dose
     }
- 
+    
 
 }
