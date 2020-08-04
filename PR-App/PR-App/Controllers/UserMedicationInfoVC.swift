@@ -92,9 +92,16 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let newMedicationVC = NewMedicationVC()
-        newMedicationVC.delegate = self
-        present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
+        
+        if medications.indices.contains(indexPath.item) == true {
+            let userMedicationDetail = UserMedicationDetailVC()
+            self.navigationController?.pushViewController(userMedicationDetail, animated: true)
+            
+        } else {
+            let newMedicationVC = NewMedicationVC()
+            newMedicationVC.delegate = self
+            present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
+        }
     }
 }
 
