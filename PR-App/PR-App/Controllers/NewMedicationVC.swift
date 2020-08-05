@@ -20,6 +20,7 @@ final class NewMedicationVC: UIViewController {
     private let viewModel = PillModelViewModel()
     private(set) var newData = UserMedicationDetailModel()
     private(set) var imageData = Data()
+    private(set) var containerView = UIView()
     
     
     private var firebaseManager = FirebaseManager()
@@ -63,8 +64,8 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
-        
-        self.firebaseManager.savingImageToStorage(cellImage: self.imageData) { (result) in
+        showLoadingSpinner(with: containerView)
+        firebaseManager.savingImageToStorage(cellImage: imageData) { (result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
@@ -72,9 +73,9 @@ final class NewMedicationVC: UIViewController {
             case .success(let url):
                 guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text else { return }
                 
-                self.newData = UserMedicationDetailModel(pillName: name, capacity: capacity, dose: dose)
+                self.newData = UserMedicationDetailModel(pillName: name, capacity: capacity, dose: dose, cellImage: url)
                 
-                self.firebaseManager.savingUserMedicationDetail(pillName: self.newData.pillName, capacity: self.newData.capacity, dose: self.newData.dose) { (result) in
+                self.firebaseManager.savingUserMedicationDetail(pillName: self.newData.pillName, capacity: self.newData.capacity, dose: self.newData.dose, cellImage: self.newData.cellImage) { (result) in
                     switch result {
                     case .success(let data):
                         print(data)
@@ -82,11 +83,11 @@ final class NewMedicationVC: UIViewController {
                         print(error.localizedDescription)
                     }
                 }
-                self.newData = UserMedicationDetailModel(cellImage: url)
+                self.dismissLoadingSpinner(with: self.containerView)
+                self.dismiss(animated: true) {
+                    self.delegate?.addNewMedicationCell()
+                }
             }
-        }
-        self.dismiss(animated: true) {
-            self.delegate?.addNewMedicationCell()
         }
     }
     

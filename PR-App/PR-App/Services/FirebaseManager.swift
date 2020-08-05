@@ -7,7 +7,9 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseAuth
+import FirebaseStorage
+import FirebaseDatabase
 
 final class FirebaseManager {
     
@@ -42,7 +44,7 @@ final class FirebaseManager {
     // MARK: Saving Medication to Firebase DB
     
     func savingImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
-        refStorage.child("images/filewe.png").putData(cellImage, metadata: nil) { (_, error) in
+        refStorage.child("images/file.png").putData(cellImage, metadata: nil) { (_, error) in
             guard error == nil else {
                 completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))
                 return
@@ -52,12 +54,12 @@ final class FirebaseManager {
                 guard let url = url, error == nil else { return }
                 let urlString = url.absoluteString
                 completion(.success(urlString))
-                print("URL downloaded" + urlString)
+                print("URL downloaded: \(urlString)")
             }
         }
     }
     
-    func savingUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, completion: @escaping (Result<String, Error>) -> Void) {
+    func savingUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?, completion: @escaping (Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: String] = [:]
@@ -70,6 +72,9 @@ final class FirebaseManager {
         }
         if let dose = dose {
             values["dose"] = dose
+        }
+        if let cellImage = cellImage {
+            values["cellImage"] = cellImage
         }
         
         refDatabase.child(users).child(uid).child(medicationData).updateChildValues(values) { (error, data) in

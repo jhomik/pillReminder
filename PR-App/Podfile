@@ -6,8 +6,6 @@ target 'PR-App' do
 
   # Pods for PR-App
 
-pod 'Firebase/Analytics'
-pod 'Firebase/Core'
 pod 'Firebase/Auth'
 pod 'Firebase/Database'
 pod 'Firebase/Storage'

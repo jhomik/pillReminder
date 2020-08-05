@@ -10,6 +10,34 @@ import UIKit
 
 extension UIViewController {
     
+    func showLoadingSpinner(with containerView: UIView) {
+        containerView.frame = view.bounds
+        containerView.backgroundColor = .systemBackground
+        containerView.alpha = 0
+        
+        UIView.animate(withDuration: 0.25) {
+            containerView.alpha = 0.8
+        }
+        
+        let activityIndicator = UIActivityIndicatorView(style: .large)
+        
+        view.addSubview(containerView)
+        containerView.addSubview(activityIndicator)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
+        ])
+        activityIndicator.startAnimating()
+    }
+    
+    func dismissLoadingSpinner(with containerView: UIView) {
+        DispatchQueue.main.async {
+            containerView.removeFromSuperview()
+        }
+    }
+    
     func showAlert(message: String, completion: (() -> Void)?) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
