@@ -8,14 +8,9 @@
 
 import UIKit
 
-protocol UserMedicationDetailDelegate {
-    func imagePickerEvent()
-}
-
 final class UserMedicationDetailView: UIView {
     
     var viewModel = UserMedicationInfoViewModel()
-    var delegate: UserMedicationDetailDelegate?
     var pillImage = UIImageView()
     
     private lazy var pillNameView = TitleAndInputMedicationView(
@@ -107,7 +102,7 @@ final class UserMedicationDetailView: UIView {
     }
     
     @objc private func imageCameraButtonTapped() {
-        delegate?.imagePickerEvent()
+        //
     }
     
     private func configureMedicationStackView() {

@@ -21,7 +21,6 @@ final class UserMedicationDetailVC: UIViewController {
         configureMedicationView()
         configureDoseAndCapacityView()
         configureEditButton()
-        medicationView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,26 +56,6 @@ final class UserMedicationDetailVC: UIViewController {
         ])
     }
     
-    private func configureImagePickerController() {
-        let imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
-        
-        let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
-            imagePicker.sourceType = .camera
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
-            imagePicker.sourceType = .photoLibrary
-            self.present(imagePicker, animated: true, completion: nil)
-        }))
-        
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        self.present(actionSheet, animated: true)
-    }
-    
     private func configureDoseAndCapacityView() {
         view.addSubview(dosageMedicationView)
         
@@ -105,24 +84,5 @@ final class UserMedicationDetailVC: UIViewController {
     @objc private func editButtonTapped() {
         let newMedicationVC = NewMedicationVC()
         present(UINavigationController(rootViewController: newMedicationVC), animated: true)
-    }
-}
-
-extension UserMedicationDetailVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as! UIImage
-        medicationView.pillImage.image = image
-        
-        picker.dismiss(animated: true, completion: nil)
-    }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension UserMedicationDetailVC: UserMedicationDetailDelegate {
-    func imagePickerEvent() {
-        configureImagePickerController()
     }
 }

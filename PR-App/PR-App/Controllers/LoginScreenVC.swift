@@ -121,6 +121,7 @@ final class LoginScreenVC: UIViewController {
         emailInput.delegate = self
         passwordInput.delegate = self
         confirmInput.delegate = self
+        emailInput.keyboardType = .emailAddress
         
         stackViewLoginData.addArrangedSubview(userName)
         stackViewLoginData.addArrangedSubview(emailInput)

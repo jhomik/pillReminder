@@ -11,11 +11,11 @@ import Firebase
 
 final class FirebaseManager {
     
-    private var ref = Database.database().reference()
+    private var refDatabase = Database.database().reference()
+    private var refStorage = Storage.storage().reference()
     private let users = "users"
     private let username = "username"
-    private let data = "data"
-    private let medication = "medication"
+    private let medicationData = "medicationData"
     private let user = "user"
     
     // MARK: Observing Medication in Firebase DB
@@ -23,23 +23,39 @@ final class FirebaseManager {
     func observeMedicationInfo(completion: @escaping(Result<UserMedicationDetailModel, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        ref.child(users).child(uid).child(medication).child(data).observe(.value) { (snapshot) in
+        refDatabase.child(users).child(uid).child(medicationData).observe(.value) { (snapshot) in
             guard let medicationInfo = snapshot.value as? [String : AnyObject] else {
                 completion(.failure(NSError(domain: "Data not received", code: 0)))
                 return
             }
             let data = UserMedicationDetailModel(dictionary: medicationInfo)
             completion(.success(data))
-            }
         }
-    
-    func savingMedicationInfoCell(image: String, title: String, completion: @escaping (Result<String, Error>) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        
-//        ref.child(users).child(uid).child(medication).child(data).chil
     }
     
+    //    func savingMedicationInfoCell(image: String, title: String, completion: @escaping (Result<String, Error>) -> Void) {
+    //        guard let uid = Auth.auth().currentUser?.uid else { return }
+    //
+    ////        ref.child(users).child(uid).child(medication).child(data).chil
+    //    }
+    
     // MARK: Saving Medication to Firebase DB
+    
+    func savingImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
+        refStorage.child("images/filewe.png").putData(cellImage, metadata: nil) { (_, error) in
+            guard error == nil else {
+                completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))
+                return
+            }
+
+            self.refStorage.child("images/file.png").downloadURL { (url, error) in
+                guard let url = url, error == nil else { return }
+                let urlString = url.absoluteString
+                completion(.success(urlString))
+                print("URL downloaded" + urlString)
+            }
+        }
+    }
     
     func savingUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, completion: @escaping (Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
@@ -56,7 +72,7 @@ final class FirebaseManager {
             values["dose"] = dose
         }
         
-        ref.child(users).child(uid).child(medication).child(data).updateChildValues(values) { (error, data) in
+        refDatabase.child(users).child(uid).child(medicationData).updateChildValues(values) { (error, data) in
             if let error = error {
                 completion(.failure(error))
                 print(error.localizedDescription)
@@ -71,11 +87,12 @@ final class FirebaseManager {
     func observeUserName(completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        ref.child(users).child(uid).child(user).child(username).observeSingleEvent(of: .value) {
+        refDatabase.child(users).child(uid).child(user).child(username).observeSingleEvent(of: .value) {
             snapshot in
             guard let username = snapshot.value as? String else {
                 completion(.failure(NSError(domain: "UserName not received", code: 0)))
-                return }
+                return
+            }
             completion(.success(username))
         }
     }
@@ -106,7 +123,7 @@ final class FirebaseManager {
                 guard let uid = data?.user.uid else { return }
                 
                 let values = ["username": username, "email": email]
-                self.ref.child(self.users).child(uid).child(self.user).updateChildValues(values) { (error, data) in
+                self.refDatabase.child(self.users).child(uid).child(self.user).updateChildValues(values) { (error, data) in
                     if let error = error {
                         print(error.localizedDescription)
                     }

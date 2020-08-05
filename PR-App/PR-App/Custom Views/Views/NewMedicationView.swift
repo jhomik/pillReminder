@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol UserMedicationDetailDelegate {
+    func imagePickerEvent()
+}
+
 final class NewMedicationView: UIView {
     
     private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
@@ -15,11 +19,16 @@ final class NewMedicationView: UIView {
     var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
     var doseTextField = CustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     var newMedicationStackView = UIStackView()
+    var medicationImage = UIButton()
+    var pillImage = UIImageView()
+    var delegate: UserMedicationDetailDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureAddMedicationLbl()
+        configureMedicationButtonCamera()
         configureNewMedicationStackView()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -40,6 +49,40 @@ final class NewMedicationView: UIView {
         ])
     }
     
+    private func configureMedicationButtonCamera() {
+        let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        
+        medicationImage.backgroundColor = .systemGray5
+        medicationImage.addTarget(self, action: #selector(imageCameraButtonTapped), for: .touchUpInside)
+        medicationImage.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
+        medicationImage.layer.cornerRadius = 16
+        medicationImage.tintColor = .systemGray
+        pillImage.layer.masksToBounds = true
+        pillImage.layer.cornerRadius = 16
+        
+        addSubview(medicationImage)
+        medicationImage.addSubview(pillImage)
+        pillImage.translatesAutoresizingMaskIntoConstraints = false
+        medicationImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            medicationImage.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
+            medicationImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            medicationImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20),
+            medicationImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35),
+            medicationImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            
+            pillImage.topAnchor.constraint(equalTo: medicationImage.topAnchor),
+            pillImage.leadingAnchor.constraint(equalTo: medicationImage.leadingAnchor),
+            pillImage.widthAnchor.constraint(equalTo: medicationImage.widthAnchor),
+            pillImage.bottomAnchor.constraint(equalTo: medicationImage.bottomAnchor),
+        ])
+    }
+    
+    @objc private func imageCameraButtonTapped() {
+           delegate?.imagePickerEvent()
+       }
+    
     private func configureNewMedicationStackView() {
     
         newMedicationStackView.addArrangedSubview(nameTextField)
@@ -54,7 +97,7 @@ final class NewMedicationView: UIView {
         
         NSLayoutConstraint.activate([
             newMedicationStackView.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
-            newMedicationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            newMedicationStackView.leadingAnchor.constraint(equalTo: medicationImage.trailingAnchor, constant: 20),
             newMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             newMedicationStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])

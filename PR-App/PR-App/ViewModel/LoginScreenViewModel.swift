@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 protocol LoginScreenEvents: class {
     func onLoginSuccess()
     func onLoginFailure(error: Error)

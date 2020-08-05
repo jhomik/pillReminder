@@ -24,5 +24,7 @@ final class UserMedicationInfoViewModel {
         return model.dose
     }
     
-
+    var cellImage: String {
+        return model.cellImage
+    }
 }
