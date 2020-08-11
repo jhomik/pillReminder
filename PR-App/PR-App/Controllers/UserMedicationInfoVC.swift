@@ -11,14 +11,16 @@ import UIKit
 final class UserMedicationInfoVC: UIViewController {
     
     private var collectionView: UICollectionView?
-    private var userNameObserver = FirebaseManager()
-    private var medications: [MedicationInfoCellModel] = []
+    private var firebaseManager = FirebaseManager()
+    private var medications: [UserMedicationDetailModel] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         configureViewController()
+        observe()
         collectionView?.backgroundColor = Constants.backgroundColor
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,7 +29,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     private func configureViewController() {
-        userNameObserver.observeUserName() { result in
+        firebaseManager.observeUserName() { result in
             switch result {
             case .success(let userName):
                 self.navigationItem.title = "Hello, " + userName + "!"
@@ -41,6 +43,13 @@ final class UserMedicationInfoVC: UIViewController {
     
     @objc private func setupNotification() {
         print("notifcation tapped")
+    }
+    
+    private func observe() {
+        firebaseManager.downloadMedicationInfo { [weak self] (result) in
+            self?.medications = result
+            self?.collectionView?.reloadData()
+        }
     }
     
     private func configureCollectionView() {
@@ -77,9 +86,9 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         
         if medications.indices.contains(indexPath.item) == true {
-            cell.newMedsTitle.text = medications[indexPath.item].cellTitle
+            cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
         } else {
-            cell.configure(with: Constants.cellImage, title: Constants.addMedication)
+            cell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
         }
         
         return cell
@@ -99,16 +108,16 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
             
         } else {
             let newMedicationVC = NewMedicationVC()
-            newMedicationVC.delegate = self
+            newMedicationVC.addDelegate = self
             present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
         }
     }
 }
 
 extension UserMedicationInfoVC: NewMedicationCellDelegate {
-    func addNewMedicationCell() {
+    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String) {
         self.collectionView?.performBatchUpdates({
-            let newCell = MedicationInfoCellModel(image: "test3", labelName: "test5")
+            let newCell = UserMedicationDetailModel(pillName: pillName, capacity: capacity, dose: dose, cellImage: cellImageUrl)
             medications.append(newCell)
             let indexPath = IndexPath(item: medications.count - 1, section: 0)
             collectionView?.insertItems(at: [indexPath])

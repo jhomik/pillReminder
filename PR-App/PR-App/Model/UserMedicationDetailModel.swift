@@ -16,10 +16,10 @@ struct UserMedicationDetailModel {
     
     
     init(dictionary: [String: AnyObject]) {
-        self.pillName = dictionary["pillName"] as? String ?? "Pill name"
-        self.capacity = dictionary["capacity"] as? String ?? "Capacity"
-        self.dose = dictionary["dose"] as? String ?? "Dose"
-        self.cellImage = dictionary["cellImage"] as? String ?? "cellImage"
+        self.pillName = dictionary["pillName"] as? String ?? ""
+        self.capacity = dictionary["capacity"] as? String ?? ""
+        self.dose = dictionary["dose"] as? String ?? ""
+        self.cellImage = dictionary["cellImage"] as? String ?? ""
     }
     
     init(pillName: String = "Tritace", capacity: String = "24 pills", dose: String = "10 mg", cellImage: String = "cellImage") {

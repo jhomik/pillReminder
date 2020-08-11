@@ -28,3 +28,4 @@ final class UserMedicationInfoViewModel {
         return model.cellImage
     }
 }
+

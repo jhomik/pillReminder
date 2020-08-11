@@ -16,19 +16,19 @@ final class UserMedicationDetailView: UIView {
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Pill name",
                                   attributes: self.titleAttributes),
-        input: NSAttributedString(string: viewModel.pillName,
+        input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
     private lazy var packageCapacityView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Capacity",
                                   attributes: self.titleAttributes),
-        input: NSAttributedString(string: viewModel.capacity,
+        input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
     private lazy var pillDoseView = TitleAndInputMedicationView(
         title: NSAttributedString(string: "Dose",
                                   attributes: self.titleAttributes),
-        input: NSAttributedString(string: viewModel.dose,
+        input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
     private lazy var titleAttributes: [NSAttributedString.Key: Any] = {

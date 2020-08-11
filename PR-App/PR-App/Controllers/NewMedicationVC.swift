@@ -9,20 +9,19 @@
 import UIKit
 
 protocol NewMedicationCellDelegate {
-    func addNewMedicationCell()
+    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String)
 }
+
 
 final class NewMedicationVC: UIViewController {
     
-    var delegate: NewMedicationCellDelegate?
+    var addDelegate: NewMedicationCellDelegate?
     private let newMedicationView = NewMedicationView()
     private let tableView = UITableView()
     private let viewModel = PillModelViewModel()
-    private(set) var newData = UserMedicationDetailModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
-    
-    
+    private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
     
     override func viewDidLoad() {
@@ -34,7 +33,6 @@ final class NewMedicationVC: UIViewController {
         createDismisKeyboardTapGesture()
         observeUserSettings()
         newMedicationView.delegate = self
-        
     }
     
     private func configureViewController() {
@@ -42,15 +40,11 @@ final class NewMedicationVC: UIViewController {
     }
     
     private func observeUserSettings() {
-        firebaseManager.observeMedicationInfo { (result) in
-            switch result {
-            case .success(let data):
-                self.newMedicationView.nameTextField.text = data.pillName
-                self.newMedicationView.capacityTextField.text = data.capacity
-                self.newMedicationView.doseTextField.text = data.dose
-                
-            case .failure(let error):
-                print(error.localizedDescription)
+        firebaseManager.downloadMedicationInfo { (result) in
+            result.forEach { (data) in
+                self.medicationView.updatePillNameValue(data.pillName)
+                self.medicationView.updatePackageCapacityValue(data.capacity)
+                self.medicationView.updatePillDoseValue(data.dose)
             }
         }
     }
@@ -73,19 +67,11 @@ final class NewMedicationVC: UIViewController {
             case .success(let url):
                 guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text else { return }
                 
-                self.newData = UserMedicationDetailModel(pillName: name, capacity: capacity, dose: dose, cellImage: url)
+                self.firebaseManager.savingUserMedicationDetail(pillName: name, capacity: capacity, dose: dose, cellImage: url)
                 
-                self.firebaseManager.savingUserMedicationDetail(pillName: self.newData.pillName, capacity: self.newData.capacity, dose: self.newData.dose, cellImage: self.newData.cellImage) { (result) in
-                    switch result {
-                    case .success(let data):
-                        print(data)
-                    case .failure(let error):
-                        print(error.localizedDescription)
-                    }
-                }
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true) {
-                    self.delegate?.addNewMedicationCell()
+                    self.addDelegate?.addNewMedicationCell(pillName: name, capacity: capacity, dose: dose, cellImageUrl: url)
                 }
             }
         }
@@ -143,7 +129,6 @@ final class NewMedicationVC: UIViewController {
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-        
     }
 }
 
@@ -181,14 +166,11 @@ extension NewMedicationVC: UIImagePickerControllerDelegate, UINavigationControll
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
-        newMedicationView.pillImage.image = image
         
-        guard let imageFB = image?.pngData() else { return }
-        imageData.append(imageFB)
+        if let uploadData = image?.jpegData(compressionQuality: 0.1) {
+            imageData.append(uploadData)
+        }
         
-        picker.dismiss(animated: true, completion: nil)
-    }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }
 }

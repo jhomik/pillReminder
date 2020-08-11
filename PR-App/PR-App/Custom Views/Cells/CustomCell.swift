@@ -26,8 +26,28 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configure(with image: UIImage, title: String) {
+    override func prepareForReuse() {
+        imageCell.image = nil
+    }
+    
+    public func configureNewMedicationCell(with image: UIImage, title: String) {
         self.imageCell.image = image
+        self.newMedsTitle.text = title
+        
+    }
+    
+    public func configureMedicationCell(with urlImage: String, title: String) {
+        guard let url = URL(string: urlImage) else { return }
+             
+             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                 guard let data = data, error == nil else { return }
+                 DispatchQueue.main.async {
+                     let image = UIImage(data: data)
+                     self.imageCell.image = image
+                 }
+             }
+             task.resume()
+        
         self.newMedsTitle.text = title
     }
     

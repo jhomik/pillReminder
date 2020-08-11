@@ -15,9 +15,9 @@ protocol UserMedicationDetailDelegate {
 final class NewMedicationView: UIView {
     
     private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
-    var nameTextField = CustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
-    var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
-    var doseTextField = CustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
+    private(set) var nameTextField = CustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
+    private(set) var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
+    private(set) var doseTextField = CustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     var newMedicationStackView = UIStackView()
     var medicationImage = UIButton()
     var pillImage = UIImageView()

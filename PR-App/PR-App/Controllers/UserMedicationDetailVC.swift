@@ -21,25 +21,22 @@ final class UserMedicationDetailVC: UIViewController {
         configureMedicationView()
         configureDoseAndCapacityView()
         configureEditButton()
+        
+        firebaseManager.downloadMedicationInfo { (result) in
+            result.forEach { (data) in
+                self.medicationView.updatePillDoseValue(data.pillName)
+                self.medicationView.updatePackageCapacityValue(data.capacity)
+                self.medicationView.updatePillDoseValue(data.dose)
+            }
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
         
-        firebaseManager.observeMedicationInfo { (result) in
-            switch result {
-            case .success(let data):
-                self.medicationView.updatePillNameValue(data.pillName)
-                self.medicationView.updatePackageCapacityValue(data.capacity)
-                self.medicationView.updatePillDoseValue(data.dose)
-                
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        
     }
-    
     
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
