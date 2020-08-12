@@ -23,6 +23,7 @@ final class NewMedicationVC: UIViewController {
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
+    var medicationsToChange: UserMedicationDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,7 +32,7 @@ final class NewMedicationVC: UIViewController {
         configureMedicationView()
         configureTableView()
         createDismisKeyboardTapGesture()
-        observeUserSettings()
+        updateTextFieldsToChange()
         newMedicationView.delegate = self
     }
     
@@ -39,14 +40,8 @@ final class NewMedicationVC: UIViewController {
         view.backgroundColor = Constants.backgroundColor
     }
     
-    private func observeUserSettings() {
-        firebaseManager.downloadMedicationInfo { (result) in
-            result.forEach { (data) in
-                self.medicationView.updatePillNameValue(data.pillName)
-                self.medicationView.updatePackageCapacityValue(data.capacity)
-                self.medicationView.updatePillDoseValue(data.dose)
-            }
-        }
+    func updateTextFieldsToChange() {
+        newMedicationView.nameTextField.text = medicationsToChange?.pillName
     }
     
     private func configureNavBar() {
@@ -166,6 +161,7 @@ extension NewMedicationVC: UIImagePickerControllerDelegate, UINavigationControll
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
+        medicationView.pillImage.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: 0.1) {
             imageData.append(uploadData)

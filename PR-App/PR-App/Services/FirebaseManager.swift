@@ -30,11 +30,10 @@ final class FirebaseManager {
                 guard let child = child as? DataSnapshot, let dict = child.value as? [String: AnyObject] else {
                     return nil
                 }
-                                                       
                 return UserMedicationDetailModel(dictionary: dict)
             }
-            
-            completion(models)
+                print("My models: \(models)")
+                completion(models)
         }
     }
 
@@ -57,7 +56,7 @@ final class FirebaseManager {
     }
     
     // MARK: Saving Medication to Firebase DB
-    
+
     func savingUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         

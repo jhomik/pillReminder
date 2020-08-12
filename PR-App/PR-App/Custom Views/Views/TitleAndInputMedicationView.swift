@@ -21,16 +21,6 @@ final class TitleAndInputMedicationView: UIView {
         return CustomLabel(text: self.input, alignment: .left)
     }()
     
-//    private var title: String = ""
-//    private var input: String = ""
-    
-//    private lazy var titleLabel: CustomLabel = {
-//        return CustomLabel(text: self.title, alignment: .left, size: 10, weight: .bold, color: .systemGray2)
-//    }()
-//    private lazy var inputLabel: CustomLabel = {
-//        return CustomLabel(text: self.input, alignment: .left, size: 24, weight: .medium, color: Constants.mainColor)
-//    }()
-    
     convenience init(title: NSAttributedString, input: NSAttributedString) {
         self.init(frame: .zero)
         self.title = title

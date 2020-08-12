@@ -11,8 +11,9 @@ import UIKit
 final class UserMedicationInfoVC: UIViewController {
     
     private var collectionView: UICollectionView?
-    private var firebaseManager = FirebaseManager()
+    private let firebaseManager = FirebaseManager()
     private var medications: [UserMedicationDetailModel] = []
+    private let containerView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +105,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         
         if medications.indices.contains(indexPath.item) == true {
             let userMedicationDetail = UserMedicationDetailVC()
+            userMedicationDetail.medications = medications[indexPath.item]
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
             
         } else {

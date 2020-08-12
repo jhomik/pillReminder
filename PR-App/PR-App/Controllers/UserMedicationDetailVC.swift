@@ -14,6 +14,7 @@ final class UserMedicationDetailVC: UIViewController {
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = CustomButton(text: Constants.changeSettings)
+    var medications: UserMedicationDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,21 +22,19 @@ final class UserMedicationDetailVC: UIViewController {
         configureMedicationView()
         configureDoseAndCapacityView()
         configureEditButton()
-        
-        firebaseManager.downloadMedicationInfo { (result) in
-            result.forEach { (data) in
-                self.medicationView.updatePillDoseValue(data.pillName)
-                self.medicationView.updatePackageCapacityValue(data.capacity)
-                self.medicationView.updatePillDoseValue(data.dose)
-            }
-        }
+        updateUI()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-        
-        
+    }
+    
+    private func updateUI() {
+        guard let meds = medications else { return }
+        self.medicationView.updatePillNameValue(meds.pillName)
+        self.medicationView.updatePackageCapacityValue(meds.capacity)
+        self.medicationView.updatePillDoseValue(meds.dose)
     }
     
     private func configureViewController() {
@@ -80,6 +79,7 @@ final class UserMedicationDetailVC: UIViewController {
     
     @objc private func editButtonTapped() {
         let newMedicationVC = NewMedicationVC()
+        newMedicationVC.medicationsToChange = medications
         present(UINavigationController(rootViewController: newMedicationVC), animated: true)
     }
 }

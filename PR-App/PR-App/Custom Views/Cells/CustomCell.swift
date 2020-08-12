@@ -26,9 +26,6 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func prepareForReuse() {
-        imageCell.image = nil
-    }
     
     public func configureNewMedicationCell(with image: UIImage, title: String) {
         self.imageCell.image = image
