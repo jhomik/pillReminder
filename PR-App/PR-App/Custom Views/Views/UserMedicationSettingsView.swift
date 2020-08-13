@@ -12,9 +12,9 @@ protocol UserMedicationDetailDelegate {
     func imagePickerEvent()
 }
 
-final class NewMedicationSettingsView: UIView {
+class UserMedicationSettingsView: UIView {
     
-    private let addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
+    private(set) var addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = CustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
     private(set) var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
     private(set) var doseTextField = CustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
@@ -28,7 +28,6 @@ final class NewMedicationSettingsView: UIView {
         configureAddMedicationLbl()
         configureMedicationButtonCamera()
         configureNewMedicationStackView()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +44,7 @@ final class NewMedicationSettingsView: UIView {
             addMedicationLbl.topAnchor.constraint(equalTo: self.topAnchor,constant: 12),
             addMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             addMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            addMedicationLbl.heightAnchor.constraint(equalToConstant: 20)
+            addMedicationLbl.heightAnchor.constraint(equalToConstant: 30)
         ])
     }
     

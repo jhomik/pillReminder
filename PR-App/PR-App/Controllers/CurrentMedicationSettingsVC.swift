@@ -1,22 +1,16 @@
 //
-//  NewMedicationVC.swift
+//  CurrentMedicationSettingsVC.swift
 //  PR-App
 //
-//  Created by Jakub Homik on 27/05/2020.
+//  Created by Jakub Homik on 13/08/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-protocol NewMedicationCellDelegate {
-    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String)
-}
-
-
-final class NewMedicationVC: UIViewController {
+class CurrentMedicationSettingsVC: UIViewController {
     
-    var addDelegate: NewMedicationCellDelegate?
-    private let newMedicationView = NewMedicationView()
+    private let userMedicationSettingView = UserMedicationSettingsView()
     private let tableView = UITableView()
     private let viewModel = PillModelViewModel()
     private(set) var imageData = Data()
@@ -33,7 +27,7 @@ final class NewMedicationVC: UIViewController {
         configureTableView()
         createDismisKeyboardTapGesture()
         updateTextFieldsToChange()
-        newMedicationView.delegate = self
+        userMedicationSettingView.delegate = self
     }
     
     private func configureViewController() {
@@ -41,7 +35,10 @@ final class NewMedicationVC: UIViewController {
     }
     
     func updateTextFieldsToChange() {
-        newMedicationView.nameTextField.text = medicationsToChange?.pillName
+        userMedicationSettingView.addMedicationLbl.text = Constants.changeMedications
+        userMedicationSettingView.nameTextField.text = medicationsToChange?.pillName
+        userMedicationSettingView.capacityTextField.text = medicationsToChange?.capacity
+        userMedicationSettingView.doseTextField.text = medicationsToChange?.dose
     }
     
     private func configureNavBar() {
@@ -53,23 +50,7 @@ final class NewMedicationVC: UIViewController {
     }
     
     @objc private func saveSettings() {
-        showLoadingSpinner(with: containerView)
-        firebaseManager.savingImageToStorage(cellImage: imageData) { (result) in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-                
-            case .success(let url):
-                guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text else { return }
-                
-                self.firebaseManager.savingUserMedicationDetail(pillName: name, capacity: capacity, dose: dose, cellImage: url)
-                
-                self.dismissLoadingSpinner(with: self.containerView)
-                self.dismiss(animated: true) {
-                    self.addDelegate?.addNewMedicationCell(pillName: name, capacity: capacity, dose: dose, cellImageUrl: url)
-                }
-            }
-        }
+        print("update medications")
     }
     
     private func configureImagePickerController() {
@@ -97,13 +78,13 @@ final class NewMedicationVC: UIViewController {
     }
     
     private func configureMedicationView() {
-        view.addSubview(newMedicationView)
+        view.addSubview(userMedicationSettingView)
         
         NSLayoutConstraint.activate([
-            newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.24)
+            userMedicationSettingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            userMedicationSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            userMedicationSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            userMedicationSettingView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.24)
         ])
     }
     
@@ -119,7 +100,7 @@ final class NewMedicationVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: newMedicationView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: userMedicationSettingView.bottomAnchor, constant: 20),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -127,7 +108,7 @@ final class NewMedicationVC: UIViewController {
     }
 }
 
-extension NewMedicationVC: UITableViewDataSource, UITableViewDelegate {
+extension CurrentMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.sections.count
@@ -157,7 +138,7 @@ extension NewMedicationVC: UITableViewDataSource, UITableViewDelegate {
     }
 }
 
-extension NewMedicationVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CurrentMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
@@ -171,7 +152,7 @@ extension NewMedicationVC: UIImagePickerControllerDelegate, UINavigationControll
     }
 }
 
-extension NewMedicationVC: UserMedicationDetailDelegate {
+extension CurrentMedicationSettingsVC: UserMedicationDetailDelegate {
     func imagePickerEvent() {
         configureImagePickerController()
     }

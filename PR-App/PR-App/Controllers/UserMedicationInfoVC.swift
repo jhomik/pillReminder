@@ -109,7 +109,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
             
         } else {
-            let newMedicationVC = NewMedicationVC()
+            let newMedicationVC = NewMedicationSettingsVC()
             newMedicationVC.addDelegate = self
             present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
         }

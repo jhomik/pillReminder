@@ -19,6 +19,7 @@ struct Constants {
     static let placeHolderCapacityMedication = "Package capacity"
     static let placeHolderDoseMedication = "Dose e.g. 50 (mg)"
     static let changeSettings = "Change settings"
+    static let changeMedications = "Change Medications"
     
 }
 

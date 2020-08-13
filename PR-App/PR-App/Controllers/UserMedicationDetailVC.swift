@@ -78,8 +78,8 @@ final class UserMedicationDetailVC: UIViewController {
     }
     
     @objc private func editButtonTapped() {
-        let newMedicationVC = NewMedicationVC()
-        newMedicationVC.medicationsToChange = medications
-        present(UINavigationController(rootViewController: newMedicationVC), animated: true)
+        let currentMedicationVC = CurrentMedicationSettingsVC()
+        currentMedicationVC.medicationsToChange = medications
+        present(UINavigationController(rootViewController: currentMedicationVC), animated: true)
     }
 }
