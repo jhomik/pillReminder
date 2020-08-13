@@ -19,6 +19,7 @@ final class FirebaseManager {
     private let username = "username"
     private let medicationData = "medicationData"
     private let user = "user"
+    private let imageName = UUID().uuidString
     
     // MARK: Download Medication from Firebase DB
     
@@ -32,7 +33,6 @@ final class FirebaseManager {
                 }
                 return UserMedicationDetailModel(dictionary: dict)
             }
-                print("My models: \(models)")
                 completion(models)
         }
     }
@@ -40,13 +40,15 @@ final class FirebaseManager {
     // MARK: Saving and downloading image to storage
     
     func savingImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
-        refStorage.child("images/file.jpg").putData(cellImage, metadata: nil) { (_, error) in
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        refStorage.child(uid).child(imageName).putData(cellImage, metadata: nil) { (_, error) in
             guard error == nil else {
                 completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))
                 return
             }
             
-            self.refStorage.child("images/file.jpg").downloadURL { (url, error) in
+            self.refStorage.child(uid).child(self.imageName).downloadURL { (url, error) in
                 guard let url = url, error == nil else { return }
                 let urlString = url.absoluteString
                 completion(.success(urlString))

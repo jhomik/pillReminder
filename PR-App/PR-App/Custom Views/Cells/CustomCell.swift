@@ -14,6 +14,7 @@ final class CustomCell: UICollectionViewCell {
     
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
+    let cache = NSCache<NSString, UIImage>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -30,13 +31,20 @@ final class CustomCell: UICollectionViewCell {
         self.newMedsTitle.text = title
     }
     
-    public func configureMedicationCell(with urlImage: String, title: String) {
-        guard let url = URL(string: urlImage) else { return }
+    public func configureMedicationCell(with urlImageString: String, title: String) {
+        let cacheKey = NSString(string: urlImageString)
+        
+        if let image = cache.object(forKey: cacheKey) {
+            self.imageCell.image = image
+        }
+        
+        guard let url = URL(string: urlImageString) else { return }
         
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data, error == nil else { return }
+            guard let image = UIImage(data: data) else { return }
+            self.cache.setObject(image, forKey: cacheKey)
             DispatchQueue.main.async {
-                let image = UIImage(data: data)
                 self.imageCell.image = image
             }
         }
@@ -54,6 +62,10 @@ final class CustomCell: UICollectionViewCell {
         newMedsTitle.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         newMedsTitle.textAlignment = .center
         newMedsTitle.numberOfLines = 0
+        
+        imageCell.clipsToBounds = true
+        imageCell.layer.cornerRadius = 20
+        imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         NSLayoutConstraint.activate([
             imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
@@ -78,6 +90,6 @@ final class CustomCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
         layer.shadowRadius = 10.0
         layer.shadowOpacity = 1.0
-        layer.masksToBounds = false
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }

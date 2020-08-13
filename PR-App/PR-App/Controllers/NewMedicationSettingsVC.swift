@@ -66,8 +66,6 @@ class NewMedicationSettingsVC: UIViewController {
                 }
             }
         }
-        
-        
     }
     
     private func configureImagePickerController() {
@@ -75,7 +73,6 @@ class NewMedicationSettingsVC: UIViewController {
         imagePicker.delegate = self
         
         let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
-        
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
@@ -90,7 +87,6 @@ class NewMedicationSettingsVC: UIViewController {
             self.present(imagePicker, animated: true, completion: nil)
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
         self.present(actionSheet, animated: true)
     }
     
@@ -159,7 +155,7 @@ extension NewMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigation
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let image = info[.originalImage] as? UIImage
-        medicationView.pillImage.image = image
+        newMedicationView.pillImage.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: 0.1) {
             imageData.append(uploadData)
