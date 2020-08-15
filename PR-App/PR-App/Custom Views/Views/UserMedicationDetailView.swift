@@ -80,8 +80,10 @@ final class UserMedicationDetailView: UIView {
         medicationButtonCamera.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
         medicationButtonCamera.layer.cornerRadius = 16
         medicationButtonCamera.tintColor = .systemGray
+        pillImage.contentMode = .scaleAspectFill
         pillImage.layer.masksToBounds = true
         pillImage.layer.cornerRadius = 16
+    
         
         addSubview(medicationButtonCamera)
         medicationButtonCamera.addSubview(pillImage)
@@ -91,12 +93,12 @@ final class UserMedicationDetailView: UIView {
         NSLayoutConstraint.activate([
             medicationButtonCamera.topAnchor.constraint(equalTo: self.topAnchor),
             medicationButtonCamera.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            medicationButtonCamera.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.4),
+            medicationButtonCamera.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
             medicationButtonCamera.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
             pillImage.topAnchor.constraint(equalTo: self.topAnchor),
             pillImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            pillImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.4),
+            pillImage.widthAnchor.constraint(equalTo: medicationButtonCamera.widthAnchor),
             pillImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])
     }

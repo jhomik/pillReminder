@@ -58,7 +58,7 @@ class UserMedicationSettingsView: UIView {
         medicationImage.tintColor = .systemGray
         pillImage.layer.masksToBounds = true
         pillImage.layer.cornerRadius = 16
-        pillImage.contentMode = .scaleAspectFill
+        pillImage.contentMode = .scaleToFill
         
         addSubview(medicationImage)
         medicationImage.addSubview(pillImage)

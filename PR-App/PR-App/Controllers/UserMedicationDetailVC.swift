@@ -35,6 +35,7 @@ final class UserMedicationDetailVC: UIViewController {
         self.medicationView.updatePillNameValue(meds.pillName)
         self.medicationView.updatePackageCapacityValue(meds.capacity)
         self.medicationView.updatePillDoseValue(meds.dose)
+        firebaseManager.downloadImage(with: meds.cellImage, imageCell: medicationView.pillImage)
     }
     
     private func configureViewController() {

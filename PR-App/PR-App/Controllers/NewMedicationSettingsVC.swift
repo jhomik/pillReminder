@@ -42,7 +42,6 @@ class NewMedicationSettingsVC: UIViewController {
         navigationController?.navigationBar.barTintColor = Constants.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = Constants.mainColor
     }
     
     @objc private func saveSettings() {
@@ -52,13 +51,13 @@ class NewMedicationSettingsVC: UIViewController {
             textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField ])
         } else {
             showLoadingSpinner(with: containerView)
-            firebaseManager.savingImageToStorage(cellImage: imageData) { (result) in
+            firebaseManager.saveImageToStorage(cellImage: imageData) { (result) in
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
                     
                 case .success(let url):
-                    self.firebaseManager.savingUserMedicationDetail(pillName: name, capacity: capacity, dose: dose, cellImage: url)
+                    self.firebaseManager.saveUserMedicationDetail(pillName: name, capacity: capacity, dose: dose, cellImage: url)
                     self.dismissLoadingSpinner(with: self.containerView)
                     self.dismiss(animated: true) {
                         self.addDelegate?.addNewMedicationCell(pillName: name, capacity: capacity, dose: dose, cellImageUrl: url)
@@ -157,7 +156,7 @@ extension NewMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigation
         let image = info[.originalImage] as? UIImage
         newMedicationView.pillImage.image = image
         
-        if let uploadData = image?.jpegData(compressionQuality: 0.1) {
+        if let uploadData = image?.jpegData(compressionQuality: 0) {
             imageData.append(uploadData)
         }
         

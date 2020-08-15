@@ -34,8 +34,8 @@ class WelcomeView: UIView {
         NSLayoutConstraint.activate([
             welcomeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             welcomeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            welcomeImage.widthAnchor.constraint(equalToConstant: 200),
-            welcomeImage.heightAnchor.constraint(equalToConstant: 180)
+            welcomeImage.widthAnchor.constraint(equalToConstant: 260),
+            welcomeImage.heightAnchor.constraint(equalToConstant: 240)
         ])
     }
 }

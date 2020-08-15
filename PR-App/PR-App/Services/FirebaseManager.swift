@@ -20,6 +20,7 @@ final class FirebaseManager {
     private let medicationData = "medicationData"
     private let user = "user"
     private let imageName = UUID().uuidString
+    private let userDefaults = UserDefaults.standard
     
     // MARK: Download Medication from Firebase DB
     
@@ -39,7 +40,7 @@ final class FirebaseManager {
 
     // MARK: Saving and downloading image to storage
     
-    func savingImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
+    func saveImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         refStorage.child(uid).child(imageName).putData(cellImage, metadata: nil) { (_, error) in
@@ -57,9 +58,34 @@ final class FirebaseManager {
         }
     }
     
+    // MARK: Downloading image or retrive from UserDefaults Data
+    
+    func downloadImage(with urlString: String, imageCell: UIImageView) {
+        
+        if let data = self.userDefaults.data(forKey: urlString), let image = UIImage(data: data) {
+            imageCell.image = image
+            print("got this image from UserDefaults")
+            print(userDefaults)
+            return
+        }
+        
+        guard let url = URL(string: urlString) else { return }
+        
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+            DispatchQueue.main.async {
+                if let data = data, let image = UIImage(data: data) {
+                    self?.userDefaults.set(image.jpegData(compressionQuality: 0), forKey: urlString)
+                    imageCell.image = image
+                    print("got this from firebase")
+                }
+            }
+        }
+        task.resume()
+    }
+    
     // MARK: Saving Medication to Firebase DB
 
-    func savingUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) {
+    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: String] = [:]

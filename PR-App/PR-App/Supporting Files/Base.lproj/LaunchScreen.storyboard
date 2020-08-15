@@ -16,17 +16,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo-PR" translatesAutoresizingMaskIntoConstraints="NO" id="3Op-uB-U1x">
-                                <rect key="frame" x="107" y="358" width="200" height="180"/>
+                                <rect key="frame" x="77" y="328" width="260" height="240"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="cTp-Qy-Ytd"/>
-                                    <constraint firstAttribute="height" constant="180" id="rwy-hX-SLx"/>
+                                    <constraint firstAttribute="width" constant="260" id="cTp-Qy-Ytd"/>
+                                    <constraint firstAttribute="height" constant="240" id="rwy-hX-SLx"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="3Op-uB-U1x" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="XFG-pg-a3d"/>
-                            <constraint firstItem="3Op-uB-U1x" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cAr-tT-IH6"/>
+                            <constraint firstItem="3Op-uB-U1x" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="R7C-fL-Hzs"/>
+                            <constraint firstItem="3Op-uB-U1x" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="xN5-U8-SWm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

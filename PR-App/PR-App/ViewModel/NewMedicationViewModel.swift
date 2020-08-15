@@ -12,7 +12,7 @@ final class NewMedicationViewModel {
     
     private let firebaseManager = FirebaseManager()
     
-//    func savingUserMedicationDetail(pillName: String, capacity: String, dose: String, cellImageUrl: String) {
+//    func saveUserMedicationDetail(pillName: String, capacity: String, dose: String, cellImageUrl: String) {
 //        firebaseManager.savingUserMedicationDetail(pillName: pillName, capacity: capacity, dose: dose, cellImage: cellImageUrl)
 //    }
 }

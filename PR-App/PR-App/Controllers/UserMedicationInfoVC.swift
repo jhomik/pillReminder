@@ -21,12 +21,12 @@ final class UserMedicationInfoVC: UIViewController {
         configureViewController()
         observe()
         collectionView?.backgroundColor = Constants.backgroundColor
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
+        
     }
     
     private func configureViewController() {
@@ -49,7 +49,9 @@ final class UserMedicationInfoVC: UIViewController {
     private func observe() {
         firebaseManager.downloadMedicationInfo { [weak self] (result) in
             self?.medications = result
-            self?.collectionView?.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView?.reloadData()
+            }
         }
     }
     
@@ -68,6 +70,7 @@ final class UserMedicationInfoVC: UIViewController {
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
         collectionView?.register(CustomCellHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CustomCellHeader.reuseID)
+        collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: AddMedicationCell.reuseId)
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
@@ -86,13 +89,19 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         
-        if medications.indices.contains(indexPath.item) == true {
-            cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
-        } else {
-            cell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
-        }
+        cell.imageCell.image = UIImage()
         
-        return cell
+        if medications.indices.contains(indexPath.item) == true {
+            showLoadingSpinner(with: containerView)
+            cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
+            return cell
+        } else {
+            let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
+            addMedCell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
+            dismissLoadingSpinner(with: containerView)
+            return addMedCell
+            
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

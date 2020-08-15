@@ -35,10 +35,12 @@ class CurrentMedicationSettingsVC: UIViewController {
     }
     
     func updateTextFieldsToChange() {
+        guard let medication = medicationsToChange else { return }
         userMedicationSettingView.addMedicationLbl.text = Constants.changeMedications
-        userMedicationSettingView.nameTextField.text = medicationsToChange?.pillName
-        userMedicationSettingView.capacityTextField.text = medicationsToChange?.capacity
-        userMedicationSettingView.doseTextField.text = medicationsToChange?.dose
+        userMedicationSettingView.nameTextField.text = medication.pillName
+        userMedicationSettingView.capacityTextField.text = medication.capacity
+        userMedicationSettingView.doseTextField.text = medication.dose
+        firebaseManager.downloadImage(with: medication.cellImage, imageCell: userMedicationSettingView.pillImage)
     }
     
     private func configureNavBar() {
@@ -46,7 +48,6 @@ class CurrentMedicationSettingsVC: UIViewController {
         navigationController?.navigationBar.barTintColor = Constants.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        navigationController?.navigationBar.tintColor = Constants.mainColor
     }
     
     @objc private func saveSettings() {

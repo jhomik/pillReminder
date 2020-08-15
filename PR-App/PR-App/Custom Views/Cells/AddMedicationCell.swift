@@ -1,16 +1,15 @@
 //
-//  CustomCell.swift
+//  AddMedicationCell.swift
 //  PR-App
 //
-//  Created by Jakub Homik on 14/05/2020.
+//  Created by Jakub Homik on 14/08/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-final class CustomCell: UICollectionViewCell {
-    
-    static let reuseId = "CustomCell"
+final class AddMedicationCell: UICollectionViewCell {
+    static let reuseId = "AddMedicationCell"
     
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
@@ -32,35 +31,28 @@ final class CustomCell: UICollectionViewCell {
         self.newMedsTitle.text = title
     }
     
-    public func configureMedicationCell(with urlImageString: String, title: String) {
-        firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
-        
-        self.newMedsTitle.text = title
-    }
-    
     private func configureSubviewsInCell() {
         self.addSubview(imageCell)
         self.addSubview(newMedsTitle)
-        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
         imageCell.translatesAutoresizingMaskIntoConstraints = false
+        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        imageCell.contentMode = .scaleAspectFit
+        imageCell.tintColor = Constants.mainColor
         
         newMedsTitle.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         newMedsTitle.textAlignment = .center
         newMedsTitle.numberOfLines = 0
         
-        imageCell.clipsToBounds = true
-        imageCell.layer.cornerRadius = 20
-        imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-
         NSLayoutConstraint.activate([
-            imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageCell.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageCell.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageCell.bottomAnchor.constraint(equalTo: newMedsTitle.topAnchor),
+            imageCell.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            imageCell.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -10),
+            imageCell.heightAnchor.constraint(equalToConstant: 50),
+            imageCell.widthAnchor.constraint(equalToConstant: 50),
             
             newMedsTitle.topAnchor.constraint(equalTo: imageCell.bottomAnchor),
             newMedsTitle.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
+            newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             newMedsTitle.heightAnchor.constraint(equalToConstant: 40),
         ])
     }
@@ -78,3 +70,4 @@ final class CustomCell: UICollectionViewCell {
         self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }
+
