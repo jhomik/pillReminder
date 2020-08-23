@@ -19,9 +19,10 @@ class UserMedicationSettingsView: UIView {
     private(set) var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
     private(set) var doseTextField = CustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     var newMedicationStackView = UIStackView()
-    var medicationImage = UIButton()
+    var medicationButton = UIButton()
     var pillImage = UIImageView()
     var delegate: UserMedicationDetailDelegate?
+    let tapToChange = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -51,31 +52,47 @@ class UserMedicationSettingsView: UIView {
     private func configureMedicationButtonCamera() {
         let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         
-        medicationImage.backgroundColor = .systemGray5
-        medicationImage.addTarget(self, action: #selector(imageCameraButtonTapped), for: .touchUpInside)
-        medicationImage.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
-        medicationImage.layer.cornerRadius = 16
-        medicationImage.tintColor = .systemGray
+        medicationButton.backgroundColor = .systemGray5
+        medicationButton.addTarget(self, action: #selector(imageCameraButtonTapped), for: .touchUpInside)
+        medicationButton.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
+        medicationButton.layer.cornerRadius = 16
+        medicationButton.tintColor = .systemGray
+        medicationButton.layer.masksToBounds = true
+        
+        tapToChange.text = Constants.tapToChange
+        tapToChange.backgroundColor = UIColor(white: 0, alpha: 0.7)
+        tapToChange.textColor = .systemBackground
+        tapToChange.textAlignment = .center
+        tapToChange.layer.masksToBounds = true
+        
         pillImage.layer.masksToBounds = true
         pillImage.layer.cornerRadius = 16
         pillImage.contentMode = .scaleToFill
         
-        addSubview(medicationImage)
-        medicationImage.addSubview(pillImage)
+        
+        addSubview(medicationButton)
+        medicationButton.addSubview(pillImage)
+        medicationButton.addSubview(tapToChange)
         pillImage.translatesAutoresizingMaskIntoConstraints = false
-        medicationImage.translatesAutoresizingMaskIntoConstraints = false
+        medicationButton.translatesAutoresizingMaskIntoConstraints = false
+        tapToChange.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            medicationImage.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
-            medicationImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            medicationImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20),
-            medicationImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35),
-            medicationImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            medicationButton.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
+            medicationButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            medicationButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 20),
+            medicationButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.35),
+            medicationButton.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             
-            pillImage.topAnchor.constraint(equalTo: medicationImage.topAnchor),
-            pillImage.leadingAnchor.constraint(equalTo: medicationImage.leadingAnchor),
-            pillImage.widthAnchor.constraint(equalTo: medicationImage.widthAnchor),
-            pillImage.bottomAnchor.constraint(equalTo: medicationImage.bottomAnchor),
+            tapToChange.heightAnchor.constraint(equalToConstant: 30),
+            tapToChange.leadingAnchor.constraint(equalTo: medicationButton.leadingAnchor),
+            tapToChange.trailingAnchor.constraint(equalTo: medicationButton.trailingAnchor),
+            tapToChange.bottomAnchor.constraint(equalTo: medicationButton.bottomAnchor),
+            
+            pillImage.topAnchor.constraint(equalTo: medicationButton.topAnchor),
+            pillImage.leadingAnchor.constraint(equalTo: medicationButton.leadingAnchor),
+            pillImage.widthAnchor.constraint(equalTo: medicationButton.widthAnchor),
+            pillImage.bottomAnchor.constraint(equalTo: medicationButton.bottomAnchor),
         ])
     }
     
@@ -97,7 +114,7 @@ class UserMedicationSettingsView: UIView {
         
         NSLayoutConstraint.activate([
             newMedicationStackView.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: 20),
-            newMedicationStackView.leadingAnchor.constraint(equalTo: medicationImage.trailingAnchor, constant: 20),
+            newMedicationStackView.leadingAnchor.constraint(equalTo: medicationButton.trailingAnchor, constant: 20),
             newMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             newMedicationStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])

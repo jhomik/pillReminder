@@ -27,6 +27,7 @@ class CurrentMedicationSettingsVC: UIViewController {
         configureTableView()
         createDismisKeyboardTapGesture()
         updateTextFieldsToChange()
+        configureCurrentMedicationView()
         userMedicationSettingView.delegate = self
     }
     
@@ -36,11 +37,14 @@ class CurrentMedicationSettingsVC: UIViewController {
     
     func updateTextFieldsToChange() {
         guard let medication = medicationsToChange else { return }
-        userMedicationSettingView.addMedicationLbl.text = Constants.changeMedications
         userMedicationSettingView.nameTextField.text = medication.pillName
         userMedicationSettingView.capacityTextField.text = medication.capacity
         userMedicationSettingView.doseTextField.text = medication.dose
         firebaseManager.downloadImage(with: medication.cellImage, imageCell: userMedicationSettingView.pillImage)
+    }
+    
+    private func configureCurrentMedicationView() {
+        userMedicationSettingView.addMedicationLbl.text = Constants.changeMedications
     }
     
     private func configureNavBar() {

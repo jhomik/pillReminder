@@ -20,7 +20,7 @@ struct Constants {
     static let placeHolderDoseMedication = "Dose e.g. 50 (mg)"
     static let changeSettings = "Change settings"
     static let changeMedications = "Change Medications"
-    
+    static let tapToChange = "Tap to change"
 }
 
 

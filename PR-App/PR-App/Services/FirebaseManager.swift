@@ -58,6 +58,14 @@ final class FirebaseManager {
         }
     }
     
+    //MARK: Removing Medication from Firebase DB
+//    
+//    func removeData() {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        
+//        refDatabase.child(users).child(uid).child(medicationData).remo
+//    }
+    
     // MARK: Downloading image or retrive from UserDefaults Data
     
     func downloadImage(with urlString: String, imageCell: UIImageView) {

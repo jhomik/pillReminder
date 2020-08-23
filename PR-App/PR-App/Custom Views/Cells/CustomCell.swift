@@ -11,16 +11,17 @@ import UIKit
 final class CustomCell: UICollectionViewCell {
     
     static let reuseId = "CustomCell"
-    
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
-    var firebaseManager = FirebaseManager()
-    
+    let deleteButton = UIButton()
+    private var firebaseManager = FirebaseManager()
+    var editButtonTapped: () -> Void = {}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCell()
         configureSubviewsInCell()
+        configureDeleteButton()
     }
     
     required init?(coder: NSCoder) {
@@ -34,8 +35,27 @@ final class CustomCell: UICollectionViewCell {
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
         firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
-        
         self.newMedsTitle.text = title
+    }
+    
+    func configureDeleteButton() {
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+        deleteButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfiguration), for: .normal)
+        deleteButton.tintColor = Constants.mainColor
+        deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(deleteButton)
+        
+        NSLayoutConstraint.activate([
+            deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: -10),
+            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -10),
+        ])
+    }
+    
+    @objc func deleteButtonTapped() {
+        print("delete button tapped")
+        editButtonTapped()
     }
     
     private func configureSubviewsInCell() {

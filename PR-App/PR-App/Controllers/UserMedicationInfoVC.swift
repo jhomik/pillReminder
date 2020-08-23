@@ -14,22 +14,26 @@ final class UserMedicationInfoVC: UIViewController {
     private let firebaseManager = FirebaseManager()
     private var medications: [UserMedicationDetailModel] = []
     private let containerView = UIView()
+    private var isActiveEditButton = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
-        configureViewController()
-        observe()
+        configureNavigationBar()
+        updateMedicationInfo()
         collectionView?.backgroundColor = Constants.backgroundColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = false
-        
     }
     
-    private func configureViewController() {
+    private func configureNavigationBar() {
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(setupNotification))
+        changeBarButtonItem()
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+        
         firebaseManager.observeUserName() { result in
             switch result {
             case .success(let userName):
@@ -38,21 +42,40 @@ final class UserMedicationInfoVC: UIViewController {
                 print(error.localizedDescription)
             }
         }
-        
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(setupNotification))
     }
     
     @objc private func setupNotification() {
         print("notifcation tapped")
     }
     
-    private func observe() {
+    private func changeBarButtonItem() {
+        let barButtonItem: UIBarButtonItem.SystemItem = isActiveEditButton ? .cancel : .edit
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
+    }
+    
+    @objc private func deleteMedication() {
+        isActiveEditButton.toggle()
+        changeBarButtonItem()
+    }
+    
+    private func updateMedicationInfo() {
         firebaseManager.downloadMedicationInfo { [weak self] (result) in
             self?.medications = result
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()
             }
         }
+    }
+    
+    private func deleteItem(for item: CustomCell) {
+        collectionView?.performBatchUpdates({
+            if let indexPath = collectionView?.indexPath(for: item) {
+                medications.remove(at: indexPath.item)
+                let indexPath = IndexPath(item: indexPath.item, section: 0)
+                collectionView?.deleteItems(at: [indexPath])
+                collectionView?.reloadData()
+            }
+        }, completion: nil)
     }
     
     private func configureCollectionView() {
@@ -81,26 +104,24 @@ final class UserMedicationInfoVC: UIViewController {
 extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
         return medications.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
-        
         cell.imageCell.image = UIImage()
+        cell.deleteButton.isHidden = isActiveEditButton
+        cell.editButtonTapped = { [weak self] in
+            self?.deleteItem(for: cell)
+        }
         
         if medications.indices.contains(indexPath.item) == true {
-            showLoadingSpinner(with: containerView)
             cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
             return cell
         } else {
             let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
             addMedCell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
-            dismissLoadingSpinner(with: containerView)
             return addMedCell
-            
         }
     }
     
@@ -116,7 +137,6 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
             let userMedicationDetail = UserMedicationDetailVC()
             userMedicationDetail.medications = medications[indexPath.item]
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
-            
         } else {
             let newMedicationVC = NewMedicationSettingsVC()
             newMedicationVC.addDelegate = self

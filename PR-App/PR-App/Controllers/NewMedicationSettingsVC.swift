@@ -30,11 +30,16 @@ class NewMedicationSettingsVC: UIViewController {
         configureMedicationView()
         configureTableView()
         createDismisKeyboardTapGesture()
+        configureNewMedicationView()
         newMedicationView.delegate = self
     }
     
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
+    }
+    
+    private func configureNewMedicationView() {
+        newMedicationView.tapToChange.isHidden = true
     }
     
     private func configureNavBar() {

@@ -10,7 +10,7 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    var viewModel = UserMedicationInfoViewModel()
+    private let viewModel = UserMedicationInfoViewModel()
     var pillImage = UIImageView()
     
     private lazy var pillNameView = TitleAndInputMedicationView(
@@ -80,13 +80,14 @@ final class UserMedicationDetailView: UIView {
         medicationButtonCamera.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
         medicationButtonCamera.layer.cornerRadius = 16
         medicationButtonCamera.tintColor = .systemGray
+        
         pillImage.contentMode = .scaleAspectFill
         pillImage.layer.masksToBounds = true
         pillImage.layer.cornerRadius = 16
     
-        
         addSubview(medicationButtonCamera)
         medicationButtonCamera.addSubview(pillImage)
+        
         pillImage.translatesAutoresizingMaskIntoConstraints = false
         medicationButtonCamera.translatesAutoresizingMaskIntoConstraints = false
         
