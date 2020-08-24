@@ -7,6 +7,7 @@
 // 
 
 import UIKit
+import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
     
@@ -33,6 +34,7 @@ final class LoginScreenVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkUserSession()
         configureButton()
         configureScrollView()
         configureViewController()
@@ -111,6 +113,16 @@ final class LoginScreenVC: UIViewController {
             logoImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: horizontalConstant),
             logoImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
+    }
+    
+    private func checkUserSession() {
+        if Auth.auth().currentUser == nil {
+                let loginVC = LoginScreenVC()
+                self.navigationController?.pushViewController(loginVC, animated: true)
+        } else {
+            let tabBarVC = TabBarController()
+            self.navigationController?.pushViewController(tabBarVC, animated: true)
+        }
     }
     
     private func configureStackViewLoginData() {

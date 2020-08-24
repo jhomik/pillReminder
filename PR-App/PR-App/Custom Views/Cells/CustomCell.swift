@@ -28,6 +28,12 @@ final class CustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
+        deleteButton.layer.masksToBounds = true
+    }
+    
     public func configureNewMedicationCell(with image: UIImage, title: String) {
         self.imageCell.image = image
         self.newMedsTitle.text = title
@@ -43,6 +49,8 @@ final class CustomCell: UICollectionViewCell {
         deleteButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfiguration), for: .normal)
         deleteButton.tintColor = Constants.mainColor
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
+        deleteButton.backgroundColor = .systemBackground
+        self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(deleteButton)
@@ -57,6 +65,8 @@ final class CustomCell: UICollectionViewCell {
         print("delete button tapped")
         editButtonTapped()
     }
+    
+    
     
     private func configureSubviewsInCell() {
         self.addSubview(imageCell)

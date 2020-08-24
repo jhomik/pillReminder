@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 final class UserMedicationInfoVC: UIViewController {
     
@@ -30,7 +31,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     private func configureNavigationBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(setupNotification))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutSession))
         changeBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
@@ -44,18 +45,31 @@ final class UserMedicationInfoVC: UIViewController {
         }
     }
     
-    @objc private func setupNotification() {
+    @objc private func logoutSession() {
+        signOutUser()
         print("notifcation tapped")
+    }
+    
+    private func signOutUser() {
+        do {
+            try Auth.auth().signOut()
+            self.dismiss(animated: true) {
+                self.navigationController?.pushViewController(LoginScreenVC(), animated: true)
+            }
+        } catch {
+            print("Failed to sign out", error)
+        }
     }
     
     private func changeBarButtonItem() {
         let barButtonItem: UIBarButtonItem.SystemItem = isActiveEditButton ? .cancel : .edit
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
     }
     
     @objc private func deleteMedication() {
         isActiveEditButton.toggle()
         changeBarButtonItem()
+        self.collectionView?.reloadData()
     }
     
     private func updateMedicationInfo() {
@@ -74,6 +88,7 @@ final class UserMedicationInfoVC: UIViewController {
                 let indexPath = IndexPath(item: indexPath.item, section: 0)
                 collectionView?.deleteItems(at: [indexPath])
                 collectionView?.reloadData()
+                firebaseManager.removeData(from: item)
             }
         }, completion: nil)
     }
@@ -110,7 +125,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         cell.imageCell.image = UIImage()
-        cell.deleteButton.isHidden = isActiveEditButton
+        cell.deleteButton.isHidden = !isActiveEditButton
         cell.editButtonTapped = { [weak self] in
             self?.deleteItem(for: cell)
         }

@@ -16,8 +16,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-//        window?.rootViewController = UINavigationController(rootViewController: LoginScreenVC())
-        window?.rootViewController = TabBarController()
+        window?.rootViewController = UINavigationController(rootViewController: LoginScreenVC())
+//        window?.rootViewController = TabBarController()
 //        window?.rootViewController = UINavigationController(rootViewController: NewMedicationSettingsVC())
 //        window?.rootViewController = UINavigationController(rootViewController: UserMedicationDetailVC())
 

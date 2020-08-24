@@ -59,12 +59,15 @@ final class FirebaseManager {
     }
     
     //MARK: Removing Medication from Firebase DB
-//    
-//    func removeData() {
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//        
-//        refDatabase.child(users).child(uid).child(medicationData).remo
-//    }
+    
+    func removeData(from cell: CustomCell) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        if let medicationID = refDatabase.child(medicationData).key {
+            refDatabase.child(users).child(uid).child(medicationData).child(medicationID).removeValue()
+            print(medicationID)
+        }
+    }
     
     // MARK: Downloading image or retrive from UserDefaults Data
     
