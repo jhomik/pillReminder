@@ -132,15 +132,18 @@ final class FirebaseManager {
         }
     }
     
+    // MARK: Reset password
+    
     // MARK: Sing in user
     
-    func signInUser(email: String, password: String, completion: ((Result<Void, Error>) -> Void)?) {
-        Auth.auth().signIn(withEmail: email, password: password) { (data, error) in
+    func signInUser(email: String, password: String, completion: ((Result<Bool, Error>) -> Void)?) {
+        Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
+            guard let user = Auth.auth().currentUser else { return }
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             } else {
-                completion?(.success(()))
+                completion?(.success((user.isEmailVerified)))
             }
         }
     }
@@ -149,10 +152,16 @@ final class FirebaseManager {
     
     func createUser(username: String, email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
         Auth.auth().createUser(withEmail: email, password: password) { (data, error) in
+            guard let user = Auth.auth().currentUser else { return }
+            
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             } else {
+                user.sendEmailVerification { (error) in
+                    guard let error = error else { return }
+                    print(error.localizedDescription)
+                }
                 completion?(.success(()))
                 
                 guard let uid = data?.user.uid else { return }

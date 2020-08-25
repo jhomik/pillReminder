@@ -1,5 +1,5 @@
 //
-//  HeaderView.swift
+//  HeaderCellView.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 23/07/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderView: UIView {
+class HeaderCellView: UIView {
     
     private let headerLabel = UILabel()
     private var titleLabel: String

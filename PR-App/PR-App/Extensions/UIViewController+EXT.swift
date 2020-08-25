@@ -38,13 +38,23 @@ extension UIViewController {
         }
     }
     
-    func showAlert(message: String, completion: (() -> Void)?) {
+    func showUserAlert(message: String, completion: (() -> Void)?) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
             alert.dismiss(animated: true, completion: completion)
         }
+    }
+    
+    func showUserAlertWithOptions(title: String?, message: String?, actionTitle: String?, completion: (() -> Void)?) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
+        alert.addAction(UIAlertAction(title: actionTitle, style: .destructive, handler: { _ in
+                   completion?()
+               }))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+       
+        self.present(alert, animated: true)
     }
     
     func createDismisKeyboardTapGesture() {

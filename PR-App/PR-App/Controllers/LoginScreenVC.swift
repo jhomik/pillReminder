@@ -27,6 +27,8 @@ final class LoginScreenVC: UIViewController {
     private var isSignUp = false
     private var segmentedController = UISegmentedControl()
     
+    private var forgotPasswordButton = UIButton()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureWelcomeView()
@@ -35,14 +37,14 @@ final class LoginScreenVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         checkUserSession()
-        configureButton()
-        configureScrollView()
         configureViewController()
         configureLogoImage()
         configureSegmentedView()
         configureStackViewLoginData()
+        configureScrollView()
         createDismisKeyboardTapGesture()
-        
+        configureButton()
+        configureForgotPasswordButton()
     }
     
     private func configureWelcomeView() {
@@ -70,7 +72,7 @@ final class LoginScreenVC: UIViewController {
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: button.topAnchor)
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -116,10 +118,9 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func checkUserSession() {
-        if Auth.auth().currentUser == nil {
-                let loginVC = LoginScreenVC()
-                self.navigationController?.pushViewController(loginVC, animated: true)
-        } else {
+        guard let user = Auth.auth().currentUser else { return }
+        if Auth.auth().currentUser != nil && user.isEmailVerified {
+            welcomeView.isHidden = true
             let tabBarVC = TabBarController()
             self.navigationController?.pushViewController(tabBarVC, animated: true)
         }
@@ -155,14 +156,14 @@ final class LoginScreenVC: UIViewController {
     
     private func configureButton() {
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-        view.addSubview(button)
+        scrollView.addSubview(button)
         
         let horizontalConstant  = UIScreen.main.bounds.width / 10
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalConstant),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalConstant),
-            button.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
-            button.heightAnchor.constraint(equalToConstant: 50)
+            button.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: 25),
+            button.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -172,24 +173,48 @@ final class LoginScreenVC: UIViewController {
         
         self.isSignUp ? self.textFieldsShaker(inputFields: [userName, emailInput, passwordInput, confirmInput]) : self.textFieldsShaker(inputFields: [emailInput, passwordInput])
     }
+    
+    private func configureForgotPasswordButton() {
+        forgotPasswordButton.setTitle("Forgot your password?", for: .normal)
+        forgotPasswordButton.setTitleColor(.label, for: .normal)
+        forgotPasswordButton.addTarget(self, action: #selector(forgotButtonTapped), for: .touchUpInside)
+        forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: 14)
+        
+        view.addSubview(forgotPasswordButton)
+        forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            forgotPasswordButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            forgotPasswordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 10),
+        ]) 
+    }
+    
+    @objc private func forgotButtonTapped() {
+        let forgotPasswordVC = UINavigationController(rootViewController: ForgotPasswordVC())
+        present(forgotPasswordVC, animated: true)
+    }
 }
 
 extension LoginScreenVC: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.showAlert(message: "Logged in!") {
+        self.showUserAlert(message: "Logged in!") {
             let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
+            self.emailInput.text = ""
+            self.passwordInput.text = ""
         }
         print("User logged successfully")
     }
     
     func onLoginFailure(error: Error) {
-        self.showAlert(message: error.localizedDescription, completion: nil)
+        self.showUserAlert(message: error.localizedDescription, completion: nil)
     }
     
     func createUserSuccess() {
-        self.showAlert(message: "Check your email with activation link!") {
+        self.showUserAlert(message: "Check your email with activation link!") {
             self.segmentedController.selectedSegmentIndex = 0
             self.isSignUp.toggle()
             self.userName.isHidden = true
@@ -198,7 +223,11 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserFailure(error: Error) {
-        self.showAlert(message: error.localizedDescription, completion: nil)
+        self.showUserAlert(message: error.localizedDescription, completion: nil)
+    }
+    
+    func isEmailVerified() {
+        self.showUserAlert(message: PRErrors.userIsNotVerified.rawValue, completion: nil)
     }
 }
 

@@ -142,7 +142,7 @@ extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderView(frame: .zero, titleLabel: viewModel.sections[section])
+        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.sections[section])
         return sectionView
     }
     

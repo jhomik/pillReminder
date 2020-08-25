@@ -13,6 +13,7 @@ protocol LoginScreenEvents: class {
     func onLoginFailure(error: Error)
     func createUserSuccess()
     func createUserFailure(error: Error)
+    func isEmailVerified()
 }
 
 final class LoginScreenViewModel {
@@ -37,8 +38,12 @@ final class LoginScreenViewModel {
             firebaseManager.signInUser(email: email, password: password) { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {
-                    case .success:
-                        self?.loginEvents?.onLoginSuccess()
+                    case .success(let data):
+                        if !data {
+                            self?.loginEvents?.isEmailVerified()
+                        } else {
+                            self?.loginEvents?.onLoginSuccess()
+                        }
                     case let .failure(error):
                         self?.loginEvents?.onLoginFailure(error: error)
                     }

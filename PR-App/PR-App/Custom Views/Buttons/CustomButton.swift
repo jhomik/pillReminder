@@ -27,12 +27,9 @@ final class CustomButton: UIButton {
     
     private func configure() {
         layer.cornerRadius = 10
-        layer.borderColor = Constants.mainColor.cgColor
-        layer.borderWidth = 1
-        backgroundColor = .white
-        setTitleColor(Constants.mainColor, for: .normal)
+        backgroundColor = Constants.mainColor
+        titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
+        setTitleColor(.systemBackground, for: .normal)
         translatesAutoresizingMaskIntoConstraints = false
-        
     }
-
 }

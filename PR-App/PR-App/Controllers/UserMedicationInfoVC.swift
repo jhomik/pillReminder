@@ -31,7 +31,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     private func configureNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Log Out", style: .plain, target: self, action: #selector(logoutSession))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(logoutSession))
         changeBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
@@ -46,16 +46,15 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     @objc private func logoutSession() {
-        signOutUser()
-        print("notifcation tapped")
+        showUserAlertWithOptions(title: nil, message: "Are you sure you want to log out from account?", actionTitle: "Sign Out") {
+            self.signOutUser()
+        }
     }
     
     private func signOutUser() {
         do {
             try Auth.auth().signOut()
-            self.dismiss(animated: true) {
-                self.navigationController?.pushViewController(LoginScreenVC(), animated: true)
-            }
+                self.tabBarController?.navigationController?.popViewController(animated: true)
         } catch {
             print("Failed to sign out", error)
         }
@@ -107,7 +106,7 @@ final class UserMedicationInfoVC: UIViewController {
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
-        collectionView?.register(CustomCellHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CustomCellHeader.reuseID)
+        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CustomCollectionViewHeader.reuseID)
         collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: AddMedicationCell.reuseId)
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -123,6 +122,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        showLoadingSpinner(with: containerView)
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         cell.imageCell.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
@@ -132,16 +132,18 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         
         if medications.indices.contains(indexPath.item) == true {
             cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
+            dismissLoadingSpinner(with: containerView)
             return cell
         } else {
             let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
             addMedCell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
+            dismissLoadingSpinner(with: containerView)
             return addMedCell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomCellHeader.reuseID, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomCollectionViewHeader.reuseID, for: indexPath)
         
         return header
     }

@@ -15,5 +15,4 @@ final class ReminderForMedicationVC: UIViewController {
 
         view.backgroundColor = .systemRed
     }
-
 }

@@ -1,5 +1,5 @@
 //
-//  CustomHeader.swift
+//  CustomCollectionViewHeader.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 14/05/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomCellHeader: UICollectionReusableView {
+final class CustomCollectionViewHeader: UICollectionReusableView {
     
     static let reuseID = "headerView"
     private var imageLogo = UIImageView()
