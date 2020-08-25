@@ -65,9 +65,7 @@ final class CustomCell: UICollectionViewCell {
         print("delete button tapped")
         editButtonTapped()
     }
-    
-    
-    
+
     private func configureSubviewsInCell() {
         self.addSubview(imageCell)
         self.addSubview(newMedsTitle)

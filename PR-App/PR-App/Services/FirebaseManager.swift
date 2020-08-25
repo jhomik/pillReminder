@@ -15,6 +15,7 @@ final class FirebaseManager {
     
     private var refDatabase = Database.database().reference()
     private var refStorage = Storage.storage().reference()
+    private var auth = Auth.auth()
     private let users = "users"
     private let username = "username"
     private let medicationData = "medicationData"
@@ -120,7 +121,7 @@ final class FirebaseManager {
     // MARK: Observing Username
     
     func observeUserName(completion: @escaping(Result<String, Error>) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+        guard let uid = auth.currentUser?.uid else { return }
         
         refDatabase.child(users).child(uid).child(user).child(username).observeSingleEvent(of: .value) {
             snapshot in
@@ -134,11 +135,21 @@ final class FirebaseManager {
     
     // MARK: Reset password
     
+    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { (error) in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(()))
+            }
+        }
+    }
+    
     // MARK: Sing in user
     
     func signInUser(email: String, password: String, completion: ((Result<Bool, Error>) -> Void)?) {
-        Auth.auth().signIn(withEmail: email, password: password) { (_, error) in
-            guard let user = Auth.auth().currentUser else { return }
+        auth.signIn(withEmail: email, password: password) { (_, error) in
+            guard let user = self.auth.currentUser else { return }
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
@@ -151,7 +162,7 @@ final class FirebaseManager {
     // MARK: Creating new user
     
     func createUser(username: String, email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
-        Auth.auth().createUser(withEmail: email, password: password) { (data, error) in
+        auth.createUser(withEmail: email, password: password) { (data, error) in
             guard let user = Auth.auth().currentUser else { return }
             
             if let error = error {

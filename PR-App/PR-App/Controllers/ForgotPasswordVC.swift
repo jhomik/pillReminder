@@ -11,6 +11,7 @@ import UIKit
 class ForgotPasswordVC: UIViewController {
     
     private var forgotPasswordView = ForgotPasswordView()
+    lazy var viewModel = ForgotPasswordViewModel(forgotPasswordEvents: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,6 +20,7 @@ class ForgotPasswordVC: UIViewController {
         configureForgotPasswordView()
         createDismisKeyboardTapGesture()
     }
+    
     private func configureViewController() {
         view.backgroundColor = Constants.backgroundColor
     }
@@ -45,5 +47,23 @@ class ForgotPasswordVC: UIViewController {
             forgotPasswordView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             forgotPasswordView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+    }
+}
+
+extension ForgotPasswordVC: ForgotPasswordEvents {
+    func showSuccesAlert() {
+        self.showUserAlert(message: "Your link with password reset has been sent!") {
+            self.dismiss(animated: true, completion: nil)
+        }
+    }
+    
+    func showFailureAlert(error: Error) {
+        self.showUserAlert(message: error.localizedDescription, completion: nil)
+    }
+}
+
+extension ForgotPasswordVC: ForgotPasswordDelegate {
+    func resetUserPassword(email: String) {
+        viewModel.resetUserPassword(withEmail: email)
     }
 }

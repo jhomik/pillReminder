@@ -41,6 +41,7 @@
 		5AEC6E1A24F51AE30052D16B /* PRErrors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC6E1924F51AE30052D16B /* PRErrors.swift */; };
 		5AEC6E1C24F54B760052D16B /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC6E1B24F54B760052D16B /* ForgotPasswordVC.swift */; };
 		5AEC6E1F24F553010052D16B /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC6E1E24F553010052D16B /* ForgotPasswordView.swift */; };
+		5AEC6E2124F567F90052D16B /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */; };
 		5AFED61D2461813400EF7C1A /* PR_App.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */; };
 		5AFED61F2461813500EF7C1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AFED61E2461813500EF7C1A /* Assets.xcassets */; };
 		5AFED62D2461813500EF7C1A /* PR_AppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AFED62C2461813500EF7C1A /* PR_AppTests.swift */; };
@@ -109,6 +110,7 @@
 		5AEC6E1924F51AE30052D16B /* PRErrors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PRErrors.swift; sourceTree = "<group>"; };
 		5AEC6E1B24F54B760052D16B /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
 		5AEC6E1E24F553010052D16B /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED61C2461813400EF7C1A /* PR_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PR_App.xcdatamodel; sourceTree = "<group>"; };
 		5AFED61E2461813500EF7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -219,6 +221,7 @@
 				5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */,
 				5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */,
 				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
+				5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -638,6 +641,7 @@
 				5AA21AD424E537AE000C6F47 /* CurrentMedicationSettingsVC.swift in Sources */,
 				5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */,
 				5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoVC.swift in Sources */,
+				5AEC6E2124F567F90052D16B /* ForgotPasswordViewModel.swift in Sources */,
 				5AB59DEA248701C400E78BD9 /* CustomTextField.swift in Sources */,
 				5AE9EA81246AD0040090A1D2 /* ReminderForMedicationVC.swift in Sources */,
 				5A9440B024CA06D4000707FA /* HeaderCellView.swift in Sources */,
