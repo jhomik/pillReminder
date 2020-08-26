@@ -8,13 +8,17 @@
 
 import UIKit
 
+protocol ForgotPasswordDelegate: class {
+    func resetPassword(withEmail: String)
+}
+
 class ForgotPasswordView: UIView {
     
     private let pillReminderLogo = UIImageView()
     private let forgotPasswordLabel = CustomLabel(text: "Password recover", alignment: .center, size: 20, weight: .semibold, color: .label)
     private let emailTextField = CustomTextField(placeholderText: "Provide your email", isPassword: false)
     private let sendPasswordButton = CustomButton(text: "Send password")
-//    private let viewModel: ForgotPasswordViewModel?
+    var delegate: ForgotPasswordDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,6 +87,7 @@ class ForgotPasswordView: UIView {
     
     @objc private func sendPasswordButtonTapped() {
         guard let email = emailTextField.text else { return }
-//        viewModel?.resetUserPassword(withEmail: email)
+        delegate?.resetPassword(withEmail: email)
+        print("test")
     }
 }

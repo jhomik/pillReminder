@@ -8,20 +8,16 @@
 
 import UIKit
 
-protocol NewMedicationCellDelegate {
-    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String)
-}
-
 class NewMedicationSettingsVC: UIViewController {
     
-    var addDelegate: NewMedicationCellDelegate?
     private let newMedicationView = UserMedicationSettingsView()
     private let tableView = UITableView()
-    private let viewModel = PillModelViewModel()
+    private let pillViewModel = PillModelViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
+    private var viewModel = NewMedicationViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,19 +51,10 @@ class NewMedicationSettingsVC: UIViewController {
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
             textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField ])
         } else {
-            showLoadingSpinner(with: containerView)
-            firebaseManager.saveImageToStorage(cellImage: imageData) { (result) in
-                switch result {
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    
-                case .success(let url):
-                    self.firebaseManager.saveUserMedicationDetail(pillName: name, capacity: capacity, dose: dose, cellImage: url)
-                    self.dismissLoadingSpinner(with: self.containerView)
-                    self.dismiss(animated: true) {
-                        self.addDelegate?.addNewMedicationCell(pillName: name, capacity: capacity, dose: dose, cellImageUrl: url)
-                    }
-                }
+            self.showLoadingSpinner(with: containerView)
+            viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose) {
+                self.dismissLoadingSpinner(with: self.containerView)
+                self.dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -128,7 +115,7 @@ class NewMedicationSettingsVC: UIViewController {
 extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sections.count
+        return pillViewModel.sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
@@ -136,13 +123,13 @@ extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewMedicationCell", for: indexPath)
-        cell.textLabel?.text = viewModel.morning[indexPath.row]
+        cell.textLabel?.text = pillViewModel.morning[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.sections[section])
+        let sectionView = HeaderCellView(frame: .zero, titleLabel: pillViewModel.sections[section])
         return sectionView
     }
     

@@ -9,8 +9,7 @@
 import UIKit
 
 final class UserMedicationDetailView: UIView {
-    
-    private let viewModel = UserMedicationInfoViewModel()
+
     var pillImage = UIImageView()
     
     private lazy var pillNameView = TitleAndInputMedicationView(

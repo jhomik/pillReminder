@@ -184,7 +184,7 @@ final class LoginScreenVC: UIViewController {
         forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            forgotPasswordButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -5),
+            forgotPasswordButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
             forgotPasswordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             forgotPasswordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             forgotPasswordButton.heightAnchor.constraint(equalToConstant: 10),
@@ -219,6 +219,8 @@ extension LoginScreenVC: LoginScreenEvents {
             self.isSignUp.toggle()
             self.userName.isHidden = true
             self.confirmInput.isHidden = true
+            self.userName.text = ""
+            self.confirmInput.text = ""
         }
     }
     

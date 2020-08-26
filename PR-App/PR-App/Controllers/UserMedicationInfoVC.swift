@@ -16,6 +16,7 @@ final class UserMedicationInfoVC: UIViewController {
     private var medications: [UserMedicationDetailModel] = []
     private let containerView = UIView()
     private var isActiveEditButton = false
+    private var viewModel = UserMedicationInfoViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +36,9 @@ final class UserMedicationInfoVC: UIViewController {
         changeBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
-        firebaseManager.observeUserName() { result in
-            switch result {
-            case .success(let userName):
-                self.navigationItem.title = "Hello, " + userName + "!"
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+        viewModel.observeUserName(completion: { (userName) in
+             self.navigationItem.title = "Hello, " + userName + "!"
+        })
     }
     
     @objc private func logoutSession() {
@@ -71,8 +67,10 @@ final class UserMedicationInfoVC: UIViewController {
         self.collectionView?.reloadData()
     }
     
+    
+    
     private func updateMedicationInfo() {
-        firebaseManager.downloadMedicationInfo { [weak self] (result) in
+        viewModel.updateMedicationInfo { [weak self] (result) in
             self?.medications = result
             DispatchQueue.main.async {
                 self?.collectionView?.reloadData()
@@ -156,7 +154,6 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
         } else {
             let newMedicationVC = NewMedicationSettingsVC()
-            newMedicationVC.addDelegate = self
             present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
         }
     }

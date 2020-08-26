@@ -11,6 +11,7 @@ import UIKit
 class ForgotPasswordVC: UIViewController {
     
     private var forgotPasswordView = ForgotPasswordView()
+    lazy var viewModel = ForgotPasswordViewModel(forgotPasswordEvents: self)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,6 +19,7 @@ class ForgotPasswordVC: UIViewController {
         configureNavigationBar()
         configureForgotPasswordView()
         createDismisKeyboardTapGesture()
+        
     }
     
     private func configureViewController() {
@@ -37,6 +39,7 @@ class ForgotPasswordVC: UIViewController {
     }
     
     private func configureForgotPasswordView() {
+        forgotPasswordView.delegate = self
         view.addSubview(forgotPasswordView)
         forgotPasswordView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -58,5 +61,11 @@ extension ForgotPasswordVC: ForgotPasswordEvents {
     
     func showFailureAlert(error: Error) {
         self.showUserAlert(message: error.localizedDescription, completion: nil)
+    }
+}
+
+extension ForgotPasswordVC: ForgotPasswordDelegate {
+    func resetPassword(withEmail: String) {
+        viewModel.resetUserPassword(withEmail: withEmail)
     }
 }
