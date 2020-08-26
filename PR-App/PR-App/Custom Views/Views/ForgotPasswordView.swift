@@ -14,7 +14,7 @@ class ForgotPasswordView: UIView {
     private let forgotPasswordLabel = CustomLabel(text: "Password recover", alignment: .center, size: 20, weight: .semibold, color: .label)
     private let emailTextField = CustomTextField(placeholderText: "Provide your email", isPassword: false)
     private let sendPasswordButton = CustomButton(text: "Send password")
-    private let viewModel: ForgotPasswordViewModel?
+//    private let viewModel: ForgotPasswordViewModel?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -83,6 +83,6 @@ class ForgotPasswordView: UIView {
     
     @objc private func sendPasswordButtonTapped() {
         guard let email = emailTextField.text else { return }
-        viewModel?.resetUserPassword(withEmail: email)
+//        viewModel?.resetUserPassword(withEmail: email)
     }
 }
