@@ -54,7 +54,7 @@ class ForgotPasswordVC: UIViewController {
 
 extension ForgotPasswordVC: ForgotPasswordEvents {
     func showSuccesAlert() {
-        self.showUserAlert(message: "Your link with password reset has been sent!") {
+        self.showUserAlert(message: PRAlerts.userForgotPassword.rawValue) {
             self.dismiss(animated: true, completion: nil)
         }
     }

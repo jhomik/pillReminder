@@ -10,25 +10,8 @@ import Foundation
 
 final class UserMedicationInfoViewModel {
     
-    private var model = UserMedicationDetailModel()
     private let firebaseManager = FirebaseManager()
-    
-    //    var pillName: String {
-    //        return model.pillName
-    //    }
-    //
-    //    var capacity: String {
-    //        return model.capacity
-    //    }
-    //
-    //    var dose: String {
-    //        return model.dose
-    //    }
-    //
-    //    var cellImage: String {
-    //        return model.cellImage
-    //    }
-    
+
     func observeUserName(completion: @escaping (String) -> Void) {
         firebaseManager.observeUserName() { result in
             switch result {

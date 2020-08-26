@@ -11,13 +11,21 @@ import UIKit
 class NewMedicationSettingsVC: UIViewController {
     
     private let newMedicationView = UserMedicationSettingsView()
-    private let tableView = UITableView()
-    private let pillViewModel = PillModelViewModel()
-    private(set) var imageData = Data()
-    private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
     private var viewModel = NewMedicationViewModel()
+    private let tableView = UITableView()
+    private(set) var imageData = Data()
+    private(set) var containerView = UIView()
+    
+    init(viewModel: NewMedicationViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +60,7 @@ class NewMedicationSettingsVC: UIViewController {
             textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField ])
         } else {
             self.showLoadingSpinner(with: containerView)
+            
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
@@ -62,8 +71,8 @@ class NewMedicationSettingsVC: UIViewController {
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
         let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
+        
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
@@ -72,12 +81,12 @@ class NewMedicationSettingsVC: UIViewController {
                 print("Camera is not available")
             }
         }))
-        
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
         self.present(actionSheet, animated: true)
     }
     
@@ -95,7 +104,7 @@ class NewMedicationSettingsVC: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NewMedicationCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
         tableView.backgroundColor = Constants.backgroundColor
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = false
@@ -115,21 +124,21 @@ class NewMedicationSettingsVC: UIViewController {
 extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return pillViewModel.sections.count
+        return viewModel.pillModel.sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewMedicationCell", for: indexPath)
-        cell.textLabel?.text = pillViewModel.morning[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseId, for: indexPath)
+        cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderCellView(frame: .zero, titleLabel: pillViewModel.sections[section])
+        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.pillModel.sections[section])
         return sectionView
     }
     

@@ -12,7 +12,7 @@ class CurrentMedicationSettingsVC: UIViewController {
     
     private let userMedicationSettingView = UserMedicationSettingsView()
     private let tableView = UITableView()
-    private let viewModel = PillModelViewModel()
+    private let viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
@@ -61,7 +61,6 @@ class CurrentMedicationSettingsVC: UIViewController {
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        
         let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
@@ -72,7 +71,6 @@ class CurrentMedicationSettingsVC: UIViewController {
                 print("Camera is not available")
             }
         }))
-        
         actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
@@ -96,7 +94,7 @@ class CurrentMedicationSettingsVC: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "NewMedicationCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
         tableView.backgroundColor = Constants.backgroundColor
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = false
@@ -116,21 +114,21 @@ class CurrentMedicationSettingsVC: UIViewController {
 extension CurrentMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.sections.count
+        return viewModel.pillModel.sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewMedicationCell", for: indexPath)
-        cell.textLabel?.text = viewModel.morning[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseId, for: indexPath)
+        cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.sections[section])
+        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.pillModel.sections[section])
         return sectionView
     }
     

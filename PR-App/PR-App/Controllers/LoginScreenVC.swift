@@ -120,9 +120,10 @@ final class LoginScreenVC: UIViewController {
     private func checkUserSession() {
         guard let user = Auth.auth().currentUser else { return }
         if Auth.auth().currentUser != nil && user.isEmailVerified {
-            welcomeView.isHidden = true
+            self.welcomeView.isHidden = true
             let tabBarVC = TabBarController()
             self.navigationController?.pushViewController(tabBarVC, animated: true)
+            self.showUserAlert(message: PRAlerts.userSessionActive.rawValue, completion: nil)
         }
     }
     
@@ -200,7 +201,7 @@ final class LoginScreenVC: UIViewController {
 extension LoginScreenVC: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.showUserAlert(message: "Logged in!") {
+        self.showUserAlert(message: PRAlerts.userLogIn.rawValue) {
             let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
             self.emailInput.text = ""
@@ -214,7 +215,7 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserSuccess() {
-        self.showUserAlert(message: "Check your email with activation link!") {
+        self.showUserAlert(message: PRAlerts.emailActivation.rawValue) {
             self.segmentedController.selectedSegmentIndex = 0
             self.isSignUp.toggle()
             self.userName.isHidden = true

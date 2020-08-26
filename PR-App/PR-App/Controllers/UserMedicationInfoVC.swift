@@ -42,7 +42,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     @objc private func logoutSession() {
-        showUserAlertWithOptions(title: nil, message: "Are you sure you want to log out from account?", actionTitle: "Sign Out") {
+        showUserAlertWithOptions(title: nil, message: PRAlerts.userSignOUt.rawValue, actionTitle: "Sign Out") {
             self.signOutUser()
         }
     }
@@ -153,7 +153,9 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
             userMedicationDetail.medications = medications[indexPath.item]
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
         } else {
-            let newMedicationVC = NewMedicationSettingsVC()
+            let viewModel = NewMedicationViewModel()
+            viewModel.addCellDelegate = self
+            let newMedicationVC = NewMedicationSettingsVC(viewModel: viewModel)
             present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
         }
     }
