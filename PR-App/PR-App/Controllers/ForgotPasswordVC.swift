@@ -19,7 +19,6 @@ class ForgotPasswordVC: UIViewController {
         configureNavigationBar()
         configureForgotPasswordView()
         createDismisKeyboardTapGesture()
-        
     }
     
     private func configureViewController() {
@@ -54,13 +53,13 @@ class ForgotPasswordVC: UIViewController {
 
 extension ForgotPasswordVC: ForgotPasswordEvents {
     func showSuccesAlert() {
-        self.showUserAlert(message: PRAlerts.userForgotPassword.rawValue) {
+        self.showUserAlert(message: PRAlerts.userForgotPassword.rawValue, withTime: nil) {
             self.dismiss(animated: true, completion: nil)
         }
     }
     
     func showFailureAlert(error: Error) {
-        self.showUserAlert(message: error.localizedDescription, completion: nil)
+        self.showUserAlert(message: error.localizedDescription, withTime: nil, completion: nil)
     }
 }
 

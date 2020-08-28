@@ -26,7 +26,7 @@ final class AddMedicationCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public func configureNewMedicationCell(with image: UIImage, title: String) {
+    public func configureAddMedicationCell(with image: UIImage, title: String) {
         self.imageCell.image = image
         self.newMedsTitle.text = title
     }

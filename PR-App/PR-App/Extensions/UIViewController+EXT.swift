@@ -38,11 +38,11 @@ extension UIViewController {
         }
     }
     
-    func showUserAlert(message: String, completion: (() -> Void)?) {
+    func showUserAlert(message: String, withTime: DispatchTime?, completion: (() -> Void)?) {
         let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
         self.present(alert, animated: true, completion: nil)
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+        DispatchQueue.main.asyncAfter(deadline: withTime ?? .now() + 3) {
             alert.dismiss(animated: true, completion: completion)
         }
     }

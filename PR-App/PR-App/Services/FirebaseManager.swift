@@ -63,7 +63,6 @@ final class FirebaseManager {
     
     func removeDataFromFirebase(model: UserMedicationDetailModel) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
         refDatabase.child(users).child(uid).child(medicationData).child(model.id).removeValue { (error, data) in
             if let error = error {
                 print(error.localizedDescription)
@@ -71,9 +70,18 @@ final class FirebaseManager {
                 print(data)
             }
         }
+
+        let url = model.cellImage
+        let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
+        storageRef.delete { (error) in
+            if let error = error {
+                print("image not deleted:" + error.localizedDescription)
+            } else {
+                print("File successfully deleted!")
+            }
+        }
     }
-    
-    
+   
     // MARK: Downloading image or retrive from UserDefaults Data
     
     func downloadImage(with urlString: String, imageCell: UIImageView) {
@@ -127,7 +135,7 @@ final class FirebaseManager {
     
     // MARK: Observing Username
     
-    func observeUserName(completion: @escaping(Result<String, Error>) -> Void) {
+    func setUserName(completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = auth.currentUser?.uid else { return }
         
         refDatabase.child(users).child(uid).child(user).child(username).observeSingleEvent(of: .value) {

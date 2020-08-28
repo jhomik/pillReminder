@@ -23,7 +23,7 @@ final class LoginScreenVC: UIViewController {
     private let confirmInput = CustomTextField(placeholderText: "Confirm Password", isPassword: true)
     private let button = CustomButton(text: "Log in")
     
-    private let logoImage = UIImageView(image: Constants.logoImage)
+    private let logoImage = UIImageView(image: Images.logoImage)
     private var isSignUp = false
     private var segmentedController = UISegmentedControl()
     
@@ -123,7 +123,7 @@ final class LoginScreenVC: UIViewController {
             self.welcomeView.isHidden = true
             let tabBarVC = TabBarController()
             self.navigationController?.pushViewController(tabBarVC, animated: true)
-            self.showUserAlert(message: PRAlerts.userSessionActive.rawValue, completion: nil)
+            self.showUserAlert(message: PRAlerts.userSessionActive.rawValue, withTime: .now() + 0.5, completion: nil)
         }
     }
     
@@ -201,7 +201,7 @@ final class LoginScreenVC: UIViewController {
 extension LoginScreenVC: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.showUserAlert(message: PRAlerts.userLogIn.rawValue) {
+        self.showUserAlert(message: PRAlerts.userLogIn.rawValue, withTime: nil) {
             let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
             self.emailInput.text = ""
@@ -211,11 +211,11 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func onLoginFailure(error: Error) {
-        self.showUserAlert(message: error.localizedDescription, completion: nil)
+        self.showUserAlert(message: error.localizedDescription, withTime: nil, completion: nil)
     }
     
     func createUserSuccess() {
-        self.showUserAlert(message: PRAlerts.emailActivation.rawValue) {
+        self.showUserAlert(message: PRAlerts.emailActivation.rawValue, withTime: nil) {
             self.segmentedController.selectedSegmentIndex = 0
             self.isSignUp.toggle()
             self.userName.isHidden = true
@@ -226,11 +226,11 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserFailure(error: Error) {
-        self.showUserAlert(message: error.localizedDescription, completion: nil)
+        self.showUserAlert(message: error.localizedDescription, withTime: nil, completion: nil)
     }
     
     func isEmailVerified() {
-        self.showUserAlert(message: PRErrors.userIsNotVerified.rawValue, completion: nil)
+        self.showUserAlert(message: PRErrors.userIsNotVerified.rawValue, withTime: nil, completion: nil)
     }
 }
 

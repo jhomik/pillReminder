@@ -54,6 +54,8 @@ class NewMedicationSettingsVC: UIViewController {
     }
     
     @objc private func saveSettings() {
+        view.endEditing(true)
+        navigationItem.rightBarButtonItem?.isEnabled = false
         guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
@@ -68,6 +70,7 @@ class NewMedicationSettingsVC: UIViewController {
     }
     
     private func configureImagePickerController() {
+        view.endEditing(true)
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
@@ -153,13 +156,14 @@ extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
 extension NewMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        let image = info[.originalImage] as? UIImage
-        newMedicationView.pillImage.image = image
-        
-        if let uploadData = image?.jpegData(compressionQuality: 0) {
-            imageData.append(uploadData)
+        if let image = info[.originalImage] as? UIImage {
+            newMedicationView.pillImage.image = image
+            if let uploadData = image.jpegData(compressionQuality: 0.1) {
+                imageData.append(uploadData)
+            }
+        } else {
+            newMedicationView.pillImage.image = Images.placeholderImage
         }
-        
         picker.dismiss(animated: true, completion: nil)
     }
 }

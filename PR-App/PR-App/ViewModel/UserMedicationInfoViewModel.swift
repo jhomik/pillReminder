@@ -12,8 +12,8 @@ final class UserMedicationInfoViewModel {
     
     private let firebaseManager = FirebaseManager()
 
-    func observeUserName(completion: @escaping (String) -> Void) {
-        firebaseManager.observeUserName() { result in
+    func setUserName(completion: @escaping (String) -> Void) {
+        firebaseManager.setUserName() { result in
             switch result {
             case .success(let userName):
                 completion(userName)
@@ -27,6 +27,9 @@ final class UserMedicationInfoViewModel {
         firebaseManager.downloadMedicationInfo { (result) in
             completion(result)
         }
+    }
+    func removeDataFromFirebase(model: UserMedicationDetailModel) {
+        firebaseManager.removeDataFromFirebase(model: model)
     }
 }
 

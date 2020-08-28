@@ -26,7 +26,7 @@ class WelcomeView: UIView {
         self.frame = bounds
         self.backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
-        welcomeImage.image = Constants.logoImage
+        welcomeImage.image = Images.logoImage
         
         addSubview(welcomeImage)
         welcomeImage.translatesAutoresizingMaskIntoConstraints = false

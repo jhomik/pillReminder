@@ -14,6 +14,7 @@ final class CustomCell: UICollectionViewCell {
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
     let deleteButton = UIButton()
+    let placeholderImage = Images.placeholderImage
     private var firebaseManager = FirebaseManager()
     var editButtonTapped: () -> Void = {}
     
@@ -32,11 +33,6 @@ final class CustomCell: UICollectionViewCell {
         super.layoutSubviews()
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
-    }
-    
-    public func configureNewMedicationCell(with image: UIImage, title: String) {
-        self.imageCell.image = image
-        self.newMedsTitle.text = title
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
@@ -62,7 +58,6 @@ final class CustomCell: UICollectionViewCell {
     }
     
     @objc func deleteButtonTapped() {
-        print("delete button tapped")
         editButtonTapped()
     }
 

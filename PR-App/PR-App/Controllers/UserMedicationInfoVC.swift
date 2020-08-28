@@ -12,11 +12,20 @@ import FirebaseAuth
 final class UserMedicationInfoVC: UIViewController {
     
     private var collectionView: UICollectionView?
-    private let firebaseManager = FirebaseManager()
-    private var medications: [UserMedicationDetailModel] = []
-    private let containerView = UIView()
-    private var isActiveEditButton = false
     private var viewModel = UserMedicationInfoViewModel()
+    private let containerView = UIView()
+    
+    private var medications: [UserMedicationDetailModel] = [] {
+        didSet {
+            changeBarButtonItem()
+        }
+    }
+    
+    private var isActiveEditButton = false {
+        didSet {
+            changeBarButtonItem()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +45,7 @@ final class UserMedicationInfoVC: UIViewController {
         changeBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
-        viewModel.observeUserName(completion: { (userName) in
+        viewModel.setUserName(completion: { (userName) in
             self.navigationItem.title = "Hello, " + userName + "!"
         })
     }
@@ -58,37 +67,36 @@ final class UserMedicationInfoVC: UIViewController {
     
     private func changeBarButtonItem() {
         let barButtonItem: UIBarButtonItem.SystemItem = isActiveEditButton ? .cancel : .edit
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
-        
-        if medications.count == 1 {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-        }
+        let button = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
+        button.isEnabled = medications.count > 0 || isActiveEditButton
+        navigationItem.rightBarButtonItem = button
     }
     
     @objc private func deleteMedication() {
         isActiveEditButton.toggle()
-        changeBarButtonItem()
         self.collectionView?.reloadData()
     }
-
+    
     private func updateMedicationInfo() {
         viewModel.updateMedicationInfo { [weak self] (result) in
-            self?.medications = result
+            guard let self = self else { return }
+            self.medications = result
             DispatchQueue.main.async {
-                self?.collectionView?.reloadData()
+                self.collectionView?.reloadData()
             }
         }
     }
     
     private func deleteItem(for item: CustomCell) {
-        collectionView?.performBatchUpdates({
-            if let indexPath = collectionView?.indexPath(for: item) {
-                let model = medications[indexPath.item]
-                medications.remove(at: indexPath.item)
-                collectionView?.deleteItems(at: [indexPath])
-                firebaseManager.removeDataFromFirebase(model: model)
-            }
-        }, completion: nil)
+        if let indexPath = collectionView?.indexPath(for: item) {
+            let model = medications[indexPath.item]
+            medications.remove(at: indexPath.item)
+            collectionView?.performBatchUpdates({
+            collectionView?.deleteItems(at: [indexPath])
+            }, completion: { _ in
+                self.viewModel.removeDataFromFirebase(model: model)
+            })
+        }
     }
     
     private func configureCollectionView() {
@@ -121,7 +129,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        showLoadingSpinner(with: containerView)
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         cell.imageCell.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
@@ -131,12 +139,10 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         
         if medications.indices.contains(indexPath.item) == true {
             cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
-            dismissLoadingSpinner(with: containerView)
             return cell
         } else {
             let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
-            addMedCell.configureNewMedicationCell(with: Constants.cellImage, title: Constants.addMedication)
-            dismissLoadingSpinner(with: containerView)
+            addMedCell.configureAddMedicationCell(with: Images.cellImage ?? UIImage(), title: Constants.addMedication)
             return addMedCell
         }
     }
@@ -149,7 +155,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
-        if medications.indices.contains(indexPath.item) == true {
+        if medications.indices.contains(indexPath.item) {
             let userMedicationDetail = UserMedicationDetailVC()
             userMedicationDetail.medications = medications[indexPath.item]
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)

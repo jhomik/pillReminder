@@ -33,7 +33,7 @@ class ForgotPasswordView: UIView {
     }
     
     private func configurePillReminderLogo() {
-        pillReminderLogo.image = Constants.horizontalLogoImage
+        pillReminderLogo.image = Images.horizontalLogoImage
         
         self.addSubview(pillReminderLogo)
         pillReminderLogo.translatesAutoresizingMaskIntoConstraints = false

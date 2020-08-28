@@ -22,12 +22,4 @@ struct UserMedicationDetailModel {
         self.dose = dictionary["dose"] as? String ?? ""
         self.cellImage = dictionary["cellImage"] as? String ?? ""
     }
-    
-    init(id: String, pillName: String = "Tritace", capacity: String = "24 pills", dose: String = "10 mg", cellImage: String = "cellImage") {
-        self.id = id
-        self.pillName = pillName
-        self.capacity = capacity
-        self.dose = dose
-        self.cellImage = cellImage
-    }
 }

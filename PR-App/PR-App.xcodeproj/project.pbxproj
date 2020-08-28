@@ -18,6 +18,7 @@
 		5A582B9A2474583700247D19 /* CustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B902474583600247D19 /* CustomLabel.swift */; };
 		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
 		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		5A82DEA724F9832E00788E36 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A82DEA624F9832E00788E36 /* Images.swift */; };
 		5A893FD0249A2C5D008F69A5 /* TitleAndInputMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */; };
 		5A9440B024CA06D4000707FA /* HeaderCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9440AF24CA06D4000707FA /* HeaderCellView.swift */; };
 		5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */; };
@@ -88,6 +89,7 @@
 		5A582B8C2473FEFC00247D19 /* UIViewController+EXT.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+EXT.swift"; sourceTree = "<group>"; };
 		5A582B902474583600247D19 /* CustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomLabel.swift; sourceTree = "<group>"; };
 		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5A82DEA624F9832E00788E36 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
 		5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleAndInputMedicationView.swift; sourceTree = "<group>"; };
 		5A9440AF24CA06D4000707FA /* HeaderCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderCellView.swift; sourceTree = "<group>"; };
 		5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoViewModel.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				AB217B2F2461CF0B00742EB1 /* Constants.swift */,
+				5A82DEA624F9832E00788E36 /* Images.swift */,
 				5AEC6E1924F51AE30052D16B /* PRErrors.swift */,
 				5A3AED5224F6F72E007ADC39 /* PRAlerts.swift */,
 			);
@@ -626,6 +629,7 @@
 				5ACB65BF24B8A19900F3D454 /* FirebaseManager.swift in Sources */,
 				5AD3E496246D9EC700882154 /* CustomCollectionViewHeader.swift in Sources */,
 				5A6A118B2473D1FF006E4B2F /* (null) in Sources */,
+				5A82DEA724F9832E00788E36 /* Images.swift in Sources */,
 				ABF726A42463A46100C903B7 /* UIView+Ext.swift in Sources */,
 				5ACB65B224AA41D800F3D454 /* LoginScreenViewModel.swift in Sources */,
 				5A3AED5124F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift in Sources */,
