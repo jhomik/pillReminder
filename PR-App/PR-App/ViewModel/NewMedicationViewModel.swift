@@ -9,7 +9,7 @@
 import Foundation
 
 protocol NewMedicationCellDelegate {
-    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String)
+    func addNewMedicationCell(_ model: UserMedicationDetailModel)
 }
 
 final class NewMedicationViewModel {
@@ -24,8 +24,12 @@ final class NewMedicationViewModel {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let url):
-                self.firebaseManager.saveUserMedicationDetail(pillName: pillName, capacity: capacity, dose: dose, cellImage: url)
-                self.addCellDelegate?.addNewMedicationCell(pillName: pillName, capacity: capacity, dose: dose, cellImageUrl: url)
+                guard let model = self.firebaseManager.saveUserMedicationDetail(pillName: pillName, capacity: capacity, dose: dose, cellImage: url) else {
+                    completion()
+                    return
+                }
+                
+                self.addCellDelegate?.addNewMedicationCell(model)
                 completion()
             }
         }

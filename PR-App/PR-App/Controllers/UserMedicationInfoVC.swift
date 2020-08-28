@@ -37,7 +37,7 @@ final class UserMedicationInfoVC: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
         viewModel.observeUserName(completion: { (userName) in
-             self.navigationItem.title = "Hello, " + userName + "!"
+            self.navigationItem.title = "Hello, " + userName + "!"
         })
     }
     
@@ -50,7 +50,7 @@ final class UserMedicationInfoVC: UIViewController {
     private func signOutUser() {
         do {
             try Auth.auth().signOut()
-                self.tabBarController?.navigationController?.popViewController(animated: true)
+            self.tabBarController?.navigationController?.popViewController(animated: true)
         } catch {
             print("Failed to sign out", error)
         }
@@ -59,6 +59,10 @@ final class UserMedicationInfoVC: UIViewController {
     private func changeBarButtonItem() {
         let barButtonItem: UIBarButtonItem.SystemItem = isActiveEditButton ? .cancel : .edit
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
+        
+        if medications.count == 1 {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+        }
     }
     
     @objc private func deleteMedication() {
@@ -66,9 +70,7 @@ final class UserMedicationInfoVC: UIViewController {
         changeBarButtonItem()
         self.collectionView?.reloadData()
     }
-    
-    
-    
+
     private func updateMedicationInfo() {
         viewModel.updateMedicationInfo { [weak self] (result) in
             self?.medications = result
@@ -81,11 +83,10 @@ final class UserMedicationInfoVC: UIViewController {
     private func deleteItem(for item: CustomCell) {
         collectionView?.performBatchUpdates({
             if let indexPath = collectionView?.indexPath(for: item) {
+                let model = medications[indexPath.item]
                 medications.remove(at: indexPath.item)
-                let indexPath = IndexPath(item: indexPath.item, section: 0)
                 collectionView?.deleteItems(at: [indexPath])
-                collectionView?.reloadData()
-                firebaseManager.removeData(from: item)
+                firebaseManager.removeDataFromFirebase(model: model)
             }
         }, completion: nil)
     }
@@ -162,13 +163,12 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
 }
 
 extension UserMedicationInfoVC: NewMedicationCellDelegate {
-    func addNewMedicationCell(pillName: String, capacity: String, dose: String, cellImageUrl: String) {
+    func addNewMedicationCell(_ model: UserMedicationDetailModel) {
+        medications.append(model)
+        let indexPath = IndexPath(item: medications.count - 1, section: 0)
         self.collectionView?.performBatchUpdates({
-            let newCell = UserMedicationDetailModel(pillName: pillName, capacity: capacity, dose: dose, cellImage: cellImageUrl)
-            medications.append(newCell)
-            let indexPath = IndexPath(item: medications.count - 1, section: 0)
             collectionView?.insertItems(at: [indexPath])
-            collectionView?.reloadData()
         }, completion: nil)
     }
 }
+

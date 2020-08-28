@@ -27,18 +27,18 @@ final class FirebaseManager {
     
     func downloadMedicationInfo(completion: @escaping([UserMedicationDetailModel]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-            
+        
         refDatabase.child(users).child(uid).child(medicationData).observeSingleEvent(of: .value) { snapshot in
             let models = snapshot.children.compactMap { child -> UserMedicationDetailModel? in
                 guard let child = child as? DataSnapshot, let dict = child.value as? [String: AnyObject] else {
                     return nil
                 }
-                return UserMedicationDetailModel(dictionary: dict)
+                return UserMedicationDetailModel(id: child.key, dictionary: dict)
             }
-                completion(models)
+            completion(models)
         }
     }
-
+    
     // MARK: Saving and downloading image to storage
     
     func saveImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
@@ -61,14 +61,18 @@ final class FirebaseManager {
     
     //MARK: Removing Medication from Firebase DB
     
-    func removeData(from cell: CustomCell) {
+    func removeDataFromFirebase(model: UserMedicationDetailModel) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        if let medicationID = refDatabase.child(medicationData).key {
-            refDatabase.child(users).child(uid).child(medicationData).child(medicationID).removeValue()
-            print(medicationID)
+        refDatabase.child(users).child(uid).child(medicationData).child(model.id).removeValue { (error, data) in
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                print(data)
+            }
         }
     }
+    
     
     // MARK: Downloading image or retrive from UserDefaults Data
     
@@ -96,26 +100,29 @@ final class FirebaseManager {
     }
     
     // MARK: Saving Medication to Firebase DB
-
-    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
+    
+    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) -> UserMedicationDetailModel? {
+        guard let uid = Auth.auth().currentUser?.uid else { return nil }
         
-        var values: [String: String] = [:]
+        var values: [String: AnyObject] = [:]
         
         if let pillName = pillName {
-            values["pillName"] = pillName
+            values["pillName"] = pillName as AnyObject
         }
         if let capacity = capacity {
-            values["capacity"] = capacity
+            values["capacity"] = capacity as AnyObject
         }
         if let dose = dose {
-            values["dose"] = dose
+            values["dose"] = dose as AnyObject
         }
         if let cellImage = cellImage {
-            values["cellImage"] = cellImage
+            values["cellImage"] = cellImage as AnyObject
         }
         
-        refDatabase.child(users).child(uid).child(medicationData).childByAutoId().setValue(values)
+        let child = refDatabase.child(users).child(uid).child(medicationData).childByAutoId()
+        child.setValue(values)
+        
+        return UserMedicationDetailModel(id: child.key ?? "", dictionary: values)
     }
     
     // MARK: Observing Username
@@ -188,3 +195,4 @@ final class FirebaseManager {
         }
     }
 }
+

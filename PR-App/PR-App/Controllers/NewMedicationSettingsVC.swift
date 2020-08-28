@@ -60,7 +60,6 @@ class NewMedicationSettingsVC: UIViewController {
             textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField ])
         } else {
             self.showLoadingSpinner(with: containerView)
-            
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
