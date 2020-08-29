@@ -10,4 +10,5 @@ import Foundation
 
 enum PRErrors: String, Error {
     case userIsNotVerified = "Your email is not verified. Check your mail inbox for link to activate your account!"
+    // read about .strings file and localization 
 }

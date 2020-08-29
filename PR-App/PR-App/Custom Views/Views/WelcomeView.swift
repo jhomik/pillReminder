@@ -9,7 +9,7 @@
 import UIKit
 
 class WelcomeView: UIView {
-    
+    //final class? 
     private let welcomeImage = UIImageView()
 
     override init(frame: CGRect) {

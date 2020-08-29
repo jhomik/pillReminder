@@ -10,6 +10,7 @@ import UIKit
 import FirebaseAuth
 
 final class LoginScreenVC: UIViewController {
+    // try to use full names, in a bigger project VC might mean completely different thing than View Controller
     
     lazy var viewModel = LoginScreenViewModel(loginEvents: self)
     
@@ -45,6 +46,7 @@ final class LoginScreenVC: UIViewController {
         createDismisKeyboardTapGesture()
         configureButton()
         configureForgotPasswordButton()
+        
     }
     
     private func configureWelcomeView() {

@@ -10,8 +10,10 @@ import UIKit
 
 struct Constants {
     static let reuseId = "NewMedicationCell"
+    // I'd keep It in table view cell class
     static let backgroundColor = UIColor(displayP3Red: 240/255, green: 248/255, blue: 255/255, alpha: 1)
     static let mainColor = UIColor(displayP3Red: 40/255, green: 209/255, blue: 204/255, alpha: 1)
+    // you can create extension to UIColor with those^ colors
     static let addMedication = "Add Medication"
     static let placeHolderNameMedication = "Name e.g. Metocard"
     static let placeHolderCapacityMedication = "Package capacity"
@@ -19,6 +21,5 @@ struct Constants {
     static let changeSettings = "Change settings"
     static let changeMedications = "Change Medications"
     static let tapToChange = "Tap to change"
+    // try to keep constants accordingly to It's context
 }
-
-

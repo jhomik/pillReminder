@@ -105,6 +105,7 @@ final class UserMedicationDetailView: UIView {
     
     @objc private func imageCameraButtonTapped() {
         //
+        // don't leave comments :) comments are always bad 
     }
     
     private func configureMedicationStackView() {

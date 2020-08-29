@@ -13,7 +13,7 @@ protocol UserMedicationDetailDelegate {
 }
 
 class UserMedicationSettingsView: UIView {
-    
+    //final class?
     private(set) var addMedicationLbl = CustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = CustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
     private(set) var capacityTextField = CustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
@@ -22,6 +22,7 @@ class UserMedicationSettingsView: UIView {
     var medicationButton = UIButton()
     var pillImage = UIImageView()
     var delegate: UserMedicationDetailDelegate?
+    // weak var, if you won't make it weak, It'll lead to retain cycle, which leads to memory leak.
     let tapToChange = UILabel()
     
     override init(frame: CGRect) {
@@ -50,6 +51,7 @@ class UserMedicationSettingsView: UIView {
     }
     
     private func configureMedicationButtonCamera() {
+        // big method, try to keep methods as small as possible. Here It makes too many things. Method should do "one thing".
         let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         
         medicationButton.backgroundColor = .systemGray5

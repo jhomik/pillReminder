@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+//EXT? :)
 extension UIViewController {
     
     func showLoadingSpinner(with containerView: UIView) {
@@ -74,7 +74,11 @@ extension UIViewController {
     
     func textFieldsShaker(inputFields: [CustomTextField]) {
         for x in inputFields {
+        // for field in inputFields
+        // don't use mysterious variable names
             if x.text!.isEmpty {
+            // using exclamation mark in that situation will result in crash
+            // however some use them this way (when they're sure It won't crash), It's a good habit to unwrap optionals to be 1000% sure
                 x.shake()
             }
         }

@@ -9,6 +9,7 @@
 import UIKit
 
 protocol ForgotPasswordDelegate: class {
+    // read about AnyObject and AnyClass. Apple has started to use them in more often than class.
     func resetPassword(withEmail: String)
 }
 
@@ -19,6 +20,7 @@ class ForgotPasswordView: UIView {
     private let emailTextField = CustomTextField(placeholderText: "Provide your email", isPassword: false)
     private let sendPasswordButton = CustomButton(text: "Send password")
     var delegate: ForgotPasswordDelegate?
+    //weak 
     
     override init(frame: CGRect) {
         super.init(frame: frame)

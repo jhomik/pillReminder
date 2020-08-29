@@ -11,15 +11,18 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 
+// you could make several classes (depending on the use case) for Firebase tasks, and provide a protocol for FirebaseManager that would make code testable.
 final class FirebaseManager {
     
     private var refDatabase = Database.database().reference()
     private var refStorage = Storage.storage().reference()
     private var auth = Auth.auth()
+    // why not lets?
     private let users = "users"
     private let username = "username"
     private let medicationData = "medicationData"
     private let user = "user"
+    //keep those in constants struct^
     private let imageName = UUID().uuidString
     private let userDefaults = UserDefaults.standard
     
@@ -203,4 +206,3 @@ final class FirebaseManager {
         }
     }
 }
-

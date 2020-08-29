@@ -9,7 +9,6 @@
 import Foundation
 
 struct PillModel {
-    
     let morning = ["No pill", "1", "1/2", "1/4"]
     let noon = ["No pill", "1", "1/2", "1/4"]
     let evening = ["No pill", "1", "1/2", "1/4"]

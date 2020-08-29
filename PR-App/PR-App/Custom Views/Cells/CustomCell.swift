@@ -59,9 +59,11 @@ final class CustomCell: UICollectionViewCell {
     
     @objc func deleteButtonTapped() {
         editButtonTapped()
+        // edit or delete tapped? :D
     }
 
     private func configureSubviewsInCell() {
+        // I'd put code for UI elements to seperate methods
         self.addSubview(imageCell)
         self.addSubview(newMedsTitle)
         newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -73,6 +75,7 @@ final class CustomCell: UICollectionViewCell {
         
         imageCell.clipsToBounds = true
         imageCell.layer.cornerRadius = 20
+        // magic numbers
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
 
         NSLayoutConstraint.activate([
@@ -98,6 +101,7 @@ final class CustomCell: UICollectionViewCell {
         layer.shadowOffset = CGSize(width: 0, height: 2.0)
         layer.shadowRadius = 10.0
         layer.shadowOpacity = 1.0
+        //magic numbers
         self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }

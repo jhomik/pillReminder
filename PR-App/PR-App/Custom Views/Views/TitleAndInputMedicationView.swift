@@ -29,6 +29,7 @@ final class TitleAndInputMedicationView: UIView {
     }
     
     private func configure() {
+        //separate methods
         addSubview(titleLabel)
         addSubview(inputLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
