@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol NewMedicationCellDelegate {
+protocol NewMedicationCellDelegate: AnyObject {
     func addNewMedicationCell(_ model: UserMedicationDetailModel)
 }
 
@@ -16,7 +16,7 @@ final class NewMedicationViewModel {
     
     var pillModel = PillModel()
     private let firebaseManager = FirebaseManager()
-    var addCellDelegate: NewMedicationCellDelegate?
+    weak var addCellDelegate: NewMedicationCellDelegate?
     
     func saveNewMedicationToFirebase(data: Data, pillName: String, capacity: String, dose: String, completion: @escaping () -> Void) {
         firebaseManager.saveImageToStorage(cellImage: data) { (result) in

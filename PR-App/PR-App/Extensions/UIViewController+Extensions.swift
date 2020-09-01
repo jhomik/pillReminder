@@ -50,10 +50,10 @@ extension UIViewController {
     func showUserAlertWithOptions(title: String?, message: String?, actionTitle: String?, completion: (() -> Void)?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .actionSheet)
         alert.addAction(UIAlertAction(title: actionTitle, style: .destructive, handler: { _ in
-                   completion?()
-               }))
+            completion?()
+        }))
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-       
+        
         self.present(alert, animated: true)
     }
     
@@ -62,20 +62,10 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func performAnimations(view: UIView) {
-        UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
-            self.view.alpha = 0.0
-        }) { (finished) in
-            UIView.transition(with: self.view, duration: 2, options: .transitionCrossDissolve, animations: {
-                self.view.alpha = 0.0
-            }, completion: nil)
-        }
-    }
-    
-    func textFieldsShaker(inputFields: [CustomTextField]) {
-        for x in inputFields {
-            if x.text!.isEmpty {
-                x.shake()
+    func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
+        for field in inputFields {
+            if let fieldText = field.text, fieldText.isEmpty {
+                field.shake()
             }
         }
     }

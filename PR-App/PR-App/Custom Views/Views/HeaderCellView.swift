@@ -8,7 +8,7 @@
 
 import UIKit
 
-class HeaderCellView: UIView {
+final class HeaderCellView: UIView {
     
     private let headerLabel = UILabel()
     private var titleLabel: String
@@ -24,16 +24,19 @@ class HeaderCellView: UIView {
     }
     
     private func configure() {
+        let headerLabelFontSize: CGFloat = 16
+        let leadingAnchorConstant: CGFloat = 16
+        
         headerLabel.text = titleLabel
-        headerLabel.backgroundColor = Constants.backgroundColor
-        headerLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        headerLabel.backgroundColor = UIColor.backgroundColor
+        headerLabel.font = UIFont.systemFont(ofSize: headerLabelFontSize, weight: .bold)
         
         self.addSubview(headerLabel)
         headerLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             headerLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: leadingAnchorConstant),
             headerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             headerLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor),
         ])

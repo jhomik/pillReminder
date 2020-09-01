@@ -20,7 +20,7 @@ extension UIView {
         self.layer.add(animation, forKey: "position")
     }
     
-    func performAnimations(view: UIImageView) {
+    func performAnimationsFadeOut(view: UIImageView) {
         UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
             view.alpha = 0.0
         }) { (finished) in

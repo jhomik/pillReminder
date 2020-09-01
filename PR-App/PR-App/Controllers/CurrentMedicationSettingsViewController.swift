@@ -1,5 +1,5 @@
 //
-//  CurrentMedicationSettingsVC.swift
+//  CurrentMedicationSettingsViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 13/08/2020.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class CurrentMedicationSettingsVC: UIViewController {
+final class CurrentMedicationSettingsViewController: UIViewController {
     
+    let reuseId = "CurrentMedicationCell"
     private let userMedicationSettingView = UserMedicationSettingsView()
     private let tableView = UITableView()
     private let viewModel = CurrentMedicationSettingsViewModel()
@@ -32,7 +33,7 @@ class CurrentMedicationSettingsVC: UIViewController {
     }
     
     private func configureViewController() {
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = UIColor.backgroundColor
     }
     
     func updateTextFieldsToChange() {
@@ -40,7 +41,7 @@ class CurrentMedicationSettingsVC: UIViewController {
         userMedicationSettingView.nameTextField.text = medication.pillName
         userMedicationSettingView.capacityTextField.text = medication.capacity
         userMedicationSettingView.doseTextField.text = medication.dose
-        firebaseManager.downloadImage(with: medication.cellImage, imageCell: userMedicationSettingView.pillImage)
+        firebaseManager.downloadImage(with: medication.cellImage, imageCell: userMedicationSettingView.medicationImage)
     }
     
     private func configureCurrentMedicationView() {
@@ -49,7 +50,7 @@ class CurrentMedicationSettingsVC: UIViewController {
     
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveSettings))
-        navigationController?.navigationBar.barTintColor = Constants.backgroundColor
+        navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
@@ -61,41 +62,46 @@ class CurrentMedicationSettingsVC: UIViewController {
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: PRAlerts.photoSource.rawValue, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.camera.rawValue, style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
             } else {
-                print("Camera is not available")
+                self.showUserAlert(message: PRErrors.cameraNotAvailable.rawValue, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.photoLibrary.rawValue, style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.cancel.rawValue, style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
     }
     
     private func configureMedicationView() {
+        let leadingAndTrailingAnchorConstants: CGFloat = 20
+        let heightAnchorMultiplier: CGFloat = 0.24
+        
         view.addSubview(userMedicationSettingView)
         
         NSLayoutConstraint.activate([
             userMedicationSettingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            userMedicationSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            userMedicationSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            userMedicationSettingView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.24)
+            userMedicationSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
+            userMedicationSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
+            userMedicationSettingView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightAnchorMultiplier)
         ])
     }
     
     private func configureTableView() {
+        let topAnchorConstant: CGFloat = 20
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
-        tableView.backgroundColor = Constants.backgroundColor
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
+        tableView.backgroundColor = UIColor.backgroundColor
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = false
         
@@ -103,7 +109,7 @@ class CurrentMedicationSettingsVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: userMedicationSettingView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: userMedicationSettingView.bottomAnchor, constant: topAnchorConstant),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -111,7 +117,7 @@ class CurrentMedicationSettingsVC: UIViewController {
     }
 }
 
-extension CurrentMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
+extension CurrentMedicationSettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.pillModel.sections.count
@@ -121,7 +127,7 @@ extension CurrentMedicationSettingsVC: UITableViewDataSource, UITableViewDelegat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -141,13 +147,15 @@ extension CurrentMedicationSettingsVC: UITableViewDataSource, UITableViewDelegat
     }
 }
 
-extension CurrentMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let compressionQualityValue: CGFloat = 0.1
+        
         let image = info[.originalImage] as? UIImage
         medicationView.pillImage.image = image
         
-        if let uploadData = image?.jpegData(compressionQuality: 0.1) {
+        if let uploadData = image?.jpegData(compressionQuality: compressionQualityValue) {
             imageData.append(uploadData)
         }
         
@@ -155,7 +163,7 @@ extension CurrentMedicationSettingsVC: UIImagePickerControllerDelegate, UINaviga
     }
 }
 
-extension CurrentMedicationSettingsVC: UserMedicationDetailDelegate {
+extension CurrentMedicationSettingsViewController: UserMedicationDetailDelegate {
     func imagePickerEvent() {
         configureImagePickerController()
     }

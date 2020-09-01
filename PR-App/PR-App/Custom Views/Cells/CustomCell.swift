@@ -13,15 +13,15 @@ final class CustomCell: UICollectionViewCell {
     static let reuseId = "CustomCell"
     var imageCell = UIImageView()
     var newMedsTitle = UILabel()
-    let deleteButton = UIButton()
-    let placeholderImage = Images.placeholderImage
-    private var firebaseManager = FirebaseManager()
-    var editButtonTapped: () -> Void = {}
+    var deleteButton = UIButton()
+    private let firebaseManager = FirebaseManager()
+    var deleteButtonEvent: () -> Void = {}
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCell()
-        configureSubviewsInCell()
+        configureImageCell()
+        configureNewMedsTitle()
         configureDeleteButton()
     }
     
@@ -37,67 +37,89 @@ final class CustomCell: UICollectionViewCell {
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
         firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
-        self.newMedsTitle.text = title
+        newMedsTitle.text = title
     }
     
     func configureDeleteButton() {
-        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
-        deleteButton.setImage(UIImage(systemName: "xmark.circle.fill", withConfiguration: imageConfiguration), for: .normal)
-        deleteButton.tintColor = Constants.mainColor
+        let deleteButtonSize: CGFloat = 25
+        let imageConfiguration = UIImage.SymbolConfiguration(pointSize: deleteButtonSize, weight: .regular)
+        let topAnchorConstant: CGFloat = 10
+        let leadingAnchorConstant: CGFloat = 10
+        
+        deleteButton.setImage(UIImage(systemName: Images.cellDeleteButton, withConfiguration: imageConfiguration), for: .normal)
+        deleteButton.tintColor = UIColor.mainColor
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         deleteButton.backgroundColor = .systemBackground
-        self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
+        deleteButton.layer.cornerRadius = deleteButton.bounds.width / 2
         
         deleteButton.translatesAutoresizingMaskIntoConstraints = false
         addSubview(deleteButton)
         
         NSLayoutConstraint.activate([
-            deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: -10),
-            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -10),
+            deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: -topAnchorConstant),
+            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -leadingAnchorConstant),
         ])
     }
     
     @objc func deleteButtonTapped() {
-        editButtonTapped()
+        deleteButtonEvent()
     }
 
-    private func configureSubviewsInCell() {
-        self.addSubview(imageCell)
-        self.addSubview(newMedsTitle)
-        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
-        imageCell.translatesAutoresizingMaskIntoConstraints = false
-        
-        newMedsTitle.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        newMedsTitle.textAlignment = .center
-        newMedsTitle.numberOfLines = 0
+    private func configureImageCell() {
+        let imageCellCornerRadius: CGFloat = 20
         
         imageCell.clipsToBounds = true
-        imageCell.layer.cornerRadius = 20
+        imageCell.layer.cornerRadius = imageCellCornerRadius
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        imageCell.image = Images.placeholderImage
 
+        self.addSubview(imageCell)
+        imageCell.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageCell.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
             imageCell.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
-            imageCell.bottomAnchor.constraint(equalTo: newMedsTitle.topAnchor),
-            
+        ])
+    }
+    
+    private func configureNewMedsTitle() {
+        let newMedsTitleFontSize: CGFloat = 16
+        let newMedsTitleNumberOfLinesInContent: Int = 0
+        let heightConstantConstraint: CGFloat = 40
+        
+        newMedsTitle.font = UIFont.systemFont(ofSize: newMedsTitleFontSize, weight: .medium)
+        newMedsTitle.textAlignment = .center
+        newMedsTitle.numberOfLines = newMedsTitleNumberOfLinesInContent
+        
+        self.addSubview(newMedsTitle)
+        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
+    
+        NSLayoutConstraint.activate([
             newMedsTitle.topAnchor.constraint(equalTo: imageCell.bottomAnchor),
             newMedsTitle.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            newMedsTitle.heightAnchor.constraint(equalToConstant: 40),
+            newMedsTitle.heightAnchor.constraint(equalToConstant: heightConstantConstraint),
         ])
     }
     
     private func configureCell() {
-        layer.cornerRadius = 20
-        layer.borderWidth = 1
+        let cellCornerRadius: CGFloat = 20
+        let cellBorderWidth: CGFloat = 1
+        let shadowOffsetWidth: CGFloat = 0.0
+        let shadowOffsetHeight: CGFloat = 2.0
+        let cellShadowRadius: CGFloat = 10
+        let cellShadowOpacity: Float = 1
+        
+        layer.cornerRadius = cellCornerRadius
+        layer.borderWidth = cellBorderWidth
         layer.borderColor = UIColor.secondarySystemFill.cgColor
         backgroundColor = .secondarySystemFill
         layer.backgroundColor = UIColor.white.cgColor
         layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: 0, height: 2.0)
-        layer.shadowRadius = 10.0
-        layer.shadowOpacity = 1.0
-        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
+        layer.shadowRadius = cellShadowRadius
+        layer.shadowOpacity = cellShadowOpacity
+        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LoginScreenEvents: class {
+protocol LoginScreenEvents: AnyObject {
     func onLoginSuccess()
     func onLoginFailure(error: Error)
     func createUserSuccess()

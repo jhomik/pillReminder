@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ForgotPasswordEvents: class {
+protocol ForgotPasswordEvents: AnyObject {
     func showSuccesAlert()
     func showFailureAlert(error: Error)
 }

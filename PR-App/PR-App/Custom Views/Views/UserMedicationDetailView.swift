@@ -9,23 +9,24 @@
 import UIKit
 
 final class UserMedicationDetailView: UIView {
-
+    
     var pillImage = UIImageView()
+    private let medicationStackView = UIStackView()
     
     private lazy var pillNameView = TitleAndInputMedicationView(
-        title: NSAttributedString(string: "Pill name",
+        title: NSAttributedString(string: Constants.pillName,
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
     private lazy var packageCapacityView = TitleAndInputMedicationView(
-        title: NSAttributedString(string: "Capacity",
+        title: NSAttributedString(string: Constants.capacity,
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
     private lazy var pillDoseView = TitleAndInputMedicationView(
-        title: NSAttributedString(string: "Dose",
+        title: NSAttributedString(string: Constants.dose,
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
@@ -35,16 +36,15 @@ final class UserMedicationDetailView: UIView {
     }()
     
     private lazy var inputAttributes: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: Constants.mainColor]
+        return [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: UIColor.mainColor]
     }()
     
-    private var medicationButtonCamera = UIButton()
-    private let medicationStackView = UIStackView()
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureMedicationView()
-        configureMedicationButtonCamera()
+        configurePillImageView()
         configureMedicationStackView()
     }
     
@@ -53,61 +53,45 @@ final class UserMedicationDetailView: UIView {
     }
     
     func updatePillNameValue(_ value: String) {
-        self.pillNameView.updateInputValue(NSAttributedString(string: value,
-                                                              attributes: self.inputAttributes))
+        self.pillNameView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
     }
     
     func updatePackageCapacityValue(_ value: String) {
-        self.packageCapacityView.updateInputValue(NSAttributedString(string: value,
-                                                                    attributes: self.inputAttributes))
+        self.packageCapacityView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
     }
     
     func updatePillDoseValue(_ value: String) {
-        self.pillDoseView.updateInputValue(NSAttributedString(string: value,
-                                                              attributes: self.inputAttributes))
+        self.pillDoseView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
     }
     
     private func configureMedicationView() {
         translatesAutoresizingMaskIntoConstraints = false
     }
     
-    private func configureMedicationButtonCamera() {
-        let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
+    private func configurePillImageView() {
+        let pillImageCornerRadius: CGFloat = 16
+        let widthAnchorMultiplier: CGFloat = 0.5
         
-        medicationButtonCamera.backgroundColor = .systemGray5
-        medicationButtonCamera.addTarget(self, action: #selector(imageCameraButtonTapped), for: .touchUpInside)
-        medicationButtonCamera.setImage(UIImage(systemName: "camera", withConfiguration: settingsCellConfig), for: .normal)
-        medicationButtonCamera.layer.cornerRadius = 16
-        medicationButtonCamera.tintColor = .systemGray
-        
+        pillImage.backgroundColor = .systemGray5
         pillImage.contentMode = .scaleAspectFill
         pillImage.layer.masksToBounds = true
-        pillImage.layer.cornerRadius = 16
-    
-        addSubview(medicationButtonCamera)
-        medicationButtonCamera.addSubview(pillImage)
+        pillImage.layer.cornerRadius = pillImageCornerRadius
+        pillImage.image = Images.placeholderImage
         
+        addSubview(pillImage)
         pillImage.translatesAutoresizingMaskIntoConstraints = false
-        medicationButtonCamera.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            medicationButtonCamera.topAnchor.constraint(equalTo: self.topAnchor),
-            medicationButtonCamera.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            medicationButtonCamera.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 0.5),
-            medicationButtonCamera.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            
             pillImage.topAnchor.constraint(equalTo: self.topAnchor),
             pillImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            pillImage.widthAnchor.constraint(equalTo: medicationButtonCamera.widthAnchor),
-            pillImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            pillImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
+            pillImage.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
-    @objc private func imageCameraButtonTapped() {
-        //
-    }
-    
     private func configureMedicationStackView() {
+        let leadingAnchorConstant: CGFloat = 30
+        
         medicationStackView.axis = .vertical
         medicationStackView.distribution = .equalSpacing
         
@@ -119,7 +103,7 @@ final class UserMedicationDetailView: UIView {
         
         NSLayoutConstraint.activate([
             medicationStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            medicationStackView.leadingAnchor.constraint(equalTo: medicationButtonCamera.trailingAnchor, constant: 30),
+            medicationStackView.leadingAnchor.constraint(equalTo: pillImage.trailingAnchor, constant: leadingAnchorConstant),
             medicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             medicationStackView.heightAnchor.constraint(equalTo: self.heightAnchor)
         ])

@@ -1,5 +1,5 @@
 //
-//  CustomTextField.swift
+//  PillReminderMainCustomTextField.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 02/06/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomTextField: UITextField {
+final class PillReminderMainCustomTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,11 +26,17 @@ final class CustomTextField: UITextField {
     }
     
     private func configure() {
-        self.font = UIFont.italicSystemFont(ofSize: 18)
-        self.layer.backgroundColor = Constants.backgroundColor.cgColor
-        self.layer.shadowOffset  = CGSize(width: 0.0, height: 0.2)
-        self.layer.shadowOpacity  = 0.5
-        self.layer.shadowRadius  = 0.0
+        let textFieldShadowOpactiy: Float = 0.5
+        let textFieldShadowRadius: CGFloat = 0.0
+        let textFieldFontSize: CGFloat = 18
+        let shadowOffsetWidth: CGFloat = 0.0
+        let shadowOffsetHeight: CGFloat = 0.2
+        
+        self.font = UIFont.italicSystemFont(ofSize: textFieldFontSize)
+        self.layer.backgroundColor = UIColor.backgroundColor.cgColor
+        self.layer.shadowOffset  = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
+        self.layer.shadowOpacity  = textFieldShadowOpactiy
+        self.layer.shadowRadius  = textFieldShadowRadius
         self.layer.shadowColor   = UIColor.label.cgColor
         self.translatesAutoresizingMaskIntoConstraints = false
         self.autocapitalizationType = .none

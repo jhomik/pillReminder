@@ -1,5 +1,5 @@
 //
-//  LoginScreenVC.swift
+//  LoginScreenViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 05/05/2020.
@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-final class LoginScreenVC: UIViewController {
+final class LoginScreenViewController: UIViewController {
     
     lazy var viewModel = LoginScreenViewModel(loginEvents: self)
     
@@ -17,11 +17,11 @@ final class LoginScreenVC: UIViewController {
     private var scrollView = UIScrollView()
     private let stackViewLoginData = UIStackView()
     
-    private let userName = CustomTextField(placeholderText: "Your name", isPassword: false)
-    private let emailInput = CustomTextField(placeholderText: "Email Address", isPassword: false)
-    private let passwordInput = CustomTextField(placeholderText: "Password", isPassword: true)
-    private let confirmInput = CustomTextField(placeholderText: "Confirm Password", isPassword: true)
-    private let button = CustomButton(text: "Log in")
+    private let userName = PillReminderMainCustomTextField(placeholderText: "Your name", isPassword: false)
+    private let emailInput = PillReminderMainCustomTextField(placeholderText: "Email Address", isPassword: false)
+    private let passwordInput = PillReminderMainCustomTextField(placeholderText: "Password", isPassword: true)
+    private let confirmInput = PillReminderMainCustomTextField(placeholderText: "Confirm Password", isPassword: true)
+    private let button = PillReminderMainCustomButton(text: "Log in")
     
     private let logoImage = UIImageView(image: Images.logoImage)
     private var isSignUp = false
@@ -59,7 +59,7 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func configureViewController() {
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = UIColor.backgroundColor
         navigationController?.isNavigationBarHidden = true
     }
     
@@ -77,19 +77,23 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func configureSegmentedView() {
+        let selectedSegmentIndexValue: Int = 0
+        let heightAnchorConstant: CGFloat = 30
+        let topAnchorConstant: CGFloat = 10
+        
         segmentedController = UISegmentedControl(items: ["Sign In", "Create Account"])
         segmentedController.apportionsSegmentWidthsByContent = false
-        segmentedController.selectedSegmentTintColor = Constants.mainColor
+        segmentedController.selectedSegmentTintColor = UIColor.mainColor
         segmentedController.translatesAutoresizingMaskIntoConstraints = false
-        segmentedController.selectedSegmentIndex = 0
+        segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
         segmentedController.addTarget(self, action: #selector(segmentedControllerChange), for: .valueChanged)
         scrollView.addSubview(segmentedController)
         
         NSLayoutConstraint.activate([
             segmentedController.leadingAnchor.constraint(equalTo: logoImage.leadingAnchor),
             segmentedController.trailingAnchor.constraint(equalTo: logoImage.trailingAnchor),
-            segmentedController.heightAnchor.constraint(equalToConstant: 30),
-            segmentedController.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: 10)
+            segmentedController.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
+            segmentedController.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: topAnchorConstant)
         ])
     }
     
@@ -128,6 +132,9 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func configureStackViewLoginData() {
+        let spacingConstant: CGFloat = 20
+        let topAnchorConstant: CGFloat = 20
+        
         userName.isHidden = true
         confirmInput.isHidden = true
         
@@ -143,7 +150,7 @@ final class LoginScreenVC: UIViewController {
         stackViewLoginData.addArrangedSubview(confirmInput)
         stackViewLoginData.axis = .vertical
         stackViewLoginData.distribution = .equalSpacing
-        stackViewLoginData.setCustomSpacing(20, after: emailInput)
+        stackViewLoginData.setCustomSpacing(spacingConstant, after: emailInput)
         
         stackViewLoginData.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackViewLoginData)
@@ -151,20 +158,23 @@ final class LoginScreenVC: UIViewController {
         NSLayoutConstraint.activate([
             stackViewLoginData.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             stackViewLoginData.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: 20),
+            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: topAnchorConstant),
         ])
     }
     
     private func configureButton() {
+        let horizontalConstant = UIScreen.main.bounds.width / 10
+        let heightAnchorConstant: CGFloat = 40
+        let topAnchorConstant: CGFloat = 25
+        
         button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         scrollView.addSubview(button)
         
-        let horizontalConstant  = UIScreen.main.bounds.width / 10
         NSLayoutConstraint.activate([
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: horizontalConstant),
             button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -horizontalConstant),
-            button.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: 25),
-            button.heightAnchor.constraint(equalToConstant: 40)
+            button.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: topAnchorConstant),
+            button.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
     
@@ -176,29 +186,33 @@ final class LoginScreenVC: UIViewController {
     }
     
     private func configureForgotPasswordButton() {
+        let forgotPasswordButtonFontsize: CGFloat = 14
+        let bottomAnchorConstant: CGFloat = 15
+        let heightAnchorConstant: CGFloat = 10
+        
         forgotPasswordButton.setTitle("Forgot your password?", for: .normal)
         forgotPasswordButton.setTitleColor(.label, for: .normal)
         forgotPasswordButton.addTarget(self, action: #selector(forgotButtonTapped), for: .touchUpInside)
-        forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: 14)
+        forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: forgotPasswordButtonFontsize)
         
         view.addSubview(forgotPasswordButton)
         forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            forgotPasswordButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15),
+            forgotPasswordButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
             forgotPasswordButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             forgotPasswordButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            forgotPasswordButton.heightAnchor.constraint(equalToConstant: 10),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
         ]) 
     }
     
     @objc private func forgotButtonTapped() {
-        let forgotPasswordVC = UINavigationController(rootViewController: ForgotPasswordVC())
+        let forgotPasswordVC = UINavigationController(rootViewController: ForgotPasswordViewController())
         present(forgotPasswordVC, animated: true)
     }
 }
 
-extension LoginScreenVC: LoginScreenEvents {
+extension LoginScreenViewController: LoginScreenEvents {
     
     func onLoginSuccess() {
         self.showUserAlert(message: PRAlerts.userLogIn.rawValue, withTime: nil) {
@@ -215,8 +229,10 @@ extension LoginScreenVC: LoginScreenEvents {
     }
     
     func createUserSuccess() {
+        let selectedSegmentIndexValue: Int = 0
+        
         self.showUserAlert(message: PRAlerts.emailActivation.rawValue, withTime: nil) {
-            self.segmentedController.selectedSegmentIndex = 0
+            self.segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
             self.isSignUp.toggle()
             self.userName.isHidden = true
             self.confirmInput.isHidden = true
@@ -234,7 +250,7 @@ extension LoginScreenVC: LoginScreenEvents {
     }
 }
 
-extension LoginScreenVC: UITextFieldDelegate {
+extension LoginScreenViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == userName {

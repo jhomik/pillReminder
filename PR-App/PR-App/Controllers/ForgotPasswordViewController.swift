@@ -1,5 +1,5 @@
 //
-//  ForgotPasswordVC.swift
+//  ForgotPasswordViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 25/08/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ForgotPasswordVC: UIViewController {
+final class ForgotPasswordViewController: UIViewController {
     
     private var forgotPasswordView = ForgotPasswordView()
     lazy var viewModel = ForgotPasswordViewModel(forgotPasswordEvents: self)
@@ -22,13 +22,13 @@ class ForgotPasswordVC: UIViewController {
     }
     
     private func configureViewController() {
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = UIColor.backgroundColor
     }
     
     private func configureNavigationBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelButtonTapped))
-        navigationController?.navigationBar.barTintColor = Constants.backgroundColor
-        navigationController?.navigationBar.tintColor = Constants.mainColor
+        navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
+        navigationController?.navigationBar.tintColor = UIColor.mainColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
@@ -38,20 +38,22 @@ class ForgotPasswordVC: UIViewController {
     }
     
     private func configureForgotPasswordView() {
+        let topAnchorConstant: CGFloat = 40
+        
         forgotPasswordView.delegate = self
         view.addSubview(forgotPasswordView)
         forgotPasswordView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            forgotPasswordView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
-            forgotPasswordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
-            forgotPasswordView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            forgotPasswordView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topAnchorConstant),
+            forgotPasswordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: topAnchorConstant),
+            forgotPasswordView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -topAnchorConstant),
             forgotPasswordView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }
 
-extension ForgotPasswordVC: ForgotPasswordEvents {
+extension ForgotPasswordViewController: ForgotPasswordEvents {
     func showSuccesAlert() {
         self.showUserAlert(message: PRAlerts.userForgotPassword.rawValue, withTime: nil) {
             self.dismiss(animated: true, completion: nil)
@@ -63,7 +65,7 @@ extension ForgotPasswordVC: ForgotPasswordEvents {
     }
 }
 
-extension ForgotPasswordVC: ForgotPasswordDelegate {
+extension ForgotPasswordViewController: ForgotPasswordDelegate {
     func resetPassword(withEmail: String) {
         viewModel.resetUserPassword(withEmail: withEmail)
     }

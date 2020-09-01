@@ -1,5 +1,5 @@
 //
-//  MainVC.swift
+//  UserMedicationInfoViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 12/05/2020.
@@ -9,12 +9,11 @@
 import UIKit
 import FirebaseAuth
 
-final class UserMedicationInfoVC: UIViewController {
+final class UserMedicationInfoViewController: UIViewController {
     
     private var collectionView: UICollectionView?
     private var viewModel = UserMedicationInfoViewModel()
     private let containerView = UIView()
-    
     private var medications: [UserMedicationDetailModel] = [] {
         didSet {
             changeBarButtonItem()
@@ -32,7 +31,7 @@ final class UserMedicationInfoVC: UIViewController {
         configureCollectionView()
         configureNavigationBar()
         updateMedicationInfo()
-        collectionView?.backgroundColor = Constants.backgroundColor
+        collectionView?.backgroundColor = UIColor.backgroundColor
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -42,7 +41,6 @@ final class UserMedicationInfoVC: UIViewController {
     
     private func configureNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(logoutSession))
-        changeBarButtonItem()
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
         
         viewModel.setUserName(completion: { (userName) in
@@ -51,7 +49,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
     
     @objc private func logoutSession() {
-        showUserAlertWithOptions(title: nil, message: PRAlerts.userSignOUt.rawValue, actionTitle: "Sign Out") {
+        showUserAlertWithOptions(title: nil, message: PRAlerts.userSignOUt.rawValue, actionTitle: PRAlerts.signOut.rawValue) {
             self.signOutUser()
         }
     }
@@ -61,7 +59,7 @@ final class UserMedicationInfoVC: UIViewController {
             try Auth.auth().signOut()
             self.tabBarController?.navigationController?.popViewController(animated: true)
         } catch {
-            print("Failed to sign out", error)
+            self.showUserAlert(message: PRErrors.failedToSignOut.rawValue + ":\(error)" , withTime: nil, completion: nil)
         }
     }
     
@@ -105,11 +103,12 @@ final class UserMedicationInfoVC: UIViewController {
         let minimumItemSpacing: CGFloat = 10
         let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
         let itemWidth = availableWidth / 2
+        let heightHeaderSize: CGFloat = 80
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
         flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 20)
-        flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: 80)
+        flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: heightHeaderSize)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
@@ -122,7 +121,7 @@ final class UserMedicationInfoVC: UIViewController {
     }
 }
 
-extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDelegate {
+extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return medications.count + 1
@@ -133,7 +132,7 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         cell.imageCell.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
-        cell.editButtonTapped = { [weak self] in
+        cell.deleteButtonEvent = { [weak self] in
             self?.deleteItem(for: cell)
         }
         
@@ -156,19 +155,19 @@ extension UserMedicationInfoVC: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         if medications.indices.contains(indexPath.item) {
-            let userMedicationDetail = UserMedicationDetailVC()
+            let userMedicationDetail = UserMedicationDetailViewController()
             userMedicationDetail.medications = medications[indexPath.item]
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
         } else {
             let viewModel = NewMedicationViewModel()
             viewModel.addCellDelegate = self
-            let newMedicationVC = NewMedicationSettingsVC(viewModel: viewModel)
+            let newMedicationVC = NewMedicationSettingsViewController(viewModel: viewModel)
             present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
         }
     }
 }
 
-extension UserMedicationInfoVC: NewMedicationCellDelegate {
+extension UserMedicationInfoViewController: NewMedicationCellDelegate {
     func addNewMedicationCell(_ model: UserMedicationDetailModel) {
         medications.append(model)
         let indexPath = IndexPath(item: medications.count - 1, section: 0)

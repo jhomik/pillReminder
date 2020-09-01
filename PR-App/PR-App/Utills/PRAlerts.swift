@@ -14,6 +14,11 @@ enum PRAlerts: String, Error {
     case userSignOUt = "Are you sure you want to log out from account?"
     case userForgotPassword = "Your link with password reset has been sent!"
     case userSessionActive = "Welcome back!"
+    case photoSource = "Photo Source"
+    case camera = "Camera"
+    case photoLibrary = "Photo Library"
+    case cancel = "Cancel"
+    case signOut = "Sign Out"
 }
 
 

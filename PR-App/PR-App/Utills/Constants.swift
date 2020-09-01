@@ -9,9 +9,6 @@
 import UIKit
 
 struct Constants {
-    static let reuseId = "NewMedicationCell"
-    static let backgroundColor = UIColor(displayP3Red: 240/255, green: 248/255, blue: 255/255, alpha: 1)
-    static let mainColor = UIColor(displayP3Red: 40/255, green: 209/255, blue: 204/255, alpha: 1)
     static let addMedication = "Add Medication"
     static let placeHolderNameMedication = "Name e.g. Metocard"
     static let placeHolderCapacityMedication = "Package capacity"
@@ -19,6 +16,14 @@ struct Constants {
     static let changeSettings = "Change settings"
     static let changeMedications = "Change Medications"
     static let tapToChange = "Tap to change"
+    static let pillName = "Pill name"
+    static let capacity = "Capacity"
+    static let dose = "Dose"
+    static let program = "Program"
+    static let users = "users"
+    static let username = "username"
+    static let medicationData = "medicationData"
+    static let user = "user"
 }
 
 

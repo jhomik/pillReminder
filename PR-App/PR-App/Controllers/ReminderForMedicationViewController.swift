@@ -1,5 +1,5 @@
 //
-//  ReminderForMedicationVC.swift
+//  ReminderForMedicationViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 12/05/2020.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class ReminderForMedicationVC: UIViewController {
+final class ReminderForMedicationViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

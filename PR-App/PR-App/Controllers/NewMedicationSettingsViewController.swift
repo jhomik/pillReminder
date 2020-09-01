@@ -1,5 +1,5 @@
 //
-//  NewMedicationSettingsVC.swift
+//  NewMedicationSettingsViewController.swift
 //  PR-App
 //
 //  Created by Jakub Homik on 27/05/2020.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class NewMedicationSettingsVC: UIViewController {
+final class NewMedicationSettingsViewController: UIViewController {
     
+    private let reuseId = "NewMedicationCell"
     private let newMedicationView = UserMedicationSettingsView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
@@ -39,16 +40,16 @@ class NewMedicationSettingsVC: UIViewController {
     }
     
     private func configureViewController() {
-        view.backgroundColor = Constants.backgroundColor
+        view.backgroundColor = UIColor.backgroundColor
     }
     
     private func configureNewMedicationView() {
-        newMedicationView.tapToChange.isHidden = true
+        newMedicationView.tapToChangeImage.isHidden = true
     }
     
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveSettings))
-        navigationController?.navigationBar.barTintColor = Constants.backgroundColor
+        navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
@@ -73,41 +74,46 @@ class NewMedicationSettingsVC: UIViewController {
         view.endEditing(true)
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        let actionSheet = UIAlertController(title: "Photo Source", message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: PRAlerts.photoSource.rawValue, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.camera.rawValue, style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
             } else {
-                print("Camera is not available")
+                self.showUserAlert(message: PRErrors.cameraNotAvailable.rawValue, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.photoLibrary.rawValue, style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: PRAlerts.cancel.rawValue, style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
     }
     
     private func configureMedicationView() {
+        let leadingAndTrailingAnchorConstants: CGFloat = 20
+        let heightAnchorMultiplier: CGFloat = 0.24
+        
         view.addSubview(newMedicationView)
         
         NSLayoutConstraint.activate([
             newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.24)
+            newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
+            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
+            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightAnchorMultiplier)
         ])
     }
     
     private func configureTableView() {
+        let topAnchorConstant: CGFloat = 20
+        
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: Constants.reuseId)
-        tableView.backgroundColor = Constants.backgroundColor
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
+        tableView.backgroundColor = UIColor.backgroundColor
         tableView.tableFooterView = UIView()
         tableView.isScrollEnabled = false
         
@@ -115,7 +121,7 @@ class NewMedicationSettingsVC: UIViewController {
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: newMedicationView.bottomAnchor, constant: 20),
+            tableView.topAnchor.constraint(equalTo: newMedicationView.bottomAnchor, constant: topAnchorConstant),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -123,7 +129,7 @@ class NewMedicationSettingsVC: UIViewController {
     }
 }
 
-extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
+extension NewMedicationSettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.pillModel.sections.count
@@ -133,7 +139,7 @@ extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.reuseId, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
         cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
         cell.accessoryType = .disclosureIndicator
         return cell
@@ -144,31 +150,28 @@ extension NewMedicationSettingsVC: UITableViewDataSource, UITableViewDelegate {
         return sectionView
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-    }
-    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
 }
 
-extension NewMedicationSettingsVC: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[.originalImage] as? UIImage {
-            newMedicationView.pillImage.image = image
-            if let uploadData = image.jpegData(compressionQuality: 0.1) {
-                imageData.append(uploadData)
-            }
-        } else {
-            newMedicationView.pillImage.image = Images.placeholderImage
+        let compressionQualityValue: CGFloat = 0.1
+        
+        guard let image = info[.originalImage] as? UIImage else { return }
+        newMedicationView.medicationImage.image = image
+        
+        if let uploadData = image.jpegData(compressionQuality: compressionQualityValue) {
+            imageData.append(uploadData)
         }
+        
         picker.dismiss(animated: true, completion: nil)
     }
 }
 
-extension NewMedicationSettingsVC: UserMedicationDetailDelegate {
+extension NewMedicationSettingsViewController: UserMedicationDetailDelegate {
     func imagePickerEvent() {
         configureImagePickerController()
     }

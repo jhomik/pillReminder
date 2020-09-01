@@ -1,5 +1,5 @@
 //
-//  CustomCellLabel.swift
+//  PillReminderMainCustomLabel.swift
 //  PR-App
 //
 //  Created by Tayler Moosa on 5/13/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomLabel: UILabel {
+final class PillReminderMainCustomLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
