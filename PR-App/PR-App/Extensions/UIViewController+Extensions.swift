@@ -52,7 +52,7 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: actionTitle, style: .destructive, handler: { _ in
             completion?()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: Alerts.cancel, style: .cancel, handler: nil))
         
         self.present(alert, animated: true)
     }

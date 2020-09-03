@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  PR-App
+
+  Created by Jakub Homik on 02/09/2020.
+  Copyright © 2020 Jakub Homik. All rights reserved.
+*/
+
+"addMedication" = "Add Medication";
+"placeHolderNameMedication" = "Name e.g. Metocard";
+"placeHolderCapacityMedication" = "Package capacity";
+"placeHolderDoseMedication" = "Dose e.g. 50 (mg)";
+"changeSettings" = "Change settings";
+"changeMedications" = "Change Medications";
+"tapToChange" = "Tap to change";
+"pillName" = "Pill name";
+"capacity" = "Capacity";
+"dose" = "Dose";
+"program" = "Program";
+"yourName" = "Your name";
+"emailAddress" = "Email Address";
+"password" = "Password";
+"confirmPassword" = "Confirm Password";
+"logIn" = "Log In";
+"signIn" = "Sign In";
+"signUp" = "Sign Up";
+"createAccount" = "Create Account";
+"forgotYourPassword" = "Forgot your password?";
+"signOut" = "Sign Out";
+"back" = "Back";
+"hello" = "Hello, ";
+"passwordRecover" = "Password Recover";
+"provideYourEmail" = "Provide your email";
+"sendPassword" = "Send password";
+"userIsNotVerified" = "Your email is not verified. Check your mail inbox for link to activate your account!";
+"failedToSignOut" = "Failed to sign out, please try again.";
+"cameraNotAvailable" = "I'm sorry, camera is not available right now.";
+"emailActivation" = "Check your email with activation link!";
+"userLogIn" = "Logged in!";
+"userSignOUt" = "Are you sure you want to log out from account?";
+"userForgotPassword" = "Your link with password reset has been sent!";
+"userSessionActive" = "Welcome back!";
+"photoSource" = "Photo Source";
+"camera" = "Camera";
+"photoLibrary" = "Photo Library";
+"cancel" = "Cancel";
+"medicine" = "Medicine";
+"reminder" = "Reminder";

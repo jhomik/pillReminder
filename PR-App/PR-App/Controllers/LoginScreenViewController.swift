@@ -17,11 +17,11 @@ final class LoginScreenViewController: UIViewController {
     private var scrollView = UIScrollView()
     private let stackViewLoginData = UIStackView()
     
-    private let userName = PillReminderMainCustomTextField(placeholderText: "Your name", isPassword: false)
-    private let emailInput = PillReminderMainCustomTextField(placeholderText: "Email Address", isPassword: false)
-    private let passwordInput = PillReminderMainCustomTextField(placeholderText: "Password", isPassword: true)
-    private let confirmInput = PillReminderMainCustomTextField(placeholderText: "Confirm Password", isPassword: true)
-    private let button = PillReminderMainCustomButton(text: "Log in")
+    private let userName = PillReminderMainCustomTextField(placeholderText: Constants.yourName, isPassword: false)
+    private let emailInput = PillReminderMainCustomTextField(placeholderText: Constants.emailAddress, isPassword: false)
+    private let passwordInput = PillReminderMainCustomTextField(placeholderText: Constants.password, isPassword: true)
+    private let confirmInput = PillReminderMainCustomTextField(placeholderText: Constants.confirmPassword, isPassword: true)
+    private let button = PillReminderMainCustomButton(text: Constants.logIn)
     
     private let logoImage = UIImageView(image: Images.logoImage)
     private var isSignUp = false
@@ -81,7 +81,7 @@ final class LoginScreenViewController: UIViewController {
         let heightAnchorConstant: CGFloat = 30
         let topAnchorConstant: CGFloat = 10
         
-        segmentedController = UISegmentedControl(items: ["Sign In", "Create Account"])
+        segmentedController = UISegmentedControl(items: [Constants.signIn, Constants.createAccount])
         segmentedController.apportionsSegmentWidthsByContent = false
         segmentedController.selectedSegmentTintColor = UIColor.mainColor
         segmentedController.translatesAutoresizingMaskIntoConstraints = false
@@ -101,8 +101,7 @@ final class LoginScreenViewController: UIViewController {
         isSignUp.toggle()
         self.userName.isHidden = !self.isSignUp
         self.confirmInput.isHidden = !self.isSignUp
-        self.passwordInput.placeholder = isSignUp ? "Create Password" : "Password"
-        self.button.setTitle(isSignUp ? "Sign Up" : "Log In", for: .normal)
+        self.button.setTitle(isSignUp ? Constants.signUp : Constants.signIn, for: .normal)
     }
     
     private func configureLogoImage() {
@@ -127,7 +126,7 @@ final class LoginScreenViewController: UIViewController {
             self.welcomeView.isHidden = true
             let tabBarVC = TabBarController()
             self.navigationController?.pushViewController(tabBarVC, animated: true)
-            self.showUserAlert(message: PRAlerts.userSessionActive.rawValue, withTime: .now() + 0.5, completion: nil)
+            self.showUserAlert(message: Alerts.userSessionActive, withTime: .now() + 1.5, completion: nil)
         }
     }
     
@@ -190,7 +189,7 @@ final class LoginScreenViewController: UIViewController {
         let bottomAnchorConstant: CGFloat = 15
         let heightAnchorConstant: CGFloat = 10
         
-        forgotPasswordButton.setTitle("Forgot your password?", for: .normal)
+        forgotPasswordButton.setTitle(Constants.forgotYourPassword, for: .normal)
         forgotPasswordButton.setTitleColor(.label, for: .normal)
         forgotPasswordButton.addTarget(self, action: #selector(forgotButtonTapped), for: .touchUpInside)
         forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: forgotPasswordButtonFontsize)
@@ -215,7 +214,7 @@ final class LoginScreenViewController: UIViewController {
 extension LoginScreenViewController: LoginScreenEvents {
     
     func onLoginSuccess() {
-        self.showUserAlert(message: PRAlerts.userLogIn.rawValue, withTime: nil) {
+        self.showUserAlert(message: Alerts.userLogIn, withTime: nil) {
             let vc = TabBarController()
             self.navigationController?.pushViewController(vc, animated: true)
             self.emailInput.text = ""
@@ -231,7 +230,7 @@ extension LoginScreenViewController: LoginScreenEvents {
     func createUserSuccess() {
         let selectedSegmentIndexValue: Int = 0
         
-        self.showUserAlert(message: PRAlerts.emailActivation.rawValue, withTime: nil) {
+        self.showUserAlert(message: Alerts.emailActivation, withTime: nil) {
             self.segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
             self.isSignUp.toggle()
             self.userName.isHidden = true
@@ -246,7 +245,7 @@ extension LoginScreenViewController: LoginScreenEvents {
     }
     
     func isEmailVerified() {
-        self.showUserAlert(message: PRErrors.userIsNotVerified.rawValue, withTime: nil, completion: nil)
+        self.showUserAlert(message: Errors.userIsNotVerified, withTime: nil, completion: nil)
     }
 }
 

@@ -40,16 +40,16 @@ final class UserMedicationInfoViewController: UIViewController {
     }
     
     private func configureNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Sign Out", style: .plain, target: self, action: #selector(logoutSession))
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: self, action: nil)
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: Constants.signOut, style: .plain, target: self, action: #selector(logoutSession))
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: Constants.back, style: .plain, target: self, action: nil)
         
         viewModel.setUserName(completion: { (userName) in
-            self.navigationItem.title = "Hello, " + userName + "!"
+            self.navigationItem.title = Constants.hello + userName + "!"
         })
     }
     
     @objc private func logoutSession() {
-        showUserAlertWithOptions(title: nil, message: PRAlerts.userSignOUt.rawValue, actionTitle: PRAlerts.signOut.rawValue) {
+        showUserAlertWithOptions(title: nil, message: Alerts.userSignOUt, actionTitle: Constants.signOut) {
             self.signOutUser()
         }
     }
@@ -59,7 +59,7 @@ final class UserMedicationInfoViewController: UIViewController {
             try Auth.auth().signOut()
             self.tabBarController?.navigationController?.popViewController(animated: true)
         } catch {
-            self.showUserAlert(message: PRErrors.failedToSignOut.rawValue + ":\(error)" , withTime: nil, completion: nil)
+            self.showUserAlert(message: Errors.failedToSignOut + ":\(error)" , withTime: nil, completion: nil)
         }
     }
     

@@ -74,21 +74,21 @@ final class NewMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        let actionSheet = UIAlertController(title: PRAlerts.photoSource.rawValue, message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: Alerts.photoSource, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.camera.rawValue, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
             } else {
-                self.showUserAlert(message: PRErrors.cameraNotAvailable.rawValue, withTime: nil, completion: nil)
+                self.showUserAlert(message: Errors.cameraNotAvailable, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.photoLibrary.rawValue, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.cancel.rawValue, style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: Alerts.cancel, style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
     }

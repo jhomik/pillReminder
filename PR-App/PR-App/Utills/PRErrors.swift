@@ -8,8 +8,8 @@
 
 import Foundation
 
-enum PRErrors: String, Error {
-    case userIsNotVerified = "Your email is not verified. Check your mail inbox for link to activate your account!"
-    case failedToSignOut = "Failed to sign out, please try again."
-    case cameraNotAvailable = "I'm sorry, camera is not available right now."
+enum Errors: String, Error {
+    case userIsNotVerified = NSLocalizedString("userIsNotVerified", comment: "")
+    case failedToSignOut = NSLocalizedString("failedToSignOut", comment: "")
+    case cameraNotAvailable = NSLocalizedString("cameraNotAvailable", comment: "")
 }

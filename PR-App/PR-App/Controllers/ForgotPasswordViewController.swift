@@ -55,7 +55,7 @@ final class ForgotPasswordViewController: UIViewController {
 
 extension ForgotPasswordViewController: ForgotPasswordEvents {
     func showSuccesAlert() {
-        self.showUserAlert(message: PRAlerts.userForgotPassword.rawValue, withTime: nil) {
+        self.showUserAlert(message: Alerts.userForgotPassword, withTime: nil) {
             self.dismiss(animated: true, completion: nil)
         }
     }

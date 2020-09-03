@@ -1,0 +1,48 @@
+/* 
+  Localizable.strings
+  PR-App
+
+  Created by Jakub Homik on 02/09/2020.
+  Copyright © 2020 Jakub Homik. All rights reserved.
+*/
+
+"addMedication" = "Dodaj lek";
+"placeHolderNameMedication" = "Nazwa leku np. Metocard";
+"placeHolderCapacityMedication" = "Pojemność opakowania";
+"placeHolderDoseMedication" = "Dawka np. 50 (mg)";
+"changeSettings" = "Edytuj ustawienia leku";
+"changeMedications" = "Edytuj lek";
+"tapToChange" = "Edycja";
+"pillName" = "Nazwa leku";
+"capacity" = "Pojemność";
+"dose" = "Dawka";
+"program" = "Program";
+"yourName" = "Twoje imię";
+"emailAddress" = "Adres e-mail";
+"password" = "Hasło";
+"confirmPassword" = "Powtórz hasło";
+"logIn" = "Zaloguj";
+"signIn" = "Logowanie";
+"signUp" = "Zarejestruj";
+"createAccount" = "Utwórz konto";
+"forgotYourPassword" = "Zapomniałeś hasła?";
+"signOut" = "Wyloguj";
+"back" = "Moje konto";
+"hello" = "Cześć, ";
+"passwordRecover" = "Odzyskaj hasło";
+"provideYourEmail" = "Podaj swój e-mail";
+"sendPassword" = "Wyślij";
+"userIsNotVerified" = "Twój mail nie został zweryfikowany. Sprawdź swoją skrzynkę w celu aktywowania konta.";
+"failedToSignOut" = "Nie udało się wylogować, spróboj ponowanie.";
+"cameraNotAvailable" = "Przepraszamy, kamera nie jest w tym momencie dostępna.";
+"emailActivation" = "Mail z linkiem aktywacyjnym został wysłany, sprawdź skrzynkę!";
+"userLogIn" = "Zalogowany!";
+"userSignOUt" = "Jesteś pewny, że chcesz się wylogować?";
+"userForgotPassword" = "Mail z linkiem do resetowania hasła został wysłany, sprawdź skrzynkę.";
+"userSessionActive" = "Witaj ponownie!";
+"photoSource" = "Źródło";
+"camera" = "Aparat";
+"photoLibrary" = "Biblioteka zdjęć";
+"cancel" = "Anuluj";
+"medicine" = "Lekarstwa";
+"reminder" = "Przypominacz";

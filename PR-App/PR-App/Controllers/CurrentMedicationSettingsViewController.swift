@@ -49,34 +49,45 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     private func configureNavBar() {
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveSettings))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateSettings))
         navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-    @objc private func saveSettings() {
-        print("update medications")
+    @objc private func updateSettings() {
+        view.endEditing(true)
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text else { return }
+        
+        if name.isEmpty || capacity.isEmpty || dose.isEmpty {
+            textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField ])
+        } else {
+            self.showLoadingSpinner(with: containerView)
+            firebaseManager.updateMedicationInfo(pillName: name, capacity: capacity, dose: dose, cellImage: nil)
+                self.dismissLoadingSpinner(with: self.containerView)
+                self.dismiss(animated: true, completion: nil)
+        }
     }
     
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()
         imagePicker.delegate = self
-        let actionSheet = UIAlertController(title: PRAlerts.photoSource.rawValue, message: nil, preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: Alerts.photoSource, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.camera.rawValue, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (action) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
             } else {
-                self.showUserAlert(message: PRErrors.cameraNotAvailable.rawValue, withTime: nil, completion: nil)
+                self.showUserAlert(message: Errors.cameraNotAvailable, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.photoLibrary.rawValue, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (action) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: PRAlerts.cancel.rawValue, style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: Alerts.cancel, style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
     }

@@ -39,8 +39,6 @@ final class UserMedicationDetailView: UIView {
         return [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: UIColor.mainColor]
     }()
     
-    
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureMedicationView()

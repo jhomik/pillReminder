@@ -15,9 +15,9 @@ protocol ForgotPasswordDelegate: AnyObject {
 final class ForgotPasswordView: UIView {
     
     private let pillReminderLogo = UIImageView()
-    private let forgotPasswordLabel = PillReminderMainCustomLabel(text: "Password recover", alignment: .center, size: 20, weight: .semibold, color: .label)
-    private let emailTextField = PillReminderMainCustomTextField(placeholderText: "Provide your email", isPassword: false)
-    private let sendPasswordButton = PillReminderMainCustomButton(text: "Send password")
+    private let forgotPasswordLabel = PillReminderMainCustomLabel(text: Constants.passwordRecover, alignment: .center, size: 20, weight: .semibold, color: .label)
+    private let emailTextField = PillReminderMainCustomTextField(placeholderText: Constants.provideYourEmail, isPassword: false)
+    private let sendPasswordButton = PillReminderMainCustomButton(text: Constants.sendPassword)
     weak var delegate: ForgotPasswordDelegate?
     
     override init(frame: CGRect) {
