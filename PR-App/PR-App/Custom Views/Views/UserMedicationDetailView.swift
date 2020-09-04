@@ -74,7 +74,6 @@ final class UserMedicationDetailView: UIView {
         pillImage.contentMode = .scaleAspectFill
         pillImage.layer.masksToBounds = true
         pillImage.layer.cornerRadius = pillImageCornerRadius
-        pillImage.image = Images.placeholderImage
         
         addSubview(pillImage)
         pillImage.translatesAutoresizingMaskIntoConstraints = false

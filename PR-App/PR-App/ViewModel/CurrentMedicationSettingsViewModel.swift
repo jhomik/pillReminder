@@ -13,19 +13,15 @@ final class CurrentMedicationSettingsViewModel {
     var pillModel = PillModel()
     private let firebaseManager = FirebaseManager()
     
-    func updateMedicationInfo(data: Data, pillName: String, capacity: String, dose: String, completion: @escaping () -> Void) {
-           firebaseManager.saveImageToStorage(cellImage: data) { (result) in
-               switch result {
-               case .failure(let error):
-                   print(error.localizedDescription)
-               case .success(let url):
-                guard self.firebaseManager.updateMedicationInfo(pillName: pillName, capacity: capacity, dose: dose, cellImage: url) != nil else {
-                       completion()
-                       return
-                   }
-                   completion()
-               }
-           }
-       }
-    
+    func updateMedicationInfo(data: Data, pillName: String, capacity: String, dose: String, childId: String, completion: @escaping () -> Void) {
+        firebaseManager.saveImageToStorage(cellImage: data) { (result) in
+            switch result {
+            case .failure(let error):
+                print(error.localizedDescription)
+            case .success(let url):
+                self.firebaseManager.updateMedicationInfo(pillName: pillName, capacity: capacity, dose: dose, cellImageURL: url, childId: childId)
+            }
+            completion()
+        }
+    }
 }

@@ -37,7 +37,7 @@ final class FirebaseManager {
     
     // MARK: Update medication data in Firebase DB
     
-    func updateMedicationInfo(pillName: String?, capacity: String?, dose: String?, cellImage: String?) {
+    func updateMedicationInfo(pillName: String?, capacity: String?, dose: String?, cellImageURL: String?, childId: String) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]
@@ -51,13 +51,11 @@ final class FirebaseManager {
         if let dose = dose {
             values["dose"] = dose as AnyObject
         }
-        if let cellImage = cellImage {
+        if let cellImage = cellImageURL {
             values["cellImage"] = cellImage as AnyObject
         }
         
-        let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()
-        
-        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(child.key ?? "").updateChildValues(values)
+        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(childId).updateChildValues(values)
     }
     
     // MARK: Saving and downloading image to storage

@@ -11,7 +11,7 @@ import UIKit
 final class NewMedicationSettingsViewController: UIViewController {
     
     private let reuseId = "NewMedicationCell"
-    private let newMedicationView = UserMedicationSettingsView()
+    private let newMedicationView = NewMedicationSettingsView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
     private var viewModel = NewMedicationViewModel()
@@ -35,16 +35,11 @@ final class NewMedicationSettingsViewController: UIViewController {
         configureMedicationView()
         configureTableView()
         createDismisKeyboardTapGesture()
-        configureNewMedicationView()
         newMedicationView.delegate = self
     }
     
     private func configureViewController() {
         view.backgroundColor = UIColor.backgroundColor
-    }
-    
-    private func configureNewMedicationView() {
-        newMedicationView.tapToChangeImage.isHidden = true
     }
     
     private func configureNavBar() {

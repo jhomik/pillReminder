@@ -1,22 +1,27 @@
 //
-//  NewMedicationSettingsView.swift
+//  CurrentMedicationSettingsView.swift
 //  PR-App
 //
-//  Created by Jakub Homik on 04/09/2020.
+//  Created by Jakub Homik on 01/06/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
 //
 
 import UIKit
 
-class NewMedicationSettingsView: UIView {
+protocol UserMedicationDetailDelegate: AnyObject {
+    func imagePickerEvent()
+}
+
+final class CurrentMedicationSettingsView: UIView {
     
-    private(set) var addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
+    private(set) var changeMedication = PillReminderMainCustomLabel(text: Constants.changeMedications, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
     private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText:  Constants.placeHolderCapacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     private var newMedicationStackView = UIStackView()
     var medicationImageButton = UIButton()
     var medicationImage = UIImageView()
+    let tapToChangeImage = UILabel()
     weak var delegate: UserMedicationDetailDelegate?
     
     override init(frame: CGRect) {
@@ -25,6 +30,7 @@ class NewMedicationSettingsView: UIView {
         configureAddMedicationLbl()
         configureMedicationImageButton()
         configureMedicationImage()
+        configureTapToChangeImageLabel()
         configureNewMedicationStackView()
     }
     
@@ -40,14 +46,14 @@ class NewMedicationSettingsView: UIView {
         let topAnchorConstant: CGFloat = 12
         let heightAnchorConstant: CGFloat = 30
         
-        addMedicationLbl.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(addMedicationLbl)
+        changeMedication.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(changeMedication)
         
         NSLayoutConstraint.activate([
-            addMedicationLbl.topAnchor.constraint(equalTo: self.topAnchor,constant: topAnchorConstant),
-            addMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            addMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            addMedicationLbl.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
+            changeMedication.topAnchor.constraint(equalTo: self.topAnchor,constant: topAnchorConstant),
+            changeMedication.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            changeMedication.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            changeMedication.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
     
@@ -68,7 +74,7 @@ class NewMedicationSettingsView: UIView {
         medicationImageButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            medicationImageButton.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: constraintConstat),
+            medicationImageButton.topAnchor.constraint(equalTo: changeMedication.bottomAnchor, constant: constraintConstat),
             medicationImageButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             medicationImageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: constraintConstat),
             medicationImageButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
@@ -94,6 +100,26 @@ class NewMedicationSettingsView: UIView {
         ])
     }
     
+    private func configureTapToChangeImageLabel() {
+        let heightAnchorConstant: CGFloat = 30
+        
+        tapToChangeImage.text = Constants.tapToChange
+        tapToChangeImage.backgroundColor = UIColor.backgroundColorTapToChangeLabel
+        tapToChangeImage.textColor = .systemBackground
+        tapToChangeImage.textAlignment = .center
+        tapToChangeImage.layer.masksToBounds = true
+        
+        medicationImageButton.addSubview(tapToChangeImage)
+        tapToChangeImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            tapToChangeImage.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
+            tapToChangeImage.leadingAnchor.constraint(equalTo: medicationImageButton.leadingAnchor),
+            tapToChangeImage.trailingAnchor.constraint(equalTo: medicationImageButton.trailingAnchor),
+            tapToChangeImage.bottomAnchor.constraint(equalTo: medicationImageButton.bottomAnchor)
+        ])
+    }
+    
     @objc private func imageCameraButtonTapped() {
         delegate?.imagePickerEvent()
     }
@@ -112,7 +138,7 @@ class NewMedicationSettingsView: UIView {
         self.addSubview(newMedicationStackView)
         
         NSLayoutConstraint.activate([
-            newMedicationStackView.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: constraintConstant),
+            newMedicationStackView.topAnchor.constraint(equalTo: changeMedication.bottomAnchor, constant: constraintConstant),
             newMedicationStackView.leadingAnchor.constraint(equalTo: medicationImageButton.trailingAnchor, constant: constraintConstant),
             newMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             newMedicationStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)

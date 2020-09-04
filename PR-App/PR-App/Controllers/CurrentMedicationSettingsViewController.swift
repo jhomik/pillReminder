@@ -11,7 +11,7 @@ import UIKit
 final class CurrentMedicationSettingsViewController: UIViewController {
     
     let reuseId = "CurrentMedicationCell"
-    private let userMedicationSettingView = UserMedicationSettingsView()
+    private let userMedicationSettingView = CurrentMedicationSettingsView()
     private let tableView = UITableView()
     private let viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
@@ -45,7 +45,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     private func configureCurrentMedicationView() {
-        userMedicationSettingView.addMedicationLbl.text = Constants.changeMedications
+        userMedicationSettingView.changeMedication.text = Constants.changeMedications
     }
     
     private func configureNavBar() {
@@ -58,15 +58,17 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     @objc private func updateSettings() {
         view.endEditing(true)
         navigationItem.rightBarButtonItem?.isEnabled = false
-        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text else { return }
+        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, let meds = medicationsToChange else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
-            textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField ])
+            textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField])
         } else {
             self.showLoadingSpinner(with: containerView)
-            firebaseManager.updateMedicationInfo(pillName: name, capacity: capacity, dose: dose, cellImage: nil)
+            viewModel.updateMedicationInfo(data: imageData, pillName: name, capacity: capacity, dose: dose, childId: meds.id) {
                 self.dismissLoadingSpinner(with: self.containerView)
+                self.updateTextFieldsToChange()
                 self.dismiss(animated: true, completion: nil)
+            }
         }
     }
     

@@ -10,7 +10,7 @@ import UIKit
 
 final class TitleAndInputMedicationView: UIView {
     
-    private var title: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.systemGray2])
+    private var title: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.systemGray2])
     
     private var input: NSAttributedString = NSAttributedString(string: "", attributes: [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: UIColor.mainColor])
     

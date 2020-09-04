@@ -12,7 +12,7 @@ protocol UserMedicationDetailDelegate: AnyObject {
     func imagePickerEvent()
 }
 
-final class UserMedicationSettingsView: UIView {
+final class CurrentMedicationSettingsView: UIView {
     
     private(set) var addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
