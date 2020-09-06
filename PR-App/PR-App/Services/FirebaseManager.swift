@@ -24,7 +24,7 @@ final class FirebaseManager {
     func downloadMedicationInfo(completion: @escaping([UserMedicationDetailModel]) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
-        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).observeSingleEvent(of: .value) { snapshot in
+        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).observe(.value) { snapshot in
             let models = snapshot.children.compactMap { child -> UserMedicationDetailModel? in
                 guard let child = child as? DataSnapshot, let dict = child.value as? [String: AnyObject] else {
                     return nil

@@ -19,6 +19,12 @@ class NewMedicationSettingsView: UIView {
     var medicationImage = UIImageView()
     weak var delegate: UserMedicationDetailDelegate?
     
+    var medicationsToChange: UserMedicationDetailModel? {
+           didSet {
+//               updateUI()
+           }
+       }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureUserMedicationSettingsView()

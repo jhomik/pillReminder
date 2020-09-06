@@ -28,14 +28,12 @@ final class UserMedicationDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+    
     }
         
     private func updateUI() {
         guard let meds = medications else { return }
-        self.medicationView.updatePillNameValue(meds.pillName)
-        self.medicationView.updatePackageCapacityValue(meds.capacity)
-        self.medicationView.updatePillDoseValue(meds.dose)
-        firebaseManager.downloadImage(with: meds.cellImage, imageCell: medicationView.pillImage)
+        medicationView.medicationToChange = meds
     }
     
     private func configureViewController() {

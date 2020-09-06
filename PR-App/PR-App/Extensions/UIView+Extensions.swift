@@ -29,4 +29,12 @@ extension UIView {
             }, completion: nil)
         }
     }
+    
+    func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
+          for field in inputFields {
+              if let fieldText = field.text, fieldText.isEmpty {
+                  field.shake()
+              }
+          }
+      }
 }

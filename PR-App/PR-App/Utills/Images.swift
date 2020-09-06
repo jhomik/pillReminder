@@ -12,7 +12,7 @@ struct Images {
     static let logoImage = UIImage(named: "logo-PR")
     static let horizontalLogoImage = UIImage(named: "title-logo")
     static let cellImage = UIImage(systemName: "plus.circle.fill")
-    static let placeholderImage = UIImage(named: "pill")
+    static let placeholderImage = "pill"
     static let cellDeleteButton = "xmark.circle.fill"
     static let cameraImage = "camera"
 }

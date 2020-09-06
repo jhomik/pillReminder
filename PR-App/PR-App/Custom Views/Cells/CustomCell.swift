@@ -71,7 +71,7 @@ final class CustomCell: UICollectionViewCell {
         imageCell.clipsToBounds = true
         imageCell.layer.cornerRadius = imageCellCornerRadius
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        imageCell.image = Images.placeholderImage
+        imageCell.image = UIImage(systemName: Images.placeholderImage)
 
         self.addSubview(imageCell)
         imageCell.translatesAutoresizingMaskIntoConstraints = false

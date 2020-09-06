@@ -28,7 +28,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         configureTableView()
         createDismisKeyboardTapGesture()
         updateTextFieldsToChange()
-        configureCurrentMedicationView()
         userMedicationSettingView.delegate = self
     }
     
@@ -36,16 +35,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         view.backgroundColor = UIColor.backgroundColor
     }
     
-    func updateTextFieldsToChange() {
+    private func updateTextFieldsToChange() {
         guard let medication = medicationsToChange else { return }
-        userMedicationSettingView.nameTextField.text = medication.pillName
-        userMedicationSettingView.capacityTextField.text = medication.capacity
-        userMedicationSettingView.doseTextField.text = medication.dose
-        firebaseManager.downloadImage(with: medication.cellImage, imageCell: userMedicationSettingView.medicationImage)
-    }
-    
-    private func configureCurrentMedicationView() {
-        userMedicationSettingView.changeMedication.text = Constants.changeMedications
+        self.userMedicationSettingView.medicationsToChange = medication
     }
     
     private func configureNavBar() {
@@ -166,7 +158,7 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
         let compressionQualityValue: CGFloat = 0.1
         
         let image = info[.originalImage] as? UIImage
-        medicationView.pillImage.image = image
+        userMedicationSettingView.medicationImageView.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: compressionQualityValue) {
             imageData.append(uploadData)

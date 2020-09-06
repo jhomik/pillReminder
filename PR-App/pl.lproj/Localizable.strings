@@ -12,7 +12,7 @@
 "placeHolderDoseMedication" = "Dawka np. 50 (mg)";
 "changeSettings" = "Edytuj ustawienia leku";
 "changeMedications" = "Edytuj lek";
-"tapToChange" = "Edycja";
+"tapToChange" = "Zmień";
 "pillName" = "Nazwa leku";
 "capacity" = "Pojemność";
 "dose" = "Dawka";

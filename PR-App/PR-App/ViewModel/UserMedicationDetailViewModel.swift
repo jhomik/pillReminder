@@ -12,4 +12,11 @@ final class UserMedicationDetailViewModel {
     
     private let firebaseManager = FirebaseManager()
     private let medicationDetailView = UserMedicationDetailView()
+    
+    func updateMedicationInfo(completion: @escaping ([UserMedicationDetailModel]) -> Void) {
+           firebaseManager.downloadMedicationInfo { (result) in
+               completion(result)
+           }
+       }
+    
 }

@@ -10,8 +10,14 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    var pillImage = UIImageView()
+    var pillImageView = UIImageView()
+    var firebaseManager = FirebaseManager()
     private let medicationStackView = UIStackView()
+    var medicationToChange: UserMedicationDetailModel? {
+        didSet {
+            updateUI()
+        }
+    }
     
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: Constants.pillName,
@@ -50,6 +56,14 @@ final class UserMedicationDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func updateUI() {
+        guard let medication = medicationToChange else { return }
+        updatePillNameValue(medication.pillName)
+        updatePackageCapacityValue(medication.capacity)
+        updatePillDoseValue(medication.dose)
+        firebaseManager.downloadImage(with: medication.cellImage, imageCell: pillImageView)
+    }
+    
     func updatePillNameValue(_ value: String) {
         self.pillNameView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
     }
@@ -70,19 +84,19 @@ final class UserMedicationDetailView: UIView {
         let pillImageCornerRadius: CGFloat = 16
         let widthAnchorMultiplier: CGFloat = 0.5
         
-        pillImage.backgroundColor = .systemGray5
-        pillImage.contentMode = .scaleAspectFill
-        pillImage.layer.masksToBounds = true
-        pillImage.layer.cornerRadius = pillImageCornerRadius
+        pillImageView.backgroundColor = .systemGray5
+        pillImageView.contentMode = .scaleAspectFill
+        pillImageView.layer.masksToBounds = true
+        pillImageView.layer.cornerRadius = pillImageCornerRadius
         
-        addSubview(pillImage)
-        pillImage.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(pillImageView)
+        pillImageView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            pillImage.topAnchor.constraint(equalTo: self.topAnchor),
-            pillImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            pillImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
-            pillImage.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            pillImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            pillImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            pillImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
+            pillImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
     
@@ -100,7 +114,7 @@ final class UserMedicationDetailView: UIView {
         
         NSLayoutConstraint.activate([
             medicationStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            medicationStackView.leadingAnchor.constraint(equalTo: pillImage.trailingAnchor, constant: leadingAnchorConstant),
+            medicationStackView.leadingAnchor.constraint(equalTo: pillImageView.trailingAnchor, constant: leadingAnchorConstant),
             medicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             medicationStackView.heightAnchor.constraint(equalTo: self.heightAnchor)
         ])

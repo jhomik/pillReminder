@@ -12,7 +12,6 @@ final class NewMedicationSettingsViewController: UIViewController {
     
     private let reuseId = "NewMedicationCell"
     private let newMedicationView = NewMedicationSettingsView()
-    private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
     private var viewModel = NewMedicationViewModel()
     private let tableView = UITableView()

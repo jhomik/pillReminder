@@ -18,6 +18,7 @@
 		5A582B9A2474583700247D19 /* PillReminderMainCustomLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582B902474583600247D19 /* PillReminderMainCustomLabel.swift */; };
 		5A582BA42474596700247D19 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A582BA32474596700247D19 /* TabBarController.swift */; };
 		5A6A118B2473D1FF006E4B2F /* (null) in Sources */ = {isa = PBXBuildFile; };
+		5A7138222504FB0A0052F668 /* LoginScreenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A7138212504FB0A0052F668 /* LoginScreenView.swift */; };
 		5A78FC3824FFC01200011DD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A78FC3624FFC01200011DD1 /* LaunchScreen.storyboard */; };
 		5A78FC3924FFC01200011DD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A78FC3624FFC01200011DD1 /* LaunchScreen.storyboard */; };
 		5A78FC3A24FFC01200011DD1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5A78FC3624FFC01200011DD1 /* LaunchScreen.storyboard */; };
@@ -97,6 +98,7 @@
 		5A582B8C2473FEFC00247D19 /* UIViewController+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extensions.swift"; sourceTree = "<group>"; };
 		5A582B902474583600247D19 /* PillReminderMainCustomLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PillReminderMainCustomLabel.swift; sourceTree = "<group>"; };
 		5A582BA32474596700247D19 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		5A7138212504FB0A0052F668 /* LoginScreenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenView.swift; sourceTree = "<group>"; };
 		5A78FC3724FFC01200011DD1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = "PR-App/Supporting Files/Base.lproj/LaunchScreen.storyboard"; sourceTree = SOURCE_ROOT; };
 		5A78FC3B24FFC08700011DD1 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = "../PR-App/Supporting Files/pl.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		5A78FC4324FFC10400011DD1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 			children = (
 				5ADB92D9248E4FF80097F9E1 /* WelcomeView.swift */,
 				5A9440AF24CA06D4000707FA /* HeaderCellView.swift */,
+				5A7138212504FB0A0052F668 /* LoginScreenView.swift */,
 				5A893FCF249A2C5D008F69A5 /* TitleAndInputMedicationView.swift */,
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
 				5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */,
@@ -691,6 +694,7 @@
 				5A82248C24FE6CA6003BD716 /* UIColor+Extensions.swift in Sources */,
 				5AEC6E1F24F553010052D16B /* ForgotPasswordView.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
+				5A7138222504FB0A0052F668 /* LoginScreenView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,7 +882,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -897,7 +901,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
