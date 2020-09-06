@@ -7,9 +7,9 @@
 */
 
 "addMedication" = "Dodaj lek";
-"placeHolderNameMedication" = "Nazwa leku np. Metocard";
+"placeHolderNameMedication" = "Nazwa leku";
 "placeHolderCapacityMedication" = "Pojemność opakowania";
-"placeHolderDoseMedication" = "Dawka np. 50 (mg)";
+"placeHolderDoseMedication" = "Dawka";
 "changeSettings" = "Edytuj ustawienia leku";
 "changeMedications" = "Edytuj lek";
 "tapToChange" = "Zmień";

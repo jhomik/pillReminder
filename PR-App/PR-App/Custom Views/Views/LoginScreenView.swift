@@ -29,19 +29,19 @@ protocol LoginScreenAlertDelegate: AnyObject {
 }
 
 final class LoginScreenView: UIView {
-    
-    private var scrollView = UIScrollView()
-    private let stackViewLoginData = UIStackView()
-    
+
     weak var delegate: LoginScreenAlertDelegate?
     weak var present: LoginScreenPresentForgotPasswordVC?
     weak var push: LoginScreenPresentUserMedicationInfoVC?
     
-    private let userName = PillReminderMainCustomTextField(placeholderText: Constants.yourName, isPassword: false)
-    private let emailInput = PillReminderMainCustomTextField(placeholderText: Constants.emailAddress, isPassword: false)
-    private let passwordInput = PillReminderMainCustomTextField(placeholderText: Constants.password, isPassword: true)
-    private let confirmInput = PillReminderMainCustomTextField(placeholderText: Constants.confirmPassword, isPassword: true)
-    private let button = PillReminderMainCustomButton(text: Constants.logIn)
+    private let userNameTextField = PillReminderMainCustomTextField(placeholderText: Constants.yourName, isPassword: false)
+    private let emailTextField = PillReminderMainCustomTextField(placeholderText: Constants.emailAddress, isPassword: false)
+    private let passwordTextField = PillReminderMainCustomTextField(placeholderText: Constants.password, isPassword: true)
+    private let confirmTextField = PillReminderMainCustomTextField(placeholderText: Constants.confirmPassword, isPassword: true)
+    
+    private var scrollView = UIScrollView()
+    private let stackViewLoginData = UIStackView()
+    private let mainButtonEvent = PillReminderMainCustomButton(text: Constants.logIn)
     private let logoImage = UIImageView(image: Images.logoImage)
     private var isSignUp = false
     private var segmentedController = UISegmentedControl()
@@ -63,30 +63,30 @@ final class LoginScreenView: UIView {
     }
     
     private func configureScrollView() {
-         scrollView.isScrollEnabled = false
-         addSubview(scrollView)
-         scrollView.translatesAutoresizingMaskIntoConstraints = false
-         
-         NSLayoutConstraint.activate([
-             scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-             scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-             scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-             scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-         ])
-     }
+        scrollView.isScrollEnabled = false
+        addSubview(scrollView)
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
+            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
     
     private func configureLogoImage() {
-        let horizontalConstant = UIScreen.main.bounds.width / 10
-        let widthConstant = UIScreen.main.bounds.width * 0.8
-        let heightConstant = widthConstant * 0.9239
+        let heightAnchorMulitplier: CGFloat = 0.35
+        let widthAnchorMultiplier: CGFloat = 0.8
+        let topAnchorConstant: CGFloat = 20
         
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoImage)
         
         NSLayoutConstraint.activate([
-            logoImage.heightAnchor.constraint(equalToConstant: heightConstant),
-            logoImage.widthAnchor.constraint(equalToConstant: widthConstant),
-            logoImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: horizontalConstant),
+            logoImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightAnchorMulitplier),
+            logoImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
+            logoImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
             logoImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
         ])
     }
@@ -114,31 +114,31 @@ final class LoginScreenView: UIView {
     
     @objc func segmentedControllerChange(sender: UISegmentedControl) {
         isSignUp.toggle()
-        self.userName.isHidden = !self.isSignUp
-        self.confirmInput.isHidden = !self.isSignUp
-        self.button.setTitle(isSignUp ? Constants.signUp : Constants.signIn, for: .normal)
+        self.userNameTextField.isHidden = !self.isSignUp
+        self.confirmTextField.isHidden = !self.isSignUp
+        self.mainButtonEvent.setTitle(isSignUp ? Constants.signUp : Constants.signIn, for: .normal)
     }
-
+    
     private func configureStackViewLoginData() {
         let spacingConstant: CGFloat = 20
         let topAnchorConstant: CGFloat = 20
         
-        userName.isHidden = true
-        confirmInput.isHidden = true
+        userNameTextField.isHidden = true
+        confirmTextField.isHidden = true
         
-        userName.delegate = self
-        emailInput.delegate = self
-        passwordInput.delegate = self
-        confirmInput.delegate = self
-        emailInput.keyboardType = .emailAddress
+        userNameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        confirmTextField.delegate = self
+        emailTextField.keyboardType = .emailAddress
         
-        stackViewLoginData.addArrangedSubview(userName)
-        stackViewLoginData.addArrangedSubview(emailInput)
-        stackViewLoginData.addArrangedSubview(passwordInput)
-        stackViewLoginData.addArrangedSubview(confirmInput)
+        stackViewLoginData.addArrangedSubview(userNameTextField)
+        stackViewLoginData.addArrangedSubview(emailTextField)
+        stackViewLoginData.addArrangedSubview(passwordTextField)
+        stackViewLoginData.addArrangedSubview(confirmTextField)
         stackViewLoginData.axis = .vertical
         stackViewLoginData.distribution = .equalSpacing
-        stackViewLoginData.setCustomSpacing(spacingConstant, after: emailInput)
+        stackViewLoginData.setCustomSpacing(spacingConstant, after: emailTextField)
         
         stackViewLoginData.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackViewLoginData)
@@ -151,63 +151,62 @@ final class LoginScreenView: UIView {
     }
     
     private func configureButton() {
-          let horizontalConstant = UIScreen.main.bounds.width / 10
-          let heightAnchorConstant: CGFloat = 40
-          let topAnchorConstant: CGFloat = 25
-          
-          button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-          scrollView.addSubview(button)
-          
-          NSLayoutConstraint.activate([
-              button.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: horizontalConstant),
-              button.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -horizontalConstant),
-              button.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: topAnchorConstant),
-              button.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-          ])
-      }
+        let heightAnchorConstant: CGFloat = 40
+        let topAnchorConstant: CGFloat = 25
+        
+        mainButtonEvent.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+        scrollView.addSubview(mainButtonEvent)
+        
+        NSLayoutConstraint.activate([
+            mainButtonEvent.leadingAnchor.constraint(equalTo: logoImage.leadingAnchor),
+            mainButtonEvent.trailingAnchor.constraint(equalTo: logoImage.trailingAnchor),
+            mainButtonEvent.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: topAnchorConstant),
+            mainButtonEvent.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
+        ])
+    }
     
     @objc private func buttonTapped() {
-          guard let username = userName.text, let email = emailInput.text, let password = passwordInput.text, let confirmPassword = confirmInput.text else { return }
+        guard let username = userNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text else { return }
         
-        self.isSignUp ? self.textFieldsShaker(inputFields: [userName, emailInput, passwordInput, confirmInput]) : self.textFieldsShaker(inputFields: [emailInput, passwordInput])
+        self.isSignUp ? self.textFieldsShaker(inputFields: [userNameTextField, emailTextField, passwordTextField, confirmTextField]) : self.textFieldsShaker(inputFields: [emailTextField, passwordTextField])
         
-          viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword, isSignUp: isSignUp)
-          
-      }
-    
-        private func configureForgotPasswordButton() {
-            let forgotPasswordButtonFontsize: CGFloat = 14
-            let bottomAnchorConstant: CGFloat = 15
-            let heightAnchorConstant: CGFloat = 10
-            
-            forgotPasswordButton.setTitle(Constants.forgotYourPassword, for: .normal)
-            forgotPasswordButton.setTitleColor(.label, for: .normal)
-            forgotPasswordButton.addTarget(self, action: #selector(forgotButtonTapped), for: .touchUpInside)
-            forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: forgotPasswordButtonFontsize)
-            
-            self.addSubview(forgotPasswordButton)
-            forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
-            
-            NSLayoutConstraint.activate([
-                forgotPasswordButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
-                forgotPasswordButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                forgotPasswordButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
-            ])
-        }
+        viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword, isSignUp: isSignUp)
         
-        @objc private func forgotButtonTapped() {
-            present?.forgotPasswordViewController()
-        }
     }
+    
+    private func configureForgotPasswordButton() {
+        let forgotPasswordButtonFontsize: CGFloat = 14
+        let bottomAnchorConstant: CGFloat = 15
+        let heightAnchorConstant: CGFloat = 10
+        
+        forgotPasswordButton.setTitle(Constants.forgotYourPassword, for: .normal)
+        forgotPasswordButton.setTitleColor(.label, for: .normal)
+        forgotPasswordButton.addTarget(self, action: #selector(forgotButtonTapped), for: .touchUpInside)
+        forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: forgotPasswordButtonFontsize)
+        
+        self.addSubview(forgotPasswordButton)
+        forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            forgotPasswordButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
+            forgotPasswordButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            forgotPasswordButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
+        ])
+    }
+    
+    @objc private func forgotButtonTapped() {
+        present?.forgotPasswordViewController()
+    }
+}
 
 extension LoginScreenView: LoginScreenEvents {
     
     func onLoginSuccess() {
         delegate?.alertLoginSuccess(message: Alerts.userLogIn, withTime: nil, completion: {
             self.push?.userMedicationInfoViewController()
-            self.emailInput.text = ""
-            self.passwordInput.text = ""
+            self.emailTextField.text = ""
+            self.passwordTextField.text = ""
         })
         print("User logged successfully")
     }
@@ -222,10 +221,10 @@ extension LoginScreenView: LoginScreenEvents {
         delegate?.alertCreateUserSuccess(message: Alerts.emailActivation, withTime: nil, completion: {
             self.segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
             self.isSignUp.toggle()
-            self.userName.isHidden = true
-            self.confirmInput.isHidden = true
-            self.userName.text = ""
-            self.confirmInput.text = ""
+            self.userNameTextField.isHidden = true
+            self.confirmTextField.isHidden = true
+            self.userNameTextField.text = ""
+            self.confirmTextField.text = ""
         })
     }
     
@@ -241,19 +240,19 @@ extension LoginScreenView: LoginScreenEvents {
 extension LoginScreenView: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        if textField == userName {
-            emailInput.becomeFirstResponder()
-        } else if textField == emailInput{
-            passwordInput.becomeFirstResponder()
-        } else if textField == passwordInput {
+        if textField == userNameTextField {
+            emailTextField.becomeFirstResponder()
+        } else if textField == emailTextField{
+            passwordTextField.becomeFirstResponder()
+        } else if textField == passwordTextField {
             if isSignUp {
-                confirmInput.becomeFirstResponder()
+                confirmTextField.becomeFirstResponder()
             } else {
-                passwordInput.resignFirstResponder()
+                passwordTextField.resignFirstResponder()
                 buttonTapped()
             }
         } else {
-            confirmInput.resignFirstResponder()
+            confirmTextField.resignFirstResponder()
             buttonTapped()
         }
         return true

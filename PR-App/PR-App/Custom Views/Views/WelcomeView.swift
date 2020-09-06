@@ -30,6 +30,9 @@ final class WelcomeView: UIView {
     }
     
     private func configureWelcomeView() {
+        let widthAnchorConstant: CGFloat = 260
+        let heightAnchorConstant: CGFloat = 240
+        
         welcomeImage.image = Images.logoImage
         
         addSubview(welcomeImage)
@@ -38,8 +41,8 @@ final class WelcomeView: UIView {
         NSLayoutConstraint.activate([
             welcomeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             welcomeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            welcomeImage.widthAnchor.constraint(equalToConstant: 260),
-            welcomeImage.heightAnchor.constraint(equalToConstant: 240)
+            welcomeImage.widthAnchor.constraint(equalToConstant: widthAnchorConstant),
+            welcomeImage.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
 }
