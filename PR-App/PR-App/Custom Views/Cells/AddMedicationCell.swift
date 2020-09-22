@@ -70,7 +70,7 @@ final class AddMedicationCell: UICollectionViewCell {
     }
     
     private func configureCell() {
-        let cellCornerRadius: CGFloat = 20
+        let cellCornerRadius: CGFloat = 10
         let cellBorderWidth: CGFloat = 1
         let shadowOffsetWidth: CGFloat = 0.0
         let shadowOffsetHeight: CGFloat = 2.0

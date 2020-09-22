@@ -184,11 +184,11 @@ final class FirebaseManager {
     
     func signInUser(email: String, password: String, completion: ((Result<Bool, Error>) -> Void)?) {
         auth.signIn(withEmail: email, password: password) { (_, error) in
-            guard let user = self.auth.currentUser else { return }
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             } else {
+                guard let user = self.auth.currentUser else { return }
                 completion?(.success((user.isEmailVerified)))
             }
         }
@@ -197,13 +197,12 @@ final class FirebaseManager {
     // MARK: Creating new user
     
     func createUser(username: String, email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
-        auth.createUser(withEmail: email, password: password) { (data, error) in
-            guard let user = Auth.auth().currentUser else { return }
-            
+        auth.createUser(withEmail: email, password: password) { (data, error) in            
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
             } else {
+                guard let user = Auth.auth().currentUser else { return }
                 user.sendEmailVerification { (error) in
                     guard let error = error else { return }
                     print(error.localizedDescription)

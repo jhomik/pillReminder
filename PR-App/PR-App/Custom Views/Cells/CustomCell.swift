@@ -19,7 +19,7 @@ final class CustomCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureCell()
+//        configureCell()
         configureImageCell()
         configureNewMedsTitle()
         configureDeleteButton()
@@ -33,6 +33,7 @@ final class CustomCell: UICollectionViewCell {
         super.layoutSubviews()
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
+        configureCell()
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
@@ -104,18 +105,18 @@ final class CustomCell: UICollectionViewCell {
     }
     
     private func configureCell() {
-        let cellCornerRadius: CGFloat = 20
+        let cellCornerRadius: CGFloat = 10
         let cellBorderWidth: CGFloat = 1
         let shadowOffsetWidth: CGFloat = 0.0
         let shadowOffsetHeight: CGFloat = 2.0
-        let cellShadowRadius: CGFloat = 10
+        let cellShadowRadius: CGFloat = 20
         let cellShadowOpacity: Float = 1
         
         layer.cornerRadius = cellCornerRadius
         layer.borderWidth = cellBorderWidth
         layer.borderColor = UIColor.secondarySystemFill.cgColor
         backgroundColor = .secondarySystemFill
-        layer.backgroundColor = UIColor.white.cgColor
+        layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
         layer.shadowColor = UIColor.gray.cgColor
         layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         layer.shadowRadius = cellShadowRadius

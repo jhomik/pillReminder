@@ -157,6 +157,7 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         if medications.indices.contains(indexPath.item) {
             let userMedicationDetail = UserMedicationDetailViewController()
             userMedicationDetail.medications = medications[indexPath.item]
+
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
         } else {
             let viewModel = NewMedicationViewModel()

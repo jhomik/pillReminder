@@ -18,7 +18,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
-    var medicationsToChange: UserMedicationDetailModel?
+    var medications: UserMedicationDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +36,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     private func updateTextFieldsToChange() {
-        guard let medication = medicationsToChange else { return }
+        guard let medication = medications else { return }
         self.userMedicationSettingView.medicationsToChange = medication
     }
     
@@ -50,7 +50,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     @objc private func updateSettings() {
         view.endEditing(true)
         navigationItem.rightBarButtonItem?.isEnabled = false
-        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, let meds = medicationsToChange else { return }
+        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, let meds = medications else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
             textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField])
@@ -128,7 +128,7 @@ extension CurrentMedicationSettingsViewController: UITableViewDataSource, UITabl
         return viewModel.pillModel.sections.count
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -141,10 +141,6 @@ extension CurrentMedicationSettingsViewController: UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.pillModel.sections[section])
         return sectionView
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

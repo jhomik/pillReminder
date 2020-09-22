@@ -10,11 +10,15 @@ import UIKit
 
 final class UserMedicationDetailViewController: UIViewController {
     
-    var firebaseManager = FirebaseManager()
+    var viewModel = UserMedicationDetailViewModel()
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
-    var medications: UserMedicationDetailModel?
+    var medications: UserMedicationDetailModel? {
+        didSet {
+            
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +36,7 @@ final class UserMedicationDetailViewController: UIViewController {
     }
         
     private func updateUI() {
-        guard let meds = medications else { return }
-        medicationView.medicationToChange = meds
+        medicationView.medicationToChange = medications
     }
     
     private func configureViewController() {
@@ -87,7 +90,7 @@ final class UserMedicationDetailViewController: UIViewController {
     
     @objc private func editButtonTapped() {
         let currentMedicationVC = CurrentMedicationSettingsViewController()
-        currentMedicationVC.medicationsToChange = medications
+        currentMedicationVC.medications = medications
         present(UINavigationController(rootViewController: currentMedicationVC), animated: true)
     }
 }

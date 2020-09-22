@@ -10,13 +10,17 @@ import UIKit
 
 final class PillReminderMainCustomTextField: UITextField {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        configure()
-    }
+//    override init(frame: CGRect) {
+//        super.init(frame: frame)
+//    }
+//
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
     
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configure()
     }
     
     convenience init(placeholderText: String, isPassword: Bool) {
@@ -32,12 +36,13 @@ final class PillReminderMainCustomTextField: UITextField {
         let shadowOffsetWidth: CGFloat = 0.0
         let shadowOffsetHeight: CGFloat = 0.2
         
+        self.backgroundColor = UIColor.backgroundColor
         self.font = UIFont.italicSystemFont(ofSize: textFieldFontSize)
         self.layer.backgroundColor = UIColor.backgroundColor.cgColor
-        self.layer.shadowOffset  = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
-        self.layer.shadowOpacity  = textFieldShadowOpactiy
-        self.layer.shadowRadius  = textFieldShadowRadius
-        self.layer.shadowColor   = UIColor.label.cgColor
+        self.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
+        self.layer.shadowOpacity = textFieldShadowOpactiy
+        self.layer.shadowRadius = textFieldShadowRadius
+        self.layer.shadowColor = UIColor.textFieldUnderline.cgColor
         self.translatesAutoresizingMaskIntoConstraints = false
         self.autocapitalizationType = .none
     }
