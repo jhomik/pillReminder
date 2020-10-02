@@ -8,24 +8,31 @@
 
 import UIKit
 
-class WelcomeView: UIView {
+final class WelcomeView: UIView {
     
     private let welcomeImage = UIImageView()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configureView()
         configureWelcomeView()
-        performAnimations(view: welcomeImage)
+        performAnimationsFadeOut(view: welcomeImage)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureWelcomeView() {
+    private func configureView() {
         self.frame = bounds
         self.backgroundColor = .systemBackground
         translatesAutoresizingMaskIntoConstraints = false
+    }
+    
+    private func configureWelcomeView() {
+        let widthAnchorConstant: CGFloat = 260
+        let heightAnchorConstant: CGFloat = 240
+        
         welcomeImage.image = Images.logoImage
         
         addSubview(welcomeImage)
@@ -34,8 +41,8 @@ class WelcomeView: UIView {
         NSLayoutConstraint.activate([
             welcomeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             welcomeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            welcomeImage.widthAnchor.constraint(equalToConstant: 260),
-            welcomeImage.heightAnchor.constraint(equalToConstant: 240)
+            welcomeImage.widthAnchor.constraint(equalToConstant: widthAnchorConstant),
+            welcomeImage.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
 }

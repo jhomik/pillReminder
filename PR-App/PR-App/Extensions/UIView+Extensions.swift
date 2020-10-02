@@ -20,7 +20,7 @@ extension UIView {
         self.layer.add(animation, forKey: "position")
     }
     
-    func performAnimations(view: UIImageView) {
+    func performAnimationsFadeOut(view: UIImageView) {
         UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
             view.alpha = 0.0
         }) { (finished) in
@@ -29,4 +29,12 @@ extension UIView {
             }, completion: nil)
         }
     }
+    
+    func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
+          for field in inputFields {
+              if let fieldText = field.text, fieldText.isEmpty {
+                  field.shake()
+              }
+          }
+      }
 }

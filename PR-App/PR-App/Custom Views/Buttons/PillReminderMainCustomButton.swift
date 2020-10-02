@@ -1,5 +1,5 @@
 //
-//  CustomButton.swift
+//  PillReminderMainCustomButton.swift
 //  PR-App
 //
 //  Created by Tayler Moosa on 5/5/20.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class CustomButton: UIButton {
+final class PillReminderMainCustomButton: UIButton {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -26,10 +26,13 @@ final class CustomButton: UIButton {
     }
     
     private func configure() {
-        layer.cornerRadius = 10
-        backgroundColor = Constants.mainColor
-        titleLabel?.font = UIFont.boldSystemFont(ofSize: 18)
-        setTitleColor(.systemBackground, for: .normal)
-        translatesAutoresizingMaskIntoConstraints = false
+        let buttonCornerRadius: CGFloat = 10
+        let buttonTitleFontsize: CGFloat = 18
+        
+        self.layer.cornerRadius = buttonCornerRadius
+        self.backgroundColor = UIColor.mainColor
+        self.titleLabel?.font = UIFont.boldSystemFont(ofSize: buttonTitleFontsize)
+        self.setTitleColor(.white, for: .normal)
+        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }

@@ -15,23 +15,25 @@ final class CustomCollectionViewHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
+        configureHorizontalLogoImage()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configure() {
-        imageLogo.image = UIImage(named: "title-logo")
+    private func configureHorizontalLogoImage() {
+        let multiplierWidthAndHeightConstant: CGFloat = 1.5
+        
+        imageLogo.image = Images.horizontalLogoImage
         imageLogo.translatesAutoresizingMaskIntoConstraints = false
         addSubview(imageLogo)
         
         NSLayoutConstraint.activate([
             imageLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageLogo.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            imageLogo.widthAnchor.constraint(equalToConstant: frame.width / 1.5),
-            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / 1.5),
+            imageLogo.widthAnchor.constraint(equalToConstant: frame.width / multiplierWidthAndHeightConstant),
+            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / multiplierWidthAndHeightConstant),
         ])
     }
 }
