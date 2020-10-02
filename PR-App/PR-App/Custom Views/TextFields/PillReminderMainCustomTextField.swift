@@ -45,5 +45,6 @@ final class PillReminderMainCustomTextField: UITextField {
         self.layer.shadowColor = UIColor.textFieldUnderline.cgColor
         self.translatesAutoresizingMaskIntoConstraints = false
         self.autocapitalizationType = .none
+        self.adjustsFontSizeToFitWidth = true
     }
 }

@@ -15,6 +15,8 @@ struct UserMedicationDetailModel {
     var dose: String
     var cellImage: String
     var frequency: String
+    var howManyTimesPerDay: String
+    var dosage: String
     
     init(id: String, dictionary: [String: AnyObject]) {
         self.id = id
@@ -23,5 +25,7 @@ struct UserMedicationDetailModel {
         self.dose = dictionary["dose"] as? String ?? ""
         self.cellImage = dictionary["cellImage"] as? String ?? ""
         self.frequency = dictionary["frequency"] as? String ?? ""
+        self.howManyTimesPerDay = dictionary["howManyTimesPerDay"] as? String ?? ""
+        self.dosage = dictionary["dosage"] as? String ?? ""
     }
 }

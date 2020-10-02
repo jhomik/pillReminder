@@ -100,7 +100,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private func configureMedicationView() {
         let leadingAndTrailingAnchorConstants: CGFloat = 20
-        let heightAnchorMultiplier: CGFloat = 0.24
         
         view.addSubview(userMedicationSettingView)
         
@@ -108,7 +107,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             userMedicationSettingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             userMedicationSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
             userMedicationSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
-            userMedicationSettingView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightAnchorMultiplier)
+            userMedicationSettingView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
     }
 }

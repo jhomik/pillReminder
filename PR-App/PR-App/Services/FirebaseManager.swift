@@ -127,7 +127,7 @@ final class FirebaseManager {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?) -> UserMedicationDetailModel? {
+    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?, frequency: String?, howManyTimesPerDay: String?, dosage: String?) -> UserMedicationDetailModel? {
         guard let uid = Auth.auth().currentUser?.uid else { return nil }
         
         var values: [String: AnyObject] = [:]
@@ -143,6 +143,15 @@ final class FirebaseManager {
         }
         if let cellImage = cellImage {
             values["cellImage"] = cellImage as AnyObject
+        }
+        if let frequency = frequency {
+            values["frequency"] = frequency as AnyObject
+        }
+        if let howManyTimesPerDay = howManyTimesPerDay {
+            values["howManyTimesPerDay"] = howManyTimesPerDay as AnyObject
+        }
+        if let dosage = dosage {
+            values["dosage"] = dosage as AnyObject
         }
         
         let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()

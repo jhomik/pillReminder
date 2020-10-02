@@ -59,11 +59,18 @@ extension UIViewController {
     
     func createDismisKeyboardTapGesture() {
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
-        tap.cancelsTouchesInView = false
         view.addGestureRecognizer(tap)
     }
     
     func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
+        for field in inputFields {
+            if let fieldText = field.text, fieldText.isEmpty {
+                field.shake()
+            }
+        }
+    }
+    
+    func textFieldsShaker2(inputFields: [PillReminderProgramCustomTextFields]) {
         for field in inputFields {
             if let fieldText = field.text, fieldText.isEmpty {
                 field.shake()

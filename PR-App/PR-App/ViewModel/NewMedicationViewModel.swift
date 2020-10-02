@@ -18,13 +18,13 @@ final class NewMedicationViewModel {
     private let firebaseManager = FirebaseManager()
     weak var addCellDelegate: NewMedicationCellDelegate?
     
-    func saveNewMedicationToFirebase(data: Data, pillName: String, capacity: String, dose: String, completion: @escaping () -> Void) {
+    func saveNewMedicationToFirebase(data: Data, pillName: String, capacity: String, dose: String, frequency: String, howManyTimesPerDay: String, dosage: String, completion: @escaping () -> Void) {
         firebaseManager.saveImageToStorage(cellImage: data) { (result) in
             switch result {
             case .failure(let error):
                 print(error.localizedDescription)
             case .success(let url):
-                guard let model = self.firebaseManager.saveUserMedicationDetail(pillName: pillName, capacity: capacity, dose: dose, cellImage: url) else {
+                guard let model = self.firebaseManager.saveUserMedicationDetail(pillName: pillName, capacity: capacity, dose: dose, cellImage: url, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) else {
                     completion()
                     return
                 }
