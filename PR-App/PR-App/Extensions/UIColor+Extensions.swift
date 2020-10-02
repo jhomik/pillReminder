@@ -38,7 +38,11 @@ extension UIColor {
         return UIColor(displayP3Red: 21/255, green: 236/255, blue: 202/255, alpha: 1)
     }
     
-    static var backgroundColorTapToChangeLabel: UIColor {
-        return UIColor(white: 0, alpha: 0.7)
+    static var backgroundColorTapToChangeLabel = UIColor { (traitCollection: UITraitCollection) -> UIColor in
+        if traitCollection.userInterfaceStyle == .dark {
+            return UIColor(white: 255, alpha: 0.5)
+        } else {
+            return UIColor(white: 0, alpha: 0.7)
+        }
     }
 }

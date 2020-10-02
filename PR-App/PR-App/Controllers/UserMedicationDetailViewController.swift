@@ -16,7 +16,7 @@ final class UserMedicationDetailViewController: UIViewController {
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
     var medications: UserMedicationDetailModel? {
         didSet {
-            
+           updateUI()
         }
     }
     
@@ -91,6 +91,13 @@ final class UserMedicationDetailViewController: UIViewController {
     @objc private func editButtonTapped() {
         let currentMedicationVC = CurrentMedicationSettingsViewController()
         currentMedicationVC.medications = medications
+        currentMedicationVC.delegate = self
         present(UINavigationController(rootViewController: currentMedicationVC), animated: true)
+    }
+}
+
+extension UserMedicationDetailViewController: PassMedicationDelegate {
+    func passMedication(medication: UserMedicationDetailModel) {
+        medicationView.medicationToChange = medication
     }
 }

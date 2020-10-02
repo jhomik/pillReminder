@@ -16,13 +16,18 @@ final class AddMedicationCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureCell()
+//        configureCell()
         configureImageCell()
         configureNewMedsTitle()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureCell()
     }
     
     public func configureAddMedicationCell(with image: UIImage, title: String) {
@@ -70,23 +75,23 @@ final class AddMedicationCell: UICollectionViewCell {
     }
     
     private func configureCell() {
-        let cellCornerRadius: CGFloat = 10
+        let cellCornerRadius: CGFloat = 20
         let cellBorderWidth: CGFloat = 1
         let shadowOffsetWidth: CGFloat = 0.0
         let shadowOffsetHeight: CGFloat = 2.0
         let cellShadowRadius: CGFloat = 10
-        let cellShadowOpacity: Float = 1
+        let cellShadowOpacity: Float = 0.5
         
-        layer.cornerRadius = cellCornerRadius
-        layer.borderWidth = cellBorderWidth
-        layer.borderColor = UIColor.secondarySystemFill.cgColor
-        backgroundColor = .secondarySystemFill
-        layer.backgroundColor = UIColor.white.cgColor
-        layer.shadowColor = UIColor.gray.cgColor
-        layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
-        layer.shadowRadius = cellShadowRadius
-        layer.shadowOpacity = cellShadowOpacity
-        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        self.layer.cornerRadius = cellCornerRadius
+        self.layer.borderWidth = cellBorderWidth
+        self.layer.borderColor = UIColor.secondarySystemFill.cgColor
+        self.backgroundColor = .secondarySystemFill
+        self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
+        self.layer.shadowColor = UIColor.gray.cgColor
+        self.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
+        self.layer.shadowRadius = cellShadowRadius
+        self.layer.shadowOpacity = cellShadowOpacity
+        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }
 

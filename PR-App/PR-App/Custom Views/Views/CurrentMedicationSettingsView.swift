@@ -75,7 +75,7 @@ final class CurrentMedicationSettingsView: UIView {
         let constraintConstat: CGFloat = 20
         let widthAnchorMultiplier: CGFloat = 0.35
         
-        medicationImageView.backgroundColor = .systemGray5
+        medicationImageView.backgroundColor = .secondarySystemFill
         medicationImageView.layer.cornerRadius = medicationImageCornerRadius
         medicationImageView.tintColor = .systemGray
         medicationImageView.layer.masksToBounds = true

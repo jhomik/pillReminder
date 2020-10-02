@@ -38,7 +38,7 @@ final class UserMedicationDetailView: UIView {
                                   attributes: self.inputAttributes))
     
     private lazy var titleAttributes: [NSAttributedString.Key: Any] = {
-        return [.font: UIFont.systemFont(ofSize: 10, weight: .bold), .foregroundColor: UIColor.systemGray2]
+        return [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.systemGray2]
     }()
     
     private lazy var inputAttributes: [NSAttributedString.Key: Any] = {

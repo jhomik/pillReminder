@@ -62,7 +62,6 @@ final class FirebaseManager {
     
     func saveImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        
         refStorage.child(uid).child(imageName).putData(cellImage, metadata: nil) { (_, error) in
             guard error == nil else {
                 completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))

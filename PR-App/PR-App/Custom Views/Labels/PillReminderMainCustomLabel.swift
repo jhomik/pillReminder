@@ -40,5 +40,4 @@ final class PillReminderMainCustomLabel: UILabel {
     func updateText(_ text: NSAttributedString) {
         self.attributedText = text
     }
-    
 }

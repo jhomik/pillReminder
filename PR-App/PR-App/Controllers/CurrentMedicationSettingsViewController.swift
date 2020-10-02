@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol PassMedicationDelegate: AnyObject {
+    func passMedication(medication: UserMedicationDetailModel)
+}
+
 final class CurrentMedicationSettingsViewController: UIViewController {
     
     let reuseId = "CurrentMedicationCell"
@@ -18,14 +22,18 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
     private var firebaseManager = FirebaseManager()
-    var medications: UserMedicationDetailModel?
+    var medications: UserMedicationDetailModel? {
+        didSet {
+            updateTextFieldsToChange()
+        }
+    }
+    weak var delegate: PassMedicationDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureNavBar()
         configureMedicationView()
-        configureTableView()
         createDismisKeyboardTapGesture()
         updateTextFieldsToChange()
         userMedicationSettingView.delegate = self
@@ -50,12 +58,16 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     @objc private func updateSettings() {
         view.endEditing(true)
         navigationItem.rightBarButtonItem?.isEnabled = false
-        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, let meds = medications else { return }
+        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, var meds = medications else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
             textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField])
         } else {
             self.showLoadingSpinner(with: containerView)
+            meds.pillName = name
+            meds.capacity = capacity
+            meds.dose = dose
+            delegate?.passMedication(medication: meds)
             viewModel.updateMedicationInfo(data: imageData, pillName: name, capacity: capacity, dose: dose, childId: meds.id) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()
@@ -99,53 +111,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             userMedicationSettingView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightAnchorMultiplier)
         ])
     }
-    
-    private func configureTableView() {
-        let topAnchorConstant: CGFloat = 20
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
-        tableView.backgroundColor = UIColor.backgroundColor
-        tableView.tableFooterView = UIView()
-        tableView.isScrollEnabled = false
-        
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: userMedicationSettingView.bottomAnchor, constant: topAnchorConstant),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-}
-
-extension CurrentMedicationSettingsViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.pillModel.sections.count
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
-        cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.pillModel.sections[section])
-        return sectionView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
-    }
 }
 
 extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -157,7 +122,7 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
         userMedicationSettingView.medicationImageView.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: compressionQualityValue) {
-            imageData.append(uploadData)
+            imageData = uploadData
         }
         
         picker.dismiss(animated: true, completion: nil)

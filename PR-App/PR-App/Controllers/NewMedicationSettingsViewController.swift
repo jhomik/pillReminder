@@ -32,7 +32,6 @@ final class NewMedicationSettingsViewController: UIViewController {
         configureViewController()
         configureNavBar()
         configureMedicationView()
-        configureTableView()
         createDismisKeyboardTapGesture()
         newMedicationView.delegate = self
     }
@@ -89,7 +88,6 @@ final class NewMedicationSettingsViewController: UIViewController {
     
     private func configureMedicationView() {
         let leadingAndTrailingAnchorConstants: CGFloat = 20
-        let heightAnchorMultiplier: CGFloat = 0.24
         
         view.addSubview(newMedicationView)
         
@@ -97,55 +95,8 @@ final class NewMedicationSettingsViewController: UIViewController {
             newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
             newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
-            newMedicationView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: heightAnchorMultiplier)
+            newMedicationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
-    }
-    
-    private func configureTableView() {
-        let topAnchorConstant: CGFloat = 20
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseId)
-        tableView.backgroundColor = UIColor.backgroundColor
-        tableView.tableFooterView = UIView()
-        tableView.isScrollEnabled = false
-        
-        view.addSubview(tableView)
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: newMedicationView.bottomAnchor, constant: topAnchorConstant),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
-    }
-}
-
-extension NewMedicationSettingsViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return viewModel.pillModel.sections.count
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath)
-        cell.textLabel?.text = viewModel.pillModel.morning[indexPath.row]
-        cell.accessoryType = .disclosureIndicator
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let sectionView = HeaderCellView(frame: .zero, titleLabel: viewModel.pillModel.sections[section])
-        return sectionView
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 40
     }
 }
 
@@ -158,7 +109,7 @@ extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, 
         newMedicationView.medicationImage.image = image
         
         if let uploadData = image.jpegData(compressionQuality: compressionQualityValue) {
-            imageData.append(uploadData)
+            imageData = uploadData
         }
         
         picker.dismiss(animated: true, completion: nil)
