@@ -41,6 +41,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private func configureViewController() {
         view.backgroundColor = UIColor.backgroundColor
+        self.isModalInPresentation = true
     }
     
     private func updateTextFieldsToChange() {
@@ -50,10 +51,15 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(updateSettings))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSettings))
         navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
+    
+    @objc private func cancelSettings() {
+           dismiss(animated: true, completion: nil)
+       }
     
     @objc private func updateSettings() {
         view.endEditing(true)

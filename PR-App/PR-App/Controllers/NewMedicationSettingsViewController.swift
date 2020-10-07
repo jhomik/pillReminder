@@ -38,24 +38,34 @@ final class NewMedicationSettingsViewController: UIViewController {
     
     private func configureViewController() {
         view.backgroundColor = UIColor.backgroundColor
+        self.isModalInPresentation = true
     }
     
     private func configureNavBar() {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(saveSettings))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSettings))
         navigationController?.navigationBar.barTintColor = UIColor.backgroundColor
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
         navigationController?.navigationBar.shadowImage = UIImage()
     }
     
+    @objc private func cancelSettings() {
+        UserDefaults.standard.removeObject(forKey: "frequencyRow")
+        UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
+        UserDefaults.standard.removeObject(forKey: "dosageRow")
+        dismiss(animated: true, completion: nil)
+    }
+    
     @objc private func saveSettings() {
         view.endEditing(true)
-        guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text, let frequency = self.newMedicationView.frequencyTextField.text, let howManyTimesPerDay = self.newMedicationView.howManyTimesTextField.text, let dosage = self.newMedicationView.doseTextField.text else { return }
+        guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text, let frequency = self.newMedicationView.frequencyTextField.text, let howManyTimesPerDay = self.newMedicationView.howManyTimesTextField.text, let dosage = self.newMedicationView.dosageTextField.text else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty {
             textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField])
             textFieldsShaker2(inputFields: [newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField])
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
+            navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView)
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) {
                 self.dismissLoadingSpinner(with: self.containerView)

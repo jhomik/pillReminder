@@ -21,7 +21,9 @@ final class CurrentMedicationSettingsView: UIView {
     
     private(set) var frequencyTextField = PillReminderProgramCustomTextFields(placeholderText: "Select frequency")
     private(set) var howManyTimesTextField = PillReminderProgramCustomTextFields(placeholderText: "How many times per day?")
-    private(set) var whatTimeTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
+    private(set) var whatTimeOnceADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
+    private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
+    private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
     private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: "Choose dosage")
     
     private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: "Frequency")
@@ -69,6 +71,9 @@ final class CurrentMedicationSettingsView: UIView {
         nameTextField.text = medication.pillName
         capacityTextField.text = medication.capacity
         doseTextField.text = medication.dose
+        frequencyTextField.text = medication.frequency
+        howManyTimesTextField.text = medication.howManyTimesPerDay
+        dosageTextField.text = medication.dosage
         firebaseManager.downloadImage(with: medication.cellImage, imageCell: medicationImageView)
     }
     
@@ -177,13 +182,17 @@ final class CurrentMedicationSettingsView: UIView {
          programMedicationStackView.addArrangedSubview(howManyTimesLabel)
          programMedicationStackView.addArrangedSubview(howManyTimesTextField)
          programMedicationStackView.addArrangedSubview(whatTimeLabel)
-         programMedicationStackView.addArrangedSubview(whatTimeTextField)
+         programMedicationStackView.addArrangedSubview(whatTimeOnceADayTextField)
+         programMedicationStackView.addArrangedSubview(whatTimeTwiceADayTextField)
+         programMedicationStackView.addArrangedSubview(whatTimeThreeTimesADayTextField)
          programMedicationStackView.addArrangedSubview(dosageLabel)
          programMedicationStackView.addArrangedSubview(dosageTextField)
          
          frequencyTextField.delegate = self
          howManyTimesTextField.delegate = self
-         whatTimeTextField.delegate = self
+         whatTimeOnceADayTextField.delegate = self
+         whatTimeTwiceADayTextField.delegate = self
+         whatTimeThreeTimesADayTextField.delegate = self
          dosageTextField.delegate = self
          
          programMedicationStackView.axis = .vertical
@@ -203,7 +212,7 @@ final class CurrentMedicationSettingsView: UIView {
     private func createPickerView(textField: UITextField) {
         let pickerView = UIPickerView()
         let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneButtonTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         //        let row = UserDefaults.standard.integer(forKey: "pickerViewRow")
         
@@ -276,7 +285,7 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
         }
     }
     
-    func CurrentMedicationSettingsView(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
 }

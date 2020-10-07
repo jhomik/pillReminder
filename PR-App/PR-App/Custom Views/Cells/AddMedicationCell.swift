@@ -16,7 +16,7 @@ final class AddMedicationCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-//        configureCell()
+        configureCell()
         configureImageCell()
         configureNewMedsTitle()
     }

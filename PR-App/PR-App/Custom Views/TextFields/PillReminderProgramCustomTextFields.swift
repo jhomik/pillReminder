@@ -21,7 +21,7 @@ class PillReminderProgramCustomTextFields: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        configure()
+        
     }
     
     convenience init(placeholderText: String) {
