@@ -212,7 +212,7 @@ final class CurrentMedicationSettingsView: UIView {
     private func createPickerView(textField: UITextField) {
         let pickerView = UIPickerView()
         let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(pickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         //        let row = UserDefaults.standard.integer(forKey: "pickerViewRow")
         
@@ -225,7 +225,7 @@ final class CurrentMedicationSettingsView: UIView {
         textField.inputAccessoryView = toolBar
     }
     
-    @objc private func doneButtonTapped() {
+    @objc private func pickerDoneButtonTapped() {
         self.endEditing(true)
     }
 }

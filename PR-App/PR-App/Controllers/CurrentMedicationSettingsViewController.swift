@@ -14,7 +14,6 @@ protocol PassMedicationDelegate: AnyObject {
 
 final class CurrentMedicationSettingsViewController: UIViewController {
     
-    let reuseId = "CurrentMedicationCell"
     private let userMedicationSettingView = CurrentMedicationSettingsView()
     private let tableView = UITableView()
     private let viewModel = CurrentMedicationSettingsViewModel()

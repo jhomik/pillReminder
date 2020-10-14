@@ -33,6 +33,7 @@ final class CustomCell: UICollectionViewCell {
         super.layoutSubviews()
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
+        self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
@@ -115,7 +116,6 @@ final class CustomCell: UICollectionViewCell {
         self.layer.borderWidth = cellBorderWidth
         self.layer.borderColor = UIColor.secondarySystemFill.cgColor
         self.backgroundColor = .secondarySystemFill
-        self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
         self.layer.shadowColor = UIColor.gray.cgColor
         self.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         self.layer.shadowRadius = cellShadowRadius

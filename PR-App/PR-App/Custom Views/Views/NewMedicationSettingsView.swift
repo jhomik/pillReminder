@@ -37,8 +37,9 @@ class NewMedicationSettingsView: UIView {
     var medicationsToChange: UserMedicationDetailModel?
     
     var activeTextField: UITextField?
-    
-    var isValueChange: Bool = false
+    private let pickerView = UIPickerView()
+    private let datePickerView = UIDatePicker()
+    private let userDefaults = UserDefaults.standard
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -157,7 +158,7 @@ class NewMedicationSettingsView: UIView {
     }
     
     private func configureProgramMedicationStackView() {
-        let constraintConstant: CGFloat = 20
+        let constraintConstant: CGFloat = 30
         
         programMedicationStackView.addArrangedSubview(frequencyLabel)
         programMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -176,11 +177,13 @@ class NewMedicationSettingsView: UIView {
         whatTimeTwiceADayTextField.delegate = self
         whatTimeThreeTimesADayTextField.delegate = self
         dosageTextField.delegate = self
+   
         whatTimeTwiceADayTextField.isHidden = true
         whatTimeThreeTimesADayTextField.isHidden = true
         
         programMedicationStackView.axis = .vertical
         programMedicationStackView.distribution = .fillEqually
+        programMedicationStackView.spacing = 10
         
         scrollView.addSubview(programMedicationStackView)
         programMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -188,70 +191,36 @@ class NewMedicationSettingsView: UIView {
         NSLayoutConstraint.activate([
             programMedicationStackView.topAnchor.constraint(equalTo: newMedicationStackView.bottomAnchor, constant: constraintConstant),
             programMedicationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            programMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            programMedicationStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5)
+            programMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
     
     private func createPickerView(withTextField: UITextField, readUserDefault: String) {
-        let pickerView = UIPickerView()
+        
         let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneButtonTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(pickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-        let row = UserDefaults.standard.integer(forKey: readUserDefault)
+//        let row = userDefaults.integer(forKey: readUserDefault)
         
         pickerView.delegate = self
-        pickerView.selectRow(row, inComponent: 0, animated: false)
+//        pickerView.selectRow(row, inComponent: 0, animated: false)
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, doneButton], animated: false)
         withTextField.inputAccessoryView = toolBar
     }
     
-    @objc private func doneButtonTapped(textField: UITextField) {
-        self.endEditing(true)
-    }
-}
-
-extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if activeTextField == frequencyTextField {
-            return pillModel.frequency.count
-        } else if activeTextField == howManyTimesTextField {
-            return pillModel.howManyTimesPerDay.count
-        } else {
-            return pillModel.dosage.count
-        }
-    }
-
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if activeTextField == frequencyTextField {
-            activeTextField?.text = pillModel.frequency[row]
-            return pillModel.frequency[row]
-        } else if activeTextField == howManyTimesTextField {
-            activeTextField?.text = pillModel.howManyTimesPerDay[row]
-            return pillModel.howManyTimesPerDay[row]
-        } else {
-            activeTextField?.text = pillModel.dosage[row]
-            return pillModel.dosage[row]
-        }
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        guard let activeTextField = activeTextField else { return }
-        
-        if activeTextField == frequencyTextField {
-            UserDefaults.standard.set(row, forKey: "frequencyRow")
-            activeTextField.text = pillModel.frequency[row]
-        } else if activeTextField == howManyTimesTextField {
-            UserDefaults.standard.set(row, forKey: "howManyTimesPerdDayRow")
-            activeTextField.text = pillModel.howManyTimesPerDay[row]
-            switch row {
+    @objc private func pickerDoneButtonTapped() {
+        guard let textField = activeTextField else { return }
+        if textField == frequencyTextField {
+            let row = pillModel.frequency[pickerView.selectedRow(inComponent: 0)]
+            textField.text = row
+            userDefaults.set(row, forKey: "frequencyRow")
+        } else if textField == howManyTimesTextField {
+            let row = pillModel.howManyTimesPerDay[pickerView.selectedRow(inComponent: 0)]
+            textField.text = row
+            userDefaults.set(row, forKey: "howManyTimesPerdDayRow")
+            switch pickerView.selectedRow(inComponent: 0) {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
                 whatTimeThreeTimesADayTextField.isHidden = true
@@ -265,8 +234,72 @@ extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSourc
                 break
             }
         } else {
-            UserDefaults.standard.set(row, forKey: "dosageRow")
-            activeTextField.text = pillModel.dosage[row]
+            let row = pillModel.dosage[pickerView.selectedRow(inComponent: 0)]
+            textField.text = row
+            userDefaults.set(row, forKey: "dosageRow")
+        }
+        self.endEditing(true)
+    }
+    
+    private func createDatePickerView(withTextField: UITextField, readUserDefault: String) {
+        let toolBar = UIToolbar()
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
+        let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
+        
+        datePickerView.datePickerMode = .time
+        if #available(iOS 13.4, *) {
+            datePickerView.preferredDatePickerStyle = .wheels
+        }
+    
+        withTextField.inputView = datePickerView
+        withTextField.inputAccessoryView = toolBar
+        toolBar.sizeToFit()
+        toolBar.setItems([spaceButton, doneButton], animated: false)
+    }
+    
+    @objc private func dateDoneButtonTapped() {
+        let formatter = DateFormatter()
+        let selectedDate = datePickerView.date
+        formatter.timeStyle = .short
+        
+        if activeTextField == whatTimeOnceADayTextField {
+            whatTimeOnceADayTextField.text = formatter.string(from: datePickerView.date)
+            userDefaults.set(selectedDate, forKey: "whatTimeOnceADayRow")
+        } else if activeTextField == whatTimeTwiceADayTextField {
+            whatTimeTwiceADayTextField.text = formatter.string(from: datePickerView.date)
+            userDefaults.set(selectedDate, forKey: "whatTimeTwiceADayRow")
+        } else {
+            whatTimeThreeTimesADayTextField.text = formatter.string(from: datePickerView.date)
+            userDefaults.set(selectedDate, forKey: "whatTimeThreeTimesADayRow")
+        }
+        self.endEditing(true)
+        
+    }
+}
+
+extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+            return 1
+        }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        if activeTextField == frequencyTextField {
+            return pillModel.frequency.count
+        } else if activeTextField == howManyTimesTextField {
+            return pillModel.howManyTimesPerDay.count
+        } else {
+            return pillModel.dosage.count
+        }
+    }
+
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if activeTextField == frequencyTextField {
+            return pillModel.frequency[row]
+        } else if activeTextField == howManyTimesTextField {
+            return pillModel.howManyTimesPerDay[row]
+        } else {
+            return pillModel.dosage[row]
         }
     }
 }
@@ -281,6 +314,12 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
             createPickerView(withTextField: textField, readUserDefault: "frequencyRow")
         } else if textField == howManyTimesTextField {
             createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
+        } else if textField == whatTimeOnceADayTextField {
+            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
+        } else if textField == whatTimeTwiceADayTextField {
+            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeTwiceADayRow")
+        } else if textField == whatTimeThreeTimesADayTextField {
+            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeThreeTimesADayRow")
         } else if textField == dosageTextField {
             createPickerView(withTextField: textField, readUserDefault: "dosageRow")
         }
@@ -289,4 +328,6 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
+    
+
 }

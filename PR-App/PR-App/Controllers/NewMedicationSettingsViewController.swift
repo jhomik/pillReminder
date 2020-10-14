@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import UserNotifications
 
 final class NewMedicationSettingsViewController: UIViewController {
     
-    private let reuseId = "NewMedicationCell"
     private let newMedicationView = NewMedicationSettingsView()
     private var firebaseManager = FirebaseManager()
     private var viewModel = NewMedicationViewModel()
@@ -34,6 +34,37 @@ final class NewMedicationSettingsViewController: UIViewController {
         configureMedicationView()
         createDismisKeyboardTapGesture()
         newMedicationView.delegate = self
+        
+    }
+    
+    private func scheduleTest() {
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
+            if success {
+                self.scheduleNotification()
+                print("test")
+            } else {
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+    
+    private func scheduleNotification() {
+        let content = UNMutableNotificationContent()
+        content.title = "Take a Pill"
+        content.body = "It's time to take a Metocard pill"
+        content.sound = .default
+        
+        let target = Date().addingTimeInterval(10)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: target), repeats: false)
+        
+        let request = UNNotificationRequest(identifier: "someID", content: content, trigger: trigger)
+        UNUserNotificationCenter.current().add(request) { (error) in
+            if error != nil {
+                print("something went wrong")
+            }
+        }
     }
     
     private func configureViewController() {
@@ -53,6 +84,7 @@ final class NewMedicationSettingsViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "frequencyRow")
         UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
         UserDefaults.standard.removeObject(forKey: "dosageRow")
+        scheduleTest()
         dismiss(animated: true, completion: nil)
     }
     
