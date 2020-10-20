@@ -16,7 +16,7 @@ extension UIView {
         animation.repeatCount = 4
         animation.autoreverses = true
         animation.fromValue = NSValue(cgPoint: CGPoint(x: self.center.x - 10, y: self.center.y))
-        animation.toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
+        animation .toValue = NSValue(cgPoint: CGPoint(x: self.center.x + 10, y: self.center.y))
         self.layer.add(animation, forKey: "position")
     }
     
@@ -31,10 +31,10 @@ extension UIView {
     }
     
     func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
-          for field in inputFields {
-              if let fieldText = field.text, fieldText.isEmpty {
-                  field.shake()
-              }
-          }
-      }
+        for field in inputFields {
+            if let fieldText = field.text, fieldText.isEmpty {
+                field.shake()
+            }
+        }
+    }
 }

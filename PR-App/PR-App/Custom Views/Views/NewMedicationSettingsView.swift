@@ -29,7 +29,7 @@ class NewMedicationSettingsView: UIView {
     private let pillModel = PillModel()
     private let newMedicationStackView = UIStackView()
     private let programMedicationStackView = UIStackView()
-    private(set) var scrollView = UIScrollView()
+    private let scrollView = UIScrollView()
     var medicationImageButton = UIButton()
     var medicationImage = UIImageView()
     weak var delegate: UserMedicationDetailDelegate?
@@ -38,7 +38,7 @@ class NewMedicationSettingsView: UIView {
     
     var activeTextField: UITextField?
     private let pickerView = UIPickerView()
-    private let datePickerView = UIDatePicker()
+    let datePickerView = UIDatePicker()
     private let userDefaults = UserDefaults.standard
     
     override init(frame: CGRect) {
@@ -198,19 +198,17 @@ class NewMedicationSettingsView: UIView {
     private func createPickerView(withTextField: UITextField, readUserDefault: String) {
         
         let toolBar = UIToolbar()
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(pickerDoneButtonTapped))
+        let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-//        let row = userDefaults.integer(forKey: readUserDefault)
-        
+
         pickerView.delegate = self
-//        pickerView.selectRow(row, inComponent: 0, animated: false)
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, doneButton], animated: false)
         withTextField.inputAccessoryView = toolBar
     }
     
-    @objc private func pickerDoneButtonTapped() {
+    @objc private func onPickerDoneButtonTapped() {
         guard let textField = activeTextField else { return }
         if textField == frequencyTextField {
             let row = pillModel.frequency[pickerView.selectedRow(inComponent: 0)]
@@ -328,6 +326,4 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
-    
-
 }

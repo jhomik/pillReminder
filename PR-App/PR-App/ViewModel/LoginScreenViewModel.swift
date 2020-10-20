@@ -20,7 +20,6 @@ final class LoginScreenViewModel {
     
     private let firebaseManager = FirebaseManager()
     private weak var loginEvents: LoginScreenEvents?
-    private var isSignUp = false
     
     init(loginEvents: LoginScreenEvents) {
         self.loginEvents = loginEvents

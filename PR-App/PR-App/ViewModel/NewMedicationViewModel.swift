@@ -34,4 +34,38 @@ final class NewMedicationViewModel {
             }
         }
     }
+    
+//    func pickerDoneButtonTapped(activeTextField: UITextField) {
+//        guard let textField = activeTextField else { return }
+//        if textField == frequencyTextField {
+//            let row = pillModel.frequency[pickerView.selectedRow(inComponent: 0)]
+//            textField.text = row
+//            userDefaults.set(row, forKey: "frequencyRow")
+//        } else if textField == howManyTimesTextField {
+//            let row = pillModel.howManyTimesPerDay[pickerView.selectedRow(inComponent: 0)]
+//            textField.text = row
+//            userDefaults.set(row, forKey: "howManyTimesPerdDayRow")
+//            switch pickerView.selectedRow(inComponent: 0) {
+//            case 0:
+//                whatTimeTwiceADayTextField.isHidden = true
+//                whatTimeThreeTimesADayTextField.isHidden = true
+//            case 1:
+//                whatTimeTwiceADayTextField.isHidden = false
+//                whatTimeThreeTimesADayTextField.isHidden = true
+//            case 2:
+//                whatTimeTwiceADayTextField.isHidden = false
+//                whatTimeThreeTimesADayTextField.isHidden = false
+//            default:
+//                break
+//            }
+//        } else {
+//            let row = pillModel.dosage[pickerView.selectedRow(inComponent: 0)]
+//            textField.text = row
+//            userDefaults.set(row, forKey: "dosageRow")
+//        }
+//        self.endEditing(true)
+//    }
 }
+
+
+

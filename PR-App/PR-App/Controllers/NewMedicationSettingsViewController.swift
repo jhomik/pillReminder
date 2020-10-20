@@ -18,6 +18,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     
+    
     init(viewModel: NewMedicationViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -89,12 +90,13 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func saveSettings() {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
         view.endEditing(true)
         guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text, let frequency = self.newMedicationView.frequencyTextField.text, let howManyTimesPerDay = self.newMedicationView.howManyTimesTextField.text, let dosage = self.newMedicationView.dosageTextField.text else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty {
-            textFieldsShaker(inputFields: [newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField])
-            textFieldsShaker2(inputFields: [newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField])
+            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField,newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
@@ -102,7 +104,9 @@ final class NewMedicationSettingsViewController: UIViewController {
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
+                appDelegate?.scheduleNotification(pillName: name, time: self.newMedicationView.datePickerView.date)
             }
+            
             UserDefaults.standard.removeObject(forKey: "frequencyRow")
             UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
             UserDefaults.standard.removeObject(forKey: "dosageRow")

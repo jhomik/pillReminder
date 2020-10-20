@@ -9,15 +9,57 @@
 import UIKit
 import CoreData
 import FirebaseCore
+import UserNotifications
+
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    let notificationCenter = UNUserNotificationCenter.current()
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let options: UNAuthorizationOptions = [.alert, .sound, .badge]
+        
+        notificationCenter.requestAuthorization(options: options) { (success, error) in
+            if !success {
+                print("User has declined notifications")
+            }
+        }
         FirebaseApp.configure()
         return true
+    }
+    
+    func scheduleNotification(pillOfTheDay: pillOfTheDay, pillName: String, time: Date) {
+    
+        let identifier = "Pill Notification"
+        let date = time
+        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        
+        let content = UNMutableNotificationContent()
+        
+        switch pillOfTheDay {
+        case .first:
+            content.title = "It's time to take todays first \(pillName) pill"
+        case .second:
+            content.title = "It's time to take second \(pillName) pill"
+        case .last:
+            content.title = "It's time to take the last \(pillName )pill of the day"
+        }
+        
+        content.body = "Tap here to take it!"
+        content.sound = .default
+        content.badge = 1
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            }
+            print(triggerDate)
+        }
     }
 
     // MARK: UISceneSession Lifecycle

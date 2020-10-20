@@ -62,18 +62,12 @@ extension UIViewController {
         view.addGestureRecognizer(tap)
     }
     
-    func textFieldsShaker(inputFields: [PillReminderMainCustomTextField]) {
-        for field in inputFields {
-            if let fieldText = field.text, fieldText.isEmpty {
-                field.shake()
-            }
-        }
-    }
-    
-    func textFieldsShaker2(inputFields: [PillReminderProgramCustomTextFields]) {
-        for field in inputFields {
-            if let fieldText = field.text, fieldText.isEmpty {
-                field.shake()
+    func textFieldShaker(_ textField: UITextField...) {
+        textField.forEach { (field) in
+            for field in textField {
+                if let fieldText = field.text, fieldText.isEmpty {
+                    field.shake()
+                }
             }
         }
     }

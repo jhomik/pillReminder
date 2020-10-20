@@ -66,7 +66,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, var meds = medications else { return }
         
         if name.isEmpty || capacity.isEmpty || dose.isEmpty {
-            textFieldsShaker(inputFields: [userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField])
+            textFieldShaker(userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField)
         } else {
             self.showLoadingSpinner(with: containerView)
             meds.pillName = name

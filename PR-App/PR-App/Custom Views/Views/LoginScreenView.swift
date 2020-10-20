@@ -18,13 +18,9 @@ protocol LoginScreenPresentForgotPasswordVC: AnyObject {
 
 protocol LoginScreenAlertDelegate: AnyObject {
     func alertLoginSuccess(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
-    
     func alertLoginFailure(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
-    
     func alertCreateUserSuccess(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
-    
     func alertCreateUserFailure(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
-    
     func alertIsEmailVerified(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
 }
 
@@ -76,7 +72,7 @@ final class LoginScreenView: UIView {
     }
     
     private func configureLogoImage() {
-        let heightAnchorMulitplier: CGFloat = 0.35
+        let heightAnchorMulitplier: CGFloat = 0.42
         let widthAnchorMultiplier: CGFloat = 0.8
         let topAnchorConstant: CGFloat = 20
         
@@ -114,6 +110,7 @@ final class LoginScreenView: UIView {
     
     @objc func segmentedControllerChange(sender: UISegmentedControl) {
         isSignUp.toggle()
+        
         self.userNameTextField.isHidden = !self.isSignUp
         self.confirmTextField.isHidden = !self.isSignUp
         self.mainButtonEvent.setTitle(isSignUp ? Constants.signUp : Constants.signIn, for: .normal)

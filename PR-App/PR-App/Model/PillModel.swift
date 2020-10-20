@@ -15,3 +15,10 @@ struct PillModel {
     let dosage = ["1", "1/2", "1/4"]
     let sections = ["Frequency", "How many times per day?", "What time?", "Dosage"]
 }
+
+enum pillOfTheDay {
+    case first
+    case second
+    case last
+}
+
