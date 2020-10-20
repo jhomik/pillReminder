@@ -104,7 +104,7 @@ final class NewMedicationSettingsViewController: UIViewController {
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
-                appDelegate?.scheduleNotification(pillName: name, time: self.newMedicationView.datePickerView.date)
+                appDelegate?.scheduleNotification(pillOfTheDay: .first, pillName: name, time: self.newMedicationView.datePickerView.date)
             }
             
             UserDefaults.standard.removeObject(forKey: "frequencyRow")
