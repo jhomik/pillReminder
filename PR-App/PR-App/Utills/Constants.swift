@@ -9,11 +9,13 @@
 import UIKit
 
 struct Constants {
+    static let onceADayNotificationIdentifier = "onceADay"
+    static let twiceADayNotificationIdentifier = "twiceADay"
+    static let threeTimesADayNotificationIdentifier = "threeTimesADay"
     static let users = "users"
     static let username = "username"
     static let medicationData = "medicationData"
     static let user = "user"
-    
     static let addMedication = NSLocalizedString("addMedication", comment: "")
     static let placeHolderNameMedication = NSLocalizedString("placeHolderNameMedication", comment: "")
     static let placeHolderCapacityMedication = NSLocalizedString("placeHolderCapacityMedication", comment: "")

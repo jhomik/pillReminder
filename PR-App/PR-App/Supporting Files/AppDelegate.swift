@@ -11,8 +11,6 @@ import CoreData
 import FirebaseCore
 import UserNotifications
 
-
-
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -30,9 +28,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func scheduleNotification(pillOfTheDay: pillOfTheDay, pillName: String, time: Date) {
-    
-        let identifier = "Pill Notification"
+    func scheduleNotification(pillOfTheDay: pillOfTheDay, textField: UITextField, identifier: String, pillName: String, time: Date) {
+
         let date = time
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         
@@ -41,15 +38,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         switch pillOfTheDay {
         case .first:
             content.title = "It's time to take todays first \(pillName) pill"
+            textField.text = DateFormatter().string(from: time)
         case .second:
             content.title = "It's time to take second \(pillName) pill"
+            textField.text = DateFormatter().string(from: time)
         case .last:
-            content.title = "It's time to take the last \(pillName )pill of the day"
+            content.title = "It's time to take the last \(pillName) pill of the day"
+            textField.text = DateFormatter().string(from: time)
         }
         
         content.body = "Tap here to take it!"
         content.sound = .default
         content.badge = 1
+        content.attachments =
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
         let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)

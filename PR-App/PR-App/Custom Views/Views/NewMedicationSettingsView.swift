@@ -38,7 +38,9 @@ class NewMedicationSettingsView: UIView {
     
     var activeTextField: UITextField?
     private let pickerView = UIPickerView()
-    let datePickerView = UIDatePicker()
+    let onceADayDatePickerView = UIDatePicker()
+    let twiceADayDatePickerView = UIDatePicker()
+    let threeTimesADayDatePickerView = UIDatePicker()
     private let userDefaults = UserDefaults.standard
     
     override init(frame: CGRect) {
@@ -239,7 +241,7 @@ class NewMedicationSettingsView: UIView {
         self.endEditing(true)
     }
     
-    private func createDatePickerView(withTextField: UITextField, readUserDefault: String) {
+    private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField, readUserDefault: String) {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -257,18 +259,20 @@ class NewMedicationSettingsView: UIView {
     
     @objc private func dateDoneButtonTapped() {
         let formatter = DateFormatter()
-        let selectedDate = datePickerView.date
+        let selectedOnce = onceADayDatePickerView.date
+        let selectedTwice = twiceADayDatePickerView.date
+        let selectedThree = threeTimesADayDatePickerView.date
         formatter.timeStyle = .short
         
         if activeTextField == whatTimeOnceADayTextField {
-            whatTimeOnceADayTextField.text = formatter.string(from: datePickerView.date)
-            userDefaults.set(selectedDate, forKey: "whatTimeOnceADayRow")
+            whatTimeOnceADayTextField.text = formatter.string(from: selectedOnce)
+            userDefaults.set(selectedOnce, forKey: "whatTimeOnceADayRow")
         } else if activeTextField == whatTimeTwiceADayTextField {
-            whatTimeTwiceADayTextField.text = formatter.string(from: datePickerView.date)
-            userDefaults.set(selectedDate, forKey: "whatTimeTwiceADayRow")
+            whatTimeTwiceADayTextField.text = formatter.string(from: selectedTwice)
+            userDefaults.set(selectedTwice, forKey: "whatTimeTwiceADayRow")
         } else {
-            whatTimeThreeTimesADayTextField.text = formatter.string(from: datePickerView.date)
-            userDefaults.set(selectedDate, forKey: "whatTimeThreeTimesADayRow")
+            whatTimeThreeTimesADayTextField.text = formatter.string(from: selectedThree)
+            userDefaults.set(selectedThree, forKey: "whatTimeThreeTimesADayRow")
         }
         self.endEditing(true)
         
@@ -313,11 +317,11 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         } else if textField == howManyTimesTextField {
             createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
         } else if textField == whatTimeOnceADayTextField {
-            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
+            createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
         } else if textField == whatTimeTwiceADayTextField {
-            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeTwiceADayRow")
+            createDatePickerView(datePickerView: twiceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeTwiceADayRow")
         } else if textField == whatTimeThreeTimesADayTextField {
-            createDatePickerView(withTextField: textField, readUserDefault: "whatTimeThreeTimesADayRow")
+            createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeThreeTimesADayRow")
         } else if textField == dosageTextField {
             createPickerView(withTextField: textField, readUserDefault: "dosageRow")
         }

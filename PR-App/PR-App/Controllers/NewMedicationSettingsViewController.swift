@@ -104,7 +104,9 @@ final class NewMedicationSettingsViewController: UIViewController {
             viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
-                appDelegate?.scheduleNotification(pillOfTheDay: .first, pillName: name, time: self.newMedicationView.datePickerView.date)
+                appDelegate?.scheduleNotification(pillOfTheDay: .first, textField: self.newMedicationView.whatTimeOnceADayTextField, identifier: Constants.onceADayNotificationIdentifier, pillName: name, time: self.newMedicationView.onceADayDatePickerView.date)
+                appDelegate?.scheduleNotification(pillOfTheDay: .second, textField: self.newMedicationView.whatTimeTwiceADayTextField, identifier: Constants.twiceADayNotificationIdentifier, pillName: name, time: self.newMedicationView.twiceADayDatePickerView.date)
+                appDelegate?.scheduleNotification(pillOfTheDay: .last, textField: self.newMedicationView.whatTimeThreeTimesADayTextField, identifier: Constants.threeTimesADayNotificationIdentifier, pillName: name, time: self.newMedicationView.threeTimesADayDatePickerView.date)
             }
             
             UserDefaults.standard.removeObject(forKey: "frequencyRow")
