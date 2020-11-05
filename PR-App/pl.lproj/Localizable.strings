@@ -46,3 +46,7 @@
 "cancel" = "Anuluj";
 "medicine" = "Lekarstwa";
 "reminder" = "Przypominacz";
+"firstPill" = "Pora wziąć pierwszą tabletkę ";
+"secondPill" = "Pora wziąć drugą tabletkę ";
+"thirdPill" = "Pora wziąć ostatnia tabletkę ";
+"tapNotification" = "Kliknij aby wziąć!";

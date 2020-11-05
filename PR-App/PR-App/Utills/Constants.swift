@@ -44,6 +44,10 @@ struct Constants {
     static let sendPassword = NSLocalizedString("sendPassword", comment: "")
     static let medicine = NSLocalizedString("medicine", comment: "")
     static let reminder = NSLocalizedString("reminder", comment: "")
+    static let firstPill = NSLocalizedString("firstPill", comment: "")
+    static let secondPill = NSLocalizedString("secondPill", comment: "")
+    static let thirdPill = NSLocalizedString("thirdPill", comment: "")
+    static let tapNotification = NSLocalizedString("tapNotification", comment: "")
 }
 
 

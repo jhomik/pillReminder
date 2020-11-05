@@ -72,7 +72,7 @@ final class LoginScreenView: UIView {
     }
     
     private func configureLogoImage() {
-        let heightAnchorMulitplier: CGFloat = 0.42
+        let heightAnchorMulitplier: CGFloat = 0.36
         let widthAnchorMultiplier: CGFloat = 0.8
         let topAnchorConstant: CGFloat = 20
         

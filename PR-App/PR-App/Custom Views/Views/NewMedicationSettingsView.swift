@@ -26,6 +26,8 @@ class NewMedicationSettingsView: UIView {
     private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: "What time?")
     private(set) var dosageLabel = PillReminderProgramCustomLabel(text: "Dosage")
     
+    private let capacityLabel = PillReminderMainCustomLabel(text: "pills", alignment: .left, size: 12, weight: .light, color: .secondarySystemFill)
+    
     private let pillModel = PillModel()
     private let newMedicationStackView = UIStackView()
     private let programMedicationStackView = UIStackView()
@@ -51,6 +53,7 @@ class NewMedicationSettingsView: UIView {
         configureMedicationImageButton()
         configureMedicationImage()
         configureNewMedicationStackView()
+        configureCapacityLabel()
         configureProgramMedicationStackView()
     }
     
@@ -148,6 +151,13 @@ class NewMedicationSettingsView: UIView {
         newMedicationStackView.axis = .vertical
         newMedicationStackView.distribution = .equalSpacing
         
+        capacityTextField.keyboardType = .numberPad
+        doseTextField.keyboardType = .numberPad
+        capacityTextField.delegate = self
+        doseTextField.delegate = self
+        capacityTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
+        doseTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
+
         scrollView.addSubview(newMedicationStackView)
         newMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -156,6 +166,25 @@ class NewMedicationSettingsView: UIView {
             newMedicationStackView.leadingAnchor.constraint(equalTo: medicationImageButton.trailingAnchor, constant: constraintConstant),
             newMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             newMedicationStackView.bottomAnchor.constraint(equalTo: medicationImageButton.bottomAnchor, constant: -constraintConstant)
+        ])
+    }
+    
+    @objc private func textFieldFilter(_ textField: UITextField) {
+        if let text = textField.text, let intText = Int(text) {
+            textField.text = "\(intText)"
+        } else {
+            textField.text = ""
+        }
+    }
+    
+    private func configureCapacityLabel() {
+        capacityTextField.addSubview(capacityLabel)
+        
+        NSLayoutConstraint.activate([
+            capacityLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            capacityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            capacityLabel.widthAnchor.constraint(equalTo: self.widthAnchor),
+            capacityLabel.heightAnchor.constraint(equalTo: self.heightAnchor)
         ])
     }
     
@@ -308,8 +337,19 @@ extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSourc
 
 extension NewMedicationSettingsView: UITextFieldDelegate {
     
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        let invalidCharactersIn = CharacterSet(charactersIn: "0123456789").inverted
+        
+        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil)
+    }
+    
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        if textField == capacityTextField || textField == doseTextField {
+            scrollView.isScrollEnabled = false
+        } else {
+            scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        }
+        
         activeTextField = textField
         
         if textField == frequencyTextField {

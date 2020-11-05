@@ -76,22 +76,13 @@ final class AddMedicationCell: UICollectionViewCell {
     
     private func configureCell() {
         let cellCornerRadius: CGFloat = 20
-        let cellBorderWidth: CGFloat = 1
-        let shadowOffsetWidth: CGFloat = 0.0
-        let shadowOffsetHeight: CGFloat = 2.0
-        let cellShadowRadius: CGFloat = 10
-        let cellShadowOpacity: Float = 0.5
-        
+        let cellBorderWidth: CGFloat = 2
+  
         self.layer.cornerRadius = cellCornerRadius
         self.layer.borderWidth = cellBorderWidth
         self.layer.borderColor = UIColor.secondarySystemFill.cgColor
         self.backgroundColor = .secondarySystemFill
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
-        self.layer.shadowColor = UIColor.gray.cgColor
-        self.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
-        self.layer.shadowRadius = cellShadowRadius
-        self.layer.shadowOpacity = cellShadowOpacity
-        self.layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
     }
 }
 

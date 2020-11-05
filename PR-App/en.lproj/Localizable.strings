@@ -46,3 +46,7 @@
 "cancel" = "Cancel";
 "medicine" = "Medicine";
 "reminder" = "Reminder";
+"firstPill" = "It's time to take todays first pill ";
+"secondPill" = "It's time to take second pill ";
+"thirdPill" = "It's time to take the last pill ";
+"tapNotification" = "Tap to take it!";
