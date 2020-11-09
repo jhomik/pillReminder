@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class TakeAPillAlertController: UIViewController {
     
@@ -25,11 +26,10 @@ class TakeAPillAlertController: UIViewController {
     private func configureTakeAPillView() {
         view.addSubview(takeAPillView)
         
-        NSLayoutConstraint.activate([
-            takeAPillView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            takeAPillView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            takeAPillView.heightAnchor.constraint(equalToConstant: 220),
-            takeAPillView.widthAnchor.constraint(equalToConstant: 280)
-        ])
+        takeAPillView.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(view)
+            make.height.equalTo(220)
+            make.width.equalTo(280)
+        }
     }
 }

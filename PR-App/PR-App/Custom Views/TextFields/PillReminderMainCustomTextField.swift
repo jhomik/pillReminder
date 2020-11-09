@@ -43,7 +43,6 @@ final class PillReminderMainCustomTextField: UITextField {
         self.layer.shadowOpacity = textFieldShadowOpactiy
         self.layer.shadowRadius = textFieldShadowRadius
         self.layer.shadowColor = UIColor.textFieldUnderline.cgColor
-        self.translatesAutoresizingMaskIntoConstraints = false
         self.autocapitalizationType = .none
         self.adjustsFontSizeToFitWidth = true
     }

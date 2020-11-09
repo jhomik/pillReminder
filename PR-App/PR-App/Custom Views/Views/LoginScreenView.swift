@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol LoginScreenPresentUserMedicationInfoVC: AnyObject {
     func userMedicationInfoViewController()
@@ -60,31 +61,25 @@ final class LoginScreenView: UIView {
     
     private func configureScrollView() {
         scrollView.isScrollEnabled = false
-        addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(scrollView)
         
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        scrollView.snp.makeConstraints { (make) in
+            make.top.leading.trailing.bottom.equalTo(self)
+        }
     }
     
     private func configureLogoImage() {
         let heightAnchorMulitplier: CGFloat = 0.36
         let widthAnchorMultiplier: CGFloat = 0.8
         let topAnchorConstant: CGFloat = 20
-        
-        logoImage.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(logoImage)
         
-        NSLayoutConstraint.activate([
-            logoImage.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightAnchorMulitplier),
-            logoImage.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
-            logoImage.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
-            logoImage.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor)
-        ])
+        logoImage.snp.makeConstraints { (make) in
+            make.height.equalTo(self).multipliedBy(heightAnchorMulitplier)
+            make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
+            make.top.equalTo(scrollView.snp.top).offset(topAnchorConstant)
+            make.centerX.equalTo(scrollView.snp.centerX)
+        }
     }
     
     private func configureSegmentedView() {
@@ -95,17 +90,15 @@ final class LoginScreenView: UIView {
         segmentedController = UISegmentedControl(items: [Constants.signIn, Constants.createAccount])
         segmentedController.apportionsSegmentWidthsByContent = false
         segmentedController.selectedSegmentTintColor = UIColor.mainColor
-        segmentedController.translatesAutoresizingMaskIntoConstraints = false
         segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
         segmentedController.addTarget(self, action: #selector(segmentedControllerChange), for: .valueChanged)
         scrollView.addSubview(segmentedController)
         
-        NSLayoutConstraint.activate([
-            segmentedController.leadingAnchor.constraint(equalTo: logoImage.leadingAnchor),
-            segmentedController.trailingAnchor.constraint(equalTo: logoImage.trailingAnchor),
-            segmentedController.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
-            segmentedController.topAnchor.constraint(equalTo: logoImage.bottomAnchor, constant: topAnchorConstant)
-        ])
+        segmentedController.snp.makeConstraints { (make) in
+            make.top.equalTo(logoImage.snp.bottom).offset(topAnchorConstant)
+            make.leading.trailing.equalTo(logoImage)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     @objc func segmentedControllerChange(sender: UISegmentedControl) {
@@ -122,7 +115,6 @@ final class LoginScreenView: UIView {
         
         userNameTextField.isHidden = true
         confirmTextField.isHidden = true
-        
         userNameTextField.delegate = self
         emailTextField.delegate = self
         passwordTextField.delegate = self
@@ -137,14 +129,12 @@ final class LoginScreenView: UIView {
         stackViewLoginData.distribution = .equalSpacing
         stackViewLoginData.setCustomSpacing(spacingConstant, after: emailTextField)
         
-        stackViewLoginData.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(stackViewLoginData)
         
-        NSLayoutConstraint.activate([
-            stackViewLoginData.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
-            stackViewLoginData.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: topAnchorConstant)
-        ])
+        stackViewLoginData.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(segmentedController)
+            make.top.equalTo(segmentedController.snp.bottom).offset(topAnchorConstant)
+        }
     }
     
     private func configureButton() {
@@ -154,12 +144,11 @@ final class LoginScreenView: UIView {
         mainButtonEvent.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         scrollView.addSubview(mainButtonEvent)
         
-        NSLayoutConstraint.activate([
-            mainButtonEvent.leadingAnchor.constraint(equalTo: logoImage.leadingAnchor),
-            mainButtonEvent.trailingAnchor.constraint(equalTo: logoImage.trailingAnchor),
-            mainButtonEvent.topAnchor.constraint(equalTo: stackViewLoginData.bottomAnchor, constant: topAnchorConstant),
-            mainButtonEvent.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        mainButtonEvent.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(logoImage)
+            make.top.equalTo(stackViewLoginData.snp.bottom).offset(topAnchorConstant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     @objc private func buttonTapped() {
@@ -182,14 +171,12 @@ final class LoginScreenView: UIView {
         forgotPasswordButton.titleLabel?.font = UIFont.italicSystemFont(ofSize: forgotPasswordButtonFontsize)
         
         self.addSubview(forgotPasswordButton)
-        forgotPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            forgotPasswordButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
-            forgotPasswordButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            forgotPasswordButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        forgotPasswordButton.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.bottom.equalTo(safeAreaLayoutGuide.self).offset(-bottomAnchorConstant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     @objc private func forgotButtonTapped() {

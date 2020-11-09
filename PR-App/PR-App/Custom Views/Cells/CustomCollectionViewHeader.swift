@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class CustomCollectionViewHeader: UICollectionReusableView {
     
@@ -26,14 +27,12 @@ final class CustomCollectionViewHeader: UICollectionReusableView {
         let multiplierWidthAndHeightConstant: CGFloat = 1.5
         
         imageLogo.image = Images.horizontalLogoImage
-        imageLogo.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(imageLogo)
+        self.addSubview(imageLogo)
         
-        NSLayoutConstraint.activate([
-            imageLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageLogo.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            imageLogo.widthAnchor.constraint(equalToConstant: frame.width / multiplierWidthAndHeightConstant),
-            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / multiplierWidthAndHeightConstant)
-        ])
+        imageLogo.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(self)
+            make.width.equalTo(frame.width / multiplierWidthAndHeightConstant)
+            make.height.equalTo(frame.height / multiplierWidthAndHeightConstant)
+        }
     }
 }

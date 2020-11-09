@@ -146,12 +146,11 @@ final class NewMedicationSettingsViewController: UIViewController {
         
         view.addSubview(newMedicationView)
         
-        NSLayoutConstraint.activate([
-            newMedicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            newMedicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
-            newMedicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
-            newMedicationView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
+        newMedicationView.snp.makeConstraints { (make) in
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+            make.leading.equalTo(leadingAndTrailingAnchorConstants)
+            make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
+        }
     }
 }
 

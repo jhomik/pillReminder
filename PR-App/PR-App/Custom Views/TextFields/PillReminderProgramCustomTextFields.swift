@@ -48,6 +48,5 @@ class PillReminderProgramCustomTextFields: UITextField {
         let textFieldFontSize: CGFloat = 18
         self.backgroundColor = .systemBackground
         self.font = UIFont.italicSystemFont(ofSize: textFieldFontSize)
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }

@@ -47,7 +47,6 @@ final class UserMedicationDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureMedicationView()
         configurePillImageView()
         configureMedicationStackView()
     }
@@ -76,10 +75,6 @@ final class UserMedicationDetailView: UIView {
         self.pillDoseView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
     }
     
-    private func configureMedicationView() {
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
     private func configurePillImageView() {
         let pillImageCornerRadius: CGFloat = 16
         let widthAnchorMultiplier: CGFloat = 0.5
@@ -90,14 +85,11 @@ final class UserMedicationDetailView: UIView {
         pillImageView.layer.cornerRadius = pillImageCornerRadius
         
         addSubview(pillImageView)
-        pillImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            pillImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            pillImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            pillImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
-            pillImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        pillImageView.snp.makeConstraints { (make) in
+            make.top.bottom.leading.equalTo(self)
+            make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
+        }
     }
     
     private func configureMedicationStackView() {
@@ -105,18 +97,14 @@ final class UserMedicationDetailView: UIView {
         
         medicationStackView.axis = .vertical
         medicationStackView.distribution = .equalSpacing
-        
-        addSubview(medicationStackView)
+        self.addSubview(medicationStackView)
         medicationStackView.addArrangedSubview(pillNameView)
         medicationStackView.addArrangedSubview(packageCapacityView)
         medicationStackView.addArrangedSubview(pillDoseView)
-        medicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            medicationStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            medicationStackView.leadingAnchor.constraint(equalTo: pillImageView.trailingAnchor, constant: leadingAnchorConstant),
-            medicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            medicationStackView.heightAnchor.constraint(equalTo: self.heightAnchor)
-        ])
+        medicationStackView.snp.makeConstraints { (make) in
+            make.top.height.trailing.equalTo(self)
+            make.leading.equalTo(pillImageView.snp.trailing).offset(leadingAnchorConstant)
+        }
     }
 }

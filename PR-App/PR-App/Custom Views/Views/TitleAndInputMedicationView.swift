@@ -30,28 +30,23 @@ final class TitleAndInputMedicationView: UIView {
     }
     
     private func configureTitleLabel() {
-        addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.leading.trailing.equalTo(self)
+        }
     }
     
     private func configureInputLabel() {
         let bottomAnchorConstant: CGFloat = 12
         
         addSubview(inputLabel)
-        inputLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            inputLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            inputLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            inputLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            inputLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -bottomAnchorConstant)
-        ])
+        inputLabel.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.bottom.equalTo(self).offset(-bottomAnchorConstant)
+            make.top.equalTo(titleLabel.snp.bottom)
+        }
     }
     
     func updateInputValue(_ text: NSAttributedString) {

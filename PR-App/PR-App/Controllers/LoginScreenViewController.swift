@@ -33,25 +33,19 @@ final class LoginScreenViewController: UIViewController {
         loginScreenView.push = self
         
         view.addSubview(loginScreenView)
-        loginScreenView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            loginScreenView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            loginScreenView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            loginScreenView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            loginScreenView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        loginScreenView.snp.makeConstraints { (make) in
+            make.bottom.leading.trailing.equalTo(view)
+            make.top.equalTo(view.safeAreaLayoutGuide)
+        }
     }
     
     private func configureWelcomeView() {
         view.addSubview(welcomeView)
         
-        NSLayoutConstraint.activate([
-            welcomeView.topAnchor.constraint(equalTo: view.topAnchor),
-            welcomeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            welcomeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            welcomeView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+        welcomeView.snp.makeConstraints { (make) in
+            make.top.leading.trailing.bottom.equalTo(view)
+        }
     }
     
     private func configureViewController() {

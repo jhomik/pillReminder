@@ -42,14 +42,13 @@ final class ForgotPasswordViewController: UIViewController {
         
         forgotPasswordView.delegate = self
         view.addSubview(forgotPasswordView)
-        forgotPasswordView.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            forgotPasswordView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: topAnchorConstant),
-            forgotPasswordView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: topAnchorConstant),
-            forgotPasswordView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -topAnchorConstant),
-            forgotPasswordView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
+    
+        forgotPasswordView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(topAnchorConstant)
+            make.leading.equalTo(topAnchorConstant)
+            make.trailing.equalTo(-topAnchorConstant)
+            make.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 

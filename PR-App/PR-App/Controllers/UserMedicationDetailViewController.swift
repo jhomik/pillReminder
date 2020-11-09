@@ -49,12 +49,12 @@ final class UserMedicationDetailViewController: UIViewController {
         
         view.addSubview(medicationView)
         
-        NSLayoutConstraint.activate([
-            medicationView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: constraintConstant),
-            medicationView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: constraintConstant),
-            medicationView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -constraintConstant),
-            medicationView.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        medicationView.snp.makeConstraints { (make) in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(constraintConstant)
+            make.leading.equalTo(constraintConstant)
+            make.trailing.equalTo(-constraintConstant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     private func configureDoseAndCapacityView() {
@@ -63,12 +63,11 @@ final class UserMedicationDetailViewController: UIViewController {
         
         view.addSubview(dosageMedicationView)
         
-        NSLayoutConstraint.activate([
-            dosageMedicationView.topAnchor.constraint(equalTo: medicationView.bottomAnchor, constant: topAnchorConstant),
-            dosageMedicationView.leadingAnchor.constraint(equalTo: medicationView.leadingAnchor),
-            dosageMedicationView.trailingAnchor.constraint(equalTo: medicationView.trailingAnchor),
-            dosageMedicationView.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        dosageMedicationView.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(medicationView)
+            make.top.equalTo(medicationView.snp.bottom).offset(topAnchorConstant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     private func configureEditButton() {
@@ -78,14 +77,12 @@ final class UserMedicationDetailViewController: UIViewController {
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
         
         view.addSubview(editButton)
-        editButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            editButton.leadingAnchor.constraint(equalTo: dosageMedicationView.leadingAnchor),
-            editButton.trailingAnchor.constraint(equalTo: dosageMedicationView.trailingAnchor),
-            editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
-            editButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        editButton.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(dosageMedicationView)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-bottomAnchorConstant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     @objc private func editButtonTapped() {

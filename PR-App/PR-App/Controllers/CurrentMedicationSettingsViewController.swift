@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 protocol PassMedicationDelegate: AnyObject {
     func passMedication(medication: UserMedicationDetailModel)
@@ -108,12 +109,11 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         
         view.addSubview(userMedicationSettingView)
         
-        NSLayoutConstraint.activate([
-            userMedicationSettingView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            userMedicationSettingView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: leadingAndTrailingAnchorConstants),
-            userMedicationSettingView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -leadingAndTrailingAnchorConstants),
-            userMedicationSettingView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
+        userMedicationSettingView.snp.makeConstraints { (make) in
+            make.leading.equalTo(leadingAndTrailingAnchorConstants)
+            make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
+            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 

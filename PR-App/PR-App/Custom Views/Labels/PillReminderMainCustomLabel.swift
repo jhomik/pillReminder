@@ -12,7 +12,6 @@ final class PillReminderMainCustomLabel: UILabel {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configure()
     }
     
     required init?(coder: NSCoder) {
@@ -31,10 +30,6 @@ final class PillReminderMainCustomLabel: UILabel {
         self.init(frame: .zero)
         self.attributedText = text
         self.textAlignment = alignment
-    }
-    
-    private func configure() {
-        translatesAutoresizingMaskIntoConstraints   = false
     }
     
     func updateText(_ text: NSAttributedString) {

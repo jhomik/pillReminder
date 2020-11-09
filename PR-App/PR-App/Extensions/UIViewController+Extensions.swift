@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 extension UIViewController {
     
@@ -23,12 +24,10 @@ extension UIViewController {
         
         view.addSubview(containerView)
         containerView.addSubview(activityIndicator)
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            activityIndicator.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
-            activityIndicator.centerXAnchor.constraint(equalTo: containerView.centerXAnchor)
-        ])
+        activityIndicator.snp.makeConstraints { (make) in
+            make.centerY.centerX.equalTo(containerView)
+        }
         activityIndicator.startAnimating()
     }
     

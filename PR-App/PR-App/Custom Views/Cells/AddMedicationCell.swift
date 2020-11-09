@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class AddMedicationCell: UICollectionViewCell {
     
@@ -43,14 +44,12 @@ final class AddMedicationCell: UICollectionViewCell {
         imageCell.tintColor = UIColor.mainColor
         
         self.addSubview(imageCell)
-        imageCell.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            imageCell.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageCell.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -horizontalAnchorConstant),
-            imageCell.heightAnchor.constraint(equalToConstant: heightAndWidthAnchorConstant),
-            imageCell.widthAnchor.constraint(equalToConstant: heightAndWidthAnchorConstant)
-        ])
+        imageCell.snp.makeConstraints { (make) in
+            make.height.width.equalTo(heightAndWidthAnchorConstant)
+            make.centerX.equalTo(self)
+            make.centerY.equalTo(self).offset(-horizontalAnchorConstant)
+        }
     }
     
     private func configureNewMedsTitle() {
@@ -64,14 +63,13 @@ final class AddMedicationCell: UICollectionViewCell {
         newMedsTitle.numberOfLines = newMedsTitleNumberOfLinesInContent
         
         self.addSubview(newMedsTitle)
-        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            newMedsTitle.topAnchor.constraint(equalTo: imageCell.bottomAnchor),
-            newMedsTitle.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -bottomAnchorConstant),
-            newMedsTitle.heightAnchor.constraint(equalToConstant: heightConstantConstraint)
-        ])
+        newMedsTitle.snp.makeConstraints { (make) in
+            make.top.equalTo(imageCell.snp.bottom)
+            make.centerX.equalTo(contentView)
+            make.bottom.equalTo(-bottomAnchorConstant)
+            make.height.equalTo(heightConstantConstraint)
+        }
     }
     
     private func configureCell() {

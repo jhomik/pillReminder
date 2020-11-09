@@ -25,7 +25,6 @@ class PillReminderProgramCustomLabel: UILabel {
     }
     
     private func configure() {
-        translatesAutoresizingMaskIntoConstraints = false
         font = UIFont.systemFont(ofSize: 16, weight: .bold)
         textAlignment = .left
     }

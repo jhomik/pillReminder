@@ -33,6 +33,5 @@ final class PillReminderMainCustomButton: UIButton {
         self.backgroundColor = UIColor.mainColor
         self.titleLabel?.font = UIFont.boldSystemFont(ofSize: buttonTitleFontsize)
         self.setTitleColor(.white, for: .normal)
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
 }

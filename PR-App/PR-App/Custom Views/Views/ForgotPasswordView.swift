@@ -37,28 +37,23 @@ final class ForgotPasswordView: UIView {
         
         pillReminderLogo.image = Images.horizontalLogoImage
         self.addSubview(pillReminderLogo)
-        pillReminderLogo.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            pillReminderLogo.topAnchor.constraint(equalTo: self.topAnchor),
-            pillReminderLogo.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            pillReminderLogo.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            pillReminderLogo.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        pillReminderLogo.snp.makeConstraints { (make) in
+            make.top.leading.trailing.equalTo(self)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     private func configureForgotPasswordLabel() {
         let heightAnchorConstant: CGFloat = 20
         
-        forgotPasswordLabel.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(forgotPasswordLabel)
         
-        NSLayoutConstraint.activate([
-            forgotPasswordLabel.topAnchor.constraint(equalTo: pillReminderLogo.bottomAnchor, constant: 10),
-            forgotPasswordLabel.leadingAnchor.constraint(equalTo: pillReminderLogo.leadingAnchor),
-            forgotPasswordLabel.trailingAnchor.constraint(equalTo: pillReminderLogo.trailingAnchor),
-            forgotPasswordLabel.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        forgotPasswordLabel.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(pillReminderLogo)
+            make.top.equalTo(pillReminderLogo.snp.bottom).offset(10)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     private func configureEmailTextField() {
@@ -66,14 +61,12 @@ final class ForgotPasswordView: UIView {
         let heightAnchorConstant: CGFloat = 20
         
         self.addSubview(emailTextField)
-        emailTextField.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            emailTextField.topAnchor.constraint(equalTo: forgotPasswordLabel.bottomAnchor, constant: topAnchorContant),
-            emailTextField.leadingAnchor.constraint(equalTo: pillReminderLogo.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: pillReminderLogo.trailingAnchor),
-            emailTextField.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        emailTextField.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(pillReminderLogo)
+            make.top.equalTo(forgotPasswordLabel.snp.bottom).offset(topAnchorContant)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     private func configureSendPasswordButton() {
@@ -82,14 +75,12 @@ final class ForgotPasswordView: UIView {
         
         sendPasswordButton.addTarget(self, action: #selector(sendPasswordButtonTapped), for: .touchUpInside)
         self.addSubview(sendPasswordButton)
-        sendPasswordButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            sendPasswordButton.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: topAnchorContant),
-            sendPasswordButton.leadingAnchor.constraint(equalTo: pillReminderLogo.leadingAnchor),
-            sendPasswordButton.trailingAnchor.constraint(equalTo: pillReminderLogo.trailingAnchor),
-            sendPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        sendPasswordButton.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(pillReminderLogo)
+            make.height.equalTo(heightAnchorConstant)
+            make.top.equalTo(emailTextField.snp.bottom).offset(topAnchorContant)
+        }
     }
     
     @objc private func sendPasswordButtonTapped() {

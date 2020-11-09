@@ -31,30 +31,28 @@ class TakeAPillView: UIView {
         self.layer.cornerRadius = 12
         self.layer.borderColor = UIColor.systemBackground.cgColor
         self.layer.borderWidth = 2
-        self.translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureTitleLabel() {
         self.addSubview(titleLabel)
         
-        NSLayoutConstraint.activate([
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            titleLabel.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        titleLabel.snp.makeConstraints { (make) in
+            make.top.equalTo(20)
+            make.leading.equalTo(30)
+            make.trailing.equalTo(-30)
+            make.height.equalTo(40)
+        }
     }
     
     private func configureButtonTookAPill() {
         self.addSubview(buttonTookAPill)
         buttonTookAPill.addTarget(self, action: #selector(tookAPillButtonTapped), for: .touchUpInside)
         
-        NSLayoutConstraint.activate([
-            buttonTookAPill.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 30),
-            buttonTookAPill.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            buttonTookAPill.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            buttonTookAPill.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        buttonTookAPill.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(titleLabel)
+            make.top.equalTo(titleLabel.snp.bottom).offset(30)
+            make.height.equalTo(40)
+        }
     }
     
     @objc private func tookAPillButtonTapped() {
@@ -65,12 +63,11 @@ class TakeAPillView: UIView {
         self.addSubview(buttonSnoozeAPill)
         buttonSnoozeAPill.addTarget(self, action: #selector(snoozeAPillButtonTapped), for: .touchUpInside)
         
-        NSLayoutConstraint.activate([
-            buttonSnoozeAPill.topAnchor.constraint(equalTo: buttonTookAPill.bottomAnchor, constant: 10),
-            buttonSnoozeAPill.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
-            buttonSnoozeAPill.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
-            buttonSnoozeAPill.heightAnchor.constraint(equalToConstant: 40)
-        ])
+        buttonSnoozeAPill.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(titleLabel)
+            make.top.equalTo(buttonTookAPill.snp.bottom).offset(10)
+            make.height.equalTo(40)
+        }
     }
     
     @objc private func snoozeAPillButtonTapped() {

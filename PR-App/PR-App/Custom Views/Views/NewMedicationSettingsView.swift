@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 struct ScheduleNotoficationData {
     var textField: UITextField
@@ -31,9 +32,7 @@ final class NewMedicationSettingsView: UIView {
     private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: "How many times per day?")
     private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: "What time?")
     private(set) var dosageLabel = PillReminderProgramCustomLabel(text: "Dosage")
-    
     private let capacityLabel = PillReminderMainCustomLabel(text: "pills", alignment: .left, size: 12, weight: .light, color: .secondarySystemFill)
-    
     private let pillModel = PillModel()
     private let newMedicationStackView = UIStackView()
     private let programMedicationStackView = UIStackView()
@@ -41,8 +40,7 @@ final class NewMedicationSettingsView: UIView {
     var medicationImageButton = UIButton()
     var medicationImage = UIImageView()
     weak var delegate: UserMedicationDetailDelegate?
-    
-    var activeTextField: UITextField?
+    private(set) var activeTextField: UITextField?
     private let pickerView = UIPickerView()
     let onceADayDatePickerView = UIDatePicker()
     let twiceADayDatePickerView = UIDatePicker()
@@ -52,7 +50,6 @@ final class NewMedicationSettingsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUserMedicationSettingsView()
         configureScrollView()
         configureAddMedicationLbl()
         configureMedicationImageButton()
@@ -66,42 +63,32 @@ final class NewMedicationSettingsView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureUserMedicationSettingsView() {
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
     private func configureScrollView() {
         scrollView.isScrollEnabled = false
         self.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        scrollView.snp.makeConstraints { (make) in
+            make.top.leading.trailing.bottom.equalTo(self)
+        }
     }
     
     private func configureAddMedicationLbl() {
         let topAnchorConstant: CGFloat = 12
         let heightAnchorConstant: CGFloat = 30
         
-        addMedicationLbl.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(addMedicationLbl)
         
-        NSLayoutConstraint.activate([
-            addMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
-            addMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            addMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            addMedicationLbl.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        addMedicationLbl.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.height.equalTo(heightAnchorConstant)
+            make.top.equalTo(scrollView).offset(topAnchorConstant)
+        }
     }
     
     private func configureMedicationImageButton() {
         let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let medicationImageButtonCornerRadius: CGFloat = 16
-        let constraintConstat: CGFloat = 20
+        let constraintConstant: CGFloat = 20
         let widthAnchorMultiplier: CGFloat = 0.42
         let heightAnchorMultiplier: CGFloat = 0.24
         
@@ -113,15 +100,14 @@ final class NewMedicationSettingsView: UIView {
         medicationImageButton.layer.masksToBounds = true
         
         scrollView.addSubview(medicationImageButton)
-        medicationImageButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            medicationImageButton.topAnchor.constraint(equalTo: addMedicationLbl.bottomAnchor, constant: constraintConstat),
-            medicationImageButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            medicationImageButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: constraintConstat),
-            medicationImageButton.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
-            medicationImageButton.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightAnchorMultiplier)
-        ])
+        medicationImageButton.snp.makeConstraints { (make) in
+            make.top.equalTo(addMedicationLbl.snp.bottom).offset(constraintConstant)
+            make.leading.equalTo(self)
+            make.trailing.equalTo(constraintConstant)
+            make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
+            make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
+        }
     }
     
     @objc private func imageCameraButtonTapped() {
@@ -135,16 +121,11 @@ final class NewMedicationSettingsView: UIView {
         medicationImage.layer.cornerRadius = medicationImageCornerRadius
         medicationImage.contentMode = .scaleToFill
         medicationImage.backgroundColor = UIColor.secondarySystemFill
-        
         medicationImageButton.addSubview(medicationImage)
-        medicationImage.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            medicationImage.topAnchor.constraint(equalTo: medicationImageButton.topAnchor),
-            medicationImage.leadingAnchor.constraint(equalTo: medicationImageButton.leadingAnchor),
-            medicationImage.widthAnchor.constraint(equalTo: medicationImageButton.widthAnchor),
-            medicationImage.heightAnchor.constraint(equalTo: medicationImageButton.heightAnchor)
-        ])
+        medicationImage.snp.makeConstraints { (make) in
+            make.top.leading.width.height.equalTo(medicationImageButton)
+        }
     }
     
     private func configureNewMedicationStackView() {
@@ -164,14 +145,13 @@ final class NewMedicationSettingsView: UIView {
         doseTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
         
         scrollView.addSubview(newMedicationStackView)
-        newMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            newMedicationStackView.topAnchor.constraint(equalTo: medicationImageButton.topAnchor, constant: constraintConstant),
-            newMedicationStackView.leadingAnchor.constraint(equalTo: medicationImageButton.trailingAnchor, constant: constraintConstant),
-            newMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            newMedicationStackView.bottomAnchor.constraint(equalTo: medicationImageButton.bottomAnchor, constant: -constraintConstant)
-        ])
+        newMedicationStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(medicationImageButton).offset(constraintConstant)
+            make.leading.equalTo(medicationImageButton.snp.trailing).offset(constraintConstant)
+            make.trailing.equalTo(self)
+            make.bottom.equalTo(medicationImageButton).offset(-constraintConstant)
+        }
     }
     
     @objc private func textFieldFilter(_ textField: UITextField) {
@@ -185,12 +165,9 @@ final class NewMedicationSettingsView: UIView {
     private func configureCapacityLabel() {
         capacityTextField.addSubview(capacityLabel)
         
-        NSLayoutConstraint.activate([
-            capacityLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            capacityLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            capacityLabel.widthAnchor.constraint(equalTo: self.widthAnchor),
-            capacityLabel.heightAnchor.constraint(equalTo: self.heightAnchor)
-        ])
+        capacityLabel.snp.makeConstraints { (make) in
+            make.centerX.centerY.width.height.equalTo(self)
+        }
     }
     
     private func configureProgramMedicationStackView() {
@@ -222,17 +199,14 @@ final class NewMedicationSettingsView: UIView {
         programMedicationStackView.spacing = 10
         
         scrollView.addSubview(programMedicationStackView)
-        programMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            programMedicationStackView.topAnchor.constraint(equalTo: newMedicationStackView.bottomAnchor, constant: constraintConstant),
-            programMedicationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            programMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
-        ])
+        programMedicationStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(newMedicationStackView.snp.bottom).offset(constraintConstant)
+            make.leading.trailing.equalTo(self)
+        }
     }
     
     private func createPickerView(withTextField: UITextField, readUserDefault: String) {
-        
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -376,7 +350,6 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
             createPickerView(withTextField: textField, readUserDefault: "frequencyRow")
         } else if textField == howManyTimesTextField {
             createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
-            print(textField)
         } else if textField == whatTimeOnceADayTextField {
             createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
         } else if textField == whatTimeTwiceADayTextField {

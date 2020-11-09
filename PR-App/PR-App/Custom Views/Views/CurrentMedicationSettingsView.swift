@@ -38,7 +38,7 @@ final class CurrentMedicationSettingsView: UIView {
     private(set) var scrollView = UIScrollView()
     weak var delegate: UserMedicationDetailDelegate?
     private let firebaseManager = FirebaseManager()
-    var activeTextField: UITextField?
+    private(set) var activeTextField: UITextField?
     private var pillModel = PillModel()
     
     var medicationsToChange: UserMedicationDetailModel? {
@@ -49,7 +49,6 @@ final class CurrentMedicationSettingsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureUserMedicationSettingsView()
         configureScrollView()
         configureChangeMedication()
         configureMedicationImageView()
@@ -60,10 +59,6 @@ final class CurrentMedicationSettingsView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configureUserMedicationSettingsView() {
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func updateUI() {
@@ -80,34 +75,28 @@ final class CurrentMedicationSettingsView: UIView {
     private func configureScrollView() {
         scrollView.isScrollEnabled = false
         self.addSubview(scrollView)
-        scrollView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            scrollView.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        scrollView.snp.makeConstraints { (make) in
+            make.top.leading.trailing.bottom.equalTo(self)
+        }
     }
     
     private func configureChangeMedication() {
         let topAnchorConstant: CGFloat = 12
         let heightAnchorConstant: CGFloat = 30
         
-        changeMedicationLbl.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(changeMedicationLbl)
         
-        NSLayoutConstraint.activate([
-            changeMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
-            changeMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            changeMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            changeMedicationLbl.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        changeMedicationLbl.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.height.equalTo(heightAnchorConstant)
+            make.top.equalTo(scrollView).offset(topAnchorConstant)
+        }
     }
     
     private func configureMedicationImageView() {
         let medicationImageCornerRadius: CGFloat = 16
-        let constraintConstat: CGFloat = 20
+        let constraintConstant: CGFloat = 20
         let widthAnchorMultiplier: CGFloat = 0.42
         let heightAnchorMultiplier: CGFloat = 0.24
         
@@ -118,15 +107,14 @@ final class CurrentMedicationSettingsView: UIView {
         medicationImageView.isUserInteractionEnabled = true
         
         scrollView.addSubview(medicationImageView)
-        medicationImageView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            medicationImageView.topAnchor.constraint(equalTo: changeMedicationLbl.bottomAnchor, constant: constraintConstat),
-            medicationImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            medicationImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: constraintConstat),
-            medicationImageView.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: widthAnchorMultiplier),
-            medicationImageView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: heightAnchorMultiplier)
-        ])
+        medicationImageView.snp.makeConstraints { (make) in
+            make.top.equalTo(changeMedicationLbl.snp.bottom).offset(constraintConstant)
+            make.leading.equalTo(self)
+            make.trailing.equalTo(constraintConstant)
+            make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
+            make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
+        }
     }
     
     private func configureTapToChangeImageButton() {
@@ -139,14 +127,11 @@ final class CurrentMedicationSettingsView: UIView {
         tapToChangeButton.layer.masksToBounds = true
         
         medicationImageView.addSubview(tapToChangeButton)
-        tapToChangeButton.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            tapToChangeButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
-            tapToChangeButton.leadingAnchor.constraint(equalTo: medicationImageView.leadingAnchor),
-            tapToChangeButton.trailingAnchor.constraint(equalTo: medicationImageView.trailingAnchor),
-            tapToChangeButton.bottomAnchor.constraint(equalTo: medicationImageView.bottomAnchor)
-        ])
+        tapToChangeButton.snp.makeConstraints { (make) in
+            make.bottom.leading.trailing.equalTo(medicationImageView)
+            make.height.equalTo(heightAnchorConstant)
+        }
     }
     
     @objc private func tapToChangeButtonTapped() {
@@ -163,15 +148,14 @@ final class CurrentMedicationSettingsView: UIView {
         currentMedicationStackView.distribution = .equalSpacing
         currentMedicationStackView.setCustomSpacing(constraintConstant, after: nameTextField)
         
-        currentMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(currentMedicationStackView)
         
-        NSLayoutConstraint.activate([
-            currentMedicationStackView.topAnchor.constraint(equalTo: medicationImageView.topAnchor, constant: constraintConstant),
-            currentMedicationStackView.leadingAnchor.constraint(equalTo: medicationImageView.trailingAnchor, constant: constraintConstant),
-            currentMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            currentMedicationStackView.bottomAnchor.constraint(equalTo: medicationImageView.bottomAnchor, constant: -constraintConstant)
-        ])
+        currentMedicationStackView.snp.makeConstraints { (make) in
+            make.top.equalTo(medicationImageView).offset(constraintConstant)
+            make.leading.equalTo(medicationImageView.snp.trailing).offset(constraintConstant)
+            make.trailing.equalTo(self)
+            make.bottom.equalTo(medicationImageView).offset(-constraintConstant)
+        }
     }
     
     private func configureProgramMedicationStackView() {
@@ -199,14 +183,12 @@ final class CurrentMedicationSettingsView: UIView {
          programMedicationStackView.distribution = .fillEqually
          
          scrollView.addSubview(programMedicationStackView)
-         programMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
          
-         NSLayoutConstraint.activate([
-             programMedicationStackView.topAnchor.constraint(equalTo: currentMedicationStackView.bottomAnchor, constant: constraintConstant),
-             programMedicationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-             programMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-             programMedicationStackView.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.4)
-         ])
+         programMedicationStackView.snp.makeConstraints { (make) in
+            make.leading.trailing.equalTo(self)
+            make.top.equalTo(currentMedicationStackView.snp.bottom).offset(constraintConstant)
+            make.height.equalTo(self).multipliedBy(0.4)
+        }
      }
     
     private func createPickerView(textField: UITextField) {

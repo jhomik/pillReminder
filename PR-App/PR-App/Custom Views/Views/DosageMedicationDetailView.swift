@@ -34,7 +34,6 @@ final class DosageMedicationDetailView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        configureDosageMedicationView()
         configureDosageMedicationStackView()
     }
     
@@ -42,25 +41,17 @@ final class DosageMedicationDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func configureDosageMedicationView() {
-        translatesAutoresizingMaskIntoConstraints = false
-    }
-    
     private func configureDosageMedicationStackView() {
         dosageMedicationStackView.axis = .vertical
         dosageMedicationStackView.distribution = .equalSpacing
     
-        addSubview(dosageMedicationStackView)
+        self.addSubview(dosageMedicationStackView)
         dosageMedicationStackView.addArrangedSubview(dosageView)
         dosageMedicationStackView.addArrangedSubview(doseProgramView)
         dosageMedicationStackView.addArrangedSubview(capacityPillsLeft)
-        dosageMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            dosageMedicationStackView.topAnchor.constraint(equalTo: self.topAnchor),
-            dosageMedicationStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            dosageMedicationStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            dosageMedicationStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
+        dosageMedicationStackView.snp.makeConstraints { (make) in
+            make.top.leading.trailing.bottom.equalTo(self)
+        }
     }
 }

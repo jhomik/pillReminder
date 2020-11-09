@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class CustomCell: UICollectionViewCell {
     
@@ -54,13 +55,12 @@ final class CustomCell: UICollectionViewCell {
         deleteButton.backgroundColor = UIColor.backgroundColor
         deleteButton.layer.cornerRadius = deleteButton.bounds.width / 2
         
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        addSubview(deleteButton)
+        self.addSubview(deleteButton)
         
-        NSLayoutConstraint.activate([
-            deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: -topAnchorConstant),
-            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -leadingAnchorConstant)
-        ])
+        deleteButton.snp.makeConstraints { (make) in
+            make.top.equalTo(-topAnchorConstant)
+            make.leading.equalTo(-leadingAnchorConstant)
+        }
     }
     
     @objc func deleteButtonTapped() {
@@ -76,13 +76,10 @@ final class CustomCell: UICollectionViewCell {
         imageCell.image = UIImage(systemName: Images.placeholderImage)
 
         self.addSubview(imageCell)
-        imageCell.translatesAutoresizingMaskIntoConstraints = false
         
-        NSLayoutConstraint.activate([
-            imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
-            imageCell.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageCell.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
-        ])
+        imageCell.snp.makeConstraints { (make) in
+            make.top.leading.trailing.equalTo(contentView)
+        }
     }
     
     private func configureNewMedsTitle() {
@@ -95,14 +92,12 @@ final class CustomCell: UICollectionViewCell {
         newMedsTitle.numberOfLines = newMedsTitleNumberOfLinesInContent
         
         self.addSubview(newMedsTitle)
-        newMedsTitle.translatesAutoresizingMaskIntoConstraints = false
-    
-        NSLayoutConstraint.activate([
-            newMedsTitle.topAnchor.constraint(equalTo: imageCell.bottomAnchor),
-            newMedsTitle.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
-            newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            newMedsTitle.heightAnchor.constraint(equalToConstant: heightConstantConstraint)
-        ])
+        
+        newMedsTitle.snp.makeConstraints { (make) in
+            make.centerX.bottom.equalTo(contentView)
+            make.top.equalTo(imageCell.snp.bottom)
+            make.height.equalTo(heightConstantConstraint)
+        }
     }
     
     private func configureCell() {

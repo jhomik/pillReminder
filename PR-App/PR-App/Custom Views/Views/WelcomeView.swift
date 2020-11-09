@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 final class WelcomeView: UIView {
     
@@ -26,7 +27,6 @@ final class WelcomeView: UIView {
     private func configureView() {
         self.frame = bounds
         self.backgroundColor = .systemBackground
-        translatesAutoresizingMaskIntoConstraints = false
     }
     
     private func configureWelcomeView() {
@@ -34,15 +34,12 @@ final class WelcomeView: UIView {
         let heightAnchorConstant: CGFloat = 240
         
         welcomeImage.image = Images.logoImage
+        self.addSubview(welcomeImage)
         
-        addSubview(welcomeImage)
-        welcomeImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            welcomeImage.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            welcomeImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            welcomeImage.widthAnchor.constraint(equalToConstant: widthAnchorConstant),
-            welcomeImage.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
-        ])
+        welcomeImage.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(self)
+            make.height.equalTo(heightAnchorConstant)
+            make.width.equalTo(widthAnchorConstant)
+        }
     }
 }
