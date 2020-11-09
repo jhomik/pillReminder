@@ -12,20 +12,19 @@ final class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewControllers = [UserMedicationInfoNavigationController(), ReminderForMedicationNavigationController()]
+        viewControllers = [userMedicationInfoNavigationController(), reminderForMedicationNavigationController()]
         UITabBar.appearance().tintColor = UIColor.mainColor
         UINavigationBar.appearance().tintColor = UIColor.mainColor
     }
     
-    private func UserMedicationInfoNavigationController() -> UINavigationController {
+    private func userMedicationInfoNavigationController() -> UINavigationController {
         let userMedicationInfoVC = UserMedicationInfoViewController()
         userMedicationInfoVC.tabBarItem = UITabBarItem(title: Constants.medicine, image: UIImage(systemName: "eyedropper.halffull"), tag: 0)
-        
         
         return UINavigationController(rootViewController: userMedicationInfoVC)
     }
     
-    private func ReminderForMedicationNavigationController() -> UINavigationController {
+    private func reminderForMedicationNavigationController() -> UINavigationController {
         let reminderForMedication = ReminderForMedicationViewController()
         reminderForMedication.tabBarItem = UITabBarItem(title: Constants.reminder, image: UIImage(systemName: "alarm.fill"), tag: 1)
         

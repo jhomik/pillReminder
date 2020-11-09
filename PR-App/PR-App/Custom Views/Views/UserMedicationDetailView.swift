@@ -61,7 +61,7 @@ final class UserMedicationDetailView: UIView {
         updatePillNameValue(medication.pillName)
         updatePackageCapacityValue(medication.capacity)
         updatePillDoseValue(medication.dose)
-        firebaseManager.downloadImage(with: medication.cellImage, imageCell: pillImageView)
+        firebaseManager.downloadImage(with: medication.cellImage ?? "", imageCell: pillImageView)
     }
     
     func updatePillNameValue(_ value: String) {

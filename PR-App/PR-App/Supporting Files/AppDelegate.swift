@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         notificationCenter.delegate = self
         
-        notificationCenter.requestAuthorization(options: options) { (success, error) in
+        notificationCenter.requestAuthorization(options: options) { (success, _) in
             if !success {
                 print("User has declined notifications")
             }
@@ -29,30 +29,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func scheduleNotification(pillOfTheDay: pillOfTheDay, textField: UITextField, identifier: String, pillName: String, time: Date) {
+    func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData) {
         
-        let date = time
+        let date = scheduleNotoficationData.time
         let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         let content = UNMutableNotificationContent()
         
         switch pillOfTheDay {
         case .first:
-            content.body = Constants.firstPill + "\(pillName)"
-            textField.text = DateFormatter().string(from: time)
+            content.title = Constants.firstPill + "\(scheduleNotoficationData.pillName)"
+            scheduleNotoficationData.textField.text = DateFormatter().string(from: scheduleNotoficationData.time)
         case .second:
-            content.body = Constants.secondPill + "\(pillName)"
-            textField.text = DateFormatter().string(from: time)
+            content.title = Constants.secondPill + "\(scheduleNotoficationData.pillName)"
+            scheduleNotoficationData.textField.text = DateFormatter().string(from: scheduleNotoficationData.time)
         case .last:
-            content.body = Constants.thirdPill + "\(pillName)"
-            textField.text = DateFormatter().string(from: time)
+            content.title = Constants.thirdPill + "\(scheduleNotoficationData.pillName)"
+            scheduleNotoficationData.textField.text = DateFormatter().string(from: scheduleNotoficationData.time)
         }
         
-        content.title = Constants.tapNotification
+        content.body = Constants.tapNotification
         content.sound = .default
         content.badge = 1
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-        let request = UNNotificationRequest(identifier: identifier, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: scheduleNotoficationData.identifier, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
             if let error = error {
@@ -86,7 +86,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          error conditions that could cause the creation of the store to fail.
          */
         let container = NSPersistentContainer(name: "PR_App")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 // Replace this implementation with code to handle the error appropriately.
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -134,4 +134,3 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         completionHandler()
     }
 }
-

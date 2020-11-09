@@ -59,7 +59,7 @@ final class UserMedicationInfoViewController: UIViewController {
             try Auth.auth().signOut()
             self.tabBarController?.navigationController?.popViewController(animated: true)
         } catch {
-            self.showUserAlert(message: Errors.failedToSignOut + ":\(error)" , withTime: nil, completion: nil)
+            self.showUserAlert(message: Errors.failedToSignOut + ":\(error)", withTime: nil, completion: nil)
         }
     }
     
@@ -112,7 +112,7 @@ final class UserMedicationInfoViewController: UIViewController {
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
-        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader , withReuseIdentifier: CustomCollectionViewHeader.reuseID)
+        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CustomCollectionViewHeader.reuseID)
         collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: AddMedicationCell.reuseId)
         collectionView?.dataSource = self
         collectionView?.delegate = self
@@ -137,7 +137,7 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         }
         
         if medications.indices.contains(indexPath.item) == true {
-            cell.configureMedicationCell(with: medications[indexPath.item].cellImage, title: medications[indexPath.item].pillName)
+            cell.configureMedicationCell(with: medications[indexPath.item].cellImage ?? "", title: medications[indexPath.item].pillName)
             return cell
         } else {
             let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
@@ -177,4 +177,3 @@ extension UserMedicationInfoViewController: NewMedicationCellDelegate {
         }, completion: nil)
     }
 }
-

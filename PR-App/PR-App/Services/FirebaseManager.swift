@@ -29,7 +29,7 @@ final class FirebaseManager {
                 guard let child = child as? DataSnapshot, let dict = child.value as? [String: AnyObject] else {
                     return nil
                 }
-                return UserMedicationDetailModel(id: child.key, dictionary: dict)
+                return UserMedicationDetailModel(userIdentifier: child.key, dictionary: dict)
             }
             completion(models)
         }
@@ -37,25 +37,25 @@ final class FirebaseManager {
     
     // MARK: Update medication data in Firebase DB
     
-    func updateMedicationInfo(pillName: String?, capacity: String?, dose: String?, cellImageURL: String?, childId: String) {
+    func updateMedicationInfo(cellImage: String?, medicationDetail: UserMedicationDetailModel?) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]
         
-        if let pillName = pillName {
+        if let pillName = medicationDetail?.pillName {
             values["pillName"] = pillName as AnyObject
         }
-        if let capacity = capacity {
+        if let capacity = medicationDetail?.capacity {
             values["capacity"] = capacity as AnyObject
         }
-        if let dose = dose {
+        if let dose = medicationDetail?.dose {
             values["dose"] = dose as AnyObject
         }
-        if let cellImage = cellImageURL {
+        if let cellImage = cellImage {
             values["cellImage"] = cellImage as AnyObject
         }
         
-        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(childId).updateChildValues(values)
+        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(medicationDetail?.userIdentifier ?? "").updateChildValues(values)
     }
     
     // MARK: Saving and downloading image to storage
@@ -77,11 +77,11 @@ final class FirebaseManager {
         }
     }
     
-    //MARK: Removing Medication from Firebase DB
+    // MARK: Removing Medication from Firebase DB
     
     func removeDataFromFirebase(model: UserMedicationDetailModel) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(model.id).removeValue { (error, data) in
+        guard let uid = Auth.auth().currentUser?.uid, let userIdentifier = model.userIdentifier else { return }
+        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(userIdentifier).removeValue { (error, data) in
             if let error = error {
                 print(error.localizedDescription)
             } else {
@@ -89,7 +89,7 @@ final class FirebaseManager {
             }
         }
 
-        let url = model.cellImage
+        guard let url = model.cellImage else { return }
         let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
         storageRef.delete { (error) in
             if let error = error {
@@ -113,7 +113,7 @@ final class FirebaseManager {
         
         guard let url = URL(string: urlString) else { return }
         
-        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
+        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
             DispatchQueue.main.async {
                 if let data = data, let image = UIImage(data: data) {
                     self?.userDefaults.set(image.jpegData(compressionQuality: 0), forKey: urlString)
@@ -127,30 +127,30 @@ final class FirebaseManager {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(pillName: String?, capacity: String?, dose: String?, cellImage: String?, frequency: String?, howManyTimesPerDay: String?, dosage: String?) -> UserMedicationDetailModel? {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?) -> UserMedicationDetailModel? {
         guard let uid = Auth.auth().currentUser?.uid else { return nil }
         
         var values: [String: AnyObject] = [:]
         
-        if let pillName = pillName {
+        if let pillName = medicationDetail?.pillName {
             values["pillName"] = pillName as AnyObject
         }
-        if let capacity = capacity {
+        if let capacity = medicationDetail?.capacity {
             values["capacity"] = capacity as AnyObject
         }
-        if let dose = dose {
+        if let dose = medicationDetail?.dose {
             values["dose"] = dose as AnyObject
         }
         if let cellImage = cellImage {
             values["cellImage"] = cellImage as AnyObject
         }
-        if let frequency = frequency {
+        if let frequency = medicationDetail?.frequency {
             values["frequency"] = frequency as AnyObject
         }
-        if let howManyTimesPerDay = howManyTimesPerDay {
+        if let howManyTimesPerDay = medicationDetail?.howManyTimesPerDay {
             values["howManyTimesPerDay"] = howManyTimesPerDay as AnyObject
         }
-        if let dosage = dosage {
+        if let dosage = medicationDetail?.dosage {
             values["dosage"] = dosage as AnyObject
         }
         
@@ -158,7 +158,7 @@ final class FirebaseManager {
         
         child.setValue(values)
         
-        return UserMedicationDetailModel(id: child.key ?? "", dictionary: values)
+        return UserMedicationDetailModel(userIdentifier: child.key ?? "", dictionary: values)
     }
     
     // MARK: Observing Username
@@ -166,8 +166,7 @@ final class FirebaseManager {
     func setUserName(completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = auth.currentUser?.uid else { return }
         
-        refDatabase.child(Constants.users).child(uid).child(Constants.user).child(Constants.username).observeSingleEvent(of: .value) {
-            snapshot in
+        refDatabase.child(Constants.users).child(uid).child(Constants.user).child(Constants.username).observeSingleEvent(of: .value) { snapshot in
             guard let username = snapshot.value as? String else {
                 completion(.failure(NSError(domain: "UserName not received", code: 0)))
                 return
@@ -230,4 +229,3 @@ final class FirebaseManager {
         }
     }
 }
-

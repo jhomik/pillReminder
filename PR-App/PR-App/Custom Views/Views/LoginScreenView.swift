@@ -143,7 +143,7 @@ final class LoginScreenView: UIView {
         NSLayoutConstraint.activate([
             stackViewLoginData.leadingAnchor.constraint(equalTo: segmentedController.leadingAnchor),
             stackViewLoginData.trailingAnchor.constraint(equalTo: segmentedController.trailingAnchor),
-            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: topAnchorConstant),
+            stackViewLoginData.topAnchor.constraint(equalTo: segmentedController.bottomAnchor, constant: topAnchorConstant)
         ])
     }
     
@@ -188,7 +188,7 @@ final class LoginScreenView: UIView {
             forgotPasswordButton.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
             forgotPasswordButton.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             forgotPasswordButton.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
+            forgotPasswordButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
     
@@ -239,7 +239,7 @@ extension LoginScreenView: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == userNameTextField {
             emailTextField.becomeFirstResponder()
-        } else if textField == emailTextField{
+        } else if textField == emailTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
             if isSignUp {

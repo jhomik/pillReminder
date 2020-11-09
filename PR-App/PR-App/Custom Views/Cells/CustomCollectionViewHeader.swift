@@ -33,7 +33,7 @@ final class CustomCollectionViewHeader: UICollectionReusableView {
             imageLogo.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             imageLogo.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             imageLogo.widthAnchor.constraint(equalToConstant: frame.width / multiplierWidthAndHeightConstant),
-            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / multiplierWidthAndHeightConstant),
+            imageLogo.heightAnchor.constraint(equalToConstant: frame.height / multiplierWidthAndHeightConstant)
         ])
     }
 }

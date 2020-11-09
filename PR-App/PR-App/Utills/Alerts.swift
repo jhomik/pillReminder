@@ -19,5 +19,3 @@ struct Alerts {
     static let photoLibrary = NSLocalizedString("photoLibrary", comment: "")
     static let cancel = NSLocalizedString("cancel", comment: "")
 }
-
-

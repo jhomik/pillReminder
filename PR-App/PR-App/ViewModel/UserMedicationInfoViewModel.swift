@@ -13,7 +13,7 @@ final class UserMedicationInfoViewModel {
     private let firebaseManager = FirebaseManager()
 
     func setUserName(completion: @escaping (String) -> Void) {
-        firebaseManager.setUserName() { result in
+        firebaseManager.setUserName { result in
             switch result {
             case .success(let userName):
                 completion(userName)
@@ -32,4 +32,3 @@ final class UserMedicationInfoViewModel {
         firebaseManager.removeDataFromFirebase(model: model)
     }
 }
-

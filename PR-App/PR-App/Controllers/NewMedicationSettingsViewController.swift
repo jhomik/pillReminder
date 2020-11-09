@@ -9,6 +9,10 @@
 import UIKit
 import UserNotifications
 
+protocol ScheduleNotoficationDelegate: AnyObject {
+    func setSchedule()
+}
+
 final class NewMedicationSettingsViewController: UIViewController {
     
     private let newMedicationView = NewMedicationSettingsView()
@@ -17,7 +21,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     private let tableView = UITableView()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
-    
+    weak var delegate: ScheduleNotoficationDelegate?
     
     init(viewModel: NewMedicationViewModel) {
         self.viewModel = viewModel
@@ -90,23 +94,22 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func saveSettings() {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        
+        let medicationToSave = UserMedicationDetailModel(medicationToSave: newMedicationView)
         
         view.endEditing(true)
-        guard let name = self.newMedicationView.nameTextField.text, let capacity = self.newMedicationView.capacityTextField.text, let dose = self.newMedicationView.doseTextField.text, let frequency = self.newMedicationView.frequencyTextField.text, let howManyTimesPerDay = self.newMedicationView.howManyTimesTextField.text, let dosage = self.newMedicationView.dosageTextField.text else { return }
         
-        if name.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty {
-            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField,newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField)
+        if medicationToSave.anyEmpty {
+            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView)
-            viewModel.saveNewMedicationToFirebase(data: imageData, pillName: name, capacity: capacity, dose: dose, frequency: frequency, howManyTimesPerDay: howManyTimesPerDay, dosage: dosage) {
+            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
-                appDelegate?.scheduleNotification(pillOfTheDay: .first, textField: self.newMedicationView.whatTimeOnceADayTextField, identifier: Constants.onceADayNotificationIdentifier, pillName: name, time: self.newMedicationView.onceADayDatePickerView.date)
-                appDelegate?.scheduleNotification(pillOfTheDay: .second, textField: self.newMedicationView.whatTimeTwiceADayTextField, identifier: Constants.twiceADayNotificationIdentifier, pillName: name, time: self.newMedicationView.twiceADayDatePickerView.date)
-                appDelegate?.scheduleNotification(pillOfTheDay: .last, textField: self.newMedicationView.whatTimeThreeTimesADayTextField, identifier: Constants.threeTimesADayNotificationIdentifier, pillName: name, time: self.newMedicationView.threeTimesADayDatePickerView.date)
+                
+                self.newMedicationView.setSchedule()
             }
             
             UserDefaults.standard.removeObject(forKey: "frequencyRow")
@@ -121,7 +124,7 @@ final class NewMedicationSettingsViewController: UIViewController {
         imagePicker.delegate = self
         let actionSheet = UIAlertController(title: Alerts.photoSource, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (_) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
@@ -129,7 +132,7 @@ final class NewMedicationSettingsViewController: UIViewController {
                 self.showUserAlert(message: Errors.cameraNotAvailable, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (_) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
@@ -154,7 +157,7 @@ final class NewMedicationSettingsViewController: UIViewController {
 
 extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let compressionQualityValue: CGFloat = 0.1
         
         guard let image = info[.originalImage] as? UIImage else { return }

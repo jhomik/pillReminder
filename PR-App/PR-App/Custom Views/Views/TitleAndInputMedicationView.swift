@@ -36,7 +36,7 @@ final class TitleAndInputMedicationView: UIView {
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor)
         ])
     }
     

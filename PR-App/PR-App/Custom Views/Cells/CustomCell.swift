@@ -59,7 +59,7 @@ final class CustomCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             deleteButton.topAnchor.constraint(equalTo: self.topAnchor, constant: -topAnchorConstant),
-            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -leadingAnchorConstant),
+            deleteButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: -leadingAnchorConstant)
         ])
     }
     
@@ -81,7 +81,7 @@ final class CustomCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             imageCell.topAnchor.constraint(equalTo: contentView.topAnchor),
             imageCell.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
-            imageCell.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+            imageCell.trailingAnchor.constraint(equalTo: contentView.trailingAnchor)
         ])
     }
     
@@ -101,7 +101,7 @@ final class CustomCell: UICollectionViewCell {
             newMedsTitle.topAnchor.constraint(equalTo: imageCell.bottomAnchor),
             newMedsTitle.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
             newMedsTitle.bottomAnchor.constraint(equalTo: contentView.bottomAnchor),
-            newMedsTitle.heightAnchor.constraint(equalToConstant: heightConstantConstraint),
+            newMedsTitle.heightAnchor.constraint(equalToConstant: heightConstantConstraint)
         ])
     }
     

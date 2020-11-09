@@ -84,7 +84,7 @@ final class UserMedicationDetailViewController: UIViewController {
             editButton.leadingAnchor.constraint(equalTo: dosageMedicationView.leadingAnchor),
             editButton.trailingAnchor.constraint(equalTo: dosageMedicationView.trailingAnchor),
             editButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -bottomAnchorConstant),
-            editButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant),
+            editButton.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
         ])
     }
     

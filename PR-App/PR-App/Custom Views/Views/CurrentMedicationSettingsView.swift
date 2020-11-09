@@ -16,7 +16,7 @@ final class CurrentMedicationSettingsView: UIView {
     
     private(set) var changeMedicationLbl = PillReminderMainCustomLabel(text: Constants.changeMedications, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
-    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText:  Constants.placeHolderCapacityMedication, isPassword: false)
+    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     
     private(set) var frequencyTextField = PillReminderProgramCustomTextFields(placeholderText: "Select frequency")
@@ -74,7 +74,7 @@ final class CurrentMedicationSettingsView: UIView {
         frequencyTextField.text = medication.frequency
         howManyTimesTextField.text = medication.howManyTimesPerDay
         dosageTextField.text = medication.dosage
-        firebaseManager.downloadImage(with: medication.cellImage, imageCell: medicationImageView)
+        firebaseManager.downloadImage(with: medication.cellImage ?? "", imageCell: medicationImageView)
     }
     
     private func configureScrollView() {
@@ -98,7 +98,7 @@ final class CurrentMedicationSettingsView: UIView {
         scrollView.addSubview(changeMedicationLbl)
         
         NSLayoutConstraint.activate([
-            changeMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor,constant: topAnchorConstant),
+            changeMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
             changeMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             changeMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             changeMedicationLbl.heightAnchor.constraint(equalToConstant: heightAnchorConstant)

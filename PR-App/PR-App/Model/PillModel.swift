@@ -16,9 +16,8 @@ struct PillModel {
     let sections = ["Frequency", "How many times per day?", "What time?", "Dosage"]
 }
 
-enum pillOfTheDay {
+enum PillOfTheDay {
     case first
     case second
     case last
 }
-

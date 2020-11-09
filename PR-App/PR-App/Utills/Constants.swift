@@ -49,5 +49,3 @@ struct Constants {
     static let thirdPill = NSLocalizedString("thirdPill", comment: "")
     static let tapNotification = NSLocalizedString("tapNotification", comment: "")
 }
-
-

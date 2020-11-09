@@ -23,7 +23,7 @@ extension UIView {
     func performAnimationsFadeOut(view: UIImageView) {
         UIView.animate(withDuration: 1.5, delay: 0, options: .curveEaseOut, animations: {
             view.alpha = 0.0
-        }) { (finished) in
+        }) { _ in
             UIView.transition(with: self, duration: 2, options: .transitionCrossDissolve, animations: {
                 self.alpha = 0.0
             }, completion: nil)

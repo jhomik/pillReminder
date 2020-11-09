@@ -8,11 +8,18 @@
 
 import UIKit
 
-class NewMedicationSettingsView: UIView {
+struct ScheduleNotoficationData {
+    var textField: UITextField
+    var identifier: String
+    let pillName: String
+    let time: Date
+}
+
+final class NewMedicationSettingsView: UIView {
     
     private(set) var addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
-    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText:  Constants.placeHolderCapacityMedication, isPassword: false)
+    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
     private(set) var frequencyTextField = PillReminderProgramCustomTextFields(placeholderText: "Select frequency")
     private(set) var howManyTimesTextField = PillReminderProgramCustomTextFields(placeholderText: "How many times per day?")
@@ -20,7 +27,6 @@ class NewMedicationSettingsView: UIView {
     private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
     private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
     private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: "Choose dosage")
-    
     private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: "Frequency")
     private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: "How many times per day?")
     private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: "What time?")
@@ -36,14 +42,13 @@ class NewMedicationSettingsView: UIView {
     var medicationImage = UIImageView()
     weak var delegate: UserMedicationDetailDelegate?
     
-    var medicationsToChange: UserMedicationDetailModel?
-    
     var activeTextField: UITextField?
     private let pickerView = UIPickerView()
     let onceADayDatePickerView = UIDatePicker()
     let twiceADayDatePickerView = UIDatePicker()
     let threeTimesADayDatePickerView = UIDatePicker()
     private let userDefaults = UserDefaults.standard
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,7 +91,7 @@ class NewMedicationSettingsView: UIView {
         scrollView.addSubview(addMedicationLbl)
         
         NSLayoutConstraint.activate([
-            addMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor,constant: topAnchorConstant),
+            addMedicationLbl.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: topAnchorConstant),
             addMedicationLbl.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             addMedicationLbl.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             addMedicationLbl.heightAnchor.constraint(equalToConstant: heightAnchorConstant)
@@ -157,7 +162,7 @@ class NewMedicationSettingsView: UIView {
         doseTextField.delegate = self
         capacityTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
         doseTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
-
+        
         scrollView.addSubview(newMedicationStackView)
         newMedicationStackView.translatesAutoresizingMaskIntoConstraints = false
         
@@ -208,7 +213,7 @@ class NewMedicationSettingsView: UIView {
         whatTimeTwiceADayTextField.delegate = self
         whatTimeThreeTimesADayTextField.delegate = self
         dosageTextField.delegate = self
-   
+        
         whatTimeTwiceADayTextField.isHidden = true
         whatTimeThreeTimesADayTextField.isHidden = true
         
@@ -231,7 +236,7 @@ class NewMedicationSettingsView: UIView {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
-
+        
         pickerView.delegate = self
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
@@ -279,7 +284,7 @@ class NewMedicationSettingsView: UIView {
         if #available(iOS 13.4, *) {
             datePickerView.preferredDatePickerStyle = .wheels
         }
-    
+        
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -306,13 +311,28 @@ class NewMedicationSettingsView: UIView {
         self.endEditing(true)
         
     }
+    
+    private func configureFirstDaySchedule() {
+        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, identifier: Constants.onceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill)
+    }
+    
+    private func configureSecondDaySchedule() {
+        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, identifier: Constants.twiceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill)
+    }
+    
+    private func configureThirdDaySchedule() {
+        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, identifier: Constants.threeTimesADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill)
+    }
 }
 
 extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSource {
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            return 1
-        }
+        return 1
+    }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if activeTextField == frequencyTextField {
@@ -323,7 +343,7 @@ extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSourc
             return pillModel.dosage.count
         }
     }
-
+    
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if activeTextField == frequencyTextField {
             return pillModel.frequency[row]
@@ -356,6 +376,7 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
             createPickerView(withTextField: textField, readUserDefault: "frequencyRow")
         } else if textField == howManyTimesTextField {
             createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
+            print(textField)
         } else if textField == whatTimeOnceADayTextField {
             createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
         } else if textField == whatTimeTwiceADayTextField {
@@ -369,5 +390,20 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+}
+
+extension NewMedicationSettingsView {
+    func setSchedule() {
+        if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
+            configureFirstDaySchedule()
+            configureSecondDaySchedule()
+            configureThirdDaySchedule()
+        } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
+            configureFirstDaySchedule()
+            configureSecondDaySchedule()
+        } else {
+            configureFirstDaySchedule()
+        }
     }
 }

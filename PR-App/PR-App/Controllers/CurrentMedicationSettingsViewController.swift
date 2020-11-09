@@ -73,11 +73,11 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             meds.capacity = capacity
             meds.dose = dose
             delegate?.passMedication(medication: meds)
-            viewModel.updateMedicationInfo(data: imageData, pillName: name, capacity: capacity, dose: dose, childId: meds.id) {
-                self.dismissLoadingSpinner(with: self.containerView)
-                self.updateTextFieldsToChange()
-                self.dismiss(animated: true, completion: nil)
-            }
+//            viewModel.updateMedicationInfo(data: imageData, pillName: name, capacity: capacity, dose: dose, childId: meds.userIdentifier) {
+//                self.dismissLoadingSpinner(with: self.containerView)
+//                self.updateTextFieldsToChange()
+//                self.dismiss(animated: true, completion: nil)
+//            }
         }
     }
     
@@ -86,7 +86,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         imagePicker.delegate = self
         let actionSheet = UIAlertController(title: Alerts.photoSource, message: nil, preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.camera, style: .default, handler: { (_) in
             if UIImagePickerController.isSourceTypeAvailable(.camera) {
                 imagePicker.sourceType = .camera
                 self.present(imagePicker, animated: true, completion: nil)
@@ -94,7 +94,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
                 self.showUserAlert(message: Errors.cameraNotAvailable, withTime: nil, completion: nil)
             }
         }))
-        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (action) in
+        actionSheet.addAction(UIAlertAction(title: Alerts.photoLibrary, style: .default, handler: { (_) in
             imagePicker.sourceType = .photoLibrary
             self.present(imagePicker, animated: true, completion: nil)
         }))
@@ -119,7 +119,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
 
 extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         let compressionQualityValue: CGFloat = 0.1
         
         let image = info[.originalImage] as? UIImage

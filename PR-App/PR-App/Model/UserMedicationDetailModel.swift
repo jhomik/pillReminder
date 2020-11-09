@@ -9,17 +9,21 @@
 import Foundation
 
 struct UserMedicationDetailModel {
-    var id: String
+    var userIdentifier: String?
     var pillName: String
     var capacity: String
     var dose: String
-    var cellImage: String
+    var cellImage: String?
     var frequency: String
     var howManyTimesPerDay: String
     var dosage: String
     
-    init(id: String, dictionary: [String: AnyObject]) {
-        self.id = id
+    var anyEmpty: Bool {
+        return pillName.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty
+    }
+    
+    init(userIdentifier: String, dictionary: [String: AnyObject]) {
+        self.userIdentifier = userIdentifier
         self.pillName = dictionary["pillName"] as? String ?? ""
         self.capacity = dictionary["capacity"] as? String ?? ""
         self.dose = dictionary["dose"] as? String ?? ""
@@ -27,5 +31,14 @@ struct UserMedicationDetailModel {
         self.frequency = dictionary["frequency"] as? String ?? ""
         self.howManyTimesPerDay = dictionary["howManyTimesPerDay"] as? String ?? ""
         self.dosage = dictionary["dosage"] as? String ?? ""
+    }
+    
+    init(medicationToSave: NewMedicationSettingsView?) {
+        self.pillName = medicationToSave?.nameTextField.text ?? ""
+        self.capacity = medicationToSave?.capacityTextField.text ?? ""
+        self.dose = medicationToSave?.doseTextField.text ?? ""
+        self.frequency = medicationToSave?.frequencyTextField.text ?? ""
+        self.howManyTimesPerDay = medicationToSave?.howManyTimesTextField.text ?? ""
+        self.dosage = medicationToSave?.dosageTextField.text ?? ""
     }
 }

@@ -50,7 +50,7 @@ final class LoginScreenViewController: UIViewController {
             welcomeView.topAnchor.constraint(equalTo: view.topAnchor),
             welcomeView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             welcomeView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            welcomeView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            welcomeView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
     
@@ -72,8 +72,8 @@ final class LoginScreenViewController: UIViewController {
 
 extension LoginScreenViewController: LoginScreenPresentUserMedicationInfoVC {
     func userMedicationInfoViewController() {
-        let vc = TabBarController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let tabBarController = TabBarController()
+        self.navigationController?.pushViewController(tabBarController, animated: true)
     }
 }
 
@@ -105,5 +105,3 @@ extension LoginScreenViewController: LoginScreenAlertDelegate {
         self.showUserAlert(message: message, withTime: nil, completion: completion)
     }
 }
-
-

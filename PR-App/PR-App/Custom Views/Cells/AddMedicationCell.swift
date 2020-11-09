@@ -85,4 +85,3 @@ final class AddMedicationCell: UICollectionViewCell {
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
     }
 }
-
