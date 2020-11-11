@@ -32,7 +32,8 @@ final class NewMedicationSettingsView: UIView {
     private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: "How many times per day?")
     private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: "What time?")
     private(set) var dosageLabel = PillReminderProgramCustomLabel(text: "Dosage")
-    private let capacityLabel = PillReminderMainCustomLabel(text: "pills", alignment: .left, size: 12, weight: .light, color: .secondarySystemFill)
+    private let capacityLabel = PillReminderMainCustomLabel(text: "pills", alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private let doseLabel = PillReminderMainCustomLabel(text: "mg", alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
     private let pillModel = PillModel()
     private let newMedicationStackView = UIStackView()
     private let programMedicationStackView = UIStackView()
@@ -47,6 +48,8 @@ final class NewMedicationSettingsView: UIView {
     let threeTimesADayDatePickerView = UIDatePicker()
     private let userDefaults = UserDefaults.standard
     private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+    private var capacityLeadingConstraint: Constraint?
+    private var doseLeadingConstraint: Constraint?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,6 +59,7 @@ final class NewMedicationSettingsView: UIView {
         configureMedicationImage()
         configureNewMedicationStackView()
         configureCapacityLabel()
+        configureDoseLabel()
         configureProgramMedicationStackView()
     }
     
@@ -164,9 +168,23 @@ final class NewMedicationSettingsView: UIView {
     
     private func configureCapacityLabel() {
         capacityTextField.addSubview(capacityLabel)
+        capacityLabel.font = UIFont.italicSystemFont(ofSize: 16)
+        capacityLabel.isHidden = true
         
         capacityLabel.snp.makeConstraints { (make) in
-            make.centerX.centerY.width.height.equalTo(self)
+            make.top.trailing.bottom.equalTo(capacityTextField)
+            self.capacityLeadingConstraint = make.leading.equalTo(capacityTextField).constraint
+        }
+    }
+    
+    private func configureDoseLabel() {
+        doseTextField.addSubview(doseLabel)
+        doseLabel.font = UIFont.italicSystemFont(ofSize: 16)
+        doseLabel.isHidden = true
+        
+        doseLabel.snp.makeConstraints { (make) in
+            make.top.trailing.bottom.equalTo(doseTextField)
+            self.doseLeadingConstraint = make.leading.equalTo(doseTextField).constraint
         }
     }
     
@@ -331,13 +349,61 @@ extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSourc
 
 extension NewMedicationSettingsView: UITextFieldDelegate {
     
+    func getWidth(text: String?) -> CGFloat {
+        let textField = UITextField(frame: .zero)
+        textField.text = text
+        textField.sizeToFit()
+        return textField.frame.size.width
+    }
+    
+    func capacityText(forContent text: String?) -> String {
+        guard let text = text, let amount = Int(text) else { return "" }
+        if amount <= 1 {
+            return "pill"
+        } else {
+            return "pills"
+        }
+    }
+    
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        
+        if textField == capacityTextField {
+            capacityLabel.text = capacityText(forContent: textField.text)
+            let capacityWidth = getWidth(text: textField.text)
+            capacityLeadingConstraint?.update(offset: capacityWidth + 5)
+            capacityLabel.layoutIfNeeded()
+        } else if textField == doseTextField {
+            let doseWidth = getWidth(text: textField.text)
+            doseLeadingConstraint?.update(offset: doseWidth + 5)
+            doseLabel.layoutIfNeeded()
+        }
+        
+        guard let capacity = capacityTextField.text, let dose = doseTextField.text else { return }
+        
+        if !capacity.isEmpty {
+            capacityLabel.isHidden = false
+        } else {
+            capacityLabel.isHidden = true
+        }
+        
+        if !dose.isEmpty {
+            doseLabel.isHidden = false
+        } else {
+            doseLabel.isHidden = true
+        }
+    }
+    
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return true }
+        
+        let newLength = text.count + string.count - range.length
         let invalidCharactersIn = CharacterSet(charactersIn: "0123456789").inverted
         
-        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil)
+        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 4
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
+        
         if textField == capacityTextField || textField == doseTextField {
             scrollView.isScrollEnabled = false
         } else {
