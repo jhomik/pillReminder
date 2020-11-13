@@ -100,7 +100,7 @@ final class NewMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         
         if medicationToSave.anyEmpty {
-            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField)
+            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.whatTimeOnceADayTextField, newMedicationView.whatTimeTwiceADayTextField, newMedicationView.whatTimeThreeTimesADayTextField, newMedicationView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
@@ -161,9 +161,12 @@ extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, 
         
         guard let image = info[.originalImage] as? UIImage else { return }
         newMedicationView.medicationImage.image = image
+        print("image: \(image)")
         
         if let uploadData = image.jpegData(compressionQuality: compressionQualityValue) {
             imageData = uploadData
+        } else if imageData.isEmpty {
+            newMedicationView.medicationImage.image = UIImage(systemName: "pill")
         }
         
         picker.dismiss(animated: true, completion: nil)

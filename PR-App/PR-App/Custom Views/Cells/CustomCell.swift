@@ -13,6 +13,7 @@ final class CustomCell: UICollectionViewCell {
     
     static let reuseId = "CustomCell"
     var imageCell = UIImageView()
+    var placeholderImage = UIImageView()
     var newMedsTitle = UILabel()
     var deleteButton = UIButton()
     private let firebaseManager = FirebaseManager()
@@ -22,6 +23,7 @@ final class CustomCell: UICollectionViewCell {
         super.init(frame: frame)
         configureCell()
         configureImageCell()
+        configurePlaceholderImageCell()
         configureNewMedsTitle()
         configureDeleteButton()
     }
@@ -35,11 +37,14 @@ final class CustomCell: UICollectionViewCell {
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
-//        self.layer.masksToBounds = true
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
-        firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
+        if urlImageString.isEmpty {
+            placeholderImage.image = Images.placeholderImage
+        } else {
+            firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
+        }
         newMedsTitle.text = title
     }
     
@@ -73,12 +78,30 @@ final class CustomCell: UICollectionViewCell {
         imageCell.clipsToBounds = true
         imageCell.layer.cornerRadius = imageCellCornerRadius
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        imageCell.image = UIImage(systemName: Images.placeholderImage)
+        imageCell.contentMode = .scaleAspectFill
 
         self.addSubview(imageCell)
         
         imageCell.snp.makeConstraints { (make) in
             make.top.leading.trailing.equalTo(contentView)
+        }
+    }
+    
+    private func configurePlaceholderImageCell() {
+        let imageCellCornerRadius: CGFloat = 20
+        
+        placeholderImage.clipsToBounds = true
+        placeholderImage.layer.cornerRadius = imageCellCornerRadius
+        placeholderImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        placeholderImage.contentMode = .scaleAspectFill
+        placeholderImage.alpha = 0.3
+        
+        self.addSubview(placeholderImage)
+        
+        placeholderImage.snp.makeConstraints { (make) in
+            make.top.leading.equalTo(30)
+            make.trailing.equalTo(-30)
+            make.bottom.equalTo(-50)
         }
     }
     

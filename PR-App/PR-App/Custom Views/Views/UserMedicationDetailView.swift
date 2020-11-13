@@ -84,7 +84,7 @@ final class UserMedicationDetailView: UIView {
         pillImageView.layer.masksToBounds = true
         pillImageView.layer.cornerRadius = pillImageCornerRadius
         
-        addSubview(pillImageView)
+        self.addSubview(pillImageView)
         
         pillImageView.snp.makeConstraints { (make) in
             make.top.bottom.leading.equalTo(self)

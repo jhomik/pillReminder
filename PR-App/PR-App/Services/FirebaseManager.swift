@@ -60,20 +60,25 @@ final class FirebaseManager {
     
     // MARK: Saving and downloading image to storage
     
-    func saveImageToStorage(cellImage: Data, completion: @escaping(Result<String, Error>) -> Void) {
-        guard let uid = Auth.auth().currentUser?.uid else { return }
-        refStorage.child(uid).child(imageName).putData(cellImage, metadata: nil) { (_, error) in
-            guard error == nil else {
-                completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))
-                return
+    func saveImageToStorage(cellImage: Data?, completion: @escaping(Result<String, Error>) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid, let data = cellImage else { return }
+        
+        if !data.isEmpty {
+            refStorage.child(uid).child(imageName).putData(data, metadata: nil) { (_, error) in
+                guard error == nil else {
+                    completion(.failure(NSError(domain: "Saving image to storage failed", code: 0)))
+                    return
+                }
+                
+                self.refStorage.child(uid).child(self.imageName).downloadURL { (url, error) in
+                    guard let url = url, error == nil else { return }
+                    let urlString = url.absoluteString
+                    completion(.success(urlString))
+                    print("URL downloaded: \(urlString)")
+                }
             }
-            
-            self.refStorage.child(uid).child(self.imageName).downloadURL { (url, error) in
-                guard let url = url, error == nil else { return }
-                let urlString = url.absoluteString
-                completion(.success(urlString))
-                print("URL downloaded: \(urlString)")
-            }
+        } else {
+            print("no image to save")
         }
     }
     
@@ -88,41 +93,48 @@ final class FirebaseManager {
                 print(data)
             }
         }
-
+        
         guard let url = model.cellImage else { return }
-        let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
-        storageRef.delete { (error) in
-            if let error = error {
-                print("image not deleted:" + error.localizedDescription)
-            } else {
-                print("File successfully deleted!")
+        if !url.isEmpty {
+            let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
+            storageRef.delete { (error) in
+                if let error = error {
+                    print("image not deleted:" + error.localizedDescription)
+                } else {
+                    print("File successfully deleted!")
+                }
             }
+        } else {
+            print("no URL image in Firebase")
         }
     }
-   
+    
     // MARK: Downloading image or retrive from UserDefaults Data
     
     func downloadImage(with urlString: String, imageCell: UIImageView) {
-        
-        if let data = self.userDefaults.data(forKey: urlString), let image = UIImage(data: data) {
-            imageCell.image = image
-            print("got this image from UserDefaults")
-            print(userDefaults)
-            return
-        }
-        
-        guard let url = URL(string: urlString) else { return }
-        
-        let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
-            DispatchQueue.main.async {
-                if let data = data, let image = UIImage(data: data) {
-                    self?.userDefaults.set(image.jpegData(compressionQuality: 0), forKey: urlString)
-                    imageCell.image = image
-                    print("got this from firebase")
+        if !urlString.isEmpty {
+            if let data = self.userDefaults.data(forKey: urlString), let image = UIImage(data: data) {
+                imageCell.image = image
+                print("got this image from UserDefaults")
+                print(userDefaults)
+                return
+            }
+            
+            guard let url = URL(string: urlString) else { return }
+            
+            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
+                DispatchQueue.main.async {
+                    if let data = data, let image = UIImage(data: data) {
+                        self?.userDefaults.set(image.jpegData(compressionQuality: 0), forKey: urlString)
+                        imageCell.image = image
+                        print("got this from firebase")
+                    }
                 }
             }
+            task.resume()
+        } else {
+            print("no image to download")
         }
-        task.resume()
     }
     
     // MARK: Saving Medication to Firebase DB

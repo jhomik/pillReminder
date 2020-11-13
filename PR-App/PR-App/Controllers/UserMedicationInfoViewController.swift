@@ -137,7 +137,10 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         }
         
         if medications.indices.contains(indexPath.item) == true {
-            cell.configureMedicationCell(with: medications[indexPath.item].cellImage ?? "", title: medications[indexPath.item].pillName)
+            guard let urlImage = medications[indexPath.item].cellImage else { return cell }
+            let title = medications[indexPath.item].pillName
+            
+            cell.configureMedicationCell(with: urlImage, title: title)
             return cell
         } else {
             let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
@@ -162,8 +165,8 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         } else {
             let viewModel = NewMedicationViewModel()
             viewModel.addCellDelegate = self
-            let newMedicationVC = NewMedicationSettingsViewController(viewModel: viewModel)
-            present(UINavigationController(rootViewController: newMedicationVC), animated: true, completion: nil)
+            let newMedicationVC = UINavigationController(rootViewController: NewMedicationSettingsViewController(viewModel: viewModel))
+            present(newMedicationVC, animated: true, completion: nil)
         }
     }
 }

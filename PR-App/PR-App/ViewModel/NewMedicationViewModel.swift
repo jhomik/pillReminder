@@ -19,18 +19,26 @@ final class NewMedicationViewModel {
     weak var addCellDelegate: NewMedicationCellDelegate?
     
     func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping () -> Void) {
-        firebaseManager.saveImageToStorage(cellImage: data) { (result) in
-            switch result {
-            case .failure(let error):
-                print(error.localizedDescription)
-            case .success(let url):
-                guard let model = self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail) else {
+        if !data.isEmpty {
+            print("full data: \(data)")
+            firebaseManager.saveImageToStorage(cellImage: data) { (result) in
+                switch result {
+                case .failure(let error):
+                    print(error.localizedDescription)
+                case .success(let url):
+                    guard let model = self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail) else {
+                        completion()
+                        return
+                    }
+                    self.addCellDelegate?.addNewMedicationCell(model)
                     completion()
-                    return
                 }
-                self.addCellDelegate?.addNewMedicationCell(model)
-                completion()
             }
+        } else {
+            print("empty data: \(data)")
+            guard let model = self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail) else { return }
+            completion()
+            self.addCellDelegate?.addNewMedicationCell(model)
         }
     }
 }

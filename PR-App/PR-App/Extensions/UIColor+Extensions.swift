@@ -35,7 +35,8 @@ extension UIColor {
     }
     
     static var mainColor: UIColor {
-        return UIColor(displayP3Red: 21/255, green: 236/255, blue: 202/255, alpha: 1)
+        let extractedExpr = UIColor(displayP3Red: 21/255, green: 236/255, blue: 202/255, alpha: 1)
+        return extractedExpr
     }
     
     static var backgroundColorTapToChangeLabel = UIColor { (traitCollection: UITraitCollection) -> UIColor in
