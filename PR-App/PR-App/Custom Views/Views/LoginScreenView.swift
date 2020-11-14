@@ -69,13 +69,14 @@ final class LoginScreenView: UIView {
     }
     
     private func configureLogoImage() {
-        let heightAnchorMulitplier: CGFloat = 0.36
-        let widthAnchorMultiplier: CGFloat = 0.8
+        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.42 : 0.36
+        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE ? 0.82 : 0.8
         let topAnchorConstant: CGFloat = 20
+        
         scrollView.addSubview(logoImage)
         
         logoImage.snp.makeConstraints { (make) in
-            make.height.equalTo(self).multipliedBy(heightAnchorMulitplier)
+            make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
             make.top.equalTo(scrollView.snp.top).offset(topAnchorConstant)
             make.centerX.equalTo(scrollView.snp.centerX)
@@ -139,7 +140,7 @@ final class LoginScreenView: UIView {
     
     private func configureButton() {
         let heightAnchorConstant: CGFloat = 40
-        let topAnchorConstant: CGFloat = 25
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 14 : 25
         
         mainButtonEvent.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         scrollView.addSubview(mainButtonEvent)

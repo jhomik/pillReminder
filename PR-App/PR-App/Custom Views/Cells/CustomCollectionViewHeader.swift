@@ -24,15 +24,16 @@ final class CustomCollectionViewHeader: UICollectionReusableView {
     }
     
     private func configureHorizontalLogoImage() {
-        let multiplierWidthAndHeightConstant: CGFloat = 1.5
+        let multiplierWidthConstant: CGFloat = DeviceTypes.isiPhoneSE ? 1.2 : 1.5
+        let multiplierHeightConstant: CGFloat = 1.5
         
         imageLogo.image = Images.horizontalLogoImage
         self.addSubview(imageLogo)
         
         imageLogo.snp.makeConstraints { (make) in
             make.centerX.centerY.equalTo(self)
-            make.width.equalTo(frame.width / multiplierWidthAndHeightConstant)
-            make.height.equalTo(frame.height / multiplierWidthAndHeightConstant)
+            make.width.equalTo(frame.width / multiplierWidthConstant)
+            make.height.equalTo(frame.height / multiplierHeightConstant)
         }
     }
 }

@@ -23,7 +23,7 @@ final class UserMedicationInfoViewModel {
         }
     }
     
-    func updateMedicationInfo(completion: @escaping ([UserMedicationDetailModel]) -> Void) {
+    func downloadMedicationInfo(completion: @escaping ([UserMedicationDetailModel]) -> Void) {
         firebaseManager.downloadMedicationInfo { (result) in
             completion(result)
         }

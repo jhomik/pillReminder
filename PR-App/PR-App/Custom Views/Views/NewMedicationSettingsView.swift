@@ -133,7 +133,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureNewMedicationStackView() {
-        let constraintConstant: CGFloat = 14
+        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 14
         
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)

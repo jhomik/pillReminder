@@ -11,6 +11,7 @@ import UIKit
 final class UserMedicationDetailView: UIView {
     
     var pillImageView = UIImageView()
+    private let placeholderImage = UIImageView()
     var firebaseManager = FirebaseManager()
     private let medicationStackView = UIStackView()
     var medicationToChange: UserMedicationDetailModel? {
@@ -48,6 +49,7 @@ final class UserMedicationDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configurePillImageView()
+        configurePlaceholderImageView()
         configureMedicationStackView()
     }
     
@@ -60,7 +62,16 @@ final class UserMedicationDetailView: UIView {
         updatePillNameValue(medication.pillName)
         updatePackageCapacityValue(medication.capacity)
         updatePillDoseValue(medication.dose)
-        firebaseManager.downloadImage(with: medication.cellImage ?? "", imageCell: pillImageView)
+        downloadImage(medication: medication)
+    
+    }
+    
+    private func downloadImage(medication: UserMedicationDetailModel) {
+        if let cellImage = medication.cellImage, !cellImage.isEmpty {
+            firebaseManager.downloadImage(with: cellImage, imageCell: pillImageView)
+        } else {
+            placeholderImage.image = Images.placeholderImage
+        }
     }
     
     func updatePillNameValue(_ value: String) {
@@ -89,6 +100,23 @@ final class UserMedicationDetailView: UIView {
         pillImageView.snp.makeConstraints { (make) in
             make.top.bottom.leading.equalTo(self)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
+        }
+    }
+    
+    private func configurePlaceholderImageView() {
+        let imageCellCornerRadius: CGFloat = 20
+        
+        placeholderImage.clipsToBounds = true
+        placeholderImage.layer.cornerRadius = imageCellCornerRadius
+        placeholderImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        placeholderImage.contentMode = .scaleAspectFill
+        placeholderImage.alpha = 0.3
+        
+        pillImageView.addSubview(placeholderImage)
+        
+        placeholderImage.snp.makeConstraints { (make) in
+            make.top.leading.equalTo(30)
+            make.trailing.bottom.equalTo(-30)
         }
     }
     

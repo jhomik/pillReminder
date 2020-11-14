@@ -39,37 +39,6 @@ final class NewMedicationSettingsViewController: UIViewController {
         configureMedicationView()
         createDismisKeyboardTapGesture()
         newMedicationView.delegate = self
-        
-    }
-    
-    private func scheduleTest() {
-        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { (success, error) in
-            if success {
-                self.scheduleNotification()
-                print("test")
-            } else {
-                if let error = error {
-                    print(error.localizedDescription)
-                }
-            }
-        }
-    }
-    
-    private func scheduleNotification() {
-        let content = UNMutableNotificationContent()
-        content.title = "Take a Pill"
-        content.body = "It's time to take a Metocard pill"
-        content.sound = .default
-        
-        let target = Date().addingTimeInterval(10)
-        let trigger = UNCalendarNotificationTrigger(dateMatching: Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: target), repeats: false)
-        
-        let request = UNNotificationRequest(identifier: "someID", content: content, trigger: trigger)
-        UNUserNotificationCenter.current().add(request) { (error) in
-            if error != nil {
-                print("something went wrong")
-            }
-        }
     }
     
     private func configureViewController() {
@@ -89,7 +58,6 @@ final class NewMedicationSettingsViewController: UIViewController {
         UserDefaults.standard.removeObject(forKey: "frequencyRow")
         UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
         UserDefaults.standard.removeObject(forKey: "dosageRow")
-        scheduleTest()
         dismiss(animated: true, completion: nil)
     }
     
@@ -108,7 +76,6 @@ final class NewMedicationSettingsViewController: UIViewController {
             viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
-                
                 self.newMedicationView.setSchedule()
             }
             
@@ -161,12 +128,9 @@ extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, 
         
         guard let image = info[.originalImage] as? UIImage else { return }
         newMedicationView.medicationImage.image = image
-        print("image: \(image)")
         
         if let uploadData = image.jpegData(compressionQuality: compressionQualityValue) {
             imageData = uploadData
-        } else if imageData.isEmpty {
-            newMedicationView.medicationImage.image = UIImage(systemName: "pill")
         }
         
         picker.dismiss(animated: true, completion: nil)

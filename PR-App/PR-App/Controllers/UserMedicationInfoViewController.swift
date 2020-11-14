@@ -30,7 +30,7 @@ final class UserMedicationInfoViewController: UIViewController {
         super.viewDidLoad()
         configureCollectionView()
         configureNavigationBar()
-        updateMedicationInfo()
+        downloadMedicationInfo()
         collectionView?.backgroundColor = UIColor.backgroundColor
     }
     
@@ -75,8 +75,8 @@ final class UserMedicationInfoViewController: UIViewController {
         self.collectionView?.reloadData()
     }
     
-    private func updateMedicationInfo() {
-        viewModel.updateMedicationInfo { [weak self] (result) in
+    private func downloadMedicationInfo() {
+        viewModel.downloadMedicationInfo { [weak self] (result) in
             guard let self = self else { return }
             self.medications = result
             DispatchQueue.main.async {
@@ -90,7 +90,7 @@ final class UserMedicationInfoViewController: UIViewController {
             let model = medications[indexPath.item]
             medications.remove(at: indexPath.item)
             collectionView?.performBatchUpdates({
-            collectionView?.deleteItems(at: [indexPath])
+                collectionView?.deleteItems(at: [indexPath])
             }, completion: { _ in
                 self.viewModel.removeDataFromFirebase(model: model)
             })
@@ -160,7 +160,7 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         if medications.indices.contains(indexPath.item) {
             let userMedicationDetail = UserMedicationDetailViewController()
             userMedicationDetail.medications = medications[indexPath.item]
-
+            
             self.navigationController?.pushViewController(userMedicationDetail, animated: true)
         } else {
             let viewModel = NewMedicationViewModel()

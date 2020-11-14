@@ -10,13 +10,12 @@ import UIKit
 
 final class UserMedicationDetailViewController: UIViewController {
     
-    var viewModel = UserMedicationDetailViewModel()
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
     var medications: UserMedicationDetailModel? {
         didSet {
-           updateUI()
+//           updateUI()
         }
     }
     
@@ -32,7 +31,6 @@ final class UserMedicationDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
-    
     }
         
     private func updateUI() {
@@ -45,7 +43,7 @@ final class UserMedicationDetailViewController: UIViewController {
     
     private func configureMedicationView() {
         let constraintConstant: CGFloat = 30
-        let heightAnchorConstant: CGFloat = 180
+        let heightAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 160 : 180
         
         view.addSubview(medicationView)
         
@@ -58,7 +56,7 @@ final class UserMedicationDetailViewController: UIViewController {
     }
     
     private func configureDoseAndCapacityView() {
-        let topAnchorConstant: CGFloat = 30
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 15 : 30
         let heightAnchorConstant: CGFloat = 200
         
         view.addSubview(dosageMedicationView)

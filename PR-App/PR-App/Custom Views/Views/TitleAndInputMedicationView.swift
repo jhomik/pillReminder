@@ -38,7 +38,7 @@ final class TitleAndInputMedicationView: UIView {
     }
     
     private func configureInputLabel() {
-        let bottomAnchorConstant: CGFloat = 12
+        let bottomAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 12
         
         addSubview(inputLabel)
         
