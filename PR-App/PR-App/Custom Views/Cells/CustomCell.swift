@@ -22,9 +22,8 @@ final class CustomCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureCell()
-        configureImageCell()
-        configurePlaceholderImageCell()
         configureNewMedsTitle()
+        configureImageCell()
         configureDeleteButton()
     }
     
@@ -37,11 +36,12 @@ final class CustomCell: UICollectionViewCell {
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
+        placeholderImage.image = Images.placeholderImage
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
         if urlImageString.isEmpty {
-            placeholderImage.image = Images.placeholderImage
+            configurePlaceholderImage()
         } else {
             firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
         }
@@ -71,6 +71,19 @@ final class CustomCell: UICollectionViewCell {
     @objc func deleteButtonTapped() {
         deleteButtonEvent()
     }
+    
+    private func configurePlaceholderImage() {
+        placeholderImage.image = Images.placeholderImage
+        placeholderImage.alpha = 0.3
+        
+        self.addSubview(placeholderImage)
+        
+        placeholderImage.snp.makeConstraints { (make) in
+            make.top.leading.equalTo(25)
+            make.bottom.equalTo(newMedsTitle.snp.top).offset(-10)
+            make.trailing.equalTo(-25)
+        }
+    }
 
     private func configureImageCell() {
         let imageCellCornerRadius: CGFloat = 20
@@ -78,30 +91,12 @@ final class CustomCell: UICollectionViewCell {
         imageCell.clipsToBounds = true
         imageCell.layer.cornerRadius = imageCellCornerRadius
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        imageCell.contentMode = .scaleAspectFill
-
+        
         self.addSubview(imageCell)
         
         imageCell.snp.makeConstraints { (make) in
             make.top.leading.trailing.equalTo(contentView)
-        }
-    }
-    
-    private func configurePlaceholderImageCell() {
-        let imageCellCornerRadius: CGFloat = 20
-        
-        placeholderImage.clipsToBounds = true
-        placeholderImage.layer.cornerRadius = imageCellCornerRadius
-        placeholderImage.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        placeholderImage.contentMode = .scaleAspectFill
-        placeholderImage.alpha = 0.3
-        
-        self.addSubview(placeholderImage)
-        
-        placeholderImage.snp.makeConstraints { (make) in
-            make.top.leading.equalTo(30)
-            make.trailing.equalTo(-30)
-            make.bottom.equalTo(-50)
+            make.bottom.equalTo(newMedsTitle.snp.top)
         }
     }
     
@@ -117,8 +112,7 @@ final class CustomCell: UICollectionViewCell {
         self.addSubview(newMedsTitle)
         
         newMedsTitle.snp.makeConstraints { (make) in
-            make.centerX.bottom.equalTo(contentView)
-            make.top.equalTo(imageCell.snp.bottom)
+            make.centerX.bottom.equalTo(self)
             make.height.equalTo(heightConstantConstraint)
         }
     }

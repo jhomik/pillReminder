@@ -11,6 +11,7 @@
 		590D1558841AF0B5E7168D06 /* Pods_PR_App_PR_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C17B4045BCB945D387C046A /* Pods_PR_App_PR_AppUITests.framework */; };
 		5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0544712560216D00635461 /* DeviceTypesConstraints.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */; };
+		5A28B69B2561302000AECF00 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */; };
 		5A3AED5124F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */; };
 		5A3AED5324F6F72E007ADC39 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3AED5224F6F72E007ADC39 /* Alerts.swift */; };
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
@@ -91,6 +92,7 @@
 		3C17B4045BCB945D387C046A /* Pods_PR_App_PR_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_App_PR_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A0544712560216D00635461 /* DeviceTypesConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraints.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationSettingsViewController.swift; sourceTree = "<group>"; };
+		5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMedicationSettingsViewModel.swift; sourceTree = "<group>"; };
 		5A3AED5224F6F72E007ADC39 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -135,13 +137,13 @@
 		5AEC6E1B24F54B760052D16B /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		5AEC6E1E24F553010052D16B /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
-		5AFED60F2461813400EF7C1A /* PR-App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PR-App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AFED60F2461813400EF7C1A /* PillReminder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PillReminder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED61C2461813400EF7C1A /* PR_App.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = PR_App.xcdatamodel; sourceTree = "<group>"; };
 		5AFED61E2461813500EF7C1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		5AFED6282461813500EF7C1A /* PR-AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PR-AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AFED6282461813500EF7C1A /* PillReminderTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PillReminderTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED62C2461813500EF7C1A /* PR_AppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PR_AppTests.swift; sourceTree = "<group>"; };
 		5AFED62E2461813500EF7C1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		5AFED6332461813600EF7C1A /* PR-AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "PR-AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5AFED6332461813600EF7C1A /* PillReminderUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PillReminderUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5AFED6372461813600EF7C1A /* PR_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PR_AppUITests.swift; sourceTree = "<group>"; };
 		5AFED6392461813600EF7C1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AFED64E2461A8F000EF7C1A /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
@@ -304,6 +306,7 @@
 				ABF726A32463A46100C903B7 /* UIView+Extensions.swift */,
 				5A582B8C2473FEFC00247D19 /* UIViewController+Extensions.swift */,
 				5A82248B24FE6CA6003BD716 /* UIColor+Extensions.swift */,
+				5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -326,9 +329,9 @@
 		5AFED6102461813400EF7C1A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5AFED60F2461813400EF7C1A /* PR-App.app */,
-				5AFED6282461813500EF7C1A /* PR-AppTests.xctest */,
-				5AFED6332461813600EF7C1A /* PR-AppUITests.xctest */,
+				5AFED60F2461813400EF7C1A /* PillReminder.app */,
+				5AFED6282461813500EF7C1A /* PillReminderTests.xctest */,
+				5AFED6332461813600EF7C1A /* PillReminderUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -419,9 +422,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5AFED60E2461813400EF7C1A /* PR-App */ = {
+		5AFED60E2461813400EF7C1A /* PillReminder */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5AFED63C2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-App" */;
+			buildConfigurationList = 5AFED63C2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminder" */;
 			buildPhases = (
 				2758B2661F71794130BDB6D4 /* [CP] Check Pods Manifest.lock */,
 				5A57A7702554807600A266C2 /* SwiftLint */,
@@ -434,14 +437,14 @@
 			);
 			dependencies = (
 			);
-			name = "PR-App";
+			name = PillReminder;
 			productName = "PR-App";
-			productReference = 5AFED60F2461813400EF7C1A /* PR-App.app */;
+			productReference = 5AFED60F2461813400EF7C1A /* PillReminder.app */;
 			productType = "com.apple.product-type.application";
 		};
-		5AFED6272461813500EF7C1A /* PR-AppTests */ = {
+		5AFED6272461813500EF7C1A /* PillReminderTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5AFED63F2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-AppTests" */;
+			buildConfigurationList = 5AFED63F2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminderTests" */;
 			buildPhases = (
 				2ADCC3A33246312851B79DE5 /* [CP] Check Pods Manifest.lock */,
 				5AFED6242461813500EF7C1A /* Sources */,
@@ -453,14 +456,14 @@
 			dependencies = (
 				5AFED62A2461813500EF7C1A /* PBXTargetDependency */,
 			);
-			name = "PR-AppTests";
+			name = PillReminderTests;
 			productName = "PR-AppTests";
-			productReference = 5AFED6282461813500EF7C1A /* PR-AppTests.xctest */;
+			productReference = 5AFED6282461813500EF7C1A /* PillReminderTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5AFED6322461813600EF7C1A /* PR-AppUITests */ = {
+		5AFED6322461813600EF7C1A /* PillReminderUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5AFED6422461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-AppUITests" */;
+			buildConfigurationList = 5AFED6422461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminderUITests" */;
 			buildPhases = (
 				A14CA8F9E7E10620BC01A7F0 /* [CP] Check Pods Manifest.lock */,
 				5AFED62F2461813600EF7C1A /* Sources */,
@@ -473,9 +476,9 @@
 			dependencies = (
 				5AFED6352461813600EF7C1A /* PBXTargetDependency */,
 			);
-			name = "PR-AppUITests";
+			name = PillReminderUITests;
 			productName = "PR-AppUITests";
-			productReference = 5AFED6332461813600EF7C1A /* PR-AppUITests.xctest */;
+			productReference = 5AFED6332461813600EF7C1A /* PillReminderUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -501,7 +504,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 5AFED60A2461813400EF7C1A /* Build configuration list for PBXProject "PR-App" */;
+			buildConfigurationList = 5AFED60A2461813400EF7C1A /* Build configuration list for PBXProject "PillReminder" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -515,9 +518,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				5AFED60E2461813400EF7C1A /* PR-App */,
-				5AFED6272461813500EF7C1A /* PR-AppTests */,
-				5AFED6322461813600EF7C1A /* PR-AppUITests */,
+				5AFED60E2461813400EF7C1A /* PillReminder */,
+				5AFED6272461813500EF7C1A /* PillReminderTests */,
+				5AFED6322461813600EF7C1A /* PillReminderUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -719,6 +722,7 @@
 				5AEC6E1C24F54B760052D16B /* ForgotPasswordViewController.swift in Sources */,
 				AB217B342461FD3100742EB1 /* PillReminderMainCustomButton.swift in Sources */,
 				5AEC6E1A24F51AE30052D16B /* Errors.swift in Sources */,
+				5A28B69B2561302000AECF00 /* UIImage+Extensions.swift in Sources */,
 				5AD3E498246DB20500882154 /* CustomCell.swift in Sources */,
 				5A582B9A2474583700247D19 /* PillReminderMainCustomLabel.swift in Sources */,
 				5A82248C24FE6CA6003BD716 /* UIColor+Extensions.swift in Sources */,
@@ -750,12 +754,12 @@
 /* Begin PBXTargetDependency section */
 		5AFED62A2461813500EF7C1A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5AFED60E2461813400EF7C1A /* PR-App */;
+			target = 5AFED60E2461813400EF7C1A /* PillReminder */;
 			targetProxy = 5AFED6292461813500EF7C1A /* PBXContainerItemProxy */;
 		};
 		5AFED6352461813600EF7C1A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 5AFED60E2461813400EF7C1A /* PR-App */;
+			target = 5AFED60E2461813400EF7C1A /* PillReminder */;
 			targetProxy = 5AFED6342461813600EF7C1A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -913,7 +917,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = PillReminder;
+				PRODUCT_NAME = PillReminder;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -932,7 +937,8 @@
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = PillReminder;
+				PRODUCT_NAME = PillReminder;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -957,7 +963,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PR-App.app/PR-App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PillReminder.app/PillReminder";
 			};
 			name = Debug;
 		};
@@ -980,7 +986,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PR-App.app/PR-App";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/PillReminder.app/PillReminder";
 			};
 			name = Release;
 		};
@@ -1029,7 +1035,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		5AFED60A2461813400EF7C1A /* Build configuration list for PBXProject "PR-App" */ = {
+		5AFED60A2461813400EF7C1A /* Build configuration list for PBXProject "PillReminder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AFED63A2461813600EF7C1A /* Debug */,
@@ -1038,7 +1044,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5AFED63C2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-App" */ = {
+		5AFED63C2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminder" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AFED63D2461813600EF7C1A /* Debug */,
@@ -1047,7 +1053,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5AFED63F2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-AppTests" */ = {
+		5AFED63F2461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminderTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AFED6402461813600EF7C1A /* Debug */,
@@ -1056,7 +1062,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5AFED6422461813600EF7C1A /* Build configuration list for PBXNativeTarget "PR-AppUITests" */ = {
+		5AFED6422461813600EF7C1A /* Build configuration list for PBXNativeTarget "PillReminderUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5AFED6432461813600EF7C1A /* Debug */,

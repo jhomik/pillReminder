@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
                BuildableName = "PR-App.app"
-               BlueprintName = "PR-App"
-               ReferencedContainer = "container:PR-App.xcodeproj">
+               BlueprintName = "PillReminder"
+               ReferencedContainer = "container:PillReminder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AFED6272461813500EF7C1A"
-               BuildableName = "PR-AppTests.xctest"
-               BlueprintName = "PR-AppTests"
-               ReferencedContainer = "container:PR-App.xcodeproj">
+               BuildableName = "PillReminderTests.xctest"
+               BlueprintName = "PillReminderTests"
+               ReferencedContainer = "container:PillReminder.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AFED6322461813600EF7C1A"
-               BuildableName = "PR-AppUITests.xctest"
-               BlueprintName = "PR-AppUITests"
-               ReferencedContainer = "container:PR-App.xcodeproj">
+               BuildableName = "PillReminderUITests.xctest"
+               BlueprintName = "PillReminderUITests"
+               ReferencedContainer = "container:PillReminder.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -67,8 +67,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
             BuildableName = "PR-App.app"
-            BlueprintName = "PR-App"
-            ReferencedContainer = "container:PR-App.xcodeproj">
+            BlueprintName = "PillReminder"
+            ReferencedContainer = "container:PillReminder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -84,8 +84,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
             BuildableName = "PR-App.app"
-            BlueprintName = "PR-App"
-            ReferencedContainer = "container:PR-App.xcodeproj">
+            BlueprintName = "PillReminder"
+            ReferencedContainer = "container:PillReminder.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
