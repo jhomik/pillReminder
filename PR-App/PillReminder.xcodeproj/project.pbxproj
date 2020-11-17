@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		57A309F0AF16A58E8344EE97 /* Pods_PR_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E91508941A183E4259F4BD51 /* Pods_PR_App.framework */; };
-		590D1558841AF0B5E7168D06 /* Pods_PR_App_PR_AppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C17B4045BCB945D387C046A /* Pods_PR_App_PR_AppUITests.framework */; };
+		46FF6EF1996C4490FCB94A82 /* Pods_PillReminderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7FFD4E2395C77D24DA5535 /* Pods_PillReminderTests.framework */; };
+		481766E5EF96CBEA7BED5B24 /* Pods_PillReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */; };
 		5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0544712560216D00635461 /* DeviceTypesConstraints.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */; };
-		5A28B69B2561302000AECF00 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */; };
 		5A3AED5124F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */; };
 		5A3AED5324F6F72E007ADC39 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A3AED5224F6F72E007ADC39 /* Alerts.swift */; };
 		5A3D003C24727FC300AD1B94 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */; };
@@ -66,7 +65,7 @@
 		AB217B302461CF0B00742EB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B2F2461CF0B00742EB1 /* Constants.swift */; };
 		AB217B342461FD3100742EB1 /* PillReminderMainCustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB217B332461FD3100742EB1 /* PillReminderMainCustomButton.swift */; };
 		ABF726A42463A46100C903B7 /* UIView+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF726A32463A46100C903B7 /* UIView+Extensions.swift */; };
-		C1E6A80D8E7551A15778BD46 /* Pods_PR_AppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F98B0607AEC79035B13EC66 /* Pods_PR_AppTests.framework */; };
+		E73A81411D772F1944EFF8DA /* Pods_PillReminder_PillReminderUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A32A8ED3F40D201563B6D42 /* Pods_PillReminder_PillReminderUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,12 +86,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		03E9359B9FAA1EFCFEF80F3A /* Pods-PR-App-PR-AppUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App-PR-AppUITests.debug.xcconfig"; path = "Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		2F98B0607AEC79035B13EC66 /* Pods_PR_AppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_AppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		3C17B4045BCB945D387C046A /* Pods_PR_App_PR_AppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_App_PR_AppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C7FFD4E2395C77D24DA5535 /* Pods_PillReminderTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PillReminderTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4098D0061B7B4F71A7C0155E /* Pods-PillReminder-PillReminderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder-PillReminderUITests.release.xcconfig"; path = "Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests.release.xcconfig"; sourceTree = "<group>"; };
+		48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder.debug.xcconfig"; path = "Target Support Files/Pods-PillReminder/Pods-PillReminder.debug.xcconfig"; sourceTree = "<group>"; };
 		5A0544712560216D00635461 /* DeviceTypesConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraints.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationSettingsViewController.swift; sourceTree = "<group>"; };
-		5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMedicationSettingsViewModel.swift; sourceTree = "<group>"; };
 		5A3AED5224F6F72E007ADC39 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		5A3D003B24727FC200AD1B94 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -147,15 +145,15 @@
 		5AFED6372461813600EF7C1A /* PR_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PR_AppUITests.swift; sourceTree = "<group>"; };
 		5AFED6392461813600EF7C1A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5AFED64E2461A8F000EF7C1A /* LoginScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreenViewController.swift; sourceTree = "<group>"; };
-		75FC864A6794A725CCB43FD2 /* Pods-PR-AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-AppTests.release.xcconfig"; path = "Target Support Files/Pods-PR-AppTests/Pods-PR-AppTests.release.xcconfig"; sourceTree = "<group>"; };
-		7FE7E048309FD047A49D1441 /* Pods-PR-AppTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-AppTests.debug.xcconfig"; path = "Target Support Files/Pods-PR-AppTests/Pods-PR-AppTests.debug.xcconfig"; sourceTree = "<group>"; };
-		95D34CE78E63F765A2524286 /* Pods-PR-App-PR-AppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App-PR-AppUITests.release.xcconfig"; path = "Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests.release.xcconfig"; sourceTree = "<group>"; };
-		A636F5A85638E4E4952CF648 /* Pods-PR-App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App.release.xcconfig"; path = "Target Support Files/Pods-PR-App/Pods-PR-App.release.xcconfig"; sourceTree = "<group>"; };
+		71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PillReminder.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EC808BF5FA6F04DC730F6AC /* Pods-PillReminderTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminderTests.release.xcconfig"; path = "Target Support Files/Pods-PillReminderTests/Pods-PillReminderTests.release.xcconfig"; sourceTree = "<group>"; };
+		8A32A8ED3F40D201563B6D42 /* Pods_PillReminder_PillReminderUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PillReminder_PillReminderUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9FA38DC4696ED3E595240776 /* Pods-PillReminder-PillReminderUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder-PillReminderUITests.debug.xcconfig"; path = "Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		A2B4230407CEE6A898250CFE /* Pods-PillReminder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder.release.xcconfig"; path = "Target Support Files/Pods-PillReminder/Pods-PillReminder.release.xcconfig"; sourceTree = "<group>"; };
 		AB217B2F2461CF0B00742EB1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		AB217B332461FD3100742EB1 /* PillReminderMainCustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillReminderMainCustomButton.swift; sourceTree = "<group>"; };
 		ABF726A32463A46100C903B7 /* UIView+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extensions.swift"; sourceTree = "<group>"; };
-		B48B0ADE5F696DEEC70E6BE4 /* Pods-PR-App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PR-App.debug.xcconfig"; path = "Target Support Files/Pods-PR-App/Pods-PR-App.debug.xcconfig"; sourceTree = "<group>"; };
-		E91508941A183E4259F4BD51 /* Pods_PR_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PR_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE1CBA6C621B380BC67E2FE5 /* Pods-PillReminderTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminderTests.debug.xcconfig"; path = "Target Support Files/Pods-PillReminderTests/Pods-PillReminderTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -163,7 +161,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				57A309F0AF16A58E8344EE97 /* Pods_PR_App.framework in Frameworks */,
+				481766E5EF96CBEA7BED5B24 /* Pods_PillReminder.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,7 +169,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C1E6A80D8E7551A15778BD46 /* Pods_PR_AppTests.framework in Frameworks */,
+				46FF6EF1996C4490FCB94A82 /* Pods_PillReminderTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -179,7 +177,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				590D1558841AF0B5E7168D06 /* Pods_PR_App_PR_AppUITests.framework in Frameworks */,
+				E73A81411D772F1944EFF8DA /* Pods_PillReminder_PillReminderUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,7 +304,6 @@
 				ABF726A32463A46100C903B7 /* UIView+Extensions.swift */,
 				5A582B8C2473FEFC00247D19 /* UIViewController+Extensions.swift */,
 				5A82248B24FE6CA6003BD716 /* UIColor+Extensions.swift */,
-				5A28B69A2561302000AECF00 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -399,12 +396,12 @@
 		9619D881732EA8BAED18863A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				B48B0ADE5F696DEEC70E6BE4 /* Pods-PR-App.debug.xcconfig */,
-				A636F5A85638E4E4952CF648 /* Pods-PR-App.release.xcconfig */,
-				03E9359B9FAA1EFCFEF80F3A /* Pods-PR-App-PR-AppUITests.debug.xcconfig */,
-				95D34CE78E63F765A2524286 /* Pods-PR-App-PR-AppUITests.release.xcconfig */,
-				7FE7E048309FD047A49D1441 /* Pods-PR-AppTests.debug.xcconfig */,
-				75FC864A6794A725CCB43FD2 /* Pods-PR-AppTests.release.xcconfig */,
+				48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */,
+				A2B4230407CEE6A898250CFE /* Pods-PillReminder.release.xcconfig */,
+				9FA38DC4696ED3E595240776 /* Pods-PillReminder-PillReminderUITests.debug.xcconfig */,
+				4098D0061B7B4F71A7C0155E /* Pods-PillReminder-PillReminderUITests.release.xcconfig */,
+				DE1CBA6C621B380BC67E2FE5 /* Pods-PillReminderTests.debug.xcconfig */,
+				7EC808BF5FA6F04DC730F6AC /* Pods-PillReminderTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -412,9 +409,9 @@
 		9C5B4536123C218F342DA14E /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				E91508941A183E4259F4BD51 /* Pods_PR_App.framework */,
-				3C17B4045BCB945D387C046A /* Pods_PR_App_PR_AppUITests.framework */,
-				2F98B0607AEC79035B13EC66 /* Pods_PR_AppTests.framework */,
+				71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */,
+				8A32A8ED3F40D201563B6D42 /* Pods_PillReminder_PillReminderUITests.framework */,
+				0C7FFD4E2395C77D24DA5535 /* Pods_PillReminderTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -573,7 +570,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PR-App-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PillReminder-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -595,7 +592,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PR-AppTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PillReminderTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -608,15 +605,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PR-App-PR-AppUITests/Pods-PR-App-PR-AppUITests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		5A57A7702554807600A266C2 /* SwiftLint */ = {
@@ -652,7 +649,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-PR-App-PR-AppUITests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-PillReminder-PillReminderUITests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -665,15 +662,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PR-App/Pods-PR-App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PillReminder/Pods-PillReminder-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-PR-App/Pods-PR-App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-PillReminder/Pods-PillReminder-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PR-App/Pods-PR-App-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-PillReminder/Pods-PillReminder-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -722,7 +719,6 @@
 				5AEC6E1C24F54B760052D16B /* ForgotPasswordViewController.swift in Sources */,
 				AB217B342461FD3100742EB1 /* PillReminderMainCustomButton.swift in Sources */,
 				5AEC6E1A24F51AE30052D16B /* Errors.swift in Sources */,
-				5A28B69B2561302000AECF00 /* UIImage+Extensions.swift in Sources */,
 				5AD3E498246DB20500882154 /* CustomCell.swift in Sources */,
 				5A582B9A2474583700247D19 /* PillReminderMainCustomLabel.swift in Sources */,
 				5A82248C24FE6CA6003BD716 /* UIColor+Extensions.swift in Sources */,
@@ -906,7 +902,7 @@
 		};
 		5AFED63D2461813600EF7C1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B48B0ADE5F696DEEC70E6BE4 /* Pods-PR-App.debug.xcconfig */;
+			baseConfigurationReference = 48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -926,7 +922,7 @@
 		};
 		5AFED63E2461813600EF7C1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A636F5A85638E4E4952CF648 /* Pods-PR-App.release.xcconfig */;
+			baseConfigurationReference = A2B4230407CEE6A898250CFE /* Pods-PillReminder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -946,7 +942,7 @@
 		};
 		5AFED6402461813600EF7C1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7FE7E048309FD047A49D1441 /* Pods-PR-AppTests.debug.xcconfig */;
+			baseConfigurationReference = DE1CBA6C621B380BC67E2FE5 /* Pods-PillReminderTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -969,7 +965,7 @@
 		};
 		5AFED6412461813600EF7C1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 75FC864A6794A725CCB43FD2 /* Pods-PR-AppTests.release.xcconfig */;
+			baseConfigurationReference = 7EC808BF5FA6F04DC730F6AC /* Pods-PillReminderTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -992,7 +988,7 @@
 		};
 		5AFED6432461813600EF7C1A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 03E9359B9FAA1EFCFEF80F3A /* Pods-PR-App-PR-AppUITests.debug.xcconfig */;
+			baseConfigurationReference = 9FA38DC4696ED3E595240776 /* Pods-PillReminder-PillReminderUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1013,7 +1009,7 @@
 		};
 		5AFED6442461813600EF7C1A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 95D34CE78E63F765A2524286 /* Pods-PR-App-PR-AppUITests.release.xcconfig */;
+			baseConfigurationReference = 4098D0061B7B4F71A7C0155E /* Pods-PillReminder-PillReminderUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

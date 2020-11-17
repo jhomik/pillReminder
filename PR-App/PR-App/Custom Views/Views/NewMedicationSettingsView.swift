@@ -9,6 +9,10 @@
 import UIKit
 import SnapKit
 
+protocol UserMedicationDetailDelegate: AnyObject {
+    func imagePickerEvent()
+}
+
 struct ScheduleNotoficationData {
     var textField: UITextField
     var identifier: String

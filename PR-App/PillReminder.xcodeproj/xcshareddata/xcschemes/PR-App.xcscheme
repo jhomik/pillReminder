@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1210"
+   LastUpgradeVersion = "1220"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -15,8 +15,36 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
-               BuildableName = "PR-App.app"
+               BuildableName = "PillReminder.app"
                BlueprintName = "PillReminder"
+               ReferencedContainer = "container:PillReminder.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5AFED6272461813500EF7C1A"
+               BuildableName = "PillReminderTests.xctest"
+               BlueprintName = "PillReminderTests"
+               ReferencedContainer = "container:PillReminder.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5AFED6322461813600EF7C1A"
+               BuildableName = "PillReminderUITests.xctest"
+               BlueprintName = "PillReminderUITests"
                ReferencedContainer = "container:PillReminder.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -66,7 +94,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
-            BuildableName = "PR-App.app"
+            BuildableName = "PillReminder.app"
             BlueprintName = "PillReminder"
             ReferencedContainer = "container:PillReminder.xcodeproj">
          </BuildableReference>
@@ -83,7 +111,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "5AFED60E2461813400EF7C1A"
-            BuildableName = "PR-App.app"
+            BuildableName = "PillReminder.app"
             BlueprintName = "PillReminder"
             ReferencedContainer = "container:PillReminder.xcodeproj">
          </BuildableReference>

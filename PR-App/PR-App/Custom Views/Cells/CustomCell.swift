@@ -24,6 +24,7 @@ final class CustomCell: UICollectionViewCell {
         configureCell()
         configureNewMedsTitle()
         configureImageCell()
+        configurePlaceholderImage()
         configureDeleteButton()
     }
     
@@ -40,10 +41,12 @@ final class CustomCell: UICollectionViewCell {
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
-        if urlImageString.isEmpty {
-            configurePlaceholderImage()
-        } else {
+        if !urlImageString.isEmpty {
             firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
+            placeholderImage.isHidden = true
+        } else {
+            configurePlaceholderImage()
+            placeholderImage.isHidden = false
         }
         newMedsTitle.text = title
     }

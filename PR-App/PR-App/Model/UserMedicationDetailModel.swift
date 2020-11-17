@@ -41,4 +41,13 @@ struct UserMedicationDetailModel {
         self.howManyTimesPerDay = medicationToSave?.howManyTimesTextField.text ?? ""
         self.dosage = medicationToSave?.dosageTextField.text ?? ""
     }
+    
+    init(medicationToSave: CurrentMedicationSettingsView?) {
+        self.pillName = medicationToSave?.nameTextField.text ?? ""
+        self.capacity = medicationToSave?.capacityTextField.text ?? ""
+        self.dose = medicationToSave?.doseTextField.text ?? ""
+        self.frequency = medicationToSave?.frequencyTextField.text ?? ""
+        self.howManyTimesPerDay = medicationToSave?.howManyTimesTextField.text ?? ""
+        self.dosage = medicationToSave?.dosageTextField.text ?? ""
+    }
 }

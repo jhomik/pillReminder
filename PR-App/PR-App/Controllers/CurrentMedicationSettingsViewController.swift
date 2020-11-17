@@ -123,7 +123,7 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
         let compressionQualityValue: CGFloat = 0.1
         
         let image = info[.originalImage] as? UIImage
-        userMedicationSettingView.medicationImageView.image = image
+        userMedicationSettingView.currentMedicationImage.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: compressionQualityValue) {
             imageData = uploadData

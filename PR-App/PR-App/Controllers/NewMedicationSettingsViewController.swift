@@ -62,7 +62,6 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func saveSettings() {
-        
         let medicationToSave = UserMedicationDetailModel(medicationToSave: newMedicationView)
         
         view.endEditing(true)

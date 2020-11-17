@@ -1,10 +1,10 @@
 platform :ios, '13.2'
 
-target 'PR-App' do
+target 'PillReminder' do
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
 
-  # Pods for PR-App
+  # Pods for PillReminder
 
 pod 'SnapKit'
 pod 'SwiftLint'
@@ -14,12 +14,12 @@ pod 'Firebase/Storage'
 
 # https://firebase.google.com/docs/ios/setup#available-pods
 
-  target 'PR-AppTests' do
+  target 'PillReminderTests' do
     inherit! :search_paths
     # Pods for testing
   end
 
-  target 'PR-AppUITests' do
+  target 'PillReminderUITests' do
     # Pods for testing
   end
 

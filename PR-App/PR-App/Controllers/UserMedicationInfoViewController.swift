@@ -131,6 +131,7 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
         
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
         cell.imageCell.image = UIImage()
+        cell.placeholderImage.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
         cell.deleteButtonEvent = { [weak self, unowned cell] in
             self?.deleteItem(for: cell)
