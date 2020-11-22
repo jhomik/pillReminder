@@ -50,3 +50,4 @@
 "secondPill" = "It's time to take second pill ";
 "thirdPill" = "It's time to take the last pill ";
 "tapNotification" = "Tap to take it!";
+"passwordMatch" = "Passwords do not match";

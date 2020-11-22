@@ -18,4 +18,5 @@ struct Alerts {
     static let camera = NSLocalizedString("camera", comment: "")
     static let photoLibrary = NSLocalizedString("photoLibrary", comment: "")
     static let cancel = NSLocalizedString("cancel", comment: "")
+    static let passwordMatch = NSLocalizedString("passwordMatch", comment: "")
 }

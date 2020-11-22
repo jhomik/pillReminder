@@ -79,6 +79,10 @@ extension LoginScreenViewController: LoginScreenPresentForgotPasswordVC {
 }
 
 extension LoginScreenViewController: LoginScreenAlertDelegate {
+    func alertIsPasswordMatch(message: String, withTime: DispatchTime?, completion: (() -> Void)?) {
+        self.showUserAlert(message: message, withTime: withTime, completion: completion)
+    }
+    
     func alertLoginSuccess(message: String, withTime: DispatchTime?, completion: (() -> Void)?) {
         self.showUserAlert(message: message, withTime: nil, completion: completion)
     }

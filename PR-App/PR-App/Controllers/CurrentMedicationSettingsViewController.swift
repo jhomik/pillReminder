@@ -58,27 +58,33 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func cancelSettings() {
-           dismiss(animated: true, completion: nil)
-       }
+        dismiss(animated: true, completion: nil)
+    }
     
     @objc private func updateSettings() {
+        guard var meds = medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
+        let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: userMedicationSettingView)
         view.endEditing(true)
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        guard let name = self.userMedicationSettingView.nameTextField.text, let capacity = self.userMedicationSettingView.capacityTextField.text, let dose = self.userMedicationSettingView.doseTextField.text, var meds = medications else { return }
         
-        if name.isEmpty || capacity.isEmpty || dose.isEmpty {
-            textFieldShaker(userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField)
+        if medicationToUpdate.anyEmpty {
+            textFieldShaker(userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField, userMedicationSettingView.frequencyTextField, userMedicationSettingView.howManyTimesTextField, userMedicationSettingView.dosageTextField)
         } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView)
-            meds.pillName = name
-            meds.capacity = capacity
-            meds.dose = dose
+            meds.pillName = medicationToUpdate.pillName
+            meds.capacity = medicationToUpdate.capacity
+            meds.dose = medicationToUpdate.dose
+            meds.cellImage = medicationToUpdate.cellImage
             delegate?.passMedication(medication: meds)
-//            viewModel.updateMedicationInfo(data: imageData, pillName: name, capacity: capacity, dose: dose, childId: meds.userIdentifier) {
-//                self.dismissLoadingSpinner(with: self.containerView)
-//                self.updateTextFieldsToChange()
-//                self.dismiss(animated: true, completion: nil)
-//            }
+            if !cellImage.isEmpty {
+                viewModel.removeImageFromStorage(url: cellImage)
+            }
+            viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
+                self.dismissLoadingSpinner(with: self.containerView)
+                self.updateTextFieldsToChange()
+                self.dismiss(animated: true, completion: nil)
+            })
         }
     }
     

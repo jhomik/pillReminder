@@ -12,6 +12,7 @@ final class PillReminderMainCustomTextField: UITextField {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        configure()
     }
 
     required init?(coder: NSCoder) {
@@ -20,7 +21,7 @@ final class PillReminderMainCustomTextField: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        configure()
+        self.layer.shadowColor = UIColor.textFieldUnderline.cgColor
     }
     
     convenience init(placeholderText: String, isPassword: Bool) {
@@ -42,7 +43,6 @@ final class PillReminderMainCustomTextField: UITextField {
         self.layer.shadowOffset = CGSize(width: shadowOffsetWidth, height: shadowOffsetHeight)
         self.layer.shadowOpacity = textFieldShadowOpactiy
         self.layer.shadowRadius = textFieldShadowRadius
-        self.layer.shadowColor = UIColor.textFieldUnderline.cgColor
         self.autocapitalizationType = .none
         self.adjustsFontSizeToFitWidth = true
     }

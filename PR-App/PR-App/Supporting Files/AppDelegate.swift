@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 print("User has declined notifications")
             }
         }
+        
+        notificationCenter.getPendingNotificationRequests { (request) in
+            print("Count: \(request.count)")
+            for item in request {
+                print(item.content)
+            }
+        }
         FirebaseApp.configure()
         return true
     }

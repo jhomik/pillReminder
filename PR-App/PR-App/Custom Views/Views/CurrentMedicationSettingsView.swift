@@ -31,7 +31,7 @@ final class CurrentMedicationSettingsView: UIView {
     private let currentMedicationStackView = UIStackView()
     private let currentProgramMedicationStackView = UIStackView()
     private let scrollView = UIScrollView()
-    private(set) var currentMedicationImage = UIImageView()
+    private(set) var currentMedicationImage = PillReminderImageView(frame: .zero)
     weak var delegate: UserMedicationDetailDelegate?
     private(set) var activeTextField: UITextField?
     private let pickerView = UIPickerView()
@@ -43,8 +43,7 @@ final class CurrentMedicationSettingsView: UIView {
     private(set) var capacityLeadingConstraint: Constraint?
     private(set) var doseLeadingConstraint: Constraint?
     private let tapToChangeButton = UIButton()
-    private let firebaseManager = FirebaseManager()
-    private let placeholderImage = UIImageView()
+    let placeholderImage = UIImageView()
     
     var medicationsToChange: UserMedicationDetailModel? {
           didSet {
@@ -62,7 +61,6 @@ final class CurrentMedicationSettingsView: UIView {
         configureProgramMedicationStackView()
         configureCapacityLabel()
         configureDoseLabel()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -80,11 +78,12 @@ final class CurrentMedicationSettingsView: UIView {
         downloadImage(medication: medication)
         updateCapcityConstraint(with: capacityTextField)
         updateDoseConstraint(with: doseTextField)
+        configureHowManyTimesPerDayTextFields(with: howManyTimesTextField)
     }
     
     private func downloadImage(medication: UserMedicationDetailModel) {
-        if let cellImage = medication.cellImage, !cellImage.isEmpty {
-            firebaseManager.downloadImage(with: cellImage, imageCell: currentMedicationImage)
+        if let cellImage = medication.cellImage, !cellImage.isEmpty{
+            currentMedicationImage.downloadImage(with: cellImage)
         } else {
             configurePlaceholderImage()
         }
@@ -137,7 +136,7 @@ final class CurrentMedicationSettingsView: UIView {
         let widthAnchorMultiplier: CGFloat = 0.42
         let heightAnchorMultiplier: CGFloat = 0.24
         
-        currentMedicationImage.backgroundColor = .systemGray5
+        currentMedicationImage.backgroundColor = .tertiarySystemFill
         currentMedicationImage.layer.cornerRadius = medicationImageButtonCornerRadius
         currentMedicationImage.tintColor = .systemGray
         currentMedicationImage.layer.masksToBounds = true
@@ -241,6 +240,19 @@ final class CurrentMedicationSettingsView: UIView {
         let doseWidth = getWidth(text: textField.text)
             doseLeadingConstraint?.update(offset: doseWidth + 5)
             doseLabel.layoutIfNeeded()
+    }
+    
+    private func configureHowManyTimesPerDayTextFields(with textField: UITextField) {
+        if textField.text == pillModel.howManyTimesPerDay[2] {
+            whatTimeTwiceADayTextField.isHidden = false
+            whatTimeThreeTimesADayTextField.isHidden = false
+        } else if textField.text == pillModel.howManyTimesPerDay[1] {
+            whatTimeTwiceADayTextField.isHidden = false
+            whatTimeThreeTimesADayTextField.isHidden = true
+        } else if textField.text == pillModel.howManyTimesPerDay[0] {
+            whatTimeTwiceADayTextField.isHidden = true
+            whatTimeThreeTimesADayTextField.isHidden = true
+        }
     }
     
     private func configureProgramMedicationStackView() {
@@ -454,7 +466,7 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
         let newLength = text.count + string.count - range.length
         let invalidCharactersIn = CharacterSet(charactersIn: "0123456789").inverted
         
-        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 4
+        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 3
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

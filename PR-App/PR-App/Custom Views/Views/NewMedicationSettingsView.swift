@@ -277,6 +277,7 @@ final class NewMedicationSettingsView: UIView {
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         datePickerView.datePickerMode = .time
+        
         if #available(iOS 13.4, *) {
             datePickerView.preferredDatePickerStyle = .wheels
         }
@@ -403,7 +404,7 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         let newLength = text.count + string.count - range.length
         let invalidCharactersIn = CharacterSet(charactersIn: "0123456789").inverted
         
-        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 4
+        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 3
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

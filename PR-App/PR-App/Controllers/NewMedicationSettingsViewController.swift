@@ -55,9 +55,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func cancelSettings() {
-        UserDefaults.standard.removeObject(forKey: "frequencyRow")
-        UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
-        UserDefaults.standard.removeObject(forKey: "dosageRow")
+        removeUserDefaults()
         dismiss(animated: true, completion: nil)
     }
     
@@ -77,11 +75,14 @@ final class NewMedicationSettingsViewController: UIViewController {
                 self.dismiss(animated: true, completion: nil)
                 self.newMedicationView.setSchedule()
             }
-            
-            UserDefaults.standard.removeObject(forKey: "frequencyRow")
-            UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
-            UserDefaults.standard.removeObject(forKey: "dosageRow")
+            removeUserDefaults()
         }
+    }
+    
+    private func removeUserDefaults() {
+        UserDefaults.standard.removeObject(forKey: "frequencyRow")
+        UserDefaults.standard.removeObject(forKey: "howManyTimesPerdDayRow")
+        UserDefaults.standard.removeObject(forKey: "dosageRow")
     }
     
     private func configureImagePickerController() {

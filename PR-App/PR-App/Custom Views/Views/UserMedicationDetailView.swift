@@ -10,7 +10,7 @@ import UIKit
 
 final class UserMedicationDetailView: UIView {
     
-    var pillImageView = UIImageView()
+    var pillImageView = PillReminderImageView(frame: .zero)
     private let placeholderImage = UIImageView()
     var firebaseManager = FirebaseManager()
     private let medicationStackView = UIStackView()
@@ -67,7 +67,7 @@ final class UserMedicationDetailView: UIView {
     
     private func downloadImage(medication: UserMedicationDetailModel) {
         if let cellImage = medication.cellImage, !cellImage.isEmpty {
-            firebaseManager.downloadImage(with: cellImage, imageCell: pillImageView)
+            pillImageView.downloadImage(with: cellImage)
         } else {
             configurePlaceholderImage()
         }
@@ -86,13 +86,7 @@ final class UserMedicationDetailView: UIView {
     }
     
     private func configurePillImageView() {
-        let pillImageCornerRadius: CGFloat = 16
         let widthAnchorMultiplier: CGFloat = 0.5
-        
-        pillImageView.backgroundColor = .secondarySystemFill
-        pillImageView.contentMode = .scaleAspectFill
-        pillImageView.layer.masksToBounds = true
-        pillImageView.layer.cornerRadius = pillImageCornerRadius
         
         self.addSubview(pillImageView)
         

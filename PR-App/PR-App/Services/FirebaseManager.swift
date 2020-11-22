@@ -17,7 +17,7 @@ final class FirebaseManager {
     private let refStorage = Storage.storage().reference()
     private let auth = Auth.auth()
     private let imageName = UUID().uuidString
-    private let userDefaults = UserDefaults.standard
+    private let cache = NSCache<NSString, UIImage>()
     
     // MARK: Download Medication from Firebase DB
     
@@ -53,6 +53,15 @@ final class FirebaseManager {
         }
         if let cellImage = cellImage {
             values["cellImage"] = cellImage as AnyObject
+        }
+        if let frequency = medicationDetail?.frequency {
+            values["frequency"] = frequency as AnyObject
+        }
+        if let howManyTimesPerDay = medicationDetail?.howManyTimesPerDay {
+            values["howManyTimesPerDay"] = howManyTimesPerDay as AnyObject
+        }
+        if let dosage = medicationDetail?.dosage {
+            values["dosage"] = dosage as AnyObject
         }
         
         refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(medicationDetail?.userIdentifier ?? "").updateChildValues(values)
@@ -109,24 +118,34 @@ final class FirebaseManager {
         }
     }
     
-    // MARK: Downloading image or retrive from UserDefaults Data
+    // MARK: Removing Image from Firebase Storage
     
-    func downloadImage(with urlString: String, imageCell: UIImageView) {
+    func removeImageFromStorage(cellImage: String) {
+        let storageRef = FirebaseStorage.Storage.storage().reference(forURL: cellImage)
+        storageRef.delete { (error) in
+            if let error = error {
+                print("image not deleted:" + error.localizedDescription)
+            } else {
+                print("File successfully deleted!")
+            }
+        }
+    }
+    
+    // MARK: Downloading image from Firebase
+    func downloadImage(with urlString: String, completion: @escaping(UIImage?) -> Void) {
+        let cacheKey = NSString(string: urlString)
         if !urlString.isEmpty {
-            if let data = self.userDefaults.data(forKey: urlString), let image = UIImage(data: data) {
-                imageCell.image = image
-                print("got this image from UserDefaults")
-                print(userDefaults)
-                return
+            if let image = cache.object(forKey: cacheKey) {
+                completion(image)
             }
             
             guard let url = URL(string: urlString) else { return }
             
-            let task = URLSession.shared.dataTask(with: url) { [weak self] (data, _, _) in
-                DispatchQueue.main.async {
-                    if let data = data, let image = UIImage(data: data) {
-                        self?.userDefaults.set(image.jpegData(compressionQuality: 0), forKey: urlString)
-                        imageCell.image = image
+            let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
+                if let data = data, let image = UIImage(data: data), let response = response as? HTTPURLResponse, response.statusCode == 200, error == nil {
+                    DispatchQueue.main.async {
+                        self.cache.setObject(image, forKey: cacheKey)
+                        completion(image)
                         print("got this from firebase")
                     }
                 }

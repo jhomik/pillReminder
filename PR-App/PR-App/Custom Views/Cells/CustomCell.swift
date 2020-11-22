@@ -12,7 +12,7 @@ import SnapKit
 final class CustomCell: UICollectionViewCell {
     
     static let reuseId = "CustomCell"
-    var imageCell = UIImageView()
+    var imageCell = PillReminderImageView(frame: .zero)
     var placeholderImage = UIImageView()
     var newMedsTitle = UILabel()
     var deleteButton = UIButton()
@@ -42,7 +42,7 @@ final class CustomCell: UICollectionViewCell {
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
         if !urlImageString.isEmpty {
-            firebaseManager.downloadImage(with: urlImageString, imageCell: imageCell)
+            imageCell.downloadImage(with: urlImageString)
             placeholderImage.isHidden = true
         } else {
             configurePlaceholderImage()
@@ -92,6 +92,7 @@ final class CustomCell: UICollectionViewCell {
         let imageCellCornerRadius: CGFloat = 20
         
         imageCell.clipsToBounds = true
+        imageCell.backgroundColor = nil
         imageCell.layer.cornerRadius = imageCellCornerRadius
         imageCell.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         

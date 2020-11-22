@@ -14,6 +14,7 @@ protocol LoginScreenEvents: AnyObject {
     func createUserSuccess()
     func createUserFailure(error: Error)
     func isEmailVerified()
+    func isPasswordMatch()
 }
 
 final class LoginScreenViewModel {
@@ -29,7 +30,9 @@ final class LoginScreenViewModel {
         if passOne == passTwo {
             return true
         } else {
+            loginEvents?.isPasswordMatch()
             return false
+            
         }
     }
     

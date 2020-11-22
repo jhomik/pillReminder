@@ -23,6 +23,7 @@ protocol LoginScreenAlertDelegate: AnyObject {
     func alertCreateUserSuccess(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
     func alertCreateUserFailure(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
     func alertIsEmailVerified(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
+    func alertIsPasswordMatch(message: String, withTime: DispatchTime?, completion: (() -> Void)?)
 }
 
 final class LoginScreenView: UIView {
@@ -186,6 +187,9 @@ final class LoginScreenView: UIView {
 }
 
 extension LoginScreenView: LoginScreenEvents {
+    func isPasswordMatch() {
+        delegate?.alertIsPasswordMatch(message: Alerts.passwordMatch, withTime: nil, completion: nil)
+    }
     
     func onLoginSuccess() {
         delegate?.alertLoginSuccess(message: Alerts.userLogIn, withTime: nil, completion: {
@@ -210,11 +214,12 @@ extension LoginScreenView: LoginScreenEvents {
             self.confirmTextField.isHidden = true
             self.userNameTextField.text = ""
             self.confirmTextField.text = ""
+            self.mainButtonEvent.setTitle(Constants.signIn, for: .normal)
         })
     }
     
     func createUserFailure(error: Error) {
-        delegate?.alertCreateUserFailure(message: Errors.userIsNotVerified, withTime: nil, completion: nil)
+        delegate?.alertCreateUserFailure(message: error.localizedDescription, withTime: nil, completion: nil)
     }
     
     func isEmailVerified() {
