@@ -6,8 +6,6 @@ line_length:
   - 300 # warning
   - 500 # error
 
-force_cast: warning
-
 type_name:
  allowed_symbols: "_"
 

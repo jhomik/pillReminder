@@ -77,9 +77,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             meds.dose = medicationToUpdate.dose
             meds.cellImage = medicationToUpdate.cellImage
             delegate?.passMedication(medication: meds)
-            if !cellImage.isEmpty {
-                viewModel.removeImageFromStorage(url: cellImage)
-            }
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()

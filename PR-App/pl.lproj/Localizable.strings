@@ -7,17 +7,18 @@
 */
 
 "addMedication" = "Dodaj lek";
-"placeHolderNameMedication" = "Nazwa leku";
-"placeHolderCapacityMedication" = "Pojemność opakowania";
-"placeHolderDoseMedication" = "Dawka";
+"nameMedication" = "Nazwa leku";
+"capacityMedication" = "Pojemność opakowania";
+"doseMedication" = "Dawka";
 "changeSettings" = "Edytuj ustawienia leku";
 "changeMedications" = "Edytuj lek";
 "tapToChange" = "Zmień";
 "pillName" = "Nazwa leku";
 "capacity" = "Pojemność";
-"dose" = "Dawka";
 "program" = "Program";
+"dosage" = "Dawkowanie";
 "yourName" = "Twoje imię";
+"dose" = "Dawka tabletki";
 "emailAddress" = "Adres e-mail";
 "password" = "Hasło";
 "confirmPassword" = "Powtórz hasło";
@@ -45,9 +46,29 @@
 "photoLibrary" = "Biblioteka zdjęć";
 "cancel" = "Anuluj";
 "medicine" = "Lekarstwa";
-"reminder" = "Przypominacz";
+"reminder" = "Powiadomienia";
 "firstPill" = "Pora wziąć pierwszą tabletkę ";
 "secondPill" = "Pora wziąć drugą tabletkę ";
 "thirdPill" = "Pora wziąć ostatnia tabletkę ";
 "tapNotification" = "Kliknij aby wziąć!";
 "passwordMatch" = "Hasła nie pasują do siebie";
+"everyDay" = "Codziennie";
+"onceADay" = "Raz dziennie";
+"twiceADay" = "2 razy dziennie | Rano i wieczorem";
+"threeTimesADay" = "3 razy dziennie | Rano, po południu, wieczorem";
+"pillsLeft" = "Pozostały ";
+"pillLeft" = "Pozostała ";
+"pills" = " tabletki";
+"pill" = " tabletka";
+"selectFrequencyInput" = "Wybierz jak często";
+"howManyTimesPerDayInput" = "Wybierz ile razy dziennie";
+"whatTimeInput" = "Wybierz godzinę";
+"chooseDosage" = "Wybierz dawkę";
+"frequencyTitle" = "Częstotliwość";
+"howManyTimesPerDayTitle" = "Ile razy dziennie?";
+"whatTimeTitle" = "O której godzinie?";
+"mgPills" = " mg";
+"onceADayArray" = "Raz dziennie";
+"twiceADayArray" = "Dwa razy dziennie";
+"threeTimesADayArray" = "Trzy razy dziennie";
+

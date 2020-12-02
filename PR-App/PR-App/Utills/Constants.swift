@@ -9,23 +9,23 @@
 import UIKit
 
 struct Constants {
-    static let onceADayNotificationIdentifier = "onceADay"
-    static let twiceADayNotificationIdentifier = "twiceADay"
-    static let threeTimesADayNotificationIdentifier = "threeTimesADay"
+    static let reminderCellId = "reminderCell"
+    static let customCellId = "customCellId"
     static let users = "users"
     static let username = "username"
     static let medicationData = "medicationData"
     static let user = "user"
     static let addMedication = NSLocalizedString("addMedication", comment: "")
-    static let placeHolderNameMedication = NSLocalizedString("placeHolderNameMedication", comment: "")
-    static let placeHolderCapacityMedication = NSLocalizedString("placeHolderCapacityMedication", comment: "")
-    static let placeHolderDoseMedication = NSLocalizedString("placeHolderDoseMedication", comment: "")
+    static let nameMedication = NSLocalizedString("nameMedication", comment: "")
+    static let capacityMedication = NSLocalizedString("capacityMedication", comment: "")
+    static let doseMedication = NSLocalizedString("doseMedication", comment: "")
+    static let dose = NSLocalizedString("dose", comment: "")
+    static let dosage = NSLocalizedString("dosage", comment: "")
     static let changeSettings = NSLocalizedString("changeSettings", comment: "")
     static let changeMedications = NSLocalizedString("changeMedications", comment: "")
     static let tapToChange = NSLocalizedString("tapToChange", comment: "")
     static let pillName = NSLocalizedString("pillName", comment: "")
     static let capacity = NSLocalizedString("capacity", comment: "")
-    static let dose = NSLocalizedString("dose", comment: "")
     static let program = NSLocalizedString("program", comment: "")
     static let yourName = NSLocalizedString("yourName", comment: "")
     static let emailAddress = NSLocalizedString("emailAddress", comment: "")
@@ -48,4 +48,23 @@ struct Constants {
     static let secondPill = NSLocalizedString("secondPill", comment: "")
     static let thirdPill = NSLocalizedString("thirdPill", comment: "")
     static let tapNotification = NSLocalizedString("tapNotification", comment: "")
+    static let everyDay = NSLocalizedString("everyDay", comment: "")
+    static let onceADay = NSLocalizedString("onceADay", comment: "")
+    static let twiceADay = NSLocalizedString("twiceADay", comment: "")
+    static let threeTimesADay = NSLocalizedString("threeTimesADay", comment: "")
+    static let pillsLeft = NSLocalizedString("pillsLeft", comment: "")
+    static let pillLeft = NSLocalizedString("pillLeft", comment: "")
+    static let pills = NSLocalizedString("pills", comment: "")
+    static let pill = NSLocalizedString("pill", comment: "")
+    static let selectFrequencyInput = NSLocalizedString("selectFrequencyInput", comment: "")
+    static let howManyTimesPerDayInput = NSLocalizedString("howManyTimesPerDayInput", comment: "")
+    static let whatTimeInput = NSLocalizedString("whatTimeInput", comment: "")
+    static let chooseDosage = NSLocalizedString("chooseDosage", comment: "")
+    static let frequencyTitle = NSLocalizedString("frequencyTitle", comment: "")
+    static let howManyTimesPerDayTitle = NSLocalizedString("howManyTimesPerDayTitle", comment: "")
+    static let whatTimeTitle = NSLocalizedString("whatTimeTitle", comment: "")
+    static let mgPills = NSLocalizedString("mgPills", comment: "")
+    static let onceADayArray = NSLocalizedString("onceADayArray", comment: "")
+    static let twiceADayArray = NSLocalizedString("twiceADayArray", comment: "")
+    static let threeTimesADayArray = NSLocalizedString("threeTimesADayArray", comment: "")
 }

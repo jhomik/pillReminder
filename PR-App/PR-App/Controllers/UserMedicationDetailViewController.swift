@@ -13,11 +13,7 @@ final class UserMedicationDetailViewController: UIViewController {
     private let medicationView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
-    var medications: UserMedicationDetailModel? {
-        didSet {
-//           updateUI()
-        }
-    }
+    var medications: UserMedicationDetailModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +31,7 @@ final class UserMedicationDetailViewController: UIViewController {
         
     private func updateUI() {
         medicationView.medicationToChange = medications
+        dosageMedicationView.medicationToChange = medications
     }
     
     private func configureViewController() {

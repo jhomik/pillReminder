@@ -11,9 +11,7 @@ import SnapKit
 
 final class CustomCell: UICollectionViewCell {
     
-    static let reuseId = "CustomCell"
     var imageCell = PillReminderImageView(frame: .zero)
-    var placeholderImage = UIImageView()
     var newMedsTitle = UILabel()
     var deleteButton = UIButton()
     private let firebaseManager = FirebaseManager()
@@ -24,7 +22,6 @@ final class CustomCell: UICollectionViewCell {
         configureCell()
         configureNewMedsTitle()
         configureImageCell()
-        configurePlaceholderImage()
         configureDeleteButton()
     }
     
@@ -37,16 +34,13 @@ final class CustomCell: UICollectionViewCell {
         self.deleteButton.layer.cornerRadius = self.deleteButton.bounds.width / 2
         deleteButton.layer.masksToBounds = true
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
-        placeholderImage.image = Images.placeholderImage
     }
     
     public func configureMedicationCell(with urlImageString: String, title: String) {
         if !urlImageString.isEmpty {
             imageCell.downloadImage(with: urlImageString)
-            placeholderImage.isHidden = true
         } else {
-            configurePlaceholderImage()
-            placeholderImage.isHidden = false
+            imageCell.image = Images.placeholderImage
         }
         newMedsTitle.text = title
     }
@@ -62,7 +56,6 @@ final class CustomCell: UICollectionViewCell {
         deleteButton.addTarget(self, action: #selector(deleteButtonTapped), for: .touchUpInside)
         deleteButton.backgroundColor = UIColor.backgroundColor
         deleteButton.layer.cornerRadius = deleteButton.bounds.width / 2
-        
         self.addSubview(deleteButton)
         
         deleteButton.snp.makeConstraints { (make) in
@@ -75,19 +68,6 @@ final class CustomCell: UICollectionViewCell {
         deleteButtonEvent()
     }
     
-    private func configurePlaceholderImage() {
-        placeholderImage.image = Images.placeholderImage
-        placeholderImage.alpha = 0.3
-        
-        self.addSubview(placeholderImage)
-        
-        placeholderImage.snp.makeConstraints { (make) in
-            make.top.leading.equalTo(25)
-            make.bottom.equalTo(newMedsTitle.snp.top).offset(-10)
-            make.trailing.equalTo(-25)
-        }
-    }
-
     private func configureImageCell() {
         let imageCellCornerRadius: CGFloat = 20
         

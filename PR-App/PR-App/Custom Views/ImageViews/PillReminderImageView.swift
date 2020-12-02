@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import SnapKit
 
 class PillReminderImageView: UIImageView {
     
     private let firebaseManager = FirebaseManager()
+    private let placeholderImage = Images.placeholderImage
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -23,7 +25,7 @@ class PillReminderImageView: UIImageView {
     
     private func configurePillImageView() {
         let pillImageCornerRadius: CGFloat = 16
-        
+        self.image = placeholderImage
         self.backgroundColor = .tertiarySystemFill
         self.contentMode = .scaleAspectFill
         self.layer.masksToBounds = true

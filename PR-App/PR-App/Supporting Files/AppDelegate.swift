@@ -15,7 +15,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let notificationCenter = UNUserNotificationCenter.current()
-    
+        
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         notificationCenter.delegate = self
@@ -30,8 +30,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Count: \(request.count)")
             for item in request {
                 print(item.content)
+                print("Identifier: \(item.identifier)")
             }
         }
+        
         FirebaseApp.configure()
         return true
     }
@@ -39,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData) {
         
         let date = scheduleNotoficationData.time
-        let triggerDate = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: date)
+        let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: date)
         let content = UNMutableNotificationContent()
         
         switch pillOfTheDay {
@@ -58,14 +60,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.sound = .default
         content.badge = 1
         
-        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
-        let request = UNNotificationRequest(identifier: scheduleNotoficationData.identifier, content: content, trigger: trigger)
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
             if let error = error {
                 print("Error \(error.localizedDescription)")
             }
             print(triggerDate)
+        }
+    }
+    
+    func nextTriggerDate(label: UILabel) {
+        let dateFormmater = DateFormatter()
+        dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
+
+        notificationCenter.getPendingNotificationRequests { (notifications) in
+            for item in notifications {
+                if let trigger = item.trigger as? UNCalendarNotificationTrigger,
+                   let triggerDate = trigger.nextTriggerDate() {
+                    let nextDate = dateFormmater.string(from: triggerDate)
+                    DispatchQueue.main.async {
+                        label.text = "Next pill: \(nextDate)"
+                    }
+                }
+            }
         }
     }
     

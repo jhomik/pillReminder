@@ -11,7 +11,6 @@ import UIKit
 final class UserMedicationDetailView: UIView {
     
     var pillImageView = PillReminderImageView(frame: .zero)
-    private let placeholderImage = UIImageView()
     var firebaseManager = FirebaseManager()
     private let medicationStackView = UIStackView()
     var medicationToChange: UserMedicationDetailModel? {
@@ -62,15 +61,11 @@ final class UserMedicationDetailView: UIView {
         updatePackageCapacityValue(medication.capacity)
         updatePillDoseValue(medication.dose)
         downloadImage(medication: medication)
-    
     }
     
     private func downloadImage(medication: UserMedicationDetailModel) {
-        if let cellImage = medication.cellImage, !cellImage.isEmpty {
-            pillImageView.downloadImage(with: cellImage)
-        } else {
-            configurePlaceholderImage()
-        }
+        guard let cellImage = medication.cellImage else { return }
+        pillImageView.downloadImage(with: cellImage)
     }
     
     func updatePillNameValue(_ value: String) {
@@ -78,11 +73,16 @@ final class UserMedicationDetailView: UIView {
     }
     
     func updatePackageCapacityValue(_ value: String) {
-        self.packageCapacityView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
+        guard let amount = Int(value) else { return }
+        if amount <= 1 {
+            self.packageCapacityView.updateInputValue(NSAttributedString(string: value + Constants.pill, attributes: self.inputAttributes))
+        } else {
+            self.packageCapacityView.updateInputValue(NSAttributedString(string: value + Constants.pills, attributes: self.inputAttributes))
+        }
     }
     
     func updatePillDoseValue(_ value: String) {
-        self.pillDoseView.updateInputValue(NSAttributedString(string: value, attributes: self.inputAttributes))
+        self.pillDoseView.updateInputValue(NSAttributedString(string: value + Constants.mgPills, attributes: self.inputAttributes))
     }
     
     private func configurePillImageView() {
@@ -93,25 +93,6 @@ final class UserMedicationDetailView: UIView {
         pillImageView.snp.makeConstraints { (make) in
             make.top.bottom.leading.equalTo(self)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
-        }
-    }
-    
-    private func configurePlaceholderImage() {
-        let topAnchorConstraint: CGFloat = 30
-        let bottomAnchorConstraint: CGFloat = 45
-        let leadingAndTrailingConstraints: CGFloat = 25
-        let placeholderAlpha: CGFloat = 0.3
-        
-        placeholderImage.image = Images.placeholderImage
-        placeholderImage.alpha = placeholderAlpha
-        
-        self.addSubview(placeholderImage)
-        
-        placeholderImage.snp.makeConstraints { (make) in
-            make.top.equalTo(pillImageView).offset(topAnchorConstraint)
-            make.leading.equalTo(pillImageView).offset(leadingAndTrailingConstraints)
-            make.trailing.equalTo(pillImageView).offset(-leadingAndTrailingConstraints)
-            make.bottom.equalTo(pillImageView).offset(-bottomAnchorConstraint)
         }
     }
     

@@ -15,7 +15,6 @@ protocol UserMedicationDetailDelegate: AnyObject {
 
 struct ScheduleNotoficationData {
     var textField: UITextField
-    var identifier: String
     let pillName: String
     let time: Date
 }
@@ -23,21 +22,21 @@ struct ScheduleNotoficationData {
 final class NewMedicationSettingsView: UIView {
     
     private(set) var addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
-    private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderNameMedication, isPassword: false)
-    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderCapacityMedication, isPassword: false)
-    private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.placeHolderDoseMedication, isPassword: false)
-    private(set) var frequencyTextField = PillReminderProgramCustomTextFields(placeholderText: "Select frequency")
-    private(set) var howManyTimesTextField = PillReminderProgramCustomTextFields(placeholderText: "How many times per day?")
-    private(set) var whatTimeOnceADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
-    private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
-    private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: "What time?")
-    private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: "Choose dosage")
-    private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: "Frequency")
-    private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: "How many times per day?")
-    private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: "What time?")
-    private(set) var dosageLabel = PillReminderProgramCustomLabel(text: "Dosage")
-    private let capacityLabel = PillReminderMainCustomLabel(text: "pills", alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
-    private let doseLabel = PillReminderMainCustomLabel(text: "mg", alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
+    private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.capacityMedication, isPassword: false)
+    private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
+    private(set) var frequencyTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.selectFrequencyInput)
+    private(set) var howManyTimesTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.howManyTimesPerDayInput)
+    private(set) var whatTimeOnceADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
+    private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
+    private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
+    private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.chooseDosage)
+    private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: Constants.frequencyTitle)
+    private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: Constants.howManyTimesPerDayTitle)
+    private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: Constants.whatTimeTitle)
+    private(set) var dosageLabel = PillReminderProgramCustomLabel(text: Constants.dosage)
+    private let capacityLabel = PillReminderMainCustomLabel(text: Constants.pills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private let doseLabel = PillReminderMainCustomLabel(text: Constants.mgPills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
     private let pillModel = PillModel()
     private let newMedicationStackView = UIStackView()
     private let programMedicationStackView = UIStackView()
@@ -310,17 +309,17 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureFirstDaySchedule() {
-        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, identifier: Constants.onceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
+        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill)
     }
     
     private func configureSecondDaySchedule() {
-        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, identifier: Constants.twiceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
+        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill)
     }
     
     private func configureThirdDaySchedule() {
-        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, identifier: Constants.threeTimesADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
+        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill)
     }
 }
@@ -364,9 +363,9 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     func capacityText(forContent text: String?) -> String {
         guard let text = text, let amount = Int(text) else { return "" }
         if amount <= 1 {
-            return "pill"
+            return Constants.pill
         } else {
-            return "pills"
+            return Constants.pills
         }
     }
     

@@ -14,6 +14,7 @@ protocol NewMedicationCellDelegate: AnyObject {
 
 final class NewMedicationViewModel {
     
+    private let userDefaults = UserDefaults.standard
     private let firebaseManager = FirebaseManager()
     weak var addCellDelegate: NewMedicationCellDelegate?
     

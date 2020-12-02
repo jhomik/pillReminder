@@ -10,10 +10,9 @@ import Foundation
 
 struct PillModel {
 
-    let frequency = ["Everyday", "Every second day"]
-    let howManyTimesPerDay = ["Once a day", "Twice a day", "Three times a day"]
+    let frequency = [Constants.everyDay]
+    let howManyTimesPerDay = [Constants.onceADayArray, Constants.twiceADayArray, Constants.threeTimesADayArray]
     let dosage = ["1", "1/2", "1/4"]
-    let sections = ["Frequency", "How many times per day?", "What time?", "Dosage"]
 }
 
 enum PillOfTheDay {

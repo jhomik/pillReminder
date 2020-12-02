@@ -36,6 +36,9 @@
 		5A977D432545BA95009A1A58 /* TakeAPillAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A977D422545BA95009A1A58 /* TakeAPillAlertController.swift */; };
 		5A977D4B2546C9E0009A1A58 /* TakeAPillView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A977D4A2546C9E0009A1A58 /* TakeAPillView.swift */; };
 		5A9813B6256A4BFC00A019C5 /* PillReminderImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9813B5256A4BFC00A019C5 /* PillReminderImageView.swift */; };
+		5A9813BE2572C70800A019C5 /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9813BD2572C70800A019C5 /* ReminderCell.swift */; };
+		5A9813CE2573C55700A019C5 /* ReminderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */; };
+		5A9813DD2576667B00A019C5 /* UIImage+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A9813DC2576667A00A019C5 /* UIImage+Extensions.swift */; };
 		5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */; };
 		5AA21ACE24D32692000C6F47 /* UserMedicationDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21ACD24D32692000C6F47 /* UserMedicationDetailModel.swift */; };
 		5AA21AD224DD806E000C6F47 /* NewMedicationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */; };
@@ -115,6 +118,9 @@
 		5A977D422545BA95009A1A58 /* TakeAPillAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeAPillAlertController.swift; sourceTree = "<group>"; };
 		5A977D4A2546C9E0009A1A58 /* TakeAPillView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TakeAPillView.swift; sourceTree = "<group>"; };
 		5A9813B5256A4BFC00A019C5 /* PillReminderImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillReminderImageView.swift; sourceTree = "<group>"; };
+		5A9813BD2572C70800A019C5 /* ReminderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderCell.swift; sourceTree = "<group>"; };
+		5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderViewModel.swift; sourceTree = "<group>"; };
+		5A9813DC2576667A00A019C5 /* UIImage+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extensions.swift"; sourceTree = "<group>"; };
 		5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoViewModel.swift; sourceTree = "<group>"; };
 		5AA21ACD24D32692000C6F47 /* UserMedicationDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailModel.swift; sourceTree = "<group>"; };
 		5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationViewModel.swift; sourceTree = "<group>"; };
@@ -192,6 +198,8 @@
 				5AD3E497246DB20500882154 /* CustomCell.swift */,
 				5AE4476224E6F1E600CC9DA4 /* AddMedicationCell.swift */,
 				5AD3E495246D9EC700882154 /* CustomCollectionViewHeader.swift */,
+				5A9813BD2572C70800A019C5 /* ReminderCell.swift */,
+				5A65A73D247C2AE7003003B2 /* Views */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -262,6 +270,7 @@
 				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
 				5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */,
 				5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */,
+				5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -289,7 +298,6 @@
 				5A9813B4256A4BD400A019C5 /* ImageViews */,
 				5A1AE7DE247E8D4C0094F17B /* TabBars */,
 				5A1AE7DD247E8D220094F17B /* Cells */,
-				5A65A73D247C2AE7003003B2 /* Views */,
 				5AA9D0A624781DB2007D85DA /* Buttons */,
 				5AA9D0A524780764007D85DA /* TextFields */,
 				5AA9D0A424780753007D85DA /* Labels */,
@@ -315,6 +323,7 @@
 				ABF726A32463A46100C903B7 /* UIView+Extensions.swift */,
 				5A582B8C2473FEFC00247D19 /* UIViewController+Extensions.swift */,
 				5A82248B24FE6CA6003BD716 /* UIColor+Extensions.swift */,
+				5A9813DC2576667A00A019C5 /* UIImage+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -701,6 +710,7 @@
 				5A3AED5124F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift in Sources */,
 				AB217B302461CF0B00742EB1 /* Constants.swift in Sources */,
 				5ADB92DA248E4FF80097F9E1 /* WelcomeView.swift in Sources */,
+				5A9813CE2573C55700A019C5 /* ReminderViewModel.swift in Sources */,
 				5A582BA42474596700247D19 /* TabBarController.swift in Sources */,
 				5A78FC472502B58900011DD1 /* NewMedicationSettingsView.swift in Sources */,
 				5ADFC2C324854870008E9282 /* CurrentMedicationSettingsView.swift in Sources */,
@@ -710,6 +720,7 @@
 				5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */,
 				5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */,
 				5AE4476324E6F1E600CC9DA4 /* AddMedicationCell.swift in Sources */,
+				5A9813BE2572C70800A019C5 /* ReminderCell.swift in Sources */,
 				5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenViewController.swift in Sources */,
@@ -736,6 +747,7 @@
 				5A82248C24FE6CA6003BD716 /* UIColor+Extensions.swift in Sources */,
 				5AEC6E1F24F553010052D16B /* ForgotPasswordView.swift in Sources */,
 				5A8572C5252270D800C58DA2 /* PillReminderProgramCustomLabel.swift in Sources */,
+				5A9813DD2576667B00A019C5 /* UIImage+Extensions.swift in Sources */,
 				5A4BA9E62465D105008AF20B /* AppDelegate.swift in Sources */,
 				5A7138222504FB0A0052F668 /* LoginScreenView.swift in Sources */,
 			);

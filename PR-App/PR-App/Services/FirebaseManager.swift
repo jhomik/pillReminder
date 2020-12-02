@@ -137,6 +137,8 @@ final class FirebaseManager {
         if !urlString.isEmpty {
             if let image = cache.object(forKey: cacheKey) {
                 completion(image)
+            } else {
+                
             }
             
             guard let url = URL(string: urlString) else { return }

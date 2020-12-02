@@ -111,7 +111,7 @@ final class UserMedicationInfoViewController: UIViewController {
         flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: heightHeaderSize)
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: CustomCell.reuseId)
+        collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: Constants.customCellId)
         collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CustomCollectionViewHeader.reuseID)
         collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: AddMedicationCell.reuseId)
         collectionView?.dataSource = self
@@ -129,9 +129,8 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CustomCell.reuseId, for: indexPath) as! CustomCell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.customCellId, for: indexPath) as? CustomCell else { return UICollectionViewCell() }
         cell.imageCell.image = UIImage()
-        cell.placeholderImage.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
         cell.deleteButtonEvent = { [weak self, unowned cell] in
             self?.deleteItem(for: cell)
@@ -144,7 +143,7 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
             cell.configureMedicationCell(with: urlImage, title: title)
             return cell
         } else {
-            let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as! AddMedicationCell
+            guard let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as? AddMedicationCell else { return UICollectionViewCell() }
             addMedCell.configureAddMedicationCell(with: Images.cellImage ?? UIImage(), title: Constants.addMedication)
             return addMedCell
         }

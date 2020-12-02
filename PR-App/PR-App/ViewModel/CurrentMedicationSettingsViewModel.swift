@@ -10,7 +10,7 @@ import Foundation
 
 final class CurrentMedicationSettingsViewModel {
     
-    var pillModel = PillModel()
+//    var pillModel = PillModel()
     private let firebaseManager = FirebaseManager()
     
     func updateMedicationInfo(data: Data, medicationDetail: UserMedicationDetailModel, completion: @escaping () -> Void) {
