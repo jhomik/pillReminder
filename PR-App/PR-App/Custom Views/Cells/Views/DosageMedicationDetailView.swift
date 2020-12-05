@@ -12,6 +12,10 @@ final class DosageMedicationDetailView: UIView {
     
     private let pillModel = PillModel()
     private let dosageMedicationStackView = UIStackView()
+    private let takeAPillView = TakeAPillView()
+    var leftCapacity: String? {
+        return medicationToChange?.capacity
+    }
     var medicationToChange: UserMedicationDetailModel? {
         didSet {
             updateUI()
@@ -48,9 +52,13 @@ final class DosageMedicationDetailView: UIView {
     }
     
     private func updateUI() {
-        guard let medication = medicationToChange else { return }
+        guard let medication = medicationToChange, let leftPills = leftCapacity else { return }
         configureDoseInformations(medication: medication)
-        updatePillsLeft(medication.capacity)
+        updatePillsLeft(leftPills)
+    }
+    
+    private func test() {
+    
     }
     
     func configureDoseInformations(medication: UserMedicationDetailModel) {
@@ -82,11 +90,28 @@ final class DosageMedicationDetailView: UIView {
     }
     
     func updatePillsLeft(_ value: String) {
-        guard let amount = Int(value) else { return }
+        guard let amount = Double(value) else { return }
         if amount <= 1 {
             self.capacityPillsLeft.updateInputValue(NSAttributedString(string: Constants.pillLeft + value + Constants.pill, attributes: self.inputAttributes))
         } else {
             self.capacityPillsLeft.updateInputValue(NSAttributedString(string: Constants.pillsLeft + value + Constants.pills, attributes: self.inputAttributes))
         }
+    }
+    
+    func decreasePillValue() -> String {
+        guard let newValue = Double(leftCapacity ?? ""), let medication = medicationToChange else { return "" }
+        if medication.dosage == "1" {
+            return String(newValue - 1)
+        } else if medication.dosage == "1/2" {
+            return String(newValue - 0.5)
+        } else {
+            return String(newValue - 0.25)
+        }
+    }
+}
+
+extension DosageMedicationDetailView: DecreasePillValueDelegate {
+    func decrease() {
+        updatePillsLeft(decreasePillValue())
     }
 }

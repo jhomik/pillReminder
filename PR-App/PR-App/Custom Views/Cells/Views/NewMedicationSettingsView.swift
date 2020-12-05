@@ -227,7 +227,7 @@ final class NewMedicationSettingsView: UIView {
         }
     }
     
-    private func createPickerView(withTextField: UITextField, readUserDefault: String) {
+    private func createPickerView(withTextField: UITextField) {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -241,15 +241,18 @@ final class NewMedicationSettingsView: UIView {
     
     @objc private func onPickerDoneButtonTapped() {
         guard let textField = activeTextField else { return }
+        
         if textField == frequencyTextField {
-            let row = pillModel.frequency[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "frequencyRow")
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.frequency[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
         } else if textField == howManyTimesTextField {
-            let row = pillModel.howManyTimesPerDay[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "howManyTimesPerdDayRow")
-            switch pickerView.selectedRow(inComponent: 0) {
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.howManyTimesPerDay[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+            switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
                 whatTimeThreeTimesADayTextField.isHidden = true
@@ -263,14 +266,15 @@ final class NewMedicationSettingsView: UIView {
                 break
             }
         } else {
-            let row = pillModel.dosage[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "dosageRow")
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.dosage[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
         }
         self.endEditing(true)
     }
     
-    private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField, readUserDefault: String) {
+    private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField) {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -289,23 +293,26 @@ final class NewMedicationSettingsView: UIView {
     
     @objc private func dateDoneButtonTapped() {
         let formatter = DateFormatter()
-        let selectedOnce = onceADayDatePickerView.date
-        let selectedTwice = twiceADayDatePickerView.date
-        let selectedThree = threeTimesADayDatePickerView.date
         formatter.timeStyle = .short
         
         if activeTextField == whatTimeOnceADayTextField {
-            whatTimeOnceADayTextField.text = formatter.string(from: selectedOnce)
-            userDefaults.set(selectedOnce, forKey: "whatTimeOnceADayRow")
+            let selectedOnce = onceADayDatePickerView.date
+            let time = formatter.string(from: selectedOnce)
+            whatTimeOnceADayTextField.text = time
+            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
+            print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
-            whatTimeTwiceADayTextField.text = formatter.string(from: selectedTwice)
-            userDefaults.set(selectedTwice, forKey: "whatTimeTwiceADayRow")
+            let selectedTwice = twiceADayDatePickerView.date
+            let time = formatter.string(from: selectedTwice)
+            whatTimeTwiceADayTextField.text = time
+            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
         } else {
-            whatTimeThreeTimesADayTextField.text = formatter.string(from: selectedThree)
-            userDefaults.set(selectedThree, forKey: "whatTimeThreeTimesADayRow")
+            let selectedThree = threeTimesADayDatePickerView.date
+            let time = formatter.string(from: selectedThree)
+            whatTimeThreeTimesADayTextField.text = time
+            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
         }
         self.endEditing(true)
-        
     }
     
     private func configureFirstDaySchedule() {
@@ -374,11 +381,11 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         if textField == capacityTextField {
             capacityLabel.text = capacityText(forContent: textField.text)
             let capacityWidth = getWidth(text: textField.text)
-            capacityLeadingConstraint?.update(offset: capacityWidth + 5)
+            capacityLeadingConstraint?.update(offset: capacityWidth + 2)
             capacityLabel.layoutIfNeeded()
         } else if textField == doseTextField {
             let doseWidth = getWidth(text: textField.text)
-            doseLeadingConstraint?.update(offset: doseWidth + 5)
+            doseLeadingConstraint?.update(offset: doseWidth + 2)
             doseLabel.layoutIfNeeded()
         }
         
@@ -417,17 +424,17 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         activeTextField = textField
         
         if textField == frequencyTextField {
-            createPickerView(withTextField: textField, readUserDefault: "frequencyRow")
+            createPickerView(withTextField: textField)
         } else if textField == howManyTimesTextField {
-            createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
+            createPickerView(withTextField: textField)
         } else if textField == whatTimeOnceADayTextField {
-            createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
+            createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField)
         } else if textField == whatTimeTwiceADayTextField {
-            createDatePickerView(datePickerView: twiceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeTwiceADayRow")
+            createDatePickerView(datePickerView: twiceADayDatePickerView, withTextField: textField)
         } else if textField == whatTimeThreeTimesADayTextField {
-            createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeThreeTimesADayRow")
+            createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField)
         } else if textField == dosageTextField {
-            createPickerView(withTextField: textField, readUserDefault: "dosageRow")
+            createPickerView(withTextField: textField)
         }
     }
     

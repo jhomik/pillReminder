@@ -15,6 +15,7 @@ import UserNotifications
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let notificationCenter = UNUserNotificationCenter.current()
+    private(set) var badgeCount = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
         
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
@@ -43,6 +44,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let date = scheduleNotoficationData.time
         let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: date)
         let content = UNMutableNotificationContent()
+        content.body = Constants.tapNotification
+        content.sound = .default
+        content.badge = badgeCount
         
         switch pillOfTheDay {
         case .first:
@@ -55,10 +59,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             content.title = Constants.thirdPill + "\(scheduleNotoficationData.pillName)"
             scheduleNotoficationData.textField.text = DateFormatter().string(from: scheduleNotoficationData.time)
         }
-        
-        content.body = Constants.tapNotification
-        content.sound = .default
-        content.badge = 1
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
         let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
@@ -81,11 +81,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                    let triggerDate = trigger.nextTriggerDate() {
                     let nextDate = dateFormmater.string(from: triggerDate)
                     DispatchQueue.main.async {
-                        label.text = "Next pill: \(nextDate)"
+                        label.text = Constants.nextPill + "\(nextDate)"
                     }
                 }
             }
         }
+    }
+    
+    func deletePendingNotification() {
+        notificationCenter.removeAllPendingNotificationRequests()
     }
     
     // MARK: UISceneSession Lifecycle

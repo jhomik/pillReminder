@@ -11,7 +11,6 @@ import SnapKit
 
 final class AddMedicationCell: UICollectionViewCell {
     
-    static let reuseId = "AddMedicationCell"
     private let imageCell = UIImageView()
     private let newMedsTitle = UILabel()
     

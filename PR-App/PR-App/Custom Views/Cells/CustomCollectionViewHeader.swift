@@ -11,7 +11,6 @@ import SnapKit
 
 final class CustomCollectionViewHeader: UICollectionReusableView {
     
-    static let reuseID = "headerView"
     private var imageLogo = UIImageView()
     
     override init(frame: CGRect) {

@@ -86,6 +86,8 @@ final class UserMedicationInfoViewController: UIViewController {
     }
     
     private func deleteItem(for item: CustomCell) {
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        appDelegate?.deletePendingNotification()
         if let indexPath = collectionView?.indexPath(for: item) {
             let model = medications[indexPath.item]
             medications.remove(at: indexPath.item)
@@ -112,8 +114,8 @@ final class UserMedicationInfoViewController: UIViewController {
         
         collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: Constants.customCellId)
-        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: CustomCollectionViewHeader.reuseID)
-        collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: AddMedicationCell.reuseId)
+        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.headerViewId)
+        collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: Constants.addMedicationCellId)
         collectionView?.dataSource = self
         collectionView?.delegate = self
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
@@ -143,14 +145,14 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
             cell.configureMedicationCell(with: urlImage, title: title)
             return cell
         } else {
-            guard let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: AddMedicationCell.reuseId, for: indexPath) as? AddMedicationCell else { return UICollectionViewCell() }
+            guard let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.addMedicationCellId, for: indexPath) as? AddMedicationCell else { return UICollectionViewCell() }
             addMedCell.configureAddMedicationCell(with: Images.cellImage ?? UIImage(), title: Constants.addMedication)
             return addMedCell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: CustomCollectionViewHeader.reuseID, for: indexPath)
+        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.headerViewId, for: indexPath)
         
         return header
     }

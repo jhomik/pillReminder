@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol DecreasePillValueDelegate: AnyObject {
+    func decrease()
+}
+
 class TakeAPillView: UIView {
 
     private let titleLabel = PillReminderMainCustomLabel(text: "Did you take a pill?", alignment: .center, size: 24, weight: .bold, color: .black)
     private let buttonTookAPill = PillReminderMainCustomButton(text: "Yes")
     private let buttonSnoozeAPill = PillReminderMainCustomButton(text: "Snooze for 5 minutes")
+    weak var delegate: DecreasePillValueDelegate?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,7 +61,7 @@ class TakeAPillView: UIView {
     }
     
     @objc private func tookAPillButtonTapped() {
-        print("test")
+        delegate?.decrease()
     }
     
     private func configureButtonSnoozeAPill() {

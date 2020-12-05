@@ -81,6 +81,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()
                 self.dismiss(animated: true, completion: nil)
+                self.userMedicationSettingView.setSchedule()
             })
         }
     }

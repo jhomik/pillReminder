@@ -9,12 +9,20 @@
 import UIKit
 
 struct Constants {
-    static let reminderCellId = "reminderCell"
+    static let defaultsFrequencyRow = "frequencyRow"
+    static let defaultsHowManyTimesRow = "howManyTimesPerDayRow"
+    static let defaultsWhatTimeOnceRow = "whatTimeOnceADayRow"
+    static let defaultsWhatTimeTwiceRow = "whatTimeTwiceADayRow"
+    static let defaultsWhatTimeThreeRow = "whatTimeThreeTimesADayRow"
+    static let defaultsDosageRow = "dosageRow"
+    static let reminderCellId = "reminderCellId"
     static let customCellId = "customCellId"
     static let users = "users"
     static let username = "username"
     static let medicationData = "medicationData"
     static let user = "user"
+    static let addMedicationCellId = "addMedicationCellId"
+    static let headerViewId = "headerViewId"
     static let addMedication = NSLocalizedString("addMedication", comment: "")
     static let nameMedication = NSLocalizedString("nameMedication", comment: "")
     static let capacityMedication = NSLocalizedString("capacityMedication", comment: "")
@@ -67,4 +75,5 @@ struct Constants {
     static let onceADayArray = NSLocalizedString("onceADayArray", comment: "")
     static let twiceADayArray = NSLocalizedString("twiceADayArray", comment: "")
     static let threeTimesADayArray = NSLocalizedString("threeTimesADayArray", comment: "")
+    static let nextPill = NSLocalizedString("nextPill", comment: "")
 }

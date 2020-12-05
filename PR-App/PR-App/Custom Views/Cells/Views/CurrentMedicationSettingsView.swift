@@ -67,12 +67,7 @@ final class CurrentMedicationSettingsView: UIView {
     
     private func updateUI() {
         guard let medication = medicationsToChange else { return }
-        nameTextField.text = medication.pillName
-        capacityTextField.text = medication.capacity
-        doseTextField.text = medication.dose
-        frequencyTextField.text = medication.frequency
-        howManyTimesTextField.text = medication.howManyTimesPerDay
-        dosageTextField.text = medication.dosage
+        updateTextFields(withModel: medication)
         downloadImage(medication: medication)
         updateCapcityConstraint(with: capacityTextField)
         updateDoseConstraint(with: doseTextField)
@@ -82,6 +77,25 @@ final class CurrentMedicationSettingsView: UIView {
     private func downloadImage(medication: UserMedicationDetailModel) {
         guard let cellImage = medication.cellImage else { return }
         currentMedicationImage.downloadImage(with: cellImage)
+    }
+    
+    private func updateTextFields(withModel medication: UserMedicationDetailModel) {
+        let formatter = DateFormatter()
+        formatter.timeStyle = .short
+        
+        nameTextField.text = medication.pillName
+        capacityTextField.text = medication.capacity
+        doseTextField.text = medication.dose
+        frequencyTextField.text = medication.frequency
+        howManyTimesTextField.text = medication.howManyTimesPerDay
+        dosageTextField.text = medication.dosage
+        
+        let onceDate = userDefaults.object(forKey: "whatTimeOnceADayRow") as? Date
+        whatTimeOnceADayTextField.text = formatter.string(from: onceDate ?? Date())
+        let twiceDate = userDefaults.object(forKey: "whatTimeTwiceADayRow") as? Date
+        whatTimeTwiceADayTextField.text = formatter.string(from: twiceDate ?? Date())
+        let threeTimesDate = userDefaults.object(forKey: "whatTimeThreeTimesADayRow") as? Date
+        whatTimeThreeTimesADayTextField.text = formatter.string(from: threeTimesDate ?? Date())
     }
     
     private func configureScrollView() {
@@ -207,13 +221,13 @@ final class CurrentMedicationSettingsView: UIView {
     private func updateCapcityConstraint(with textField: UITextField) {
         capacityLabel.text = capacityText(forContent: textField.text)
         let capacityWidth = getWidth(text: textField.text)
-        capacityLeadingConstraint?.update(offset: capacityWidth + 5)
+        capacityLeadingConstraint?.update(offset: capacityWidth + 2)
         capacityLabel.layoutIfNeeded()
     }
     
     private func updateDoseConstraint(with textField: UITextField) {
         let doseWidth = getWidth(text: textField.text)
-        doseLeadingConstraint?.update(offset: doseWidth + 5)
+        doseLeadingConstraint?.update(offset: doseWidth + 2)
         doseLabel.layoutIfNeeded()
     }
     
@@ -266,12 +280,15 @@ final class CurrentMedicationSettingsView: UIView {
         }
     }
     
-    private func createPickerView(withTextField: UITextField, readUserDefault: String) {
+    private func createPickerView(withTextField: UITextField, readUserDefaults: String) {
+        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Int else { return }
+        
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         pickerView.delegate = self
+        pickerView.selectRow(valueFromUserDefaults, inComponent: 0, animated: true)
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, doneButton], animated: false)
@@ -280,15 +297,18 @@ final class CurrentMedicationSettingsView: UIView {
     
     @objc private func onPickerDoneButtonTapped() {
         guard let textField = activeTextField else { return }
+        
         if textField == frequencyTextField {
-            let row = pillModel.frequency[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "frequencyRow")
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.frequency[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
         } else if textField == howManyTimesTextField {
-            let row = pillModel.howManyTimesPerDay[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "howManyTimesPerdDayRow")
-            switch pickerView.selectedRow(inComponent: 0) {
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.howManyTimesPerDay[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+            switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
                 whatTimeThreeTimesADayTextField.isHidden = true
@@ -302,23 +322,28 @@ final class CurrentMedicationSettingsView: UIView {
                 break
             }
         } else {
-            let row = pillModel.dosage[pickerView.selectedRow(inComponent: 0)]
-            textField.text = row
-            userDefaults.set(row, forKey: "dosageRow")
+            let row = pickerView.selectedRow(inComponent: 0)
+            let rowSelected = pillModel.dosage[row]
+            textField.text = rowSelected
+            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
         }
         self.endEditing(true)
     }
     
-    private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField, readUserDefault: String) {
+    private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField, readUserDefaults: String) {
+        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Date else { return }
+        
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         datePickerView.datePickerMode = .time
+        
         if #available(iOS 13.4, *) {
             datePickerView.preferredDatePickerStyle = .wheels
         }
         
+        datePickerView.date = valueFromUserDefaults
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -327,39 +352,45 @@ final class CurrentMedicationSettingsView: UIView {
     
     @objc private func dateDoneButtonTapped() {
         let formatter = DateFormatter()
-        let selectedOnce = onceADayDatePickerView.date
-        let selectedTwice = twiceADayDatePickerView.date
-        let selectedThree = threeTimesADayDatePickerView.date
         formatter.timeStyle = .short
         
         if activeTextField == whatTimeOnceADayTextField {
-            whatTimeOnceADayTextField.text = formatter.string(from: selectedOnce)
-            userDefaults.set(selectedOnce, forKey: "whatTimeOnceADayRow")
+            let selectedOnce = onceADayDatePickerView.date
+            let time = formatter.string(from: selectedOnce)
+            whatTimeOnceADayTextField.text = time
+            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
+            print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
-            whatTimeTwiceADayTextField.text = formatter.string(from: selectedTwice)
-            userDefaults.set(selectedTwice, forKey: "whatTimeTwiceADayRow")
+            let selectedTwice = twiceADayDatePickerView.date
+            let time = formatter.string(from: selectedTwice)
+            whatTimeTwiceADayTextField.text = time
+            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
         } else {
-            whatTimeThreeTimesADayTextField.text = formatter.string(from: selectedThree)
-            userDefaults.set(selectedThree, forKey: "whatTimeThreeTimesADayRow")
+            let selectedThree = threeTimesADayDatePickerView.date
+            let time = formatter.string(from: selectedThree)
+            whatTimeThreeTimesADayTextField.text = time
+            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
         }
         self.endEditing(true)
-        
     }
     
-    //    private func configureFirstDaySchedule() {
-    //        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, identifier: Constants.onceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
-    //        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill)
-    //    }
-    //
-    //    private func configureSecondDaySchedule() {
-    //        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, identifier: Constants.twiceADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
-    //        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill)
-    //    }
-    //
-    //    private func configureThirdDaySchedule() {
-    //        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, identifier: Constants.threeTimesADayNotificationIdentifier, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
-    //        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill)
-    //    }
+    private func configureFirstDaySchedule() {
+        appDelegate?.deletePendingNotification()
+        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill)
+    }
+    
+    private func configureSecondDaySchedule() {
+        appDelegate?.deletePendingNotification()
+        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill)
+    }
+    
+    private func configureThirdDaySchedule() {
+        appDelegate?.deletePendingNotification()
+        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill)
+    }
 }
 
 extension CurrentMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSource {
@@ -401,9 +432,9 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
     func capacityText(forContent text: String?) -> String {
         guard let text = text, let amount = Int(text) else { return "" }
         if amount <= 1 {
-            return "pill"
+            return Constants.pill
         } else {
-            return "pills"
+            return Constants.pills
         }
     }
     
@@ -412,11 +443,11 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
         if textField == capacityTextField {
             capacityLabel.text = capacityText(forContent: textField.text)
             let capacityWidth = getWidth(text: textField.text)
-            capacityLeadingConstraint?.update(offset: capacityWidth + 5)
+            capacityLeadingConstraint?.update(offset: capacityWidth + 2)
             capacityLabel.layoutIfNeeded()
         } else if textField == doseTextField {
             let doseWidth = getWidth(text: textField.text)
-            doseLeadingConstraint?.update(offset: doseWidth + 5)
+            doseLeadingConstraint?.update(offset: doseWidth + 2)
             doseLabel.layoutIfNeeded()
         }
         
@@ -455,17 +486,17 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
         activeTextField = textField
         
         if textField == frequencyTextField {
-            createPickerView(withTextField: textField, readUserDefault: "frequencyRow")
+            createPickerView(withTextField: textField, readUserDefaults: Constants.defaultsFrequencyRow)
         } else if textField == howManyTimesTextField {
-            createPickerView(withTextField: textField, readUserDefault: "howManyTimesPerdDayRow")
+            createPickerView(withTextField: textField, readUserDefaults: Constants.defaultsHowManyTimesRow)
         } else if textField == whatTimeOnceADayTextField {
-            createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeOnceADayRow")
+            createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField, readUserDefaults: Constants.defaultsWhatTimeOnceRow)
         } else if textField == whatTimeTwiceADayTextField {
-            createDatePickerView(datePickerView: twiceADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeTwiceADayRow")
+            createDatePickerView(datePickerView: twiceADayDatePickerView, withTextField: textField, readUserDefaults: Constants.defaultsWhatTimeTwiceRow)
         } else if textField == whatTimeThreeTimesADayTextField {
-            createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField, readUserDefault: "whatTimeThreeTimesADayRow")
+            createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField, readUserDefaults: Constants.defaultsWhatTimeThreeRow)
         } else if textField == dosageTextField {
-            createPickerView(withTextField: textField, readUserDefault: "dosageRow")
+            createPickerView(withTextField: textField, readUserDefaults: Constants.defaultsDosageRow)
         }
     }
     
@@ -474,17 +505,17 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
     }
 }
 
-//extension CurrentMedicationSettingsView {
-//    func setSchedule() {
-//        if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
-//            configureFirstDaySchedule()
-//            configureSecondDaySchedule()
-//            configureThirdDaySchedule()
-//        } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
-//            configureFirstDaySchedule()
-//            configureSecondDaySchedule()
-//        } else {
-//            configureFirstDaySchedule()
-//        }
-//    }
-//}
+extension CurrentMedicationSettingsView {
+    func setSchedule() {
+        if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
+            configureFirstDaySchedule()
+            configureSecondDaySchedule()
+            configureThirdDaySchedule()
+        } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
+            configureFirstDaySchedule()
+            configureSecondDaySchedule()
+        } else {
+            configureFirstDaySchedule()
+        }
+    }
+}

@@ -63,21 +63,24 @@ class ReminderCell: UITableViewCell {
         self.labelText.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         
         labelText.snp.makeConstraints { (make) in
-            make.top.equalTo(16)
+            make.top.equalTo(padding)
             make.leading.equalTo(imageCell.snp.trailing).offset(padding)
+            make.trailing.equalTo(self)
             make.height.equalTo(height)
         }
     }
     
     private func configureDetailLabelText() {
         let padding: CGFloat = 12
-        let height: CGFloat = 20
+        let height: CGFloat = 40
         self.addSubview(detailLabelText)
         self.detailLabelText.font = UIFont.italicSystemFont(ofSize: 14)
+        self.detailLabelText.numberOfLines = 2
         
         detailLabelText.snp.makeConstraints { (make) in
-            make.top.equalTo(labelText.snp.bottom).offset(6)
+            make.top.equalTo(labelText.snp.bottom).offset(4)
             make.leading.equalTo(imageCell.snp.trailing).offset(padding)
+            make.trailing.equalTo(self)
             make.height.equalTo(height)
         }
     }

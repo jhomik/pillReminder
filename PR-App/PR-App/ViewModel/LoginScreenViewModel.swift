@@ -32,7 +32,6 @@ final class LoginScreenViewModel {
         } else {
             loginEvents?.isPasswordMatch()
             return false
-            
         }
     }
     
