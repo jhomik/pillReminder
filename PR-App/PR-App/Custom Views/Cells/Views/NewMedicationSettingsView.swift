@@ -246,12 +246,12 @@ final class NewMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
+//            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
         } else if textField == howManyTimesTextField {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+//            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -269,7 +269,7 @@ final class NewMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
+//            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
         }
         self.endEditing(true)
     }
@@ -292,6 +292,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     @objc private func dateDoneButtonTapped() {
+
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
@@ -305,12 +306,12 @@ final class NewMedicationSettingsView: UIView {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
+//            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
+//            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
         }
         self.endEditing(true)
     }

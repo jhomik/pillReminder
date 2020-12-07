@@ -15,13 +15,12 @@ protocol PassMedicationDelegate: AnyObject {
 
 final class CurrentMedicationSettingsViewController: UIViewController {
     
-    private let userMedicationSettingView = CurrentMedicationSettingsView()
+    private let currentMedicationSettingsView = CurrentMedicationSettingsView()
     private let tableView = UITableView()
     private let viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private let medicationView = UserMedicationDetailView()
-    private var firebaseManager = FirebaseManager()
     var medications: UserMedicationDetailModel? {
         didSet {
             updateTextFieldsToChange()
@@ -35,8 +34,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         configureNavBar()
         configureMedicationView()
         createDismisKeyboardTapGesture()
-        updateTextFieldsToChange()
-        userMedicationSettingView.delegate = self
+        currentMedicationSettingsView.delegate = self
     }
     
     private func configureViewController() {
@@ -46,7 +44,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private func updateTextFieldsToChange() {
         guard let medication = medications else { return }
-        self.userMedicationSettingView.medicationsToChange = medication
+        self.currentMedicationSettingsView.medicationsToChange = medication
     }
     
     private func configureNavBar() {
@@ -63,11 +61,12 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     @objc private func updateSettings() {
         guard var meds = medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
-        let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: userMedicationSettingView)
+        let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: currentMedicationSettingsView)
+        
         view.endEditing(true)
         
         if medicationToUpdate.anyEmpty {
-            textFieldShaker(userMedicationSettingView.nameTextField, userMedicationSettingView.capacityTextField, userMedicationSettingView.doseTextField, userMedicationSettingView.frequencyTextField, userMedicationSettingView.howManyTimesTextField, userMedicationSettingView.dosageTextField)
+            textFieldShaker(currentMedicationSettingsView.nameTextField, currentMedicationSettingsView.capacityTextField, currentMedicationSettingsView.doseTextField, currentMedicationSettingsView.frequencyTextField, currentMedicationSettingsView.howManyTimesTextField, currentMedicationSettingsView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
@@ -76,15 +75,26 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             meds.capacity = medicationToUpdate.capacity
             meds.dose = medicationToUpdate.dose
             meds.cellImage = medicationToUpdate.cellImage
+            meds.frequency = medicationToUpdate.frequency
+            meds.howManyTimesPerDay = medicationToUpdate.howManyTimesPerDay
+            meds.dosage = medicationToUpdate.dosage
             delegate?.passMedication(medication: meds)
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()
-                self.dismiss(animated: true, completion: nil)
-                self.userMedicationSettingView.setSchedule()
+                self.dismiss(animated: true)
+                self.currentMedicationSettingsView.setSchedule()
             })
+            
         }
     }
+//    
+//    private func updateUserMedicationDetailViewVC(medication: UserMedicationDetailModel, medicationToChange: UserMedicationDetailView) {
+//        medication.pillName = medicationToChange.pillName.text
+//        medication.capacity = medicationToChange.capacity
+//        medication.dose = medicationToChange.dose
+//        medication.cellImage = medicationToChange.cellImage
+//    }
     
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()
@@ -111,9 +121,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     private func configureMedicationView() {
         let leadingAndTrailingAnchorConstants: CGFloat = 20
         
-        view.addSubview(userMedicationSettingView)
+        view.addSubview(currentMedicationSettingsView)
         
-        userMedicationSettingView.snp.makeConstraints { (make) in
+        currentMedicationSettingsView.snp.makeConstraints { (make) in
             make.leading.equalTo(leadingAndTrailingAnchorConstants)
             make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
             make.top.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -127,7 +137,7 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
         let compressionQualityValue: CGFloat = 0.1
         
         let image = info[.originalImage] as? UIImage
-        userMedicationSettingView.currentMedicationImage.image = image
+        currentMedicationSettingsView.currentMedicationImage.image = image
         
         if let uploadData = image?.jpegData(compressionQuality: compressionQualityValue) {
             imageData = uploadData

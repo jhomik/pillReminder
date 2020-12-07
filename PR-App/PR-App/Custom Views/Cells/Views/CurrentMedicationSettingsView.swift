@@ -90,12 +90,12 @@ final class CurrentMedicationSettingsView: UIView {
         howManyTimesTextField.text = medication.howManyTimesPerDay
         dosageTextField.text = medication.dosage
         
-        let onceDate = userDefaults.object(forKey: "whatTimeOnceADayRow") as? Date
-        whatTimeOnceADayTextField.text = formatter.string(from: onceDate ?? Date())
-        let twiceDate = userDefaults.object(forKey: "whatTimeTwiceADayRow") as? Date
-        whatTimeTwiceADayTextField.text = formatter.string(from: twiceDate ?? Date())
-        let threeTimesDate = userDefaults.object(forKey: "whatTimeThreeTimesADayRow") as? Date
-        whatTimeThreeTimesADayTextField.text = formatter.string(from: threeTimesDate ?? Date())
+//        let onceDate = userDefaults.object(forKey: Constants.defaultsWhatTimeOnceRow) as? Date
+        whatTimeOnceADayTextField.text = medication.whatTimeOnceRow
+//        let twiceDate = userDefaults.object(forKey: Constants.defaultsWhatTimeTwiceRow) as? Date
+        whatTimeTwiceADayTextField.text = medication.whatTimeTwiceRow
+//        let threeTimesDate = userDefaults.object(forKey: Constants.defaultsWhatTimeThreeRow) as? Date
+        whatTimeThreeTimesADayTextField.text = medication.whatTimeThreeRow
     }
     
     private func configureScrollView() {
@@ -281,14 +281,14 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func createPickerView(withTextField: UITextField, readUserDefaults: String) {
-        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Int else { return }
+//        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Int else { return }
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         pickerView.delegate = self
-        pickerView.selectRow(valueFromUserDefaults, inComponent: 0, animated: true)
+//        pickerView.selectRow(valueFromUserDefaults, inComponent: 0, animated: true)
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, doneButton], animated: false)
@@ -302,12 +302,12 @@ final class CurrentMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
+//            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
         } else if textField == howManyTimesTextField {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+//            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -325,13 +325,13 @@ final class CurrentMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
+//            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
         }
         self.endEditing(true)
     }
     
     private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField, readUserDefaults: String) {
-        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Date else { return }
+//        guard let valueFromUserDefaults = userDefaults.object(forKey: readUserDefaults) as? Date else { return }
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
@@ -343,7 +343,7 @@ final class CurrentMedicationSettingsView: UIView {
             datePickerView.preferredDatePickerStyle = .wheels
         }
         
-        datePickerView.date = valueFromUserDefaults
+//        datePickerView.date = valueFromUserDefaults
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -358,18 +358,18 @@ final class CurrentMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
+//            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
+//            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
+//            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
         }
         self.endEditing(true)
     }

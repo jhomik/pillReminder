@@ -16,6 +16,9 @@ struct UserMedicationDetailModel {
     var cellImage: String?
     var frequency: String
     var howManyTimesPerDay: String
+    var whatTimeOnceRow: String
+    var whatTimeTwiceRow: String?
+    var whatTimeThreeRow: String?
     var dosage: String
     
     var anyEmpty: Bool {
@@ -30,6 +33,9 @@ struct UserMedicationDetailModel {
         self.cellImage = dictionary["cellImage"] as? String ?? ""
         self.frequency = dictionary["frequency"] as? String ?? ""
         self.howManyTimesPerDay = dictionary["howManyTimesPerDay"] as? String ?? ""
+        self.whatTimeOnceRow = dictionary["whatTimeOnceRow"] as? String ?? ""
+        self.whatTimeTwiceRow = dictionary["whatTimeTwiceRow"] as? String ?? ""
+        self.whatTimeThreeRow = dictionary["whatTimeThreeRow"] as? String ?? ""
         self.dosage = dictionary["dosage"] as? String ?? ""
     }
     
@@ -39,6 +45,9 @@ struct UserMedicationDetailModel {
         self.dose = medicationToSave?.doseTextField.text ?? ""
         self.frequency = medicationToSave?.frequencyTextField.text ?? ""
         self.howManyTimesPerDay = medicationToSave?.howManyTimesTextField.text ?? ""
+        self.whatTimeOnceRow = medicationToSave?.whatTimeOnceADayTextField.text ?? ""
+        self.whatTimeTwiceRow = medicationToSave?.whatTimeTwiceADayTextField.text ?? ""
+        self.whatTimeThreeRow = medicationToSave?.whatTimeThreeTimesADayTextField.text ?? ""
         self.dosage = medicationToSave?.dosageTextField.text ?? ""
     }
     
@@ -49,6 +58,9 @@ struct UserMedicationDetailModel {
         self.dose = medicationToSave?.doseTextField.text ?? ""
         self.frequency = medicationToSave?.frequencyTextField.text ?? ""
         self.howManyTimesPerDay = medicationToSave?.howManyTimesTextField.text ?? ""
+        self.whatTimeOnceRow = medicationToSave?.whatTimeOnceADayTextField.text ?? ""
+        self.whatTimeTwiceRow = medicationToSave?.whatTimeTwiceADayTextField.text ?? ""
+        self.whatTimeThreeRow = medicationToSave?.whatTimeThreeTimesADayTextField.text ?? ""
         self.dosage = medicationToSave?.dosageTextField.text ?? ""
     }
 }

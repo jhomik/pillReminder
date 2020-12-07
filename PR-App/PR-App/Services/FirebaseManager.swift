@@ -60,6 +60,15 @@ final class FirebaseManager {
         if let howManyTimesPerDay = medicationDetail?.howManyTimesPerDay {
             values["howManyTimesPerDay"] = howManyTimesPerDay as AnyObject
         }
+        if let whatTimeOnceRow = medicationDetail?.whatTimeOnceRow {
+            values["whatTimeOnceRow"] = whatTimeOnceRow as AnyObject
+        }
+        if let whatTimeTwiceRow = medicationDetail?.whatTimeTwiceRow {
+            values["whatTimeTwiceRow"] = whatTimeTwiceRow as AnyObject
+        }
+        if let whatTimeThreeRow = medicationDetail?.whatTimeThreeRow {
+            values["whatTimeThreeRow"] = whatTimeThreeRow as AnyObject
+        }
         if let dosage = medicationDetail?.dosage {
             values["dosage"] = dosage as AnyObject
         }
@@ -144,13 +153,12 @@ final class FirebaseManager {
             guard let url = URL(string: urlString) else { return }
             
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
-                if let data = data, let image = UIImage(data: data), let response = response as? HTTPURLResponse, response.statusCode == 200, error == nil {
-                    DispatchQueue.main.async {
-                        self.cache.setObject(image, forKey: cacheKey)
-                        completion(image)
-                        print("got this from firebase")
-                    }
-                }
+                guard let data = data, let image = UIImage(data: data), let response = response as? HTTPURLResponse, response.statusCode == 200, error == nil else { return }
+                
+                self.cache.setObject(image, forKey: cacheKey)
+                print("cache image: \(image)")
+                completion(image)
+                print("got this from firebase")
             }
             task.resume()
         } else {
@@ -182,6 +190,15 @@ final class FirebaseManager {
         }
         if let howManyTimesPerDay = medicationDetail?.howManyTimesPerDay {
             values["howManyTimesPerDay"] = howManyTimesPerDay as AnyObject
+        }
+        if let whatTimeOnceRow = medicationDetail?.whatTimeOnceRow {
+            values["whatTimeOnceRow"] = whatTimeOnceRow as AnyObject
+        }
+        if let whatTimeTwiceRow = medicationDetail?.whatTimeTwiceRow {
+            values["whatTimeTwiceRow"] = whatTimeTwiceRow as AnyObject
+        }
+        if let whatTimeThreeRow = medicationDetail?.whatTimeThreeRow {
+            values["whatTimeThreeRow"] = whatTimeThreeRow as AnyObject
         }
         if let dosage = medicationDetail?.dosage {
             values["dosage"] = dosage as AnyObject

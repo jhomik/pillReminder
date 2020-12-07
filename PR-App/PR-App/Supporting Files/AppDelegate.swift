@@ -75,8 +75,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let dateFormmater = DateFormatter()
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
 
-        notificationCenter.getPendingNotificationRequests { (notifications) in
-            for item in notifications {
+        notificationCenter.getPendingNotificationRequests { (requests) in
+            for item in requests {
                 if let trigger = item.trigger as? UNCalendarNotificationTrigger,
                    let triggerDate = trigger.nextTriggerDate() {
                     let nextDate = dateFormmater.string(from: triggerDate)

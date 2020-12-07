@@ -7,7 +7,7 @@
 //
 
 import XCTest
-@testable import PR_App
+@testable import PillReminder
 
 class PR_AppTests: XCTestCase {
 

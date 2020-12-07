@@ -16,7 +16,6 @@ protocol ScheduleNotoficationDelegate: AnyObject {
 final class NewMedicationSettingsViewController: UIViewController {
     
     private let newMedicationView = NewMedicationSettingsView()
-    private var firebaseManager = FirebaseManager()
     private var viewModel = NewMedicationViewModel()
     private let tableView = UITableView()
     private(set) var imageData = Data()

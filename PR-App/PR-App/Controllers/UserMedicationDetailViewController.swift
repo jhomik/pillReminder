@@ -14,10 +14,10 @@ final class UserMedicationDetailViewController: UIViewController {
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
     var medications: UserMedicationDetailModel?
+    var popToRootViewController: () -> Void = {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        updateUI()
         configureViewController()
         configureMedicationView()
         configureDoseAndCapacityView()
@@ -27,6 +27,7 @@ final class UserMedicationDetailViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tabBarController?.tabBar.isHidden = true
+        updateUI()
     }
         
     private func updateUI() {
