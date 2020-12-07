@@ -130,7 +130,6 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.customCellId, for: indexPath) as? CustomCell else { return UICollectionViewCell() }
         cell.imageCell.image = UIImage()
         cell.deleteButton.isHidden = !isActiveEditButton
@@ -143,8 +142,10 @@ extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollec
             let title = medications[indexPath.item].pillName
             
             cell.configureMedicationCell(with: urlImage, title: title)
+            
             return cell
         } else {
+            
             guard let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.addMedicationCellId, for: indexPath) as? AddMedicationCell else { return UICollectionViewCell() }
             addMedCell.configureAddMedicationCell(with: Images.cellImage ?? UIImage(), title: Constants.addMedication)
             return addMedCell

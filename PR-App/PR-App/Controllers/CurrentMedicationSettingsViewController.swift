@@ -78,6 +78,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             meds.frequency = medicationToUpdate.frequency
             meds.howManyTimesPerDay = medicationToUpdate.howManyTimesPerDay
             meds.dosage = medicationToUpdate.dosage
+            if !imageData.isEmpty {
+                viewModel.removeImageFromStorage(url: cellImage)
+            }
             delegate?.passMedication(medication: meds)
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
                 self.dismissLoadingSpinner(with: self.containerView)
