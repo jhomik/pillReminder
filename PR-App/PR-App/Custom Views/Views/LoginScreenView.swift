@@ -27,27 +27,29 @@ protocol LoginScreenAlertDelegate: AnyObject {
 }
 
 final class LoginScreenView: UIView {
-
+    
+    private let stackViewLoginData = UIStackView()
+    private let mainButtonEvent = PillReminderMainCustomButton(text: Constants.signIn)
+    private let logoImage = UIImageView(image: Images.logoImage)
+    private let viewModel: LoginScreenViewModel
+    
+    private(set) var userNameTextField = PillReminderMainCustomTextField(placeholderText: Constants.yourName, isPassword: false)
+    private(set) var emailTextField = PillReminderMainCustomTextField(placeholderText: Constants.emailAddress, isPassword: false)
+    private(set) var passwordTextField = PillReminderMainCustomTextField(placeholderText: Constants.password, isPassword: true)
+    private(set) var confirmTextField = PillReminderMainCustomTextField(placeholderText: Constants.confirmPassword, isPassword: true)
+    
+    private var scrollView = UIScrollView()
+    private var segmentedController = UISegmentedControl()
+    private var forgotPasswordButton = UIButton()
+    
     weak var delegate: LoginScreenAlertDelegate?
     weak var present: LoginScreenPresentForgotPasswordVC?
     weak var push: LoginScreenPresentUserMedicationInfoVC?
     
-    private let userNameTextField = PillReminderMainCustomTextField(placeholderText: Constants.yourName, isPassword: false)
-    private let emailTextField = PillReminderMainCustomTextField(placeholderText: Constants.emailAddress, isPassword: false)
-    private let passwordTextField = PillReminderMainCustomTextField(placeholderText: Constants.password, isPassword: true)
-    private let confirmTextField = PillReminderMainCustomTextField(placeholderText: Constants.confirmPassword, isPassword: true)
-    
-    private var scrollView = UIScrollView()
-    private let stackViewLoginData = UIStackView()
-    private let mainButtonEvent = PillReminderMainCustomButton(text: Constants.logIn)
-    private let logoImage = UIImageView(image: Images.logoImage)
-    private var isSignUp = false
-    private var segmentedController = UISegmentedControl()
-    private var forgotPasswordButton = UIButton()
-    lazy var viewModel = LoginScreenViewModel(loginEvents: self)
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(viewModel: LoginScreenViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        viewModel.loginEvents = self
         configureScrollView()
         configureLogoImage()
         configureSegmentedView()
@@ -65,12 +67,16 @@ final class LoginScreenView: UIView {
         self.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { (make) in
-            make.top.leading.trailing.bottom.equalTo(self)
+            make.top.equalTo(safeAreaLayoutGuide.self)
+            make.leading.trailing.bottom.equalTo(self)
         }
     }
     
     private func configureLogoImage() {
-        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.42 : 0.36
+        // TODO: Logic? Should be in the ViewModel?
+        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.42 : 0.34
+        
+        // TODO: Logic? Should be in the ViewModel?
         let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE ? 0.82 : 0.8
         let topAnchorConstant: CGFloat = 20
         
@@ -104,11 +110,11 @@ final class LoginScreenView: UIView {
     }
     
     @objc func segmentedControllerChange(sender: UISegmentedControl) {
-        isSignUp.toggle()
+        viewModel.toogleIsSignUp()
         
-        self.userNameTextField.isHidden = !self.isSignUp
-        self.confirmTextField.isHidden = !self.isSignUp
-        self.mainButtonEvent.setTitle(isSignUp ? Constants.signUp : Constants.signIn, for: .normal)
+        self.userNameTextField.isHidden = viewModel.checkIfSignUp()
+        self.confirmTextField.isHidden = viewModel.checkIfSignUp()
+        self.mainButtonEvent.setTitle(viewModel.setTitleForButton(), for: .normal)
     }
     
     private func configureStackViewLoginData() {
@@ -154,12 +160,12 @@ final class LoginScreenView: UIView {
     }
     
     @objc private func buttonTapped() {
-        guard let username = userNameTextField.text, let email = emailTextField.text, let password = passwordTextField.text, let confirmPassword = confirmTextField.text else { return }
+        let userModel = UserModel(loginScreen: self)
         
-        self.isSignUp ? self.textFieldsShaker(inputFields: [userNameTextField, emailTextField, passwordTextField, confirmTextField]) : self.textFieldsShaker(inputFields: [emailTextField, passwordTextField])
+        // TODO: Logic? Should be in the ViewModel?
+        viewModel.checkIfSignUp() ? self.textFieldsShaker(inputFields: [emailTextField, passwordTextField]) : self.textFieldsShaker(inputFields: [userNameTextField, emailTextField, passwordTextField, confirmTextField])
         
-        viewModel.loginButtonTapped(userName: username, email: email, password: password, confirmPassword: confirmPassword, isSignUp: isSignUp)
-        
+        viewModel.loginButtonTapped(userModel: userModel)
     }
     
     private func configureForgotPasswordButton() {
@@ -209,7 +215,7 @@ extension LoginScreenView: LoginScreenEvents {
         
         delegate?.alertCreateUserSuccess(message: Alerts.emailActivation, withTime: nil, completion: {
             self.segmentedController.selectedSegmentIndex = selectedSegmentIndexValue
-            self.isSignUp.toggle()
+            self.viewModel.toogleIsSignUp()
             self.userNameTextField.isHidden = true
             self.confirmTextField.isHidden = true
             self.userNameTextField.text = ""
@@ -228,14 +234,14 @@ extension LoginScreenView: LoginScreenEvents {
 }
 
 extension LoginScreenView: UITextFieldDelegate {
-    
+    // TODO: Logic - how to put this inside ViewModel?
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == userNameTextField {
             emailTextField.becomeFirstResponder()
         } else if textField == emailTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
-            if isSignUp {
+            if viewModel.checkIfSignUp() {
                 confirmTextField.becomeFirstResponder()
             } else {
                 passwordTextField.resignFirstResponder()

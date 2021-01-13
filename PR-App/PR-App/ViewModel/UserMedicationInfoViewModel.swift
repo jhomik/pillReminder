@@ -11,6 +11,20 @@ import Foundation
 final class UserMedicationInfoViewModel {
     
     private let firebaseManager = FirebaseManager()
+    
+    private(set) var medications: [UserMedicationDetailModel] = [] {
+        didSet {
+            
+        }
+    }
+    
+//    func cellForItem(_ indexPath: IndexPath) {
+//        let title = medications[indexPath.item].pillName
+//        if medications.indices.contains(indexPath.item) == true {
+//            guard let urlImage = medications[indexPath.item].cellImage else { return }
+//            
+//        }
+//    }
 
     func setUserName(completion: @escaping (String) -> Void) {
         firebaseManager.setUserName { result in

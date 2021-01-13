@@ -22,8 +22,7 @@
 "emailAddress" = "Adres e-mail";
 "password" = "Hasło";
 "confirmPassword" = "Powtórz hasło";
-"logIn" = "Zaloguj";
-"signIn" = "Logowanie";
+"signIn" = "Zaloguj";
 "signUp" = "Zarejestruj";
 "createAccount" = "Utwórz konto";
 "forgotYourPassword" = "Zapomniałeś hasła?";

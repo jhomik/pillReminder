@@ -22,7 +22,6 @@
 "emailAddress" = "Email Address";
 "password" = "Password";
 "confirmPassword" = "Confirm Password";
-"logIn" = "Log In";
 "signIn" = "Sign In";
 "signUp" = "Sign Up";
 "createAccount" = "Create Account";

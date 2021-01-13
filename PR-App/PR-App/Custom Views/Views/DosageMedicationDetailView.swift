@@ -45,6 +45,7 @@ final class DosageMedicationDetailView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureDosageMedicationStackView()
+        takeAPillView.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -55,10 +56,6 @@ final class DosageMedicationDetailView: UIView {
         guard let medication = medicationToChange, let leftPills = leftCapacity else { return }
         configureDoseInformations(medication: medication)
         updatePillsLeft(leftPills)
-    }
-    
-    private func test() {
-    
     }
     
     func configureDoseInformations(medication: UserMedicationDetailModel) {
@@ -112,6 +109,6 @@ final class DosageMedicationDetailView: UIView {
 
 extension DosageMedicationDetailView: DecreasePillValueDelegate {
     func decrease() {
-        updatePillsLeft(decreasePillValue())
+        print("test")
     }
 }

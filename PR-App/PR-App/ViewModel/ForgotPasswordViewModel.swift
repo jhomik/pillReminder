@@ -22,7 +22,7 @@ final class ForgotPasswordViewModel {
         self.forgotPasswordEvents = forgotPasswordEvents
     }
     
-    func resetUserPassword(withEmail: String) {
+    func resetUserPassword(withEmail: UserModel) {
         firebaseManager.resetUserPassword(with: withEmail) { [weak self] (result) in
             guard let self = self else { return }
             switch result {

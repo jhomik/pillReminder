@@ -9,8 +9,8 @@
 import UIKit
 import SnapKit
 
-protocol PassMedicationDelegate: AnyObject {
-    func passMedication(medication: UserMedicationDetailModel)
+protocol PopViewControllerDelegate: AnyObject {
+    func popViewController()
 }
 
 final class CurrentMedicationSettingsViewController: UIViewController {
@@ -26,7 +26,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             updateTextFieldsToChange()
         }
     }
-    weak var delegate: PassMedicationDelegate?
+    weak var popViewDelegate: PopViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,7 +60,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func updateSettings() {
-        guard var meds = medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
+        guard let meds = medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
         let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: currentMedicationSettingsView)
         
         view.endEditing(true)
@@ -71,33 +71,19 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView)
-            meds.pillName = medicationToUpdate.pillName
-            meds.capacity = medicationToUpdate.capacity
-            meds.dose = medicationToUpdate.dose
-            meds.cellImage = medicationToUpdate.cellImage
-            meds.frequency = medicationToUpdate.frequency
-            meds.howManyTimesPerDay = medicationToUpdate.howManyTimesPerDay
-            meds.dosage = medicationToUpdate.dosage
             if !imageData.isEmpty {
                 viewModel.removeImageFromStorage(url: cellImage)
             }
-            delegate?.passMedication(medication: meds)
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
                 self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()
-                self.dismiss(animated: true)
+                self.dismiss(animated: true) {
+                    self.popViewDelegate?.popViewController()
+                }
                 self.currentMedicationSettingsView.setSchedule()
             })
-            
         }
     }
-//    
-//    private func updateUserMedicationDetailViewVC(medication: UserMedicationDetailModel, medicationToChange: UserMedicationDetailView) {
-//        medication.pillName = medicationToChange.pillName.text
-//        medication.capacity = medicationToChange.capacity
-//        medication.dose = medicationToChange.dose
-//        medication.cellImage = medicationToChange.cellImage
-//    }
     
     private func configureImagePickerController() {
         let imagePicker = UIImagePickerController()

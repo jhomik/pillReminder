@@ -39,7 +39,6 @@ struct Constants {
     static let emailAddress = NSLocalizedString("emailAddress", comment: "")
     static let password = NSLocalizedString("password", comment: "")
     static let confirmPassword = NSLocalizedString("confirmPassword", comment: "")
-    static let logIn = NSLocalizedString("logIn", comment: "")
     static let signIn = NSLocalizedString("signIn", comment: "")
     static let signUp = NSLocalizedString("signUp", comment: "")
     static let createAccount = NSLocalizedString("createAccount", comment: "")

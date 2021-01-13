@@ -61,28 +61,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: scheduleNotoficationData.identifier, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
             if let error = error {
                 print("Error \(error.localizedDescription)")
             }
             print(triggerDate)
+            print(request.identifier)
         }
     }
     
     func nextTriggerDate(label: UILabel) {
         let dateFormmater = DateFormatter()
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
-
+        
         notificationCenter.getPendingNotificationRequests { (requests) in
+            print("My pending requests: \(requests)")
+            var nextDate: [String] = []
             for item in requests {
                 if let trigger = item.trigger as? UNCalendarNotificationTrigger,
                    let triggerDate = trigger.nextTriggerDate() {
-                    let nextDate = dateFormmater.string(from: triggerDate)
-                    DispatchQueue.main.async {
-                        label.text = Constants.nextPill + "\(nextDate)"
-                    }
+                    let dates = dateFormmater.string(from: triggerDate)
+                    nextDate.append(dates)
+                }
+                DispatchQueue.main.async {
+                    label.text = Constants.nextPill + "\(nextDate.min() ?? "")"
                 }
             }
         }

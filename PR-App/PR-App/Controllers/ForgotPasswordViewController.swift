@@ -65,7 +65,7 @@ extension ForgotPasswordViewController: ForgotPasswordEvents {
 }
 
 extension ForgotPasswordViewController: ForgotPasswordDelegate {
-    func resetPassword(withEmail: String) {
+    func resetPassword(withEmail: UserModel) {
         viewModel.resetUserPassword(withEmail: withEmail)
     }
 }

@@ -20,11 +20,8 @@ protocol LoginScreenEvents: AnyObject {
 final class LoginScreenViewModel {
     
     private let firebaseManager = FirebaseManager()
-    private weak var loginEvents: LoginScreenEvents?
-    
-    init(loginEvents: LoginScreenEvents) {
-        self.loginEvents = loginEvents
-    }
+    weak var loginEvents: LoginScreenEvents?
+    private(set) var isSignUp = false
     
     func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
         if passOne == passTwo {
@@ -35,8 +32,28 @@ final class LoginScreenViewModel {
         }
     }
     
-    func signInUser(userName: String, email: String, password: String, confirmPassword: String, isSignUp: Bool = false) {
-        firebaseManager.signInUser(email: email, password: password) { [weak self] result in
+    func toogleIsSignUp() {
+        isSignUp.toggle()
+    }
+    
+    func checkIfSignUp() -> Bool {
+        if isSignUp {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func setTitleForButton() -> String {
+        if isSignUp {
+            return Constants.signUp
+        } else {
+            return Constants.signIn
+        }
+    }
+    
+    func signInUser(userModel: UserModel) {
+        firebaseManager.signInUser(userModel: userModel, completion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -49,11 +66,11 @@ final class LoginScreenViewModel {
                     self?.loginEvents?.onLoginFailure(error: error)
                 }
             }
-        }
+        })
     }
     
-    func createNewUser(userName: String, email: String, password: String, confirmPassword: String, isSignUp: Bool = false) {
-        firebaseManager.createUser(username: userName, email: email, password: password, confirmPassword: confirmPassword, completion: { [weak self] result in
+    func createNewUser(userModel: UserModel) {
+        firebaseManager.createUser(userModel: userModel, completion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:
@@ -65,12 +82,12 @@ final class LoginScreenViewModel {
         })
     }
     
-    func loginButtonTapped(userName: String, email: String, password: String, confirmPassword: String, isSignUp: Bool = false) {
-        if !isSignUp && !email.isEmpty && !password.isEmpty {
-            signInUser(userName: userName, email: email, password: password, confirmPassword: confirmPassword)
+    func loginButtonTapped(userModel: UserModel) {
+        if !isSignUp && !userModel.signInEmpty {
+            signInUser(userModel: userModel)
             
-        } else if isSignUp && !userName.isEmpty && !email.isEmpty && !password.isEmpty && !confirmPassword.isEmpty && newPasswordCheck(passOne: password, passTwo: confirmPassword) == true {
-            createNewUser(userName: userName, email: email, password: password, confirmPassword: confirmPassword)
+        } else if isSignUp && !userModel.signUpEmpty && newPasswordCheck(passOne: userModel.password, passTwo: userModel.confirmPassword) == true {
+            createNewUser(userModel: userModel)
         }
     }
 }

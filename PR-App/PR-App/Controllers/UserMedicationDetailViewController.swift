@@ -14,7 +14,6 @@ final class UserMedicationDetailViewController: UIViewController {
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
     var medications: UserMedicationDetailModel?
-    var popToRootViewController: () -> Void = {}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,13 +83,13 @@ final class UserMedicationDetailViewController: UIViewController {
     @objc private func editButtonTapped() {
         let currentMedicationVC = CurrentMedicationSettingsViewController()
         currentMedicationVC.medications = medications
-        currentMedicationVC.delegate = self
+        currentMedicationVC.popViewDelegate = self
         present(UINavigationController(rootViewController: currentMedicationVC), animated: true)
     }
 }
 
-extension UserMedicationDetailViewController: PassMedicationDelegate {
-    func passMedication(medication: UserMedicationDetailModel) {
-        medicationView.medicationToChange = medication
+extension UserMedicationDetailViewController: PopViewControllerDelegate {
+    func popViewController() {
+        navigationController?.popViewController(animated: false)
     }
 }

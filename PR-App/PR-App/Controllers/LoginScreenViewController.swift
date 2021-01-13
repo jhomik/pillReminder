@@ -11,8 +11,9 @@ import FirebaseAuth
 
 final class LoginScreenViewController: UIViewController {
     
-    private let loginScreenView = LoginScreenView()
+    private let viewModel = LoginScreenViewModel()
     private let welcomeView = WelcomeView()
+    lazy private(set) var loginScreenView = LoginScreenView(viewModel: viewModel)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -27,17 +28,14 @@ final class LoginScreenViewController: UIViewController {
         createDismisKeyboardTapGesture()
     }
     
+    override func loadView() {
+        self.view = loginScreenView
+    }
+    
     private func configureLoginScreenView() {
         loginScreenView.delegate = self
         loginScreenView.present = self
         loginScreenView.push = self
-        
-        view.addSubview(loginScreenView)
-        
-        loginScreenView.snp.makeConstraints { (make) in
-            make.bottom.leading.trailing.equalTo(view)
-            make.top.equalTo(view.safeAreaLayoutGuide)
-        }
     }
     
     private func configureWelcomeView() {
@@ -53,6 +51,8 @@ final class LoginScreenViewController: UIViewController {
         navigationController?.isNavigationBarHidden = true
     }
 
+    // TODO: Change place for logic and checking user session
+    
     private func checkUserSession() {
         guard let user = Auth.auth().currentUser else { return }
         if Auth.auth().currentUser != nil && user.isEmailVerified {

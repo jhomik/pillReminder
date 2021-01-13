@@ -227,8 +227,8 @@ final class FirebaseManager {
     
     // MARK: Reset password
     
-    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void) {
-        auth.sendPasswordReset(withEmail: email) { (error) in
+    func resetUserPassword(with userModel: UserModel, completion: @escaping(Result<Void, Error>) -> Void) {
+        auth.sendPasswordReset(withEmail: userModel.email) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {
@@ -239,8 +239,8 @@ final class FirebaseManager {
     
     // MARK: Sing in user
     
-    func signInUser(email: String, password: String, completion: ((Result<Bool, Error>) -> Void)?) {
-        auth.signIn(withEmail: email, password: password) { (_, error) in
+    func signInUser(userModel: UserModel, completion: ((Result<Bool, Error>) -> Void)?) {
+        auth.signIn(withEmail: userModel.email, password: userModel.password) { (_, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
@@ -253,8 +253,8 @@ final class FirebaseManager {
     
     // MARK: Creating new user
     
-    func createUser(username: String, email: String, password: String, confirmPassword: String, completion: ((Result<Void, Error>) -> Void)?) {
-        auth.createUser(withEmail: email, password: password) { (data, error) in            
+    func createUser(userModel: UserModel, completion: ((Result<Void, Error>) -> Void)?) {
+        auth.createUser(withEmail: userModel.email, password: userModel.password) { (data, error) in
             if let error = error {
                 print(error.localizedDescription)
                 completion?(.failure(error))
@@ -268,7 +268,7 @@ final class FirebaseManager {
                 
                 guard let uid = data?.user.uid else { return }
                 
-                let values = ["username": username, "email": email]
+                let values = ["username": userModel.userName, "email": userModel.email]
                 self.refDatabase.child(Constants.users).child(uid).child(Constants.user).setValue(values) { (error, data) in
                     if let error = error {
                         print(error.localizedDescription)

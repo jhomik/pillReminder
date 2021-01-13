@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ForgotPasswordDelegate: AnyObject {
-    func resetPassword(withEmail: String)
+    func resetPassword(withEmail: UserModel)
 }
 
 final class ForgotPasswordView: UIView {
@@ -85,6 +85,6 @@ final class ForgotPasswordView: UIView {
     
     @objc private func sendPasswordButtonTapped() {
         guard let email = emailTextField.text else { return }
-        delegate?.resetPassword(withEmail: email)
+//        delegate?.resetPassword(withEmail: email)
     }
 }
