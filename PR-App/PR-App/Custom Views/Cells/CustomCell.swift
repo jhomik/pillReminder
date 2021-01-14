@@ -11,11 +11,17 @@ import SnapKit
 
 final class CustomCell: UICollectionViewCell {
     
-    var imageCell = PillReminderImageView(frame: .zero)
-    var newMedsTitle = UILabel()
+    private let imageCell = PillReminderImageView(frame: .zero)
+    private let newMedsTitle = UILabel()
     var deleteButton = UIButton()
     private let firebaseManager = FirebaseManager()
     var deleteButtonEvent: () -> Void = {}
+    
+    var customMedicationCell: UserMedicationDetailModel? {
+        didSet {
+            configureMedicationCell()
+        }
+    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -36,13 +42,14 @@ final class CustomCell: UICollectionViewCell {
         self.layer.backgroundColor = UIColor.cellBackgroundColor.cgColor
     }
     
-    public func configureMedicationCell(with urlImageString: String, title: String) {
-        if !urlImageString.isEmpty {
-            imageCell.downloadImage(with: urlImageString)
+    private func configureMedicationCell() {
+        guard let medications = customMedicationCell, let cellImage = medications.cellImage else { return }
+        if !cellImage.isEmpty {
+            imageCell.downloadImage(with: cellImage)
         } else {
             imageCell.image = Images.placeholderImage
         }
-        newMedsTitle.text = title
+        newMedsTitle.text = medications.pillName
     }
     
     func configureDeleteButton() {

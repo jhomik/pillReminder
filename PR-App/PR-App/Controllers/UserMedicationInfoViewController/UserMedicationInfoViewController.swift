@@ -14,25 +14,23 @@ final class UserMedicationInfoViewController: UIViewController {
     private var collectionView: UICollectionView?
     private var viewModel = UserMedicationInfoViewModel()
     private let containerView = UIView()
-    private var medications: [UserMedicationDetailModel] = [] {
-        didSet {
-            changeBarButtonItem()
-        }
-    }
     
-    private var isActiveEditButton = false {
-        didSet {
-            changeBarButtonItem()
-        }
-    }
+//    lazy private(set) var userMedicationInfoView = UserMedicationInfoView(viewModel: viewModel)
+    lazy private(set) var userMedicationDataSource = UserMedicationInfoDataSource(viewModel: viewModel)
+    lazy private(set) var userMedicationDelegate = UserMedicationInfoDelegate(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureCollectionView()
         configureNavigationBar()
-        downloadMedicationInfo()
+        viewModel.downloadMedicationInfo()
+        viewModel.delegateMedicationInfo = self
         collectionView?.backgroundColor = UIColor.backgroundColor
     }
+    
+//    override func loadView() {
+//        self.view = userMedicationInfoView
+//    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -58,45 +56,20 @@ final class UserMedicationInfoViewController: UIViewController {
         do {
             try Auth.auth().signOut()
             self.tabBarController?.navigationController?.popViewController(animated: true)
-        } catch {
+        } catch let error {
             self.showUserAlert(message: Errors.failedToSignOut + ":\(error)", withTime: nil, completion: nil)
         }
     }
     
     private func changeBarButtonItem() {
-        let barButtonItem: UIBarButtonItem.SystemItem = isActiveEditButton ? .cancel : .edit
+        let barButtonItem: UIBarButtonItem.SystemItem = viewModel.isActiveEditButton ? .cancel : .edit
         let button = UIBarButtonItem(barButtonSystemItem: barButtonItem, target: self, action: #selector(deleteMedication))
-        button.isEnabled = medications.count > 0 || isActiveEditButton
+        button.isEnabled = viewModel.medications.count > 0 || viewModel.isActiveEditButton
         navigationItem.rightBarButtonItem = button
     }
     
     @objc private func deleteMedication() {
-        isActiveEditButton.toggle()
-        self.collectionView?.reloadData()
-    }
-    
-    private func downloadMedicationInfo() {
-        viewModel.downloadMedicationInfo { [weak self] (result) in
-            guard let self = self else { return }
-            self.medications = result
-            DispatchQueue.main.async {
-                self.collectionView?.reloadData()
-            }
-        }
-    }
-    
-    private func deleteItem(for item: CustomCell) {
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        appDelegate?.deletePendingNotification()
-        if let indexPath = collectionView?.indexPath(for: item) {
-            let model = medications[indexPath.item]
-            medications.remove(at: indexPath.item)
-            collectionView?.performBatchUpdates({
-                collectionView?.deleteItems(at: [indexPath])
-            }, completion: { _ in
-                self.viewModel.removeDataFromFirebase(model: model)
-            })
-        }
+        viewModel.toggleEditButton()
     }
     
     private func configureCollectionView() {
@@ -116,70 +89,32 @@ final class UserMedicationInfoViewController: UIViewController {
         collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: Constants.customCellId)
         collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.headerViewId)
         collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: Constants.addMedicationCellId)
-        collectionView?.dataSource = self
-        collectionView?.delegate = self
+        collectionView?.dataSource = userMedicationDataSource
+        collectionView?.delegate = userMedicationDelegate
         collectionView?.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(collectionView ?? UICollectionView())
     }
 }
 
-extension UserMedicationInfoViewController: UICollectionViewDataSource, UICollectionViewDelegate {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return medications.count + 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.customCellId, for: indexPath) as? CustomCell else { return UICollectionViewCell() }
-        cell.imageCell.image = UIImage()
-        cell.deleteButton.isHidden = !isActiveEditButton
-        cell.deleteButtonEvent = { [weak self, unowned cell] in
-            self?.deleteItem(for: cell)
-        }
-        
-        if medications.indices.contains(indexPath.item) == true {
-            guard let urlImage = medications[indexPath.item].cellImage else { return cell }
-            let title = medications[indexPath.item].pillName
-            
-            cell.configureMedicationCell(with: urlImage, title: title)
-            
-            return cell
-        } else {
-            
-            guard let addMedCell = collectionView.dequeueReusableCell(withReuseIdentifier: Constants.addMedicationCellId, for: indexPath) as? AddMedicationCell else { return UICollectionViewCell() }
-            addMedCell.configureAddMedicationCell(with: Images.cellImage ?? UIImage(), title: Constants.addMedication)
-            return addMedCell
+extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
+    func reloadCollectionView() {
+        DispatchQueue.main.async {
+            self.collectionView?.reloadData()
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Constants.headerViewId, for: indexPath)
-        
-        return header
+    func pushNewMedicationSettingsController() {
+        let newMedicationSettings = NewMedicationSettingsViewController()
+        present(UINavigationController(rootViewController: newMedicationSettings), animated: true, completion: nil)
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
-        if medications.indices.contains(indexPath.item) {
-            let userMedicationDetail = UserMedicationDetailViewController()
-            userMedicationDetail.medications = medications[indexPath.item]
-            
-            self.navigationController?.pushViewController(userMedicationDetail, animated: true)
-        } else {
-            let viewModel = NewMedicationViewModel()
-            viewModel.addCellDelegate = self
-            let newMedicationVC = UINavigationController(rootViewController: NewMedicationSettingsViewController(viewModel: viewModel))
-            present(newMedicationVC, animated: true, completion: nil)
-        }
+    func pushUserMedicationDetailController(with medications: UserMedicationDetailModel) {
+        let userMedicationDetail = UserMedicationDetailViewController()
+        userMedicationDetail.medications = medications
+        self.navigationController?.pushViewController(userMedicationDetail, animated: true)
     }
-}
-
-extension UserMedicationInfoViewController: NewMedicationCellDelegate {
-    func addNewMedicationCell(_ model: UserMedicationDetailModel) {
-        medications.append(model)
-        let indexPath = IndexPath(item: medications.count - 1, section: 0)
-        self.collectionView?.performBatchUpdates({
-            collectionView?.insertItems(at: [indexPath])
-        }, completion: nil)
+    
+    func updateBarButtonItem() {
+        changeBarButtonItem()
     }
 }

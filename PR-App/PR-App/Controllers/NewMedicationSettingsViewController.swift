@@ -9,10 +9,6 @@
 import UIKit
 import UserNotifications
 
-protocol ScheduleNotoficationDelegate: AnyObject {
-    func setSchedule()
-}
-
 final class NewMedicationSettingsViewController: UIViewController {
     
     private let newMedicationView = NewMedicationSettingsView()
@@ -20,16 +16,6 @@ final class NewMedicationSettingsViewController: UIViewController {
     private let tableView = UITableView()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
-    weak var delegate: ScheduleNotoficationDelegate?
-    
-    init(viewModel: NewMedicationViewModel) {
-        self.viewModel = viewModel
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

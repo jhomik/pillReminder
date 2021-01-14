@@ -30,9 +30,9 @@ final class AddMedicationCell: UICollectionViewCell {
         configureCell()
     }
     
-    public func configureAddMedicationCell(with image: UIImage, title: String) {
-        self.imageCell.image = image
-        self.newMedsTitle.text = title
+    public func configureAddMedicationCell() {
+        self.imageCell.image = Images.cellImage
+        self.newMedsTitle.text = Constants.addMedication
     }
     
     private func configureImageCell() {

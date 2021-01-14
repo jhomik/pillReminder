@@ -8,37 +8,27 @@
 
 import Foundation
 
-protocol NewMedicationCellDelegate: AnyObject {
-    func addNewMedicationCell(_ model: UserMedicationDetailModel)
-}
-
 final class NewMedicationViewModel {
     
-    private let userDefaults = UserDefaults.standard
     private let firebaseManager = FirebaseManager()
-    weak var addCellDelegate: NewMedicationCellDelegate?
     
     func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping () -> Void) {
         if !data.isEmpty {
             print("full data: \(data)")
-            firebaseManager.saveImageToStorage(cellImage: data) { (result) in
+            firebaseManager.saveImageToStorage(cellImage: data) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                    guard let model = self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail) else {
-                        completion()
-                        return
-                    }
-                    self.addCellDelegate?.addNewMedicationCell(model)
-                    completion()
+                  let _ = self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail)
                 }
+                completion()
             }
         } else {
             print("empty data: \(data)")
-            guard let model = self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail) else { return }
+            let _ = self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail)
             completion()
-            self.addCellDelegate?.addNewMedicationCell(model)
         }
     }
 }

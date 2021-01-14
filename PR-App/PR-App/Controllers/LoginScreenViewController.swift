@@ -4,7 +4,7 @@
 //
 //  Created by Jakub Homik on 05/05/2020.
 //  Copyright © 2020 Jakub Homik. All rights reserved.
-// 
+//
 
 import UIKit
 import FirebaseAuth
@@ -12,12 +12,16 @@ import FirebaseAuth
 final class LoginScreenViewController: UIViewController {
     
     private let viewModel = LoginScreenViewModel()
-    private let welcomeView = WelcomeView()
     lazy private(set) var loginScreenView = LoginScreenView(viewModel: viewModel)
+    private let welcomeView = WelcomeView()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         configureWelcomeView()
+    }
+    
+    override func loadView() {
+        self.view = loginScreenView
     }
     
     override func viewDidLoad() {
@@ -26,10 +30,6 @@ final class LoginScreenViewController: UIViewController {
         configureLoginScreenView()
         configureViewController()
         createDismisKeyboardTapGesture()
-    }
-    
-    override func loadView() {
-        self.view = loginScreenView
     }
     
     private func configureLoginScreenView() {
@@ -52,7 +52,6 @@ final class LoginScreenViewController: UIViewController {
     }
 
     // TODO: Change place for logic and checking user session
-    
     private func checkUserSession() {
         guard let user = Auth.auth().currentUser else { return }
         if Auth.auth().currentUser != nil && user.isEmailVerified {

@@ -8,23 +8,66 @@
 
 import Foundation
 
+protocol UserMedicationInfoEventDelegate: AnyObject {
+    func reloadCollectionView()
+    func updateBarButtonItem()
+    func pushUserMedicationDetailController(with medications: UserMedicationDetailModel)
+    func pushNewMedicationSettingsController()
+}
+
 final class UserMedicationInfoViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    weak var delegateMedicationInfo: UserMedicationInfoEventDelegate?
     
+    private let firebaseManager = FirebaseManager()
     private(set) var medications: [UserMedicationDetailModel] = [] {
         didSet {
-            
+            delegateMedicationInfo?.updateBarButtonItem()
+            delegateMedicationInfo?.reloadCollectionView()
         }
     }
     
-//    func cellForItem(_ indexPath: IndexPath) {
-//        let title = medications[indexPath.item].pillName
-//        if medications.indices.contains(indexPath.item) == true {
-//            guard let urlImage = medications[indexPath.item].cellImage else { return }
-//            
-//        }
-//    }
+    private(set) var isActiveEditButton = false {
+        didSet {
+            delegateMedicationInfo?.updateBarButtonItem()
+            delegateMedicationInfo?.reloadCollectionView()
+        }
+    }
+    
+    func deleteItemAt(_ indexPath: IndexPath) {
+        let model = medications[indexPath.item]
+        medications.remove(at: indexPath.item)
+        firebaseManager.removeDataFromFirebase(model: model)
+    }
+    
+    func appendItemWith(_ model: UserMedicationDetailModel) {
+        medications.append(model)
+    }
+    
+    func insertItemAt() -> IndexPath {
+        let indexPath = IndexPath(item: medications.count - 1, section: 0)
+        return indexPath
+    }
+    
+    func itemSelectedAt(indexPath: IndexPath) {
+        delegateMedicationInfo?.pushUserMedicationDetailController(with: medications[indexPath.item])
+    }
+    
+    func pushNewMedicationSettingsViewController() {
+        delegateMedicationInfo?.pushNewMedicationSettingsController()
+    }
+    
+    func didSelectItemAt(indexPath: IndexPath) {
+        if medications.indices.contains(indexPath.item) {
+            itemSelectedAt(indexPath: indexPath)
+        } else {
+            pushNewMedicationSettingsViewController()
+        }
+    }
+    
+    func toggleEditButton() {
+        isActiveEditButton.toggle()
+    }
 
     func setUserName(completion: @escaping (String) -> Void) {
         firebaseManager.setUserName { result in
@@ -37,11 +80,13 @@ final class UserMedicationInfoViewModel {
         }
     }
     
-    func downloadMedicationInfo(completion: @escaping ([UserMedicationDetailModel]) -> Void) {
-        firebaseManager.downloadMedicationInfo { (result) in
-            completion(result)
+    func downloadMedicationInfo() {
+        firebaseManager.downloadMedicationInfo { [weak self] (result) in
+            guard let self = self else { return }
+            self.medications = result
         }
     }
+    
     func removeDataFromFirebase(model: UserMedicationDetailModel) {
         firebaseManager.removeDataFromFirebase(model: model)
     }
