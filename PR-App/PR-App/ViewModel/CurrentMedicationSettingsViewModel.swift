@@ -14,7 +14,8 @@ final class CurrentMedicationSettingsViewModel {
     
     func updateMedicationInfo(data: Data, medicationDetail: UserMedicationDetailModel, completion: @escaping () -> Void) {
         if !data.isEmpty {
-            firebaseManager.saveImageToStorage(cellImage: data) { (result) in
+            firebaseManager.saveImageToStorage(cellImage: data) { [weak self] (result) in
+                guard let self = self else { return }
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)

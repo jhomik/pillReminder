@@ -11,7 +11,6 @@ import UIKit
 final class UserMedicationDetailView: UIView {
     
     var pillImageView = PillReminderImageView(frame: .zero)
-    var firebaseManager = FirebaseManager()
     private let medicationStackView = UIStackView()
     var medicationToChange: UserMedicationDetailModel? {
         didSet {
@@ -31,17 +30,17 @@ final class UserMedicationDetailView: UIView {
         input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
-    private lazy var pillDoseView = TitleAndInputMedicationView(
+    private(set) lazy var pillDoseView = TitleAndInputMedicationView(
         title: NSAttributedString(string: Constants.dose,
                                   attributes: self.titleAttributes),
         input: NSAttributedString(string: "",
                                   attributes: self.inputAttributes))
     
-    private lazy var titleAttributes: [NSAttributedString.Key: Any] = {
+    private(set) lazy var titleAttributes: [NSAttributedString.Key: Any] = {
         return [.font: UIFont.systemFont(ofSize: 12, weight: .bold), .foregroundColor: UIColor.systemGray2]
     }()
     
-    private lazy var inputAttributes: [NSAttributedString.Key: Any] = {
+    private(set) lazy var inputAttributes: [NSAttributedString.Key: Any] = {
         return [.font: UIFont.systemFont(ofSize: 24, weight: .medium), .foregroundColor: UIColor.mainColor]
     }()
     

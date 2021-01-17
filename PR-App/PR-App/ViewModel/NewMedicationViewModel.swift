@@ -21,13 +21,13 @@ final class NewMedicationViewModel {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                  let _ = self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail)
+                  self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail)
                 }
                 completion()
             }
         } else {
             print("empty data: \(data)")
-            let _ = self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail)
+            self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail)
             completion()
         }
     }

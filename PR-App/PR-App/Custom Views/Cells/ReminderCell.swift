@@ -37,7 +37,7 @@ class ReminderCell: UITableViewCell {
         guard let imageUrl = reminderModel?.cellImage else { return }
         imageCell.downloadImage(with: imageUrl)
         labelText.text = reminderModel?.pillName
-        appDelegate?.nextTriggerDate(label: detailLabelText)
+        appDelegate?.nextTriggerDate(label: detailLabelText, for: reminderModel?.userIdentifier)
     }
     
     private func configureCell() {

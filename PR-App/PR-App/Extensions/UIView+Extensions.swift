@@ -37,4 +37,20 @@ extension UIView {
             }
         }
     }
+    
+    func setFlowLayout() -> UICollectionViewFlowLayout {
+        let width = self.bounds.width
+        let padding: CGFloat = 20
+        let minimumItemSpacing: CGFloat = 10
+        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
+        let itemWidth = availableWidth / 2
+        let heightHeaderSize: CGFloat = 80
+
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
+        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 20)
+        flowLayout.headerReferenceSize = CGSize(width: self.frame.width, height: heightHeaderSize)
+        
+        return flowLayout
+    }
 }

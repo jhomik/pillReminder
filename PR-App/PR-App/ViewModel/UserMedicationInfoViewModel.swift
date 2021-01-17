@@ -9,28 +9,32 @@
 import Foundation
 
 protocol UserMedicationInfoEventDelegate: AnyObject {
-    func reloadCollectionView()
     func updateBarButtonItem()
     func pushUserMedicationDetailController(with medications: UserMedicationDetailModel)
     func pushNewMedicationSettingsController()
 }
 
+protocol UpdateCollectionViewDelegate: AnyObject {
+    func reloadCollectionView()
+}
+
 final class UserMedicationInfoViewModel {
     
     weak var delegateMedicationInfo: UserMedicationInfoEventDelegate?
+    weak var updateCollectionView: UpdateCollectionViewDelegate?
     
     private let firebaseManager = FirebaseManager()
     private(set) var medications: [UserMedicationDetailModel] = [] {
         didSet {
             delegateMedicationInfo?.updateBarButtonItem()
-            delegateMedicationInfo?.reloadCollectionView()
+            updateCollectionView?.reloadCollectionView()
         }
     }
     
     private(set) var isActiveEditButton = false {
         didSet {
             delegateMedicationInfo?.updateBarButtonItem()
-            delegateMedicationInfo?.reloadCollectionView()
+            updateCollectionView?.reloadCollectionView()
         }
     }
     
@@ -85,6 +89,7 @@ final class UserMedicationInfoViewModel {
             guard let self = self else { return }
             self.medications = result
         }
+        print("download Medications")
     }
     
     func removeDataFromFirebase(model: UserMedicationDetailModel) {

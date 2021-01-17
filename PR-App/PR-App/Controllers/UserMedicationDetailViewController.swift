@@ -10,7 +10,7 @@ import UIKit
 
 final class UserMedicationDetailViewController: UIViewController {
     
-    private let medicationView = UserMedicationDetailView()
+    private let userMedicationDetailView = UserMedicationDetailView()
     private let dosageMedicationView = DosageMedicationDetailView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
     var medications: UserMedicationDetailModel?
@@ -30,7 +30,7 @@ final class UserMedicationDetailViewController: UIViewController {
     }
         
     private func updateUI() {
-        medicationView.medicationToChange = medications
+        userMedicationDetailView.medicationToChange = medications
         dosageMedicationView.medicationToChange = medications
     }
     
@@ -42,9 +42,9 @@ final class UserMedicationDetailViewController: UIViewController {
         let constraintConstant: CGFloat = 30
         let heightAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 160 : 180
         
-        view.addSubview(medicationView)
+        view.addSubview(userMedicationDetailView)
         
-        medicationView.snp.makeConstraints { (make) in
+        userMedicationDetailView.snp.makeConstraints { (make) in
             make.top.equalTo(view.safeAreaLayoutGuide).offset(constraintConstant)
             make.leading.equalTo(constraintConstant)
             make.trailing.equalTo(-constraintConstant)
@@ -59,8 +59,8 @@ final class UserMedicationDetailViewController: UIViewController {
         view.addSubview(dosageMedicationView)
         
         dosageMedicationView.snp.makeConstraints { (make) in
-            make.leading.trailing.equalTo(medicationView)
-            make.top.equalTo(medicationView.snp.bottom).offset(topAnchorConstant)
+            make.leading.trailing.equalTo(userMedicationDetailView)
+            make.top.equalTo(userMedicationDetailView.snp.bottom).offset(topAnchorConstant)
             make.height.equalTo(heightAnchorConstant)
         }
     }

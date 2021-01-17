@@ -317,19 +317,19 @@ final class NewMedicationSettingsView: UIView {
         self.endEditing(true)
     }
     
-    private func configureFirstDaySchedule() {
+    private func configureFirstDaySchedule(for medicationId: String?) {
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill)
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: medicationId)
     }
     
-    private func configureSecondDaySchedule() {
+    private func configureSecondDaySchedule(for medicationId: String?) {
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill)
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: medicationId)
     }
     
-    private func configureThirdDaySchedule() {
+    private func configureThirdDaySchedule(for medicationId: String?) {
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill)
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: medicationId)
     }
 }
 
@@ -446,16 +446,16 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
 }
 
 extension NewMedicationSettingsView {
-    func setSchedule() {
+    func setSchedule(medicationId: String?) {
         if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
-            configureFirstDaySchedule()
-            configureSecondDaySchedule()
-            configureThirdDaySchedule()
+            configureFirstDaySchedule(for: medicationId)
+            configureSecondDaySchedule(for: medicationId)
+            configureThirdDaySchedule(for: medicationId)
         } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
-            configureFirstDaySchedule()
-            configureSecondDaySchedule()
+            configureFirstDaySchedule(for: medicationId)
+            configureSecondDaySchedule(for: medicationId)
         } else {
-            configureFirstDaySchedule()
+            configureFirstDaySchedule(for: medicationId)
         }
     }
 }

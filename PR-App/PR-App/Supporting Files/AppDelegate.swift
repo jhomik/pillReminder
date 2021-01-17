@@ -39,7 +39,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData) {
+    func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData, medicationId: String?) {
         
         let date = scheduleNotoficationData.time
         let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: date)
@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.body = Constants.tapNotification
         content.sound = .default
         content.badge = badgeCount
+        content.userInfo["medicationId"] = medicationId
         
         switch pillOfTheDay {
         case .first:
@@ -72,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func nextTriggerDate(label: UILabel) {
+    func nextTriggerDate(label: UILabel, for medicationId: String?) {
         let dateFormmater = DateFormatter()
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
         
@@ -80,8 +81,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("My pending requests: \(requests)")
             var nextDate: [String] = []
             for item in requests {
-                if let trigger = item.trigger as? UNCalendarNotificationTrigger,
-                   let triggerDate = trigger.nextTriggerDate() {
+                let userInfo = item.content.userInfo
+                if let medId = userInfo["medicationId"] as? String, medId == medicationId,
+                    let trigger = item.trigger as? UNCalendarNotificationTrigger,
+                    let triggerDate = trigger.nextTriggerDate() {
                     let dates = dateFormmater.string(from: triggerDate)
                     nextDate.append(dates)
                 }

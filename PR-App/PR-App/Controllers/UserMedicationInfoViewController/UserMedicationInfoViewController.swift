@@ -11,26 +11,22 @@ import FirebaseAuth
 
 final class UserMedicationInfoViewController: UIViewController {
     
-    private var collectionView: UICollectionView?
     private var viewModel = UserMedicationInfoViewModel()
     private let containerView = UIView()
     
-//    lazy private(set) var userMedicationInfoView = UserMedicationInfoView(viewModel: viewModel)
-    lazy private(set) var userMedicationDataSource = UserMedicationInfoDataSource(viewModel: viewModel)
-    lazy private(set) var userMedicationDelegate = UserMedicationInfoDelegate(viewModel: viewModel)
+    lazy private(set) var userMedicationInfoView = UserMedicationInfoView(viewModel: viewModel)
+//    lazy private(set) var userMedicationDataSource = UserMedicationInfoDataSource(viewModel: viewModel)
+//    lazy private(set) var userMedicationDelegate = UserMedicationInfoDelegate(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureCollectionView()
         configureNavigationBar()
-        viewModel.downloadMedicationInfo()
         viewModel.delegateMedicationInfo = self
-        collectionView?.backgroundColor = UIColor.backgroundColor
     }
     
-//    override func loadView() {
-//        self.view = userMedicationInfoView
-//    }
+    override func loadView() {
+        self.view = userMedicationInfoView
+    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -71,38 +67,9 @@ final class UserMedicationInfoViewController: UIViewController {
     @objc private func deleteMedication() {
         viewModel.toggleEditButton()
     }
-    
-    private func configureCollectionView() {
-        let width = view.bounds.width
-        let padding: CGFloat = 20
-        let minimumItemSpacing: CGFloat = 10
-        let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
-        let itemWidth = availableWidth / 2
-        let heightHeaderSize: CGFloat = 80
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.sectionInset = UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding)
-        flowLayout.itemSize = CGSize(width: itemWidth, height: itemWidth + 20)
-        flowLayout.headerReferenceSize = CGSize(width: view.frame.width, height: heightHeaderSize)
-        
-        collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: flowLayout)
-        collectionView?.register(CustomCell.self, forCellWithReuseIdentifier: Constants.customCellId)
-        collectionView?.register(CustomCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: Constants.headerViewId)
-        collectionView?.register(AddMedicationCell.self, forCellWithReuseIdentifier: Constants.addMedicationCellId)
-        collectionView?.dataSource = userMedicationDataSource
-        collectionView?.delegate = userMedicationDelegate
-        collectionView?.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(collectionView ?? UICollectionView())
-    }
 }
 
 extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
-    func reloadCollectionView() {
-        DispatchQueue.main.async {
-            self.collectionView?.reloadData()
-        }
-    }
-    
     func pushNewMedicationSettingsController() {
         let newMedicationSettings = NewMedicationSettingsViewController()
         present(UINavigationController(rootViewController: newMedicationSettings), animated: true, completion: nil)

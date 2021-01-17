@@ -168,8 +168,8 @@ final class FirebaseManager {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?) -> UserMedicationDetailModel? {
-        guard let uid = Auth.auth().currentUser?.uid else { return nil }
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]
         
@@ -207,8 +207,6 @@ final class FirebaseManager {
         let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()
         
         child.setValue(values)
-        
-        return UserMedicationDetailModel(userIdentifier: child.key ?? "", dictionary: values)
     }
     
     // MARK: Observing Username
