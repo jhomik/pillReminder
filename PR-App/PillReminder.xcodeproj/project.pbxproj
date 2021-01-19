@@ -57,7 +57,6 @@
 		5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C0248402FF008E9282 /* PillModel.swift */; };
 		5ADFC2C324854870008E9282 /* CurrentMedicationSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C224854870008E9282 /* CurrentMedicationSettingsView.swift */; };
 		5ADFC2CA24856BB7008E9282 /* UserMedicationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */; };
-		5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */; };
 		5AE4476324E6F1E600CC9DA4 /* AddMedicationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE4476224E6F1E600CC9DA4 /* AddMedicationCell.swift */; };
 		5AE9EA7F246ACC400090A1D2 /* UserMedicationInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoViewController.swift */; };
 		5AE9EA81246AD0040090A1D2 /* ReminderForMedicationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE9EA80246AD0040090A1D2 /* ReminderForMedicationViewController.swift */; };
@@ -143,7 +142,6 @@
 		5ADFC2C0248402FF008E9282 /* PillModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillModel.swift; sourceTree = "<group>"; };
 		5ADFC2C224854870008E9282 /* CurrentMedicationSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentMedicationSettingsView.swift; sourceTree = "<group>"; };
 		5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationDetailView.swift; sourceTree = "<group>"; };
-		5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DosageMedicationDetailView.swift; sourceTree = "<group>"; };
 		5AE4476224E6F1E600CC9DA4 /* AddMedicationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMedicationCell.swift; sourceTree = "<group>"; };
 		5AE9EA7E246ACC400090A1D2 /* UserMedicationInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoViewController.swift; sourceTree = "<group>"; };
 		5AE9EA80246AD0040090A1D2 /* ReminderForMedicationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationViewController.swift; sourceTree = "<group>"; };
@@ -237,7 +235,6 @@
 				5A7138212504FB0A0052F668 /* LoginScreenView.swift */,
 				5A2386E225B08E8600289FFE /* UserMedicationInfoView.swift */,
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
-				5ADFC2CB24857403008E9282 /* DosageMedicationDetailView.swift */,
 				5ADFC2C224854870008E9282 /* CurrentMedicationSettingsView.swift */,
 				5A78FC462502B58900011DD1 /* NewMedicationSettingsView.swift */,
 				5AEC6E1E24F553010052D16B /* ForgotPasswordView.swift */,
@@ -736,7 +733,6 @@
 				5A78FC472502B58900011DD1 /* NewMedicationSettingsView.swift in Sources */,
 				5ADFC2C324854870008E9282 /* CurrentMedicationSettingsView.swift in Sources */,
 				5AA21AD224DD806E000C6F47 /* NewMedicationViewModel.swift in Sources */,
-				5ADFC2CC24857403008E9282 /* DosageMedicationDetailView.swift in Sources */,
 				5A9813B6256A4BFC00A019C5 /* PillReminderImageView.swift in Sources */,
 				5ADFC2C1248402FF008E9282 /* PillModel.swift in Sources */,
 				5AA21ACA24D02BA0000C6F47 /* UserMedicationInfoViewModel.swift in Sources */,

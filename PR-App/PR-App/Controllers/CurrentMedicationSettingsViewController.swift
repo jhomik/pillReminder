@@ -20,7 +20,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     private let viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
-    private let medicationView = UserMedicationDetailView()
+//    private let medicationView = UserMedicationDetailView()
     var medications: UserMedicationDetailModel? {
         didSet {
             updateTextFieldsToChange()
@@ -70,12 +70,12 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
-            self.showLoadingSpinner(with: containerView)
+//            self.showLoadingSpinner(with: containerView)
             if !imageData.isEmpty {
                 viewModel.removeImageFromStorage(url: cellImage)
             }
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
-                self.dismissLoadingSpinner(with: self.containerView)
+//                self.dismissLoadingSpinner(with: self.containerView)
                 self.updateTextFieldsToChange()
                 self.dismiss(animated: true) {
                     self.popViewDelegate?.popViewController()
