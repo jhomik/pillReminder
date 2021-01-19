@@ -40,7 +40,7 @@ class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
         cell.deleteButtonEvent = { [weak self, unowned cell] in
             self?.deleteItem(for: cell, collectionView: collectionView)
         }
-
+        
         if viewModel.medications.indices.contains(indexPath.item) == true {
             cell.customMedicationCell = viewModel.medications[indexPath.item]
             return cell

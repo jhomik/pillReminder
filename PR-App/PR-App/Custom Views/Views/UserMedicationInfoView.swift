@@ -12,6 +12,7 @@ import SnapKit
 class UserMedicationInfoView: UIView {
     
     private let containerView = UIView()
+    private let spinner = UIActivityIndicatorView()
 
     private(set) var collectionView: UICollectionView?
     private(set) var viewModel: UserMedicationInfoViewModel
@@ -30,6 +31,8 @@ class UserMedicationInfoView: UIView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // TODO: How to call this method inside NewMedicationSettingsViewController?
 
     func addMedCell(_ model: UserMedicationDetailModel) {
         viewModel.appendItemWith(model)
@@ -39,7 +42,7 @@ class UserMedicationInfoView: UIView {
     }
 
     private func configureCollectionView() {
-        let width = self.bounds.width
+        let width = UIScreen.main.bounds.width
         let padding: CGFloat = 20
         let minimumItemSpacing: CGFloat = 10
         let availableWidth = width - (padding * 2) - (minimumItemSpacing * 2)
@@ -64,8 +67,6 @@ class UserMedicationInfoView: UIView {
         collectionView?.snp.makeConstraints({ (make) in
             make.top.left.right.bottom.equalTo(self)
         })
-        
-        print("loading CollectionView")
     }
 }
 

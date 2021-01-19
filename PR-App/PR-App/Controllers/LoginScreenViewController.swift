@@ -58,7 +58,7 @@ final class LoginScreenViewController: UIViewController {
             self.welcomeView.isHidden = true
             let tabBarVC = TabBarController()
             self.navigationController?.pushViewController(tabBarVC, animated: true)
-            self.showUserAlert(message: Alerts.userSessionActive, withTime: .now() + 1.5, completion: nil)
+//            self.showUserAlert(message: Alerts.userSessionActive, withTime: .now() + 1.5, completion: nil)
         }
     }
 }

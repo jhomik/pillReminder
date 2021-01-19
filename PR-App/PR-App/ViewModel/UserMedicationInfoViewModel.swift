@@ -12,6 +12,8 @@ protocol UserMedicationInfoEventDelegate: AnyObject {
     func updateBarButtonItem()
     func pushUserMedicationDetailController(with medications: UserMedicationDetailModel)
     func pushNewMedicationSettingsController()
+    func showLoadingSpinner()
+    func dismissLoadingSpinner()
 }
 
 protocol UpdateCollectionViewDelegate: AnyObject {
@@ -85,10 +87,12 @@ final class UserMedicationInfoViewModel {
     }
     
     func downloadMedicationInfo() {
+        self.delegateMedicationInfo?.showLoadingSpinner()
         firebaseManager.downloadMedicationInfo { [weak self] (result) in
             guard let self = self else { return }
             self.medications = result
         }
+        self.delegateMedicationInfo?.dismissLoadingSpinner()
         print("download Medications")
     }
     
