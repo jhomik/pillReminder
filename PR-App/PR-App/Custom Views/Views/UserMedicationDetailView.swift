@@ -15,7 +15,7 @@ final class UserMedicationDetailView: UIView {
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
 
     var pillImageView = PillReminderImageView(frame: .zero)
-    var viewModel: UserMedicationDetailViewModel
+    private(set) var viewModel: UserMedicationDetailViewModel
     
     private lazy var pillNameView = TitleAndInputMedicationView(
         title: NSAttributedString(string: Constants.pillName,
@@ -66,11 +66,11 @@ final class UserMedicationDetailView: UIView {
     init(viewModel: UserMedicationDetailViewModel) {
         self.viewModel = viewModel
         super.init(frame: .zero)
+        updateUI()
         configurePillImageView()
         configureMedicationStackView()
         configureDosageMedicationStackView()
         configureEditButton()
-        updateUI()
     }
     
     required init?(coder: NSCoder) {
@@ -136,7 +136,7 @@ final class UserMedicationDetailView: UIView {
             make.height.equalTo(heightAnchorConstant)
         }
     }
-    
+    // TODO: Change location of calling method downloadImage
     private func downloadImage(medication: UserMedicationDetailModel) {
         guard let cellImage = medication.cellImage else { return }
         pillImageView.downloadImage(with: cellImage)

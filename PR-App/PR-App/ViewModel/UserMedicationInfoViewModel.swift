@@ -22,10 +22,11 @@ protocol UpdateCollectionViewDelegate: AnyObject {
 
 final class UserMedicationInfoViewModel {
     
+    private let firebaseManager = FirebaseManager()
+    
     weak var delegateMedicationInfo: UserMedicationInfoEventDelegate?
     weak var updateCollectionView: UpdateCollectionViewDelegate?
     
-    private let firebaseManager = FirebaseManager()
     private(set) var medications: [UserMedicationDetailModel] = [] {
         didSet {
             delegateMedicationInfo?.updateBarButtonItem()

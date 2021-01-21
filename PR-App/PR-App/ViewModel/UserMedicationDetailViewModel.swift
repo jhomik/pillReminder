@@ -14,10 +14,12 @@ protocol EditButtonEventDelegate: AnyObject {
 
 final class UserMedicationDetailViewModel {
     
-    weak var buttonTappedDelegate: EditButtonEventDelegate?
-    
-    var medications: UserMedicationDetailModel?
     private let pillModel = PillModel()
+    private let firebaseManager = FirebaseManager()
+
+    var medications: UserMedicationDetailModel?
+    
+    weak var buttonTappedDelegate: EditButtonEventDelegate?
     
     var leftCapacity: String? {
         return medications?.capacity
