@@ -8,10 +8,19 @@
 
 import Foundation
 
+protocol NewMedicationEventDelegate: AnyObject {
+    func imagePickerEvent()
+}
+
 final class NewMedicationViewModel {
     
     private let firebaseManager = FirebaseManager()
+    weak var newMedicationDelegate: NewMedicationEventDelegate?
     
+    private(set) var medications: UserMedicationDetailModel?
+    
+    private(set) var imageData: Data?
+ 
     func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping () -> Void) {
         if !data.isEmpty {
             print("full data: \(data)")
@@ -29,6 +38,15 @@ final class NewMedicationViewModel {
             print("empty data: \(data)")
             self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail)
             completion()
+        }
+    }
+    
+    func setCapacityText(_ text: String?) -> String {
+        guard let text = text, let amount = Int(text) else { return "" }
+        if amount <= 1 {
+            return Constants.pill
+        } else {
+            return Constants.pills
         }
     }
 }

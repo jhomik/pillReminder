@@ -32,7 +32,7 @@ final class CurrentMedicationSettingsView: UIView {
     private let currentProgramMedicationStackView = UIStackView()
     private let scrollView = UIScrollView()
     private(set) var currentMedicationImage = PillReminderImageView(frame: .zero)
-    weak var delegate: UserMedicationDetailDelegate?
+//    weak var delegate: UserMedicationDetailDelegate?
     private(set) var activeTextField: UITextField?
     private let pickerView = UIPickerView()
     private let onceADayDatePickerView = UIDatePicker()
@@ -161,7 +161,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     @objc private func tapToChangeButtonTapped() {
-        delegate?.imagePickerEvent()
+//        delegate?.imagePickerEvent()
     }
     
     private func configureCurrentMedicationStackview() {

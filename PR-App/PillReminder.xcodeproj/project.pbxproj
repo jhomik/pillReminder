@@ -283,8 +283,8 @@
 				5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */,
 				5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */,
 				5ACFD99325B1233200E6FAE4 /* UserMedicationDetailViewModel.swift */,
-				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
 				5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */,
+				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
 				5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */,
 				5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */,
 			);

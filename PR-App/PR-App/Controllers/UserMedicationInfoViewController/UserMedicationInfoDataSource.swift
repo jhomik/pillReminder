@@ -11,6 +11,7 @@ import UIKit
 class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
 
     var viewModel: UserMedicationInfoViewModel
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     init(viewModel: UserMedicationInfoViewModel) {
         self.viewModel = viewModel
@@ -19,6 +20,7 @@ class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
     private func deleteItem(for item: CustomCell, collectionView: UICollectionView) {
         if let indexPath = collectionView.indexPath(for: item) {
             viewModel.deleteItemAt(indexPath)
+            appDelegate?.deletePendingNotification()
             collectionView.performBatchUpdates({
                 collectionView.deleteItems(at: [indexPath])
             })

@@ -34,7 +34,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         configureNavBar()
         configureMedicationView()
         createDismisKeyboardTapGesture()
-        currentMedicationSettingsView.delegate = self
+//        currentMedicationSettingsView.delegate = self
     }
     
     private func configureViewController() {
@@ -136,8 +136,8 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
     }
 }
 
-extension CurrentMedicationSettingsViewController: UserMedicationDetailDelegate {
-    func imagePickerEvent() {
-        configureImagePickerController()
-    }
-}
+//extension CurrentMedicationSettingsViewController: NewMedicationEventDelegate {
+//    func imagePickerEvent() {
+//        configureImagePickerController()
+//    }
+//}

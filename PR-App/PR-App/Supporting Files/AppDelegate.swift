@@ -11,6 +11,13 @@ import CoreData
 import FirebaseCore
 import UserNotifications
 
+struct ScheduleNotoficationData {
+    var textField: UITextField
+    let pillName: String
+    let time: Date
+    var identifier: String
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
@@ -62,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
-        let request = UNNotificationRequest(identifier: scheduleNotoficationData.identifier, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
             if let error = error {
@@ -89,7 +96,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     nextDate.append(dates)
                 }
                 DispatchQueue.main.async {
-                    label.text = Constants.nextPill + "\(nextDate.min() ?? "")"
+                    label.text = Constants.nextPill + "\(nextDate)"
                 }
             }
         }

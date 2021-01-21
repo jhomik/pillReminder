@@ -11,9 +11,8 @@ import UserNotifications
 
 final class NewMedicationSettingsViewController: UIViewController {
     
-    private let newMedicationView = NewMedicationSettingsView()
     private var viewModel = NewMedicationViewModel()
-    private let tableView = UITableView()
+    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel)
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     
@@ -23,7 +22,7 @@ final class NewMedicationSettingsViewController: UIViewController {
         configureNavBar()
         configureMedicationView()
         createDismisKeyboardTapGesture()
-        newMedicationView.delegate = self
+        viewModel.newMedicationDelegate = self
     }
     
     private func configureViewController() {
@@ -44,7 +43,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func saveSettings() {
-        let medicationToSave = UserMedicationDetailModel(medicationToSave: newMedicationView)
+        let medicationToSave = UserMedicationDetailModel(userIdentifier: UUID().uuidString, medicationToSave: newMedicationView)
         view.endEditing(true)
         
         if medicationToSave.anyEmpty {
@@ -113,7 +112,7 @@ extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, 
     }
 }
 
-extension NewMedicationSettingsViewController: UserMedicationDetailDelegate {
+extension NewMedicationSettingsViewController: NewMedicationEventDelegate {
     func imagePickerEvent() {
         configureImagePickerController()
     }
