@@ -13,8 +13,6 @@ final class UserMedicationDetailView: UIView {
     private let medicationStackView = UIStackView()
     private let dosageMedicationStackView = UIStackView()
     private let editButton = PillReminderMainCustomButton(text: Constants.changeSettings)
-    private let takeAPillView = TakeAPillView()
-    private let pillModel = PillModel()
 
     var pillImageView = PillReminderImageView(frame: .zero)
     var viewModel: UserMedicationDetailViewModel
@@ -85,30 +83,8 @@ final class UserMedicationDetailView: UIView {
         updatePackageCapacityValue(medications.capacity)
         updatePillDoseValue(medications.dose)
         downloadImage(medication: medications)
-        configureDoseInformations(medication: medications)
+        updateDoseProgram()
         updatePillsLeft(leftPills)
-    }
-    
-    private func downloadImage(medication: UserMedicationDetailModel) {
-        guard let cellImage = medication.cellImage else { return }
-        pillImageView.downloadImage(with: cellImage)
-    }
-    
-    func updatePillNameValue(_ value: String) {
-        self.pillNameView.updateInputValue(NSAttributedString(string: value, attributes: self.informationInputAttributes))
-    }
-    
-    func updatePackageCapacityValue(_ value: String) {
-        guard let amount = Int(value) else { return }
-        if amount <= 1 {
-            self.packageCapacityView.updateInputValue(NSAttributedString(string: value + Constants.pill, attributes: self.informationInputAttributes))
-        } else {
-            self.packageCapacityView.updateInputValue(NSAttributedString(string: value + Constants.pills, attributes: self.informationInputAttributes))
-        }
-    }
-    
-    func updatePillDoseValue(_ value: String) {
-        self.pillDoseView.updateInputValue(NSAttributedString(string: value + Constants.mgPills, attributes: self.informationInputAttributes))
     }
     
     private func configurePillImageView() {
@@ -142,18 +118,6 @@ final class UserMedicationDetailView: UIView {
         }
     }
     
-    // MARK: Configure Program and Dose Stack view
-    
-    func configureDoseInformations(medication: UserMedicationDetailModel) {
-        if medication.howManyTimesPerDay == pillModel.howManyTimesPerDay[0] {
-            updateDose(Constants.onceADay)
-        } else if medication.howManyTimesPerDay == pillModel.howManyTimesPerDay[1] {
-            updateDose(Constants.twiceADay)
-        } else {
-            updateDose(Constants.threeTimesADay)
-        }
-    }
-    
     private func configureDosageMedicationStackView() {
         let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 15 : 30
         let heightAnchorConstant: CGFloat = 200
@@ -173,25 +137,36 @@ final class UserMedicationDetailView: UIView {
         }
     }
     
-    func updateDose(_ value: String) {
-        self.dosageView.updateInputValue(NSAttributedString(string: value, attributes: self.programAndDosageInputAttributes))
+    private func downloadImage(medication: UserMedicationDetailModel) {
+        guard let cellImage = medication.cellImage else { return }
+        pillImageView.downloadImage(with: cellImage)
+    }
+    
+    func updatePillNameValue(_ value: String) {
+        self.pillNameView.updateInputValue(NSAttributedString(string: value, attributes: self.informationInputAttributes))
+    }
+    
+    func updatePackageCapacityValue(_ value: String) {
+        self.packageCapacityView.updateInputValue(NSAttributedString(string: viewModel.setPackageSuffixLabel(value), attributes: self.informationInputAttributes))
+    }
+    
+    func updatePillDoseValue(_ value: String) {
+        self.pillDoseView.updateInputValue(NSAttributedString(string: value + Constants.mgPills, attributes: self.informationInputAttributes))
+    }
+    
+    func updateDoseProgram() {
+        self.dosageView.updateInputValue(NSAttributedString(string: viewModel.configureDoseInformations(), attributes: self.programAndDosageInputAttributes))
     }
     
     func updatePillsLeft(_ value: String) {
-        guard let amount = Double(value) else { return }
-        if amount <= 1 {
-            self.capacityPillsLeft.updateInputValue(NSAttributedString(string: Constants.pillLeft + value + Constants.pill, attributes: self.programAndDosageInputAttributes))
-        } else {
-            self.capacityPillsLeft.updateInputValue(NSAttributedString(string: Constants.pillsLeft + value + Constants.pills, attributes: self.programAndDosageInputAttributes))
-        }
+        self.capacityPillsLeft.updateInputValue(NSAttributedString(string: viewModel.setPillsLeftLabel(value), attributes: self.programAndDosageInputAttributes))
     }
-    
+
     private func configureEditButton() {
         let bottomAnchorConstant: CGFloat = 30
         let heightAnchorConstant: CGFloat = 40
         
         editButton.addTarget(self, action: #selector(editButtonTapped), for: .touchUpInside)
-        
         self.addSubview(editButton)
         
         editButton.snp.makeConstraints { (make) in

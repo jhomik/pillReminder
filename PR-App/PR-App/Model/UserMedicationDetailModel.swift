@@ -39,7 +39,8 @@ struct UserMedicationDetailModel {
         self.dosage = dictionary["dosage"] as? String ?? ""
     }
     
-    init(medicationToSave: NewMedicationSettingsView?) {
+    init(userIdentifier: String, medicationToSave: NewMedicationSettingsView?) {
+        self.userIdentifier = userIdentifier
         self.pillName = medicationToSave?.nameTextField.text ?? ""
         self.capacity = medicationToSave?.capacityTextField.text ?? ""
         self.dose = medicationToSave?.doseTextField.text ?? ""

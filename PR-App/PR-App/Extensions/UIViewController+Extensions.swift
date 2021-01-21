@@ -30,7 +30,7 @@ extension UIViewController {
                 containerView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
                 containerView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
                 spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-                spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor),
+                spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
             ])
             spinner.startAnimating()
         }
