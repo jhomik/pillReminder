@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserMedicationInfoDelegate: NSObject, UICollectionViewDelegate {
+final class UserMedicationInfoDelegate: NSObject, UICollectionViewDelegate {
     
     var viewModel: UserMedicationInfoViewModel
     

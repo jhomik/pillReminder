@@ -8,7 +8,7 @@
 
 import UIKit
 
-class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
+final class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
 
     var viewModel: UserMedicationInfoViewModel
     private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate

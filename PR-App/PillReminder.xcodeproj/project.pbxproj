@@ -10,6 +10,8 @@
 		46FF6EF1996C4490FCB94A82 /* Pods_PillReminderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7FFD4E2395C77D24DA5535 /* Pods_PillReminderTests.framework */; };
 		481766E5EF96CBEA7BED5B24 /* Pods_PillReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */; };
 		5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0544712560216D00635461 /* DeviceTypesConstraints.swift */; };
+		5A177DEC25B996C90038FFE4 /* ReminderForMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */; };
+		5A177DF225B997800038FFE4 /* ReminderForMedicationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */; };
 		5A23866F25AF18DC00289FFE /* UserMedicationInfoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A23866E25AF18DC00289FFE /* UserMedicationInfoDataSource.swift */; };
 		5A2386DE25B08DE100289FFE /* UserMedicationInfoDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A2386DD25B08DE100289FFE /* UserMedicationInfoDelegate.swift */; };
@@ -97,6 +99,8 @@
 		4098D0061B7B4F71A7C0155E /* Pods-PillReminder-PillReminderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder-PillReminderUITests.release.xcconfig"; path = "Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder.debug.xcconfig"; path = "Target Support Files/Pods-PillReminder/Pods-PillReminder.debug.xcconfig"; sourceTree = "<group>"; };
 		5A0544712560216D00635461 /* DeviceTypesConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraints.swift; sourceTree = "<group>"; };
+		5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationView.swift; sourceTree = "<group>"; };
+		5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationDataSource.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationSettingsViewController.swift; sourceTree = "<group>"; };
 		5A23866E25AF18DC00289FFE /* UserMedicationInfoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoDataSource.swift; sourceTree = "<group>"; };
 		5A2386DD25B08DE100289FFE /* UserMedicationInfoDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserMedicationInfoDelegate.swift; sourceTree = "<group>"; };
@@ -198,6 +202,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5A177DF025B997630038FFE4 /* ReminderForMedicationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5AE9EA80246AD0040090A1D2 /* ReminderForMedicationViewController.swift */,
+				5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */,
+			);
+			path = ReminderForMedicationViewController;
+			sourceTree = "<group>";
+		};
 		5A1AE7DD247E8D220094F17B /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -235,6 +248,7 @@
 				5A7138212504FB0A0052F668 /* LoginScreenView.swift */,
 				5A2386E225B08E8600289FFE /* UserMedicationInfoView.swift */,
 				5ADFC2C924856BB7008E9282 /* UserMedicationDetailView.swift */,
+				5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */,
 				5ADFC2C224854870008E9282 /* CurrentMedicationSettingsView.swift */,
 				5A78FC462502B58900011DD1 /* NewMedicationSettingsView.swift */,
 				5AEC6E1E24F553010052D16B /* ForgotPasswordView.swift */,
@@ -283,10 +297,10 @@
 				5ACB65B124AA41D800F3D454 /* LoginScreenViewModel.swift */,
 				5AA21AC924D02BA0000C6F47 /* UserMedicationInfoViewModel.swift */,
 				5ACFD99325B1233200E6FAE4 /* UserMedicationDetailViewModel.swift */,
+				5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */,
 				5A3AED5024F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift */,
 				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
 				5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */,
-				5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -408,7 +422,7 @@
 				5AFED64E2461A8F000EF7C1A /* LoginScreenViewController.swift */,
 				5A23866A25AF161800289FFE /* UserMedicationInfoViewController */,
 				5AA9D0A22477F80D007D85DA /* UserMedicationDetailViewController.swift */,
-				5AE9EA80246AD0040090A1D2 /* ReminderForMedicationViewController.swift */,
+				5A177DF025B997630038FFE4 /* ReminderForMedicationViewController */,
 				5AA21AD324E537AE000C6F47 /* CurrentMedicationSettingsViewController.swift */,
 				5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */,
 				5AEC6E1B24F54B760052D16B /* ForgotPasswordViewController.swift */,
@@ -742,6 +756,8 @@
 				5A2386E325B08E8600289FFE /* UserMedicationInfoView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5A23866F25AF18DC00289FFE /* UserMedicationInfoDataSource.swift in Sources */,
+				5A177DEC25B996C90038FFE4 /* ReminderForMedicationView.swift in Sources */,
+				5A177DF225B997800038FFE4 /* ReminderForMedicationDataSource.swift in Sources */,
 				5AFED64F2461A8F000EF7C1A /* LoginScreenViewController.swift in Sources */,
 				5A977D432545BA95009A1A58 /* TakeAPillAlertController.swift in Sources */,
 				5A3AED5324F6F72E007ADC39 /* Alerts.swift in Sources */,

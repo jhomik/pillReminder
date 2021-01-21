@@ -14,7 +14,6 @@ final class UserMedicationDetailViewController: UIViewController {
     lazy private(set) var userMedicationDetailView = UserMedicationDetailView(viewModel: viewModel)
     
     override func loadView() {
-        super.loadView()
         self.view = userMedicationDetailView
     }
     override func viewDidLoad() {
