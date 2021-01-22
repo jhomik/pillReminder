@@ -15,7 +15,6 @@ struct ScheduleNotoficationData {
     var textField: UITextField
     let pillName: String
     let time: Date
-    var identifier: String
 }
 
 @UIApplicationMain
@@ -96,7 +95,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     nextDate.append(dates)
                 }
                 DispatchQueue.main.async {
-                    label.text = Constants.nextPill + "\(nextDate)"
+                    label.text = Constants.nextPill + "\(nextDate.min() ?? "")"
                 }
             }
         }

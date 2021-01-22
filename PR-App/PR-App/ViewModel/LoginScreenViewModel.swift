@@ -32,6 +32,22 @@ final class LoginScreenViewModel {
         }
     }
     
+    func setHeightAnchorMulitplier() -> Float {
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            return 0.42
+        } else {
+            return 0.34
+        }
+    }
+    
+    func setWidthAnchorMultiplier() -> Float {
+        if DeviceTypes.isiPhoneSE {
+            return 0.82
+        } else {
+            return 0.8
+        }
+    }
+    
     func toogleIsSignUp() {
         isSignUp.toggle()
     }

@@ -376,19 +376,19 @@ final class CurrentMedicationSettingsView: UIView {
     
     private func configureFirstDaySchedule() {
         appDelegate?.deletePendingNotification()
-        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date, identifier: UUID().uuidString)
+        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: medicationsToChange?.userIdentifier ?? "")
     }
     
     private func configureSecondDaySchedule() {
         appDelegate?.deletePendingNotification()
-        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date, identifier: UUID().uuidString)
+        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: medicationsToChange?.userIdentifier ?? "")
     }
     
     private func configureThirdDaySchedule() {
         appDelegate?.deletePendingNotification()
-        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date, identifier: UUID().uuidString)
+        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
         appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: medicationsToChange?.userIdentifier ?? "")
     }
 }

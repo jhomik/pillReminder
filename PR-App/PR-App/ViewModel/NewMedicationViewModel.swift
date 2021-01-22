@@ -21,7 +21,7 @@ final class NewMedicationViewModel {
     
     private(set) var imageData: Data?
  
-    func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping () -> Void) {
+    func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping (String) -> Void) {
         if !data.isEmpty {
             print("full data: \(data)")
             firebaseManager.saveImageToStorage(cellImage: data) { [weak self] (result) in
@@ -30,14 +30,12 @@ final class NewMedicationViewModel {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                  self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail)
+                    self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail, completion: completion)
                 }
-                completion()
             }
         } else {
             print("empty data: \(data)")
-            self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail)
-            completion()
+            self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail, completion: completion)
         }
     }
     

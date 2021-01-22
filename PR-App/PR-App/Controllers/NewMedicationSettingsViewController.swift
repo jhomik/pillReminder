@@ -43,7 +43,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func saveSettings() {
-        let medicationToSave = UserMedicationDetailModel(userIdentifier: UUID().uuidString, medicationToSave: newMedicationView)
+        let medicationToSave = UserMedicationDetailModel(medicationToSave: newMedicationView)
         view.endEditing(true)
         
         if medicationToSave.anyEmpty {
@@ -51,11 +51,11 @@ final class NewMedicationSettingsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
-//            self.showLoadingSpinner(with: containerView)
-            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) {
-//                self.dismissLoadingSpinner(with: self.containerView)
+            //            self.showLoadingSpinner(with: containerView)
+            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (key) in
+                //                self.dismissLoadingSpinner(with: self.containerView)
                 self.dismiss(animated: true, completion: nil)
-                self.newMedicationView.setSchedule(medicationId: medicationToSave.userIdentifier)
+                self.newMedicationView.setSchedule(medicationId: key)
             }
         }
     }
