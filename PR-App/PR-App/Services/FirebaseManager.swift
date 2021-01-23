@@ -11,7 +11,21 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 
-final class FirebaseManager {
+protocol FirebaseManagerEvents: AnyObject {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((String) -> Void))
+    func downloadMedicationInfo(completion: @escaping([UserMedicationDetailModel]) -> Void)
+    func updateMedicationInfo(cellImage: String?, medicationDetail: UserMedicationDetailModel?)
+    func saveImageToStorage(cellImage: Data?, completion: @escaping(Result<String, Error>) -> Void)
+    func removeDataFromFirebase(model: UserMedicationDetailModel)
+    func removeImageFromStorage(cellImage: String)
+    func downloadImage(with urlString: String, completion: @escaping(UIImage?) -> Void)
+    func setUserName(completion: @escaping(Result<String, Error>) -> Void)
+    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void)
+    func signInUser(userModel: UserModel, completion: ((Result<Bool, Error>) -> Void)?)
+    func createUser(userModel: UserModel, completion: ((Result<Void, Error>) -> Void)?)
+}
+
+final class FirebaseManager: FirebaseManagerEvents {
     
     private let refDatabase = Database.database().reference()
     private let refStorage = Storage.storage().reference()
