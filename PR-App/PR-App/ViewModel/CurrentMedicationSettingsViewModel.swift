@@ -12,18 +12,35 @@ protocol CurrentMedicationEventDelegate: AnyObject {
     func imagePickerEvent()
 }
 
+protocol UpdateTextFieldsSuffix: AnyObject {
+    func updateSuffix()
+}
+
 final class CurrentMedicationSettingsViewModel {
     
     private let firebaseManager = FirebaseManager()
     
-    var medications: UserMedicationDetailModel?
+    var medications: UserMedicationDetailModel? {
+        didSet {
+            suffixTextFieldsDelegate?.updateSuffix()
+        }
+    }
     weak var currentMedicationDelegate: CurrentMedicationEventDelegate?
+    weak var suffixTextFieldsDelegate: UpdateTextFieldsSuffix?
     
     func setConstraintConstant() -> Float {
         if DeviceTypes.isiPhoneSE {
             return 0
         } else {
             return 14
+        }
+    }
+    
+    func setFilterForTextField(text: inout String?) {
+        if let filterText = text, let intText = Int(filterText) {
+            text = "\(intText)"
+        } else {
+            text = ""
         }
     }
     
