@@ -11,7 +11,7 @@ import SnapKit
 
 class ReminderForMedicationView: UIView {
     
-    private var tableView = UITableView()
+    private let tableView = UITableView()
     
     private(set) var viewModel: ReminderViewModel
     lazy private(set) var remindersDataSource = ReminderForMedicationDataSource(viewModel: viewModel)

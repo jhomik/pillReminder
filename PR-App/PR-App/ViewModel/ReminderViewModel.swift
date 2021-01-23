@@ -15,9 +15,7 @@ protocol ReminderViewEventDelegate: AnyObject {
 final class ReminderViewModel {
     
     private let firebaseManager = FirebaseManager()
-    
     private(set) var reminders: [UserMedicationDetailModel] = []
-    
     weak var reminderEvent: ReminderViewEventDelegate?
     
     func downloadReminders() {

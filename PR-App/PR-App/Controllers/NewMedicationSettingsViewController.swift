@@ -11,16 +11,20 @@ import UserNotifications
 
 final class NewMedicationSettingsViewController: UIViewController {
     
-    private var viewModel = NewMedicationViewModel()
     lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel)
+    
+    private(set) var viewModel = NewMedicationViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
+    private(set) var activityIndicator = UIActivityIndicatorView()
     
+    override func loadView() {
+        self.view = newMedicationView
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureNavBar()
-        configureMedicationView()
         createDismisKeyboardTapGesture()
         viewModel.newMedicationDelegate = self
     }
@@ -51,9 +55,9 @@ final class NewMedicationSettingsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
-            //            self.showLoadingSpinner(with: containerView)
+            self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
             viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (key) in
-                //                self.dismissLoadingSpinner(with: self.containerView)
+                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true, completion: nil)
                 self.newMedicationView.setSchedule(medicationId: key)
             }
@@ -81,18 +85,6 @@ final class NewMedicationSettingsViewController: UIViewController {
         actionSheet.addAction(UIAlertAction(title: Alerts.cancel, style: .cancel, handler: nil))
         
         self.present(actionSheet, animated: true)
-    }
-    
-    private func configureMedicationView() {
-        let leadingAndTrailingAnchorConstants: CGFloat = 20
-        
-        view.addSubview(newMedicationView)
-        
-        newMedicationView.snp.makeConstraints { (make) in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(leadingAndTrailingAnchorConstants)
-            make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
-        }
     }
 }
 

@@ -41,7 +41,7 @@ extension UserMedicationDetailViewController: PopViewControllerDelegate {
 extension UserMedicationDetailViewController: EditButtonEventDelegate {
     func editButtonTapped() {
         let currentMedicationVC = CurrentMedicationSettingsViewController()
-        currentMedicationVC.medications = viewModel.medications
+        currentMedicationVC.viewModel.medications = viewModel.medications
         currentMedicationVC.popViewDelegate = self
         present(UINavigationController(rootViewController: currentMedicationVC), animated: true)
     }

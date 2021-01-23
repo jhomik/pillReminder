@@ -8,9 +8,33 @@
 
 import Foundation
 
+protocol CurrentMedicationEventDelegate: AnyObject {
+    func imagePickerEvent()
+}
+
 final class CurrentMedicationSettingsViewModel {
     
     private let firebaseManager = FirebaseManager()
+    
+    var medications: UserMedicationDetailModel?
+    weak var currentMedicationDelegate: CurrentMedicationEventDelegate?
+    
+    func setConstraintConstant() -> Float {
+        if DeviceTypes.isiPhoneSE {
+            return 0
+        } else {
+            return 14
+        }
+    }
+    
+    func setCapacityText(_ text: String?) -> String {
+        guard let text = text, let amount = Int(text) else { return "" }
+        if amount <= 1 {
+            return Constants.pill
+        } else {
+            return Constants.pills
+        }
+    }
     
     func updateMedicationInfo(data: Data, medicationDetail: UserMedicationDetailModel, completion: @escaping () -> Void) {
         if !data.isEmpty {

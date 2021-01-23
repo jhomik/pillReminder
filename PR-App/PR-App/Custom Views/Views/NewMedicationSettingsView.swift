@@ -68,7 +68,8 @@ final class NewMedicationSettingsView: UIView {
         self.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { (make) in
-            make.top.leading.trailing.bottom.equalTo(self)
+            make.top.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(self)
         }
     }
     
@@ -79,7 +80,8 @@ final class NewMedicationSettingsView: UIView {
         scrollView.addSubview(addMedicationLbl)
         
         addMedicationLbl.snp.makeConstraints { (make) in
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(20)
+            make.trailing.equalTo(self)
             make.height.equalTo(heightAnchorConstant)
             make.top.equalTo(scrollView).offset(topAnchorConstant)
         }
@@ -103,8 +105,8 @@ final class NewMedicationSettingsView: UIView {
         
         medicationImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(addMedicationLbl.snp.bottom).offset(constraintConstant)
-            make.leading.equalTo(self)
-            make.trailing.equalTo(constraintConstant)
+            make.leading.equalTo(addMedicationLbl.snp.leading)
+            make.trailing.equalTo(-constraintConstant)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
             make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
         }
@@ -129,7 +131,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureNewMedicationStackView() {
-        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 14
+        let constraintConstant = viewModel.setConstraintConstant()
         
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)
@@ -149,17 +151,13 @@ final class NewMedicationSettingsView: UIView {
         newMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(medicationImageButton).offset(constraintConstant)
             make.leading.equalTo(medicationImageButton.snp.trailing).offset(constraintConstant)
-            make.trailing.equalTo(self)
+            make.trailing.equalTo(self).offset(-20)
             make.bottom.equalTo(medicationImageButton).offset(-constraintConstant)
         }
     }
-    // TODO: How to put this to viewModel, tried with inout parameter but did not work.
+    
     @objc private func textFieldFilter(_ textField: UITextField) {
-        if let text = textField.text, let intText = Int(text) {
-            textField.text = "\(intText)"
-        } else {
-            textField.text = ""
-        }
+        viewModel.setFilterForTextField(text: &textField.text)
     }
     
     private func configureCapacityLabel() {
@@ -216,7 +214,8 @@ final class NewMedicationSettingsView: UIView {
         
         programMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(newMedicationStackView.snp.bottom).offset(constraintConstant)
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(addMedicationLbl.snp.leading)
+            make.trailing.equalTo(self).offset(-20)
         }
     }
     

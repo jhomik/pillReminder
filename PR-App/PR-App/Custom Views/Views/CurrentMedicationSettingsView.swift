@@ -11,6 +11,23 @@ import SnapKit
 
 final class CurrentMedicationSettingsView: UIView {
     
+    private let pillModel = PillModel()
+    private let tapToChangeButton = UIButton()
+    private let currentMedicationStackView = UIStackView()
+    private let currentProgramMedicationStackView = UIStackView()
+    private let scrollView = UIScrollView()
+    private let pickerView = UIPickerView()
+    private let onceADayDatePickerView = UIDatePicker()
+    private let twiceADayDatePickerView = UIDatePicker()
+    private let threeTimesADayDatePickerView = UIDatePicker()
+    private let userDefaults = UserDefaults.standard
+    private let frequencyLabel = PillReminderProgramCustomLabel(text: Constants.frequencyTitle)
+    private let howManyTimesLabel = PillReminderProgramCustomLabel(text: Constants.howManyTimesPerDayTitle)
+    private let whatTimeLabel = PillReminderProgramCustomLabel(text: Constants.whatTimeTitle)
+    private let dosageLabel = PillReminderProgramCustomLabel(text: Constants.dosage)
+    private let capacityLabel = PillReminderMainCustomLabel(text: Constants.pills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private let doseLabel = PillReminderMainCustomLabel(text: Constants.mgPills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    
     private(set) var changeMedicationLbl = PillReminderMainCustomLabel(text: Constants.changeMedications, alignment: .left, size: 24, weight: .bold, color: .label)
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
     private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.capacityMedication, isPassword: false)
@@ -21,38 +38,22 @@ final class CurrentMedicationSettingsView: UIView {
     private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
     private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
     private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.chooseDosage)
-    private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: Constants.frequencyTitle)
-    private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: Constants.howManyTimesPerDayTitle)
-    private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: Constants.whatTimeTitle)
-    private(set) var dosageLabel = PillReminderProgramCustomLabel(text: Constants.dosage)
-    private let capacityLabel = PillReminderMainCustomLabel(text: Constants.pills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
-    private let doseLabel = PillReminderMainCustomLabel(text: Constants.mgPills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
-    private let pillModel = PillModel()
-    private let currentMedicationStackView = UIStackView()
-    private let currentProgramMedicationStackView = UIStackView()
-    private let scrollView = UIScrollView()
     private(set) var currentMedicationImage = PillReminderImageView(frame: .zero)
 //    weak var delegate: UserMedicationDetailDelegate?
     private(set) var activeTextField: UITextField?
-    private let pickerView = UIPickerView()
-    private let onceADayDatePickerView = UIDatePicker()
-    private let twiceADayDatePickerView = UIDatePicker()
-    private let threeTimesADayDatePickerView = UIDatePicker()
-    private let userDefaults = UserDefaults.standard
-    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     private(set) var capacityLeadingConstraint: Constraint?
     private(set) var doseLeadingConstraint: Constraint?
-    private let tapToChangeButton = UIButton()
-    var medicationsToChange: UserMedicationDetailModel? {
-        didSet {
-            updateUI()
-        }
-    }
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var viewModel: CurrentMedicationSettingsViewModel
+    
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+
+    init(viewModel: CurrentMedicationSettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
+        updateUI()
         configureScrollView()
-        configureAddMedicationLbl()
+        configureChangeMedicationLbl()
         configureMedicationImageView()
         configureTapToChangeButton()
         configureCurrentMedicationStackview()
@@ -66,7 +67,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func updateUI() {
-        guard let medication = medicationsToChange else { return }
+        guard let medication = viewModel.medications else { return }
         updateTextFields(withModel: medication)
         downloadImage(medication: medication)
         updateCapcityConstraint(with: capacityTextField)
@@ -103,18 +104,20 @@ final class CurrentMedicationSettingsView: UIView {
         self.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { (make) in
-            make.top.leading.trailing.bottom.equalTo(self)
+            make.leading.trailing.equalTo(self)
+            make.top.bottom.equalTo(self.safeAreaLayoutGuide)
         }
     }
     
-    private func configureAddMedicationLbl() {
-        let topAnchorConstant: CGFloat = 12
+    private func configureChangeMedicationLbl() {
+        let topAnchorConstant: CGFloat = 20
         let heightAnchorConstant: CGFloat = 30
         
         scrollView.addSubview(changeMedicationLbl)
-        
+
         changeMedicationLbl.snp.makeConstraints { (make) in
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(20)
+            make.trailing.equalTo(self)
             make.height.equalTo(heightAnchorConstant)
             make.top.equalTo(scrollView).offset(topAnchorConstant)
         }
@@ -136,8 +139,8 @@ final class CurrentMedicationSettingsView: UIView {
         
         currentMedicationImage.snp.makeConstraints { (make) in
             make.top.equalTo(changeMedicationLbl.snp.bottom).offset(constraintConstant)
-            make.leading.equalTo(self)
-            make.trailing.equalTo(constraintConstant)
+            make.leading.equalTo(changeMedicationLbl.snp.leading)
+            make.trailing.equalTo(-constraintConstant)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
             make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
         }
@@ -165,7 +168,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureCurrentMedicationStackview() {
-        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 14
+        let constraintConstant = viewModel.setConstraintConstant()
         
         currentMedicationStackView.addArrangedSubview(nameTextField)
         currentMedicationStackView.addArrangedSubview(capacityTextField)
@@ -185,7 +188,7 @@ final class CurrentMedicationSettingsView: UIView {
         currentMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(currentMedicationImage).offset(constraintConstant)
             make.leading.equalTo(currentMedicationImage.snp.trailing).offset(constraintConstant)
-            make.trailing.equalTo(self)
+            make.trailing.equalTo(self).offset(-20)
             make.bottom.equalTo(currentMedicationImage).offset(-constraintConstant)
         }
     }
@@ -276,7 +279,8 @@ final class CurrentMedicationSettingsView: UIView {
         
         currentProgramMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(currentMedicationStackView.snp.bottom).offset(constraintConstant)
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(changeMedicationLbl.snp.leading)
+            make.trailing.equalTo(self).offset(-20)
         }
     }
     
@@ -377,19 +381,19 @@ final class CurrentMedicationSettingsView: UIView {
     private func configureFirstDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: medicationsToChange?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: viewModel.medications?.userIdentifier ?? "")
     }
     
     private func configureSecondDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: medicationsToChange?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: viewModel.medications?.userIdentifier ?? "")
     }
     
     private func configureThirdDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: medicationsToChange?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: viewModel.medications?.userIdentifier ?? "")
     }
 }
 
@@ -430,12 +434,7 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
     }
     
     func capacityText(forContent text: String?) -> String {
-        guard let text = text, let amount = Int(text) else { return "" }
-        if amount <= 1 {
-            return Constants.pill
-        } else {
-            return Constants.pills
-        }
+        viewModel.setCapacityText(text)
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {

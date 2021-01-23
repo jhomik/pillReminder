@@ -10,15 +10,19 @@ import UIKit
 
 final class ForgotPasswordViewController: UIViewController {
     
-    private var forgotPasswordView = ForgotPasswordView()
-    lazy var viewModel = ForgotPasswordViewModel(forgotPasswordEvents: self)
+    private(set) var viewModel = ForgotPasswordViewModel()
+    lazy private(set) var forgotPasswordView = ForgotPasswordView(viewModel: viewModel)
+    
+    override func loadView() {
+        self.view = forgotPasswordView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureNavigationBar()
-        configureForgotPasswordView()
         createDismisKeyboardTapGesture()
+        viewModel.passwordEvents = self
     }
     
     private func configureViewController() {
@@ -36,20 +40,6 @@ final class ForgotPasswordViewController: UIViewController {
     @objc private func cancelButtonTapped() {
         dismiss(animated: true, completion: nil)
     }
-    
-    private func configureForgotPasswordView() {
-        let topAnchorConstant: CGFloat = 40
-        
-        forgotPasswordView.delegate = self
-        view.addSubview(forgotPasswordView)
-    
-        forgotPasswordView.snp.makeConstraints { (make) in
-            make.top.equalTo(view.safeAreaLayoutGuide).offset(topAnchorConstant)
-            make.leading.equalTo(topAnchorConstant)
-            make.trailing.equalTo(-topAnchorConstant)
-            make.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
 }
 
 extension ForgotPasswordViewController: ForgotPasswordEvents {
@@ -61,11 +51,5 @@ extension ForgotPasswordViewController: ForgotPasswordEvents {
     
     func showFailureAlert(error: Error) {
         self.showUserAlert(message: error.localizedDescription, withTime: nil, completion: nil)
-    }
-}
-
-extension ForgotPasswordViewController: ForgotPasswordDelegate {
-    func resetPassword(withEmail: UserModel) {
-        viewModel.resetUserPassword(withEmail: withEmail)
     }
 }

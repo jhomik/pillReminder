@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SnapKit
 
 protocol PopViewControllerDelegate: AnyObject {
     func popViewController()
@@ -15,36 +14,31 @@ protocol PopViewControllerDelegate: AnyObject {
 
 final class CurrentMedicationSettingsViewController: UIViewController {
     
-    private let currentMedicationSettingsView = CurrentMedicationSettingsView()
     private let tableView = UITableView()
-    private let viewModel = CurrentMedicationSettingsViewModel()
+    
+    lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel)
+    
+    private(set) var viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
-//    private let medicationView = UserMedicationDetailView()
-    var medications: UserMedicationDetailModel? {
-        didSet {
-            updateTextFieldsToChange()
-        }
-    }
+    private(set) var activityIndicator = UIActivityIndicatorView()
+    
     weak var popViewDelegate: PopViewControllerDelegate?
     
+    override func loadView() {
+        self.view = currentMedicationSettingsView
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureNavBar()
-        configureMedicationView()
         createDismisKeyboardTapGesture()
-//        currentMedicationSettingsView.delegate = self
+        viewModel.currentMedicationDelegate = self
     }
     
     private func configureViewController() {
         view.backgroundColor = UIColor.backgroundColor
         self.isModalInPresentation = true
-    }
-    
-    private func updateTextFieldsToChange() {
-        guard let medication = medications else { return }
-        self.currentMedicationSettingsView.medicationsToChange = medication
     }
     
     private func configureNavBar() {
@@ -60,7 +54,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func updateSettings() {
-        guard let meds = medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
+        guard let meds = viewModel.medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
         let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: currentMedicationSettingsView)
         
         view.endEditing(true)
@@ -70,13 +64,12 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
-//            self.showLoadingSpinner(with: containerView)
+            self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
             if !imageData.isEmpty {
                 viewModel.removeImageFromStorage(url: cellImage)
             }
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
-//                self.dismissLoadingSpinner(with: self.containerView)
-                self.updateTextFieldsToChange()
+                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true) {
                     self.popViewDelegate?.popViewController()
                 }
@@ -106,18 +99,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         
         self.present(actionSheet, animated: true)
     }
-    
-    private func configureMedicationView() {
-        let leadingAndTrailingAnchorConstants: CGFloat = 20
-        
-        view.addSubview(currentMedicationSettingsView)
-        
-        currentMedicationSettingsView.snp.makeConstraints { (make) in
-            make.leading.equalTo(leadingAndTrailingAnchorConstants)
-            make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-        }
-    }
 }
 
 extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -136,8 +117,8 @@ extension CurrentMedicationSettingsViewController: UIImagePickerControllerDelega
     }
 }
 
-//extension CurrentMedicationSettingsViewController: NewMedicationEventDelegate {
-//    func imagePickerEvent() {
-//        configureImagePickerController()
-//    }
-//}
+extension CurrentMedicationSettingsViewController: CurrentMedicationEventDelegate {
+    func imagePickerEvent() {
+        configureImagePickerController()
+    }
+}

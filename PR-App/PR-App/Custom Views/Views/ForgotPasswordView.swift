@@ -8,20 +8,18 @@
 
 import UIKit
 
-protocol ForgotPasswordDelegate: AnyObject {
-    func resetPassword(withEmail: UserModel)
-}
-
 final class ForgotPasswordView: UIView {
     
     private let pillReminderLogo = UIImageView()
     private let forgotPasswordLabel = PillReminderMainCustomLabel(text: Constants.passwordRecover, alignment: .center, size: 20, weight: .semibold, color: .label)
     private let emailTextField = PillReminderMainCustomTextField(placeholderText: Constants.provideYourEmail, isPassword: false)
     private let sendPasswordButton = PillReminderMainCustomButton(text: Constants.sendPassword)
-    weak var delegate: ForgotPasswordDelegate?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private(set) var viewModel: ForgotPasswordViewModel
+    
+    init(viewModel: ForgotPasswordViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         configurePillReminderLogo()
         configureForgotPasswordLabel()
         configureEmailTextField()
@@ -34,13 +32,15 @@ final class ForgotPasswordView: UIView {
     
     private func configurePillReminderLogo() {
         let heightAnchorConstant: CGFloat = 60
+        let constraintConstant: CGFloat = 40
         
         pillReminderLogo.image = Images.horizontalLogoImage
         self.addSubview(pillReminderLogo)
         
         pillReminderLogo.snp.makeConstraints { (make) in
-            make.top.leading.trailing.equalTo(self)
-            make.height.equalTo(heightAnchorConstant)
+            make.top.equalTo(self.safeAreaLayoutGuide).offset(constraintConstant)
+            make.height.leading.equalTo(heightAnchorConstant)
+            make.trailing.equalTo(self).offset(-constraintConstant)
         }
     }
     
@@ -85,6 +85,6 @@ final class ForgotPasswordView: UIView {
     
     @objc private func sendPasswordButtonTapped() {
         guard let email = emailTextField.text else { return }
-//        delegate?.resetPassword(withEmail: email)
+        viewModel.resetUserPassword(withEmail: email)
     }
 }

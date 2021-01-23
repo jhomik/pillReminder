@@ -19,7 +19,6 @@ final class NewMedicationViewModel {
     
     private(set) var medications: UserMedicationDetailModel?
     
-    private(set) var imageData: Data?
  
     func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping (String) -> Void) {
         if !data.isEmpty {
@@ -45,6 +44,22 @@ final class NewMedicationViewModel {
             return Constants.pill
         } else {
             return Constants.pills
+        }
+    }
+    
+    func setFilterForTextField(text: inout String?) {
+        if let filterText = text, let intText = Int(filterText) {
+            text = "\(intText)"
+        } else {
+            text = ""
+        }
+    }
+    
+    func setConstraintConstant() -> Float {
+        if DeviceTypes.isiPhoneSE {
+            return 0
+        } else {
+            return 14
         }
     }
 }

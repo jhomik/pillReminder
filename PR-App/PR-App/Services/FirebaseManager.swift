@@ -227,8 +227,8 @@ final class FirebaseManager {
     
     // MARK: Reset password
     
-    func resetUserPassword(with userModel: UserModel, completion: @escaping(Result<Void, Error>) -> Void) {
-        auth.sendPasswordReset(withEmail: userModel.email) { (error) in
+    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {

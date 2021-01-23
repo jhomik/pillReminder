@@ -16,20 +16,17 @@ protocol ForgotPasswordEvents: AnyObject {
 final class ForgotPasswordViewModel {
     
     private let firebaseManager = FirebaseManager()
-    weak var forgotPasswordEvents: ForgotPasswordEvents?
-    
-    init(forgotPasswordEvents: ForgotPasswordEvents) {
-        self.forgotPasswordEvents = forgotPasswordEvents
-    }
-    
-    func resetUserPassword(withEmail: UserModel) {
+    weak var passwordEvents: ForgotPasswordEvents?
+    private(set) var userModel: UserModel?
+ 
+    func resetUserPassword(withEmail: String) {
         firebaseManager.resetUserPassword(with: withEmail) { [weak self] (result) in
             guard let self = self else { return }
             switch result {
             case .success:
-                self.forgotPasswordEvents?.showSuccesAlert()
+                self.passwordEvents?.showSuccesAlert()
             case .failure(let error):
-                self.forgotPasswordEvents?.showFailureAlert(error: error)
+                self.passwordEvents?.showFailureAlert(error: error)
             }
         }
     }
