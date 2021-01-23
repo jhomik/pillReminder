@@ -14,12 +14,16 @@ protocol ReminderViewEventDelegate: AnyObject {
 
 final class ReminderViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
     private(set) var reminders: [UserMedicationDetailModel] = []
     weak var reminderEvent: ReminderViewEventDelegate?
     
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
+    
     func downloadReminders() {
-        firebaseManager.downloadMedicationInfo { [weak self] (result) in
+        firebaseManagerEvents?.downloadMedicationInfo { [weak self] (result) in
             self?.reminders = result
             self?.reminderEvent?.reloadReminders()
         }

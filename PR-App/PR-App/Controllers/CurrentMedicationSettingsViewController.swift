@@ -14,11 +14,11 @@ protocol PopViewControllerDelegate: AnyObject {
 
 final class CurrentMedicationSettingsViewController: UIViewController {
     
-    private let tableView = UITableView()
+    private let firebaseManager = FirebaseManager()
     
     lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel)
+    lazy private(set) var viewModel = CurrentMedicationSettingsViewModel(firebaseManagerEvents: firebaseManager)
     
-    private(set) var viewModel = CurrentMedicationSettingsViewModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private(set) var activityIndicator = UIActivityIndicatorView()

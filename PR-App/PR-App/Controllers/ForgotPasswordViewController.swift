@@ -10,7 +10,9 @@ import UIKit
 
 final class ForgotPasswordViewController: UIViewController {
     
-    private(set) var viewModel = ForgotPasswordViewModel()
+    private let firebaseManager = FirebaseManager()
+    
+    lazy private(set) var viewModel = ForgotPasswordViewModel(firebaseManagerEvents: firebaseManager)
     lazy private(set) var forgotPasswordView = ForgotPasswordView(viewModel: viewModel)
     
     override func loadView() {

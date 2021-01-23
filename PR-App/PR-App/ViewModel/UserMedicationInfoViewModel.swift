@@ -22,10 +22,13 @@ protocol UpdateCollectionViewDelegate: AnyObject {
 
 final class UserMedicationInfoViewModel {
     
-    private let firebaseManager = FirebaseManager()
-    
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
     weak var delegateMedicationInfo: UserMedicationInfoEventDelegate?
     weak var updateCollectionView: UpdateCollectionViewDelegate?
+    
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
     
     private(set) var medications: [UserMedicationDetailModel] = [] {
         didSet {
@@ -44,7 +47,7 @@ final class UserMedicationInfoViewModel {
     func deleteItemAt(_ indexPath: IndexPath) {
         let model = medications[indexPath.item]
         medications.remove(at: indexPath.item)
-        firebaseManager.removeDataFromFirebase(model: model)
+        firebaseManagerEvents?.removeDataFromFirebase(model: model)
     }
     
     func appendItemWith(_ model: UserMedicationDetailModel) {
@@ -77,7 +80,7 @@ final class UserMedicationInfoViewModel {
     }
 
     func setUserName(completion: @escaping (String) -> Void) {
-        firebaseManager.setUserName { result in
+        firebaseManagerEvents?.setUserName { result in
             switch result {
             case .success(let userName):
                 completion(userName)
@@ -89,7 +92,7 @@ final class UserMedicationInfoViewModel {
     
     func downloadMedicationInfo() {
         self.delegateMedicationInfo?.showLoadingSpinner()
-        firebaseManager.downloadMedicationInfo { [weak self] (result) in
+        firebaseManagerEvents?.downloadMedicationInfo { [weak self] (result) in
             guard let self = self else { return }
             self.medications = result
         }
@@ -98,6 +101,6 @@ final class UserMedicationInfoViewModel {
     }
     
     func removeDataFromFirebase(model: UserMedicationDetailModel) {
-        firebaseManager.removeDataFromFirebase(model: model)
+        firebaseManagerEvents?.removeDataFromFirebase(model: model)
     }
 }

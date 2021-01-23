@@ -10,7 +10,9 @@ import UIKit
 
 final class ReminderForMedicationViewController: UIViewController {
    
-    private let viewModel = ReminderViewModel()
+    private let firebaseManager = FirebaseManager()
+    
+    lazy private(set) var viewModel = ReminderViewModel(firebaseManagerEvents: firebaseManager)
     lazy private(set) var reminderForMedicationView = ReminderForMedicationView(viewModel: viewModel)
 
     override func loadView() {

@@ -11,10 +11,11 @@ import FirebaseAuth
 
 final class UserMedicationInfoViewController: UIViewController {
     
-    private var viewModel = UserMedicationInfoViewModel()
+    private let firebaseManager = FirebaseManager()
     private let containerView = UIView()
     private let spinner = UIActivityIndicatorView()
     
+    lazy private(set) var viewModel = UserMedicationInfoViewModel(firebaseManagerEvents: firebaseManager)
     lazy private(set) var userMedicationInfoView = UserMedicationInfoView(viewModel: viewModel)
     
     override func viewDidLoad() {

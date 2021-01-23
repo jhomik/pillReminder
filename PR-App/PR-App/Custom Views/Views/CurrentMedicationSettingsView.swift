@@ -59,7 +59,6 @@ final class CurrentMedicationSettingsView: UIView {
         configureProgramMedicationStackView()
         configureCapacityLabel()
         configureDoseLabel()
-        viewModel.suffixTextFieldsDelegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -512,11 +511,5 @@ extension CurrentMedicationSettingsView {
         } else {
             configureFirstDaySchedule()
         }
-    }
-}
-
-extension CurrentMedicationSettingsView: UpdateTextFieldsSuffix {
-    func updateSuffix() {
-        updateUI()
     }
 }

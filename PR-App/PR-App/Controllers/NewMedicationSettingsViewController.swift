@@ -11,9 +11,11 @@ import UserNotifications
 
 final class NewMedicationSettingsViewController: UIViewController {
     
-    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel)
+    private let firebaseManager = FirebaseManager()
     
-    private(set) var viewModel = NewMedicationViewModel()
+    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel)
+    lazy private var viewModel = NewMedicationViewModel(firebaseManagerEvents: firebaseManager)
+    
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private(set) var activityIndicator = UIActivityIndicatorView()

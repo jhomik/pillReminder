@@ -11,9 +11,11 @@ import FirebaseAuth
 
 final class LoginScreenViewController: UIViewController {
     
-    private let viewModel = LoginScreenViewModel()
-    lazy private(set) var loginScreenView = LoginScreenView(viewModel: viewModel)
+    private let firebaseManager = FirebaseManager()
     private let welcomeView = WelcomeView()
+    
+    lazy private(set) var viewModel = LoginScreenViewModel(firebaseManagerEvents: firebaseManager)
+    lazy private(set) var loginScreenView = LoginScreenView(viewModel: viewModel)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

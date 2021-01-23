@@ -15,7 +15,6 @@ protocol EditButtonEventDelegate: AnyObject {
 final class UserMedicationDetailViewModel {
     
     private let pillModel = PillModel()
-    private let firebaseManager = FirebaseManager()
 
     var medications: UserMedicationDetailModel?
     

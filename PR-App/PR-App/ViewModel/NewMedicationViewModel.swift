@@ -14,27 +14,30 @@ protocol NewMedicationEventDelegate: AnyObject {
 
 final class NewMedicationViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
     weak var newMedicationDelegate: NewMedicationEventDelegate?
     
     private(set) var medications: UserMedicationDetailModel?
     
- 
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
+    
     func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping (String) -> Void) {
         if !data.isEmpty {
             print("full data: \(data)")
-            firebaseManager.saveImageToStorage(cellImage: data) { [weak self] (result) in
+            firebaseManagerEvents?.saveImageToStorage(cellImage: data) { [weak self] (result) in
                 guard let self = self else { return }
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                    self.firebaseManager.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail, completion: completion)
+                    self.firebaseManagerEvents?.saveUserMedicationDetail(cellImage: url, medicationDetail: medicationDetail, completion: completion)
                 }
             }
         } else {
             print("empty data: \(data)")
-            self.firebaseManager.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail, completion: completion)
+            self.firebaseManagerEvents?.saveUserMedicationDetail(cellImage: nil, medicationDetail: medicationDetail, completion: completion)
         }
     }
     
