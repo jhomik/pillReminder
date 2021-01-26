@@ -24,15 +24,15 @@ final class UserMedicationDetailViewModel {
         return medications?.capacity
     }
     
-    func decreasePillValue() -> String {
-        guard let newValue = Double(leftCapacity ?? ""), let medication = medications else { return "" }
+    func decreasePillValue(with value: String?) {
+        guard var newValue = Double(value ?? ""), let medication = medications else { return }
     
-        if medication.dosage == "1" {
-            return String(newValue - 1)
-        } else if medication.dosage == "1/2" {
-            return String(newValue - 0.5)
+        if medication.dosage == pillModel.dosage[0] {
+            newValue -= 1
+        } else if medication.dosage == pillModel.dosage[1] {
+            newValue -= 0.5
         } else {
-            return String(newValue - 0.25)
+            newValue -= 0.25
         }
     }
     

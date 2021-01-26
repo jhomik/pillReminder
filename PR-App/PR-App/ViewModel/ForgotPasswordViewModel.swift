@@ -17,7 +17,6 @@ final class ForgotPasswordViewModel {
     
     weak var firebaseManagerEvents: FirebaseManagerEvents?
     weak var passwordEvents: ForgotPasswordEvents?
-    private(set) var userModel: UserModel?
     
     init(firebaseManagerEvents: FirebaseManagerEvents) {
         self.firebaseManagerEvents = firebaseManagerEvents

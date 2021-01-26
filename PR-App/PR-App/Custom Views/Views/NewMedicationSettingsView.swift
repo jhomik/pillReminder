@@ -26,9 +26,9 @@ final class NewMedicationSettingsView: UIView {
     private let onceADayDatePickerView = UIDatePicker()
     private let twiceADayDatePickerView = UIDatePicker()
     private let threeTimesADayDatePickerView = UIDatePicker()
-    private let userDefaults = UserDefaults.standard
     
     private(set) var viewModel: NewMedicationViewModel
+    private(set) var userDefaults: MedicationInfoDefaults
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
     private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.capacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
@@ -46,8 +46,9 @@ final class NewMedicationSettingsView: UIView {
     
     private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
    
-    init(viewModel: NewMedicationViewModel) {
+    init(viewModel: NewMedicationViewModel, userDefaults: MedicationInfoDefaults) {
         self.viewModel = viewModel
+        self.userDefaults = userDefaults
         super.init(frame: .zero)
         configureScrollView()
         configureAddMedicationLbl()
@@ -253,12 +254,12 @@ final class NewMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
+            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -276,7 +277,7 @@ final class NewMedicationSettingsView: UIView {
             let row = pickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
+            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
@@ -308,18 +309,18 @@ final class NewMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
+            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-//            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
+            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-//            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
+            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }

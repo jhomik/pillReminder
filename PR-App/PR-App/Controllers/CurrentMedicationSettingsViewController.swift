@@ -16,8 +16,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private let firebaseManager = FirebaseManager()
     
-    lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel)
+    lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel, userDefaults: userDefaults)
     lazy private(set) var viewModel = CurrentMedicationSettingsViewModel(firebaseManagerEvents: firebaseManager)
+    private let userDefaults = MedicationInfoDefaults()
     
     private(set) var imageData = Data()
     private(set) var containerView = UIView()

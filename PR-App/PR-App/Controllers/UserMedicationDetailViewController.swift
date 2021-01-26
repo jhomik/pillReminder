@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol DecreaseValueEventDelegate: AnyObject {
+    func decreaseCapacity(with value: String?)
+}
+
 final class UserMedicationDetailViewController: UIViewController {
     
     private(set) var viewModel = UserMedicationDetailViewModel()

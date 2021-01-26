@@ -1,5 +1,5 @@
 //
-//  UserDefaults.swift
+//  MedicationInfoDefaults.swift
 //  PillReminder
 //
 //  Created by Jakub Homik on 26/01/2021.
