@@ -15,8 +15,11 @@ class TakeAPillView: UIView {
     private let buttonSnoozeAPill = PillReminderMainCustomButton(text: "Snooze for 5 minutes")
     private let containerView = UIView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var viewModel: TakeAPillViewModel
+    
+    init(viewModel: TakeAPillViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         configureContainerView()
         configureTitleLabel()
         configureButtonTookAPill()
@@ -64,7 +67,7 @@ class TakeAPillView: UIView {
     }
     
     @objc private func tookAPillButtonTapped() {
-        print("test")
+        viewModel.takeAPillDelegate?.onButtonTapped()
     }
     
     private func configureButtonSnoozeAPill() {

@@ -10,7 +10,7 @@ import Foundation
 
 class MedicationInfoDefaults {
     enum Key: String, CaseIterable {
-        case row, date
+        case row, date, leftPill
         func make(for medicationID: String) -> String {
             return self.rawValue + "_" + medicationID
         }
@@ -25,12 +25,22 @@ class MedicationInfoDefaults {
     }
     
     // MARK: - API
+    func storeLeftPill(value: String) {
+        saveValue(forKey: .leftPill, value: value, medicationID: medsID)
+    }
+    
     func storeRowInfo(row: Int) {
         saveValue(forKey: .row, value: row, medicationID: medsID)
     }
     
     func storeDateInfo(date: Date) {
         saveValue(forKey: .date, value: date, medicationID: medsID)
+    }
+    
+    func getLeftPillInfo() -> String? {
+        let leftPill: String? = readValue(forKey: .leftPill, medicationID: medsID)
+        
+        return leftPill
     }
     
     func getRowInfo() -> Int? {

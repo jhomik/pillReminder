@@ -10,7 +10,9 @@ import UIKit
 
 class TakeAPillAlertController: UIViewController {
     
-    private let takeAPillView = TakeAPillView()
+    private let userDefaults = MedicationInfoDefaults()
+    lazy private(set) var viewModel = TakeAPillViewModel(userDefaults: userDefaults)
+    lazy private(set) var takeAPillView = TakeAPillView(viewModel: viewModel)
     
     override func loadView() {
         self.view = takeAPillView
@@ -18,9 +20,16 @@ class TakeAPillAlertController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTakeAPillAlertController()
+        viewModel.takeAPillDelegate = self
     }
     
     private func configureTakeAPillAlertController() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
+    }
+}
+
+extension TakeAPillAlertController: TakeAPillEventDelegate {
+    func onButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

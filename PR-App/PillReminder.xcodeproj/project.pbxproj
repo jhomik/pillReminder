@@ -10,6 +10,7 @@
 		46FF6EF1996C4490FCB94A82 /* Pods_PillReminderTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C7FFD4E2395C77D24DA5535 /* Pods_PillReminderTests.framework */; };
 		481766E5EF96CBEA7BED5B24 /* Pods_PillReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */; };
 		5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0544712560216D00635461 /* DeviceTypesConstraints.swift */; };
+		5A11883B25C2AFD20042B713 /* TakeAPillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A11883A25C2AFD20042B713 /* TakeAPillViewModel.swift */; };
 		5A177DEC25B996C90038FFE4 /* ReminderForMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */; };
 		5A177DF225B997800038FFE4 /* ReminderForMedicationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */; };
@@ -100,6 +101,8 @@
 		4098D0061B7B4F71A7C0155E /* Pods-PillReminder-PillReminderUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder-PillReminderUITests.release.xcconfig"; path = "Target Support Files/Pods-PillReminder-PillReminderUITests/Pods-PillReminder-PillReminderUITests.release.xcconfig"; sourceTree = "<group>"; };
 		48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PillReminder.debug.xcconfig"; path = "Target Support Files/Pods-PillReminder/Pods-PillReminder.debug.xcconfig"; sourceTree = "<group>"; };
 		5A0544712560216D00635461 /* DeviceTypesConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraints.swift; sourceTree = "<group>"; };
+		5A11883A25C2AFD20042B713 /* TakeAPillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeAPillViewModel.swift; sourceTree = "<group>"; };
+		5A11884225C2DFC20042B713 /* PillReminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PillReminder.entitlements; sourceTree = "<group>"; };
 		5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationView.swift; sourceTree = "<group>"; };
 		5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationDataSource.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -303,6 +306,7 @@
 				5AA21AD124DD806E000C6F47 /* NewMedicationViewModel.swift */,
 				5A9813CD2573C55700A019C5 /* ReminderViewModel.swift */,
 				5AEC6E2024F567F90052D16B /* ForgotPasswordViewModel.swift */,
+				5A11883A25C2AFD20042B713 /* TakeAPillViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -365,6 +369,7 @@
 		5AFED6062461813400EF7C1A = {
 			isa = PBXGroup;
 			children = (
+				5A11884225C2DFC20042B713 /* PillReminder.entitlements */,
 				5A78FC4424FFC10400011DD1 /* Localizable.strings */,
 				5AFED6112461813400EF7C1A /* PR-App */,
 				5AFED61B2461813400EF7C1A /* PR_App.xcdatamodeld */,
@@ -740,6 +745,7 @@
 				5A6A118B2473D1FF006E4B2F /* (null) in Sources */,
 				5A82DEA724F9832E00788E36 /* Images.swift in Sources */,
 				ABF726A42463A46100C903B7 /* UIView+Extensions.swift in Sources */,
+				5A11883B25C2AFD20042B713 /* TakeAPillViewModel.swift in Sources */,
 				5ACB65B224AA41D800F3D454 /* LoginScreenViewModel.swift in Sources */,
 				5A3AED5124F6F617007ADC39 /* CurrentMedicationSettingsViewModel.swift in Sources */,
 				5ADAF55025A068EF00EAA41D /* UserModel.swift in Sources */,
@@ -969,6 +975,7 @@
 			baseConfigurationReference = 48F2EEBFDE804C0A9CEA25B2 /* Pods-PillReminder.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PillReminder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RTGVGP453;
 				INFOPLIST_FILE = "PR-App/Supporting Files/Info.plist";
@@ -989,6 +996,7 @@
 			baseConfigurationReference = A2B4230407CEE6A898250CFE /* Pods-PillReminder.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = PillReminder.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3RTGVGP453;
 				INFOPLIST_FILE = "PR-App/Supporting Files/Info.plist";

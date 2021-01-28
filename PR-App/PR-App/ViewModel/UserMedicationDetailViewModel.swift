@@ -19,21 +19,14 @@ final class UserMedicationDetailViewModel {
     var medications: UserMedicationDetailModel?
     
     weak var buttonTappedDelegate: EditButtonEventDelegate?
+    var userDefaults: MedicationInfoDefaults
     
     var leftCapacity: String? {
-        return medications?.capacity
+        return userDefaults.getLeftPillInfo()
     }
     
-    func decreasePillValue(with value: String?) {
-        guard var newValue = Double(value ?? ""), let medication = medications else { return }
-    
-        if medication.dosage == pillModel.dosage[0] {
-            newValue -= 1
-        } else if medication.dosage == pillModel.dosage[1] {
-            newValue -= 0.5
-        } else {
-            newValue -= 0.25
-        }
+    init(userDefaults: MedicationInfoDefaults) {
+        self.userDefaults = userDefaults
     }
     
     func setPackageSuffixLabel(_ value: String) -> String {

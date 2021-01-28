@@ -14,7 +14,8 @@ protocol DecreaseValueEventDelegate: AnyObject {
 
 final class UserMedicationDetailViewController: UIViewController {
     
-    private(set) var viewModel = UserMedicationDetailViewModel()
+    private let userDefaults = MedicationInfoDefaults()
+    lazy private(set) var viewModel = UserMedicationDetailViewModel(userDefaults: userDefaults)
     lazy private(set) var userMedicationDetailView = UserMedicationDetailView(viewModel: viewModel)
     
     override func loadView() {
