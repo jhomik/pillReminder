@@ -41,6 +41,7 @@ class MedicationInfoDefaults {
     
     func getDateInfo() -> Date? {
         let date: Date? = readValue(forKey: .date, medicationID: medsID)
+        
         return date
     }
     

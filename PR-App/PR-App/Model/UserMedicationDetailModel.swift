@@ -17,8 +17,8 @@ struct UserMedicationDetailModel {
     var frequency: String
     var howManyTimesPerDay: String
     var whatTimeOnceRow: String
-    var whatTimeTwiceRow: String?
-    var whatTimeThreeRow: String?
+    var whatTimeTwiceRow: String
+    var whatTimeThreeRow: String
     var dosage: String
     
     var anyEmpty: Bool {

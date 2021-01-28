@@ -61,14 +61,14 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         
         if medicationToUpdate.anyEmpty {
-            textFieldShaker(currentMedicationSettingsView.nameTextField, currentMedicationSettingsView.capacityTextField, currentMedicationSettingsView.doseTextField, currentMedicationSettingsView.frequencyTextField, currentMedicationSettingsView.howManyTimesTextField, currentMedicationSettingsView.dosageTextField)
+            textFieldShaker(currentMedicationSettingsView.nameTextField, currentMedicationSettingsView.capacityTextField, currentMedicationSettingsView.doseTextField, currentMedicationSettingsView.frequencyTextField, currentMedicationSettingsView.howManyTimesTextField, currentMedicationSettingsView.whatTimeOnceADayTextField, currentMedicationSettingsView.whatTimeTwiceADayTextField, currentMedicationSettingsView.whatTimeThreeTimesADayTextField, currentMedicationSettingsView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
-            if !imageData.isEmpty {
-                viewModel.removeImageFromStorage(url: cellImage)
-            }
+//            if !imageData.isEmpty {
+//                viewModel.removeImageFromStorage(url: cellImage)
+//            }
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true) {

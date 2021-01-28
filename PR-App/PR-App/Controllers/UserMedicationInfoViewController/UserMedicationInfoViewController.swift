@@ -70,12 +70,12 @@ final class UserMedicationInfoViewController: UIViewController {
 }
 
 extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
-    func showLoadingSpinner() {
-        showLoadingSpinner(with: containerView, spinner: spinner)
-    }
-    
-    func dismissLoadingSpinner() {
-        dismissLoadingSpinner(with: containerView, spinner: spinner)
+    func isLoading(_ loading: Bool) {
+        if loading {
+            showLoadingSpinner(with: containerView, spinner: spinner)
+        } else {
+            dismissLoadingSpinner(with: containerView, spinner: spinner)
+        }
     }
     
     func pushNewMedicationSettingsController() {

@@ -9,11 +9,10 @@
 import Foundation
 
 protocol UserMedicationInfoEventDelegate: AnyObject {
+    func isLoading(_ loading: Bool)
     func updateBarButtonItem()
     func pushUserMedicationDetailController(with medications: UserMedicationDetailModel)
     func pushNewMedicationSettingsController()
-    func showLoadingSpinner()
-    func dismissLoadingSpinner()
 }
 
 protocol UpdateCollectionViewDelegate: AnyObject {
@@ -91,12 +90,13 @@ final class UserMedicationInfoViewModel {
     }
     
     func downloadMedicationInfo() {
-        self.delegateMedicationInfo?.showLoadingSpinner()
         firebaseManagerEvents?.downloadMedicationInfo { [weak self] (result) in
             guard let self = self else { return }
+            self.delegateMedicationInfo?.isLoading(true)
             self.medications = result
+            self.delegateMedicationInfo?.isLoading(false)
         }
-        self.delegateMedicationInfo?.dismissLoadingSpinner()
+
         print("download Medications")
     }
     
