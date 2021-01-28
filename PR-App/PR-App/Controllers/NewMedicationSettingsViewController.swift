@@ -59,11 +59,11 @@ final class NewMedicationSettingsViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
-            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (key) in
+            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (model) in
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true, completion: nil)
-                self.newMedicationView.setSchedule(medicationId: key)
-                self.userDefaults = MedicationInfoDefaults(medsID: key)
+                self.newMedicationView.setSchedule(medicationId: model)
+                self.userDefaults.storeLeftPill(value: medicationToSave.capacity, medicationModel: model)
             }
         }
     }

@@ -78,13 +78,15 @@ final class UserMedicationDetailView: UIView {
     }
     
     func updateUI() {
-        guard let medications = viewModel.medications, let leftPills = viewModel.leftCapacity else { return }
+        guard let medications = viewModel.medications else { return }
         updatePillNameValue(medications.pillName)
         updatePackageCapacityValue(medications.capacity)
         updatePillDoseValue(medications.dose)
         downloadImage(medication: medications)
         updateDoseProgram()
-        updatePillsLeft(leftPills)
+        if let leftPills = viewModel.leftCapacity {
+            updatePillsLeft(leftPills)
+        }
     }
     
     private func configurePillImageView() {

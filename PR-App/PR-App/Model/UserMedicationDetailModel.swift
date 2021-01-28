@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct UserMedicationDetailModel {
+struct UserMedicationDetailModel: Codable {
     var userIdentifier: String?
     var pillName: String
     var capacity: String

@@ -23,7 +23,7 @@ final class NewMedicationViewModel {
         self.firebaseManagerEvents = firebaseManagerEvents
     }
     
-    func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping (String) -> Void) {
+    func saveNewMedicationToFirebase(data: Data, medicationDetail: UserMedicationDetailModel?, completion: @escaping (UserMedicationDetailModel) -> Void) {
         if !data.isEmpty {
             print("full data: \(data)")
             firebaseManagerEvents?.saveImageToStorage(cellImage: data) { [weak self] (result) in

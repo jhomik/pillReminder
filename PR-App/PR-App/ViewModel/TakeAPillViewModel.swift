@@ -19,7 +19,7 @@ final class TakeAPillViewModel {
     var userDefaults: MedicationInfoDefaults
     
     var leftCapacity: String? {
-        return medications?.capacity
+        return userDefaults.getLeftPillInfo(medicationModel: medications)
     }
     
     weak var takeAPillDelegate: TakeAPillEventDelegate?
@@ -38,6 +38,6 @@ final class TakeAPillViewModel {
         } else {
             newValue -= 0.25
         }
-        userDefaults.storeLeftPill(value: String("\(newValue)"))
+        userDefaults.storeLeftPill(value: String("\(newValue.clean)"), medicationModel: medication)
     }
 }

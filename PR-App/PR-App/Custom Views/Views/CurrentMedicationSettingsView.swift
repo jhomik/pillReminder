@@ -64,6 +64,13 @@ final class CurrentMedicationSettingsView: UIView {
         configureDoseLabel()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        updateCapcityConstraint(with: capacityTextField)
+        updateDoseConstraint(with: doseTextField)
+        configureHowManyTimesPerDayTextFields(with: howManyTimesTextField)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -72,9 +79,6 @@ final class CurrentMedicationSettingsView: UIView {
         guard let medication = viewModel.medications else { return }
         updateTextFields(withModel: medication)
         downloadImage(medication: medication)
-        updateCapcityConstraint(with: capacityTextField)
-        updateDoseConstraint(with: doseTextField)
-        configureHowManyTimesPerDayTextFields(with: howManyTimesTextField)
     }
     
     private func downloadImage(medication: UserMedicationDetailModel) {
@@ -276,14 +280,14 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func createPickerView(withTextField: UITextField, pickerView: UIPickerView) {
-        guard let valueFromUserDefaults = userDefaults.getRowInfo() else { return }
+//        guard let valueFromUserDefaults = userDefaults.getRowInfo() else { return }
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
         
         pickerView.delegate = self
-        pickerView.selectRow(valueFromUserDefaults, inComponent: 0, animated: true)
+        pickerView.selectRow(0, inComponent: 0, animated: true)
         withTextField.inputView = pickerView
         toolBar.sizeToFit()
         toolBar.setItems([spaceButton, doneButton], animated: false)
@@ -297,12 +301,12 @@ final class CurrentMedicationSettingsView: UIView {
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -320,13 +324,13 @@ final class CurrentMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
     
     private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField) {
-        guard let valueFromUserDefaults = userDefaults.getDateInfo() else { return }
+//        guard let valueFromUserDefaults = userDefaults.getDateInfo() else { return }
         
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
@@ -338,7 +342,7 @@ final class CurrentMedicationSettingsView: UIView {
             datePickerView.preferredDatePickerStyle = .wheels
         }
         
-        datePickerView.date = valueFromUserDefaults
+        datePickerView.date = Date()
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -353,18 +357,18 @@ final class CurrentMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedOnce)
+//            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedTwice)
+//            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedThree)
+//            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }
@@ -372,19 +376,19 @@ final class CurrentMedicationSettingsView: UIView {
     private func configureFirstDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: viewModel.medications?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationModel: viewModel.medications)
     }
     
     private func configureSecondDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: viewModel.medications?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationModel: viewModel.medications)
     }
     
     private func configureThirdDaySchedule() {
         appDelegate?.deletePendingNotification()
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: viewModel.medications?.userIdentifier ?? "")
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationModel: viewModel.medications)
     }
 }
 

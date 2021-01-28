@@ -10,60 +10,39 @@ import Foundation
 
 class MedicationInfoDefaults {
     enum Key: String, CaseIterable {
-        case row, date, leftPill
+        case leftPill
         func make(for medicationID: String) -> String {
             return self.rawValue + "_" + medicationID
         }
     }
+    
     let userDefaults: UserDefaults
-    let medsID: String
     
     // MARK: - Lifecycle
-    init(userDefaults: UserDefaults = .standard, medsID: String = "") {
+    init(userDefaults: UserDefaults = .standard) {
         self.userDefaults = userDefaults
-        self.medsID = medsID
     }
     
     // MARK: - API
-    func storeLeftPill(value: String) {
-        saveValue(forKey: .leftPill, value: value, medicationID: medsID)
+    func storeLeftPill(value: String, medicationModel: UserMedicationDetailModel?) {
+        saveValue(forKey: .leftPill, value: value, medicationModel: medicationModel?.userIdentifier ?? "")
     }
     
-    func storeRowInfo(row: Int) {
-        saveValue(forKey: .row, value: row, medicationID: medsID)
-    }
-    
-    func storeDateInfo(date: Date) {
-        saveValue(forKey: .date, value: date, medicationID: medsID)
-    }
-    
-    func getLeftPillInfo() -> String? {
-        let leftPill: String? = readValue(forKey: .leftPill, medicationID: medsID)
+    func getLeftPillInfo(medicationModel: UserMedicationDetailModel?) -> String? {
+        let leftPill: String? = readValue(forKey: .leftPill, medicationModel: medicationModel?.userIdentifier ?? "")
         
         return leftPill
     }
     
-    func getRowInfo() -> Int? {
-        let row: Int? = readValue(forKey: .row, medicationID: medsID)
-        
-        return row
-    }
-    
-    func getDateInfo() -> Date? {
-        let date: Date? = readValue(forKey: .date, medicationID: medsID)
-        
-        return date
-    }
-    
-    func removeUserInfo() {
+    func removeUserInfo(medsID: String) {
         Key.allCases.map { $0.make(for: medsID) }.forEach { key in userDefaults.removeObject(forKey: key) }
     }
     
     // MARK: - Private
-    private func saveValue(forKey key: Key, value: Any, medicationID: String) {
-        userDefaults.set(value, forKey: key.make(for: medicationID))
+    private func saveValue(forKey key: Key, value: Any, medicationModel: String) {
+        userDefaults.set(value, forKey: key.make(for: medicationModel))
     }
-    private func readValue<T>(forKey key: Key, medicationID: String) -> T? {
-        return userDefaults.value(forKey: key.make(for: medicationID)) as? T
+    private func readValue<T>(forKey key: Key, medicationModel: String) -> T? {
+        return userDefaults.value(forKey: key.make(for: medicationModel)) as? T
     }
 }

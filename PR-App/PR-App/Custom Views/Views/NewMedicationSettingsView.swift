@@ -222,7 +222,7 @@ final class NewMedicationSettingsView: UIView {
         }
     }
     
-    func setSchedule(medicationId: String?) {
+    func setSchedule(medicationId: UserMedicationDetailModel) {
         // TODO: LOGIC - how to put that in ViewModel?
         if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
             configureFirstDaySchedule(for: medicationId)
@@ -256,12 +256,12 @@ final class NewMedicationSettingsView: UIView {
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -279,7 +279,7 @@ final class NewMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-            userDefaults.storeRowInfo(row: row)
+//            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
@@ -311,35 +311,35 @@ final class NewMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedOnce)
+//            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedTwice)
+//            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-            userDefaults.storeDateInfo(date: selectedThree)
+//            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }
     
-    private func configureFirstDaySchedule(for medicationId: String?) {
+    private func configureFirstDaySchedule(for medicationModel: UserMedicationDetailModel?) {
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: medicationId)
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationModel: medicationModel)
     }
     
-    private func configureSecondDaySchedule(for medicationId: String?) {
+    private func configureSecondDaySchedule(for medicationModel: UserMedicationDetailModel?) {
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: medicationId)
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationModel: medicationModel)
     }
     
-    private func configureThirdDaySchedule(for medicationId: String?) {
+    private func configureThirdDaySchedule(for medicationModel: UserMedicationDetailModel?) {
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: medicationId)
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationModel: medicationModel)
     }
 }
 

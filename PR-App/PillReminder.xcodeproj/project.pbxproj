@@ -11,6 +11,7 @@
 		481766E5EF96CBEA7BED5B24 /* Pods_PillReminder.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 71B2A52855D610FE6C294757 /* Pods_PillReminder.framework */; };
 		5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A0544712560216D00635461 /* DeviceTypesConstraints.swift */; };
 		5A11883B25C2AFD20042B713 /* TakeAPillViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A11883A25C2AFD20042B713 /* TakeAPillViewModel.swift */; };
+		5A11885B25C358240042B713 /* Double+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A11885A25C358240042B713 /* Double+Extension.swift */; };
 		5A177DEC25B996C90038FFE4 /* ReminderForMedicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */; };
 		5A177DF225B997800038FFE4 /* ReminderForMedicationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */; };
 		5A1AE7E0247EAB510094F17B /* NewMedicationSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */; };
@@ -103,6 +104,7 @@
 		5A0544712560216D00635461 /* DeviceTypesConstraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceTypesConstraints.swift; sourceTree = "<group>"; };
 		5A11883A25C2AFD20042B713 /* TakeAPillViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeAPillViewModel.swift; sourceTree = "<group>"; };
 		5A11884225C2DFC20042B713 /* PillReminder.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PillReminder.entitlements; sourceTree = "<group>"; };
+		5A11885A25C358240042B713 /* Double+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Double+Extension.swift"; sourceTree = "<group>"; };
 		5A177DEB25B996C90038FFE4 /* ReminderForMedicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationView.swift; sourceTree = "<group>"; };
 		5A177DF125B997800038FFE4 /* ReminderForMedicationDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderForMedicationDataSource.swift; sourceTree = "<group>"; };
 		5A1AE7DF247EAB510094F17B /* NewMedicationSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMedicationSettingsViewController.swift; sourceTree = "<group>"; };
@@ -362,6 +364,7 @@
 				ABF726A32463A46100C903B7 /* UIView+Extensions.swift */,
 				5A582B8C2473FEFC00247D19 /* UIViewController+Extensions.swift */,
 				5A82248B24FE6CA6003BD716 /* UIColor+Extensions.swift */,
+				5A11885A25C358240042B713 /* Double+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -763,6 +766,7 @@
 				5AE4476324E6F1E600CC9DA4 /* AddMedicationCell.swift in Sources */,
 				5A9813BE2572C70800A019C5 /* ReminderCell.swift in Sources */,
 				5A0544722560216E00635461 /* DeviceTypesConstraints.swift in Sources */,
+				5A11885B25C358240042B713 /* Double+Extension.swift in Sources */,
 				5A2386E325B08E8600289FFE /* UserMedicationInfoView.swift in Sources */,
 				5A4BA9E52465D105008AF20B /* SceneDelegate.swift in Sources */,
 				5A23866F25AF18DC00289FFE /* UserMedicationInfoDataSource.swift in Sources */,

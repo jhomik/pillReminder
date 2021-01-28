@@ -12,7 +12,7 @@ import FirebaseStorage
 import FirebaseDatabase
 
 protocol FirebaseManagerEvents: AnyObject {
-    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((String) -> Void))
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((UserMedicationDetailModel) -> Void))
     func downloadMedicationInfo(completion: @escaping([UserMedicationDetailModel]) -> Void)
     func updateMedicationInfo(cellImage: String?, medicationDetail: UserMedicationDetailModel?)
     func saveImageToStorage(cellImage: Data?, completion: @escaping(Result<String, Error>) -> Void)
@@ -182,7 +182,7 @@ final class FirebaseManager: FirebaseManagerEvents {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((String) -> Void)) {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((UserMedicationDetailModel) -> Void)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]
@@ -219,10 +219,12 @@ final class FirebaseManager: FirebaseManagerEvents {
         }
         
         let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()
-        
+    
         child.setValue(values)
         
-        completion(child.key ?? "")
+        let model = UserMedicationDetailModel(userIdentifier: child.key ?? "", dictionary: values)
+        
+        completion(model)
     }
     
     // MARK: Observing Username

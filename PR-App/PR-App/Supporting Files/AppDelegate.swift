@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData, medicationId: String?) {
+    func scheduleNotification(pillOfTheDay: PillOfTheDay, scheduleNotoficationData: ScheduleNotoficationData, medicationModel: UserMedicationDetailModel?) {
         
         let date = scheduleNotoficationData.time
         let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: date)
@@ -53,7 +53,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.body = Constants.tapNotification
         content.sound = .default
         content.badge = badgeCount
-        content.userInfo["medicationId"] = medicationId
+        content.userInfo["medicationID"] = medicationModel?.userIdentifier ?? ""
+        content.userInfo["medicationModel"] = try? JSONEncoder().encode(medicationModel)
         
         switch pillOfTheDay {
         case .first:
@@ -88,7 +89,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             var nextDate: [String] = []
             for item in requests {
                 let userInfo = item.content.userInfo
-                if let medId = userInfo["medicationId"] as? String, medId == medicationId,
+                if let medId = userInfo["medicationID"] as? String, medId == medicationId,
                     let trigger = item.trigger as? UNCalendarNotificationTrigger,
                     let triggerDate = trigger.nextTriggerDate() {
                     let dates = dateFormmater.string(from: triggerDate)
@@ -168,10 +169,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
+        let userInfoDecode = response.notification.request.content.userInfo["medicationModel"]
+        
+        guard let userInfo = userInfoDecode as? Data, let model = try? JSONDecoder().decode(UserMedicationDetailModel.self, from: userInfo) else { return }
         
         let takeAPillVC = TakeAPillAlertController()
         takeAPillVC.modalPresentationStyle = .overFullScreen
         takeAPillVC.modalTransitionStyle = .crossDissolve
+        takeAPillVC.viewModel.medications = model
         rootViewController.present(takeAPillVC, animated: true)
         
         completionHandler()

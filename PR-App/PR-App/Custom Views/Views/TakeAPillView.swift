@@ -67,6 +67,7 @@ class TakeAPillView: UIView {
     }
     
     @objc private func tookAPillButtonTapped() {
+        viewModel.decreasePillValue()
         viewModel.takeAPillDelegate?.onButtonTapped()
     }
     
