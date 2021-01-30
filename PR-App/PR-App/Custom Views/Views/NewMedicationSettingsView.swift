@@ -222,17 +222,17 @@ final class NewMedicationSettingsView: UIView {
         }
     }
     
-    func setSchedule(medicationId: UserMedicationDetailModel) {
+    func setSchedule(medicationModel: UserMedicationDetailModel) {
         // TODO: LOGIC - how to put that in ViewModel?
         if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
-            configureFirstDaySchedule(for: medicationId)
-            configureSecondDaySchedule(for: medicationId)
-            configureThirdDaySchedule(for: medicationId)
+            configureFirstDaySchedule(for: medicationModel)
+            configureSecondDaySchedule(for: medicationModel)
+            configureThirdDaySchedule(for: medicationModel)
         } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
-            configureFirstDaySchedule(for: medicationId)
-            configureSecondDaySchedule(for: medicationId)
+            configureFirstDaySchedule(for: medicationModel)
+            configureSecondDaySchedule(for: medicationModel)
         } else {
-            configureFirstDaySchedule(for: medicationId)
+            configureFirstDaySchedule(for: medicationModel)
         }
     }
 

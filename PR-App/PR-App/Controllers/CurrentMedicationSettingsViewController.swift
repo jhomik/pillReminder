@@ -66,16 +66,17 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
-//            if !imageData.isEmpty {
-//                viewModel.removeImageFromStorage(url: cellImage)
-//            }
-            viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate, completion: {
+            //            if !imageData.isEmpty {
+            //                viewModel.removeImageFromStorage(url: cellImage)
+            //            }
+            
+            viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate) {
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
+                self.currentMedicationSettingsView.setSchedule(medicationModel: medicationToUpdate)
                 self.dismiss(animated: true) {
                     self.popViewDelegate?.popViewController()
                 }
-                self.currentMedicationSettingsView.setSchedule()
-            })
+            }
         }
     }
     

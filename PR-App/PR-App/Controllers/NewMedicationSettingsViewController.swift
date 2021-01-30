@@ -62,7 +62,7 @@ final class NewMedicationSettingsViewController: UIViewController {
             viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (model) in
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true, completion: nil)
-                self.newMedicationView.setSchedule(medicationId: model)
+                self.newMedicationView.setSchedule(medicationModel: model)
                 self.userDefaults.storeLeftPill(value: medicationToSave.capacity, medicationModel: model)
             }
         }

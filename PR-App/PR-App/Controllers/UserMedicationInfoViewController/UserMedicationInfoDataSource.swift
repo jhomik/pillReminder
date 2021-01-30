@@ -20,7 +20,7 @@ final class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
     private func deleteItem(for item: CustomCell, collectionView: UICollectionView) {
         if let indexPath = collectionView.indexPath(for: item) {
             viewModel.deleteItemAt(indexPath)
-            appDelegate?.deletePendingNotification()
+            appDelegate?.deletePendingNotification(medicationID: item.customMedicationCell?.userIdentifier)
             collectionView.performBatchUpdates({
                 collectionView.deleteItems(at: [indexPath])
             })

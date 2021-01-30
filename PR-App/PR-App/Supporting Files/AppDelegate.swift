@@ -80,6 +80,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func updateNotofication(pillOfTheDay: PillOfTheDay, schedule: ScheduleNotoficationData, medicationModel: UserMedicationDetailModel?) {
+        let date = schedule.time
+        let triggerDate = Calendar.current.dateComponents([.hour, .minute], from: date)
+        let content = UNMutableNotificationContent()
+        content.body = Constants.tapNotification
+        content.sound = .default
+        content.badge = badgeCount
+        content.userInfo["medicationID"] = medicationModel?.userIdentifier ?? ""
+        content.userInfo["medicationModel"] = try? JSONEncoder().encode(medicationModel)
+        
+        switch pillOfTheDay {
+        case .first:
+            content.title = Constants.firstPill + "\(schedule.pillName)"
+            schedule.textField.text = DateFormatter().string(from: schedule.time)
+        case .second:
+            content.title = Constants.secondPill + "\(schedule.pillName)"
+            schedule.textField.text = DateFormatter().string(from: schedule.time)
+        case .last:
+            content.title = Constants.thirdPill + "\(schedule.pillName)"
+            schedule.textField.text = DateFormatter().string(from: schedule.time)
+        }
+        
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        
+        notificationCenter.add(request) { (error) in
+            if let error = error {
+                print("Error \(error.localizedDescription)")
+            }
+            print(triggerDate)
+            print(request.identifier)
+        }
+    }
+    
     func nextTriggerDate(label: UILabel, for medicationId: String?) {
         let dateFormmater = DateFormatter()
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
@@ -102,8 +136,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func deletePendingNotification() {
-        notificationCenter.removeAllPendingNotificationRequests()
+    func deletePendingNotification(medicationID: String?) {
+        notificationCenter.getPendingNotificationRequests { (request) in
+            for item in request {
+                let userInfo = item.content.userInfo
+                if let mediID = userInfo["medicationID"] as? String, mediID == medicationID {
+                    self.notificationCenter.removePendingNotificationRequests(withIdentifiers: [item.identifier])
+                }
+            }
+        }
     }
     
     // MARK: UISceneSession Lifecycle

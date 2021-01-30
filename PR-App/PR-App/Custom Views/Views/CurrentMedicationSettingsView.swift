@@ -324,14 +324,11 @@ final class CurrentMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-//            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
     
     private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField) {
-//        guard let valueFromUserDefaults = userDefaults.getDateInfo() else { return }
-        
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(dateDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -342,7 +339,6 @@ final class CurrentMedicationSettingsView: UIView {
             datePickerView.preferredDatePickerStyle = .wheels
         }
         
-        datePickerView.date = Date()
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -357,38 +353,35 @@ final class CurrentMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }
     
-    private func configureFirstDaySchedule() {
-        appDelegate?.deletePendingNotification()
+    private func configureFirstDaySchedule(medicationModel: UserMedicationDetailModel?) {
+//        appDelegate?.deletePendingNotification()
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationModel: viewModel.medications)
+        appDelegate?.updateNotofication(pillOfTheDay: .first, schedule: scheduleFirstPill, medicationModel: medicationModel)
     }
     
-    private func configureSecondDaySchedule() {
-        appDelegate?.deletePendingNotification()
+    private func configureSecondDaySchedule(medicationModel: UserMedicationDetailModel?) {
+//        appDelegate?.deletePendingNotification()
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationModel: viewModel.medications)
+        appDelegate?.updateNotofication(pillOfTheDay: .second, schedule: scheduleSecondPill, medicationModel: medicationModel)
     }
     
-    private func configureThirdDaySchedule() {
-        appDelegate?.deletePendingNotification()
+    private func configureThirdDaySchedule(medicationModel: UserMedicationDetailModel?) {
+//        appDelegate?.deletePendingNotification()
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationModel: viewModel.medications)
+        appDelegate?.updateNotofication(pillOfTheDay: .last, schedule: scheduleThirdPill, medicationModel: medicationModel)
     }
 }
 
@@ -500,16 +493,16 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
 }
 
 extension CurrentMedicationSettingsView {
-    func setSchedule() {
+    func setSchedule(medicationModel: UserMedicationDetailModel?) {
         if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
-            configureFirstDaySchedule()
-            configureSecondDaySchedule()
-            configureThirdDaySchedule()
+            configureFirstDaySchedule(medicationModel: medicationModel)
+            configureSecondDaySchedule(medicationModel: medicationModel)
+            configureThirdDaySchedule(medicationModel: medicationModel)
         } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
-            configureFirstDaySchedule()
-            configureSecondDaySchedule()
+            configureFirstDaySchedule(medicationModel: medicationModel)
+            configureSecondDaySchedule(medicationModel: medicationModel)
         } else {
-            configureFirstDaySchedule()
+            configureFirstDaySchedule(medicationModel: medicationModel)
         }
     }
 }

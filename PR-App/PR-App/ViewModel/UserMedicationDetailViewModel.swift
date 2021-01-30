@@ -22,7 +22,7 @@ final class UserMedicationDetailViewModel {
     var userDefaults: MedicationInfoDefaults
     
     var leftCapacity: String? {
-        return userDefaults.getLeftPillInfo(medicationModel: medications )
+        return userDefaults.getLeftPillInfo(medicationModel: medications)
     }
     
     init(userDefaults: MedicationInfoDefaults) {
