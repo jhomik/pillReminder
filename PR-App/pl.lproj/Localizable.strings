@@ -71,4 +71,7 @@
 "twiceADayArray" = "Dwa razy dziennie";
 "threeTimesADayArray" = "Trzy razy dziennie";
 "nextPill" = "Następna tabletka: ";
+"didYouTakePill" = "Czy wziąłeś już tabletkę ";
+"yes" = "Tak";
+"snoozeFor5Minutes" = "Przypomnij za 5 minut";
 

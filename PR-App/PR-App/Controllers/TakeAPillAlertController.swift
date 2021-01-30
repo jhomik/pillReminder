@@ -17,6 +17,7 @@ class TakeAPillAlertController: UIViewController {
     override func loadView() {
         self.view = takeAPillView
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTakeAPillAlertController()

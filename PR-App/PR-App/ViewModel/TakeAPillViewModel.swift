@@ -28,7 +28,7 @@ final class TakeAPillViewModel {
         self.userDefaults = userDefaults
     }
     
-    func decreasePillValue() {
+    func decreasePillValue(completion: () -> Void) {
         guard var newValue = Double(leftCapacity ?? ""), let medication = medications else { return }
         
         if medication.dosage == pillModel.dosage[0] {
@@ -39,5 +39,6 @@ final class TakeAPillViewModel {
             newValue -= 0.25
         }
         userDefaults.storeLeftPill(value: String("\(newValue.clean)"), medicationModel: medication)
+        completion()
     }
 }

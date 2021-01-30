@@ -75,4 +75,7 @@ struct Constants {
     static let twiceADayArray = NSLocalizedString("twiceADayArray", comment: "")
     static let threeTimesADayArray = NSLocalizedString("threeTimesADayArray", comment: "")
     static let nextPill = NSLocalizedString("nextPill", comment: "")
+    static let didYouTakePill = NSLocalizedString("didYouTakePill", comment: "")
+    static let yes = NSLocalizedString("yes", comment: "")
+    static let snoozeFor5Minutes = NSLocalizedString("snoozeFor5Minutes", comment: "")
 }

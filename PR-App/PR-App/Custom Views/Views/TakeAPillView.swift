@@ -10,9 +10,9 @@ import UIKit
 
 class TakeAPillView: UIView {
 
-    private let titleLabel = PillReminderMainCustomLabel(text: "Did you take a pill?", alignment: .center, size: 24, weight: .bold, color: .black)
-    private let buttonTookAPill = PillReminderMainCustomButton(text: "Yes")
-    private let buttonSnoozeAPill = PillReminderMainCustomButton(text: "Snooze for 5 minutes")
+    lazy private(set) var titleLabel = PillReminderMainCustomLabel(text: Constants.didYouTakePill + "\(viewModel.medications?.pillName ?? "") ?", alignment: .center, size: 24, weight: .bold, color: .black)
+    private let buttonTookAPill = PillReminderMainCustomButton(text: Constants.yes)
+    private let buttonSnoozeAPill = PillReminderMainCustomButton(text: Constants.snoozeFor5Minutes)
     private let containerView = UIView()
     
     var viewModel: TakeAPillViewModel
@@ -46,6 +46,8 @@ class TakeAPillView: UIView {
     
     private func configureTitleLabel() {
         containerView.addSubview(titleLabel)
+        titleLabel.numberOfLines = 0
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(20)
@@ -67,8 +69,9 @@ class TakeAPillView: UIView {
     }
     
     @objc private func tookAPillButtonTapped() {
-        viewModel.decreasePillValue()
-        viewModel.takeAPillDelegate?.onButtonTapped()
+        viewModel.decreasePillValue {
+            viewModel.takeAPillDelegate?.onButtonTapped()
+        }
     }
     
     private func configureButtonSnoozeAPill() {

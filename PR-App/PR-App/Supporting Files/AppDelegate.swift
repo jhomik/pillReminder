@@ -167,6 +167,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 }
 
 extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
+        let userInfoDecode = notification.request.content.userInfo["medicationModel"]
+        
+        guard let userInfo = userInfoDecode as? Data, let model = try? JSONDecoder().decode(UserMedicationDetailModel.self, from: userInfo) else { return }
+        
+        let takeAPillVC = TakeAPillAlertController()
+        takeAPillVC.modalPresentationStyle = .overFullScreen
+        takeAPillVC.modalTransitionStyle = .crossDissolve
+        takeAPillVC.viewModel.medications = model
+        rootViewController.present(takeAPillVC, animated: true)
+        
+        completionHandler([.badge, .sound])
+    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
         let userInfoDecode = response.notification.request.content.userInfo["medicationModel"]
