@@ -25,6 +25,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     private(set) var activityIndicator = UIActivityIndicatorView()
     
     weak var popViewDelegate: PopViewControllerDelegate?
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     override func loadView() {
         self.view = currentMedicationSettingsView
@@ -72,6 +73,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate) {
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
+                self.appDelegate?.deletePendingNotification(medicationID: medicationToUpdate.userIdentifier)
                 self.currentMedicationSettingsView.setSchedule(medicationModel: medicationToUpdate)
                 self.dismiss(animated: true) {
                     self.popViewDelegate?.popViewController()
