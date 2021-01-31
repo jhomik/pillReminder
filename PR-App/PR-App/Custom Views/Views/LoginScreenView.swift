@@ -73,11 +73,8 @@ final class LoginScreenView: UIView {
     }
     
     private func configureLogoImage() {
-        // TODO: Logic? Should be in the ViewModel?
-        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.42 : 0.34
-        
-        // TODO: Logic? Should be in the ViewModel?
-        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE ? 0.82 : 0.8
+        let heightAnchorMultiplier = viewModel.setHeightAnchorMulitplier()
+        let widthAnchorMultiplier = viewModel.setWidthAnchorMultiplier()
         let topAnchorConstant: CGFloat = 20
         
         scrollView.addSubview(logoImage)

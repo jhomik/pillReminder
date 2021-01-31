@@ -71,3 +71,6 @@
 "twiceADayArray" = "Twice a day";
 "threeTimesADayArray" = "Three times a day";
 "nextPill" = "Next pill: ";
+"didYouTakePill" = "Did you take a ";
+"yes" = "Yes";
+"snoozeFor5Minutes" = "Snooze for 5 minutes";

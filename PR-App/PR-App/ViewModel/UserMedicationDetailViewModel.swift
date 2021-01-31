@@ -6,8 +6,56 @@
 //  Copyright © 2021 Jakub Homik. All rights reserved.
 //
 
-import UIKit
+import Foundation
+
+protocol EditButtonEventDelegate: AnyObject {
+    func editButtonTapped()
+}
 
 final class UserMedicationDetailViewModel {
     
+    private let pillModel = PillModel()
+
+    var medications: UserMedicationDetailModel?
+    
+    weak var buttonTappedDelegate: EditButtonEventDelegate?
+    var userDefaults: MedicationInfoDefaults
+    
+    var leftCapacity: String? {
+        return userDefaults.getLeftPillInfo(medicationModel: medications)
+    }
+    
+    init(userDefaults: MedicationInfoDefaults) {
+        self.userDefaults = userDefaults
+    }
+    
+    func setPackageSuffixLabel(_ value: String) -> String {
+        guard let amount = Int(value) else { return "" }
+        
+        if amount <= 1 {
+            return value + Constants.pill
+        } else {
+            return value + Constants.pills
+        }
+    }
+    
+    func configureDoseInformations() -> String {
+        if medications?.howManyTimesPerDay == pillModel.howManyTimesPerDay[0] {
+            return Constants.onceADay
+        } else if medications?.howManyTimesPerDay == pillModel.howManyTimesPerDay[1] {
+            return Constants.twiceADay
+        } else {
+            return Constants.threeTimesADay
+        }
+    }
+    
+    func setPillsLeftLabel(_ value: String) -> String {
+        guard let amount = Double(value) else { return "" }
+        
+        if amount <= 1 {
+            return Constants.pillLeft + value + Constants.pill
+        } else {
+            return Constants.pillsLeft + value + Constants.pills
+        }
+    }
 }

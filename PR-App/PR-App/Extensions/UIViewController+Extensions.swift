@@ -11,29 +11,35 @@ import SnapKit
 
 extension UIViewController {
     
-    func showLoadingSpinner(with containerView: UIView) {
-        containerView.frame = view.bounds
-        containerView.backgroundColor = .systemBackground
-        containerView.alpha = 0
-        
-        UIView.animate(withDuration: 0.25) {
-            containerView.alpha = 0.8
+    func showLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
+        DispatchQueue.main.async {
+            spinner.style = .large
+            containerView.backgroundColor = .systemBackground
+            containerView.alpha = 0
+            
+            UIView.animate(withDuration: 0.25) {
+                containerView.alpha = 0.8
+            }
+            
+            self.view.addSubview(containerView)
+            containerView.addSubview(spinner)
+            containerView.translatesAutoresizingMaskIntoConstraints = false
+            spinner.translatesAutoresizingMaskIntoConstraints = false
+            
+            NSLayoutConstraint.activate([
+                containerView.widthAnchor.constraint(equalTo: self.view.widthAnchor),
+                containerView.heightAnchor.constraint(equalTo: self.view.heightAnchor),
+                spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+                spinner.centerYAnchor.constraint(equalTo: containerView.centerYAnchor)
+            ])
+            spinner.startAnimating()
         }
-        
-        let activityIndicator = UIActivityIndicatorView(style: .large)
-        
-        view.addSubview(containerView)
-        containerView.addSubview(activityIndicator)
-        
-        activityIndicator.snp.makeConstraints { (make) in
-            make.centerY.centerX.equalTo(containerView)
-        }
-        activityIndicator.startAnimating()
     }
     
-    func dismissLoadingSpinner(with containerView: UIView) {
+    func dismissLoadingSpinner(with containerView: UIView, spinner: UIActivityIndicatorView) {
         DispatchQueue.main.async {
             containerView.removeFromSuperview()
+            spinner.stopAnimating()
         }
     }
     

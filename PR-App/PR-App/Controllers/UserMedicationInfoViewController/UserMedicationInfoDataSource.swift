@@ -8,9 +8,10 @@
 
 import UIKit
 
-class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
+final class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
 
     var viewModel: UserMedicationInfoViewModel
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     init(viewModel: UserMedicationInfoViewModel) {
         self.viewModel = viewModel
@@ -19,6 +20,7 @@ class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
     private func deleteItem(for item: CustomCell, collectionView: UICollectionView) {
         if let indexPath = collectionView.indexPath(for: item) {
             viewModel.deleteItemAt(indexPath)
+            appDelegate?.deletePendingNotification(medicationID: item.customMedicationCell?.userIdentifier)
             collectionView.performBatchUpdates({
                 collectionView.deleteItems(at: [indexPath])
             })
@@ -40,7 +42,7 @@ class UserMedicationInfoDataSource: NSObject, UICollectionViewDataSource {
         cell.deleteButtonEvent = { [weak self, unowned cell] in
             self?.deleteItem(for: cell, collectionView: collectionView)
         }
-
+        
         if viewModel.medications.indices.contains(indexPath.item) == true {
             cell.customMedicationCell = viewModel.medications[indexPath.item]
             return cell

@@ -9,20 +9,28 @@
 import UIKit
 import SnapKit
 
-protocol UserMedicationDetailDelegate: AnyObject {
-    func imagePickerEvent()
-}
-
-struct ScheduleNotoficationData {
-    var textField: UITextField
-    let pillName: String
-    let time: Date
-    var identifier: String
-}
-
 final class NewMedicationSettingsView: UIView {
     
-    private(set) var addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
+    private let addMedicationLbl = PillReminderMainCustomLabel(text: Constants.addMedication, alignment: .left, size: 24, weight: .bold, color: .label)
+    private let frequencyLabel = PillReminderProgramCustomLabel(text: Constants.frequencyTitle)
+    private let howManyTimesLabel = PillReminderProgramCustomLabel(text: Constants.howManyTimesPerDayTitle)
+    private let whatTimeLabel = PillReminderProgramCustomLabel(text: Constants.whatTimeTitle)
+    private let dosageLabel = PillReminderProgramCustomLabel(text: Constants.dosage)
+    private let capacityLabel = PillReminderMainCustomLabel(text: Constants.pills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private let doseLabel = PillReminderMainCustomLabel(text: Constants.mgPills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
+    private let pillModel = PillModel()
+    private let newMedicationStackView = UIStackView()
+    private let programMedicationStackView = UIStackView()
+    private let scrollView = UIScrollView()
+    private let frequencyPickerView = UIPickerView()
+    private let howManyTimesPickerView = UIPickerView()
+    private let dosagePickerView = UIPickerView()
+    private let onceADayDatePickerView = UIDatePicker()
+    private let twiceADayDatePickerView = UIDatePicker()
+    private let threeTimesADayDatePickerView = UIDatePicker()
+    
+    private(set) var viewModel: NewMedicationViewModel
+    private(set) var userDefaults: MedicationInfoDefaults
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
     private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.capacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
@@ -32,31 +40,18 @@ final class NewMedicationSettingsView: UIView {
     private(set) var whatTimeTwiceADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
     private(set) var whatTimeThreeTimesADayTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.whatTimeInput)
     private(set) var dosageTextField = PillReminderProgramCustomTextFields(placeholderText: Constants.chooseDosage)
-    private(set) var frequencyLabel = PillReminderProgramCustomLabel(text: Constants.frequencyTitle)
-    private(set) var howManyTimesLabel = PillReminderProgramCustomLabel(text: Constants.howManyTimesPerDayTitle)
-    private(set) var whatTimeLabel = PillReminderProgramCustomLabel(text: Constants.whatTimeTitle)
-    private(set) var dosageLabel = PillReminderProgramCustomLabel(text: Constants.dosage)
-    private let capacityLabel = PillReminderMainCustomLabel(text: Constants.pills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
-    private let doseLabel = PillReminderMainCustomLabel(text: Constants.mgPills, alignment: .left, size: 16, weight: .light, color: .tertiaryLabel)
-    private let pillModel = PillModel()
-    private let newMedicationStackView = UIStackView()
-    private let programMedicationStackView = UIStackView()
-    private let scrollView = UIScrollView()
-    var medicationImageButton = UIButton()
-    var medicationImage = UIImageView()
-    weak var delegate: UserMedicationDetailDelegate?
     private(set) var activeTextField: UITextField?
-    private let pickerView = UIPickerView()
-    let onceADayDatePickerView = UIDatePicker()
-    let twiceADayDatePickerView = UIDatePicker()
-    let threeTimesADayDatePickerView = UIDatePicker()
-    private let userDefaults = UserDefaults.standard
-    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
-    private var capacityLeadingConstraint: Constraint?
-    private var doseLeadingConstraint: Constraint?
+    private(set) var capacityLeadingConstraint: Constraint?
+    private(set) var doseLeadingConstraint: Constraint?
+    private(set) var medicationImageButton = UIButton()
+    private(set) var medicationImage = UIImageView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
+   
+    init(viewModel: NewMedicationViewModel, userDefaults: MedicationInfoDefaults) {
+        self.viewModel = viewModel
+        self.userDefaults = userDefaults
+        super.init(frame: .zero)
         configureScrollView()
         configureAddMedicationLbl()
         configureMedicationImageButton()
@@ -76,7 +71,8 @@ final class NewMedicationSettingsView: UIView {
         self.addSubview(scrollView)
         
         scrollView.snp.makeConstraints { (make) in
-            make.top.leading.trailing.bottom.equalTo(self)
+            make.top.bottom.equalTo(self.safeAreaLayoutGuide)
+            make.leading.trailing.equalTo(self)
         }
     }
     
@@ -87,7 +83,8 @@ final class NewMedicationSettingsView: UIView {
         scrollView.addSubview(addMedicationLbl)
         
         addMedicationLbl.snp.makeConstraints { (make) in
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(20)
+            make.trailing.equalTo(self)
             make.height.equalTo(heightAnchorConstant)
             make.top.equalTo(scrollView).offset(topAnchorConstant)
         }
@@ -111,15 +108,15 @@ final class NewMedicationSettingsView: UIView {
         
         medicationImageButton.snp.makeConstraints { (make) in
             make.top.equalTo(addMedicationLbl.snp.bottom).offset(constraintConstant)
-            make.leading.equalTo(self)
-            make.trailing.equalTo(constraintConstant)
+            make.leading.equalTo(addMedicationLbl.snp.leading)
+            make.trailing.equalTo(-constraintConstant)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
             make.height.equalTo(self).multipliedBy(heightAnchorMultiplier)
         }
     }
     
     @objc private func imageCameraButtonTapped() {
-        delegate?.imagePickerEvent()
+        viewModel.newMedicationDelegate?.imagePickerEvent()
     }
     
     private func configureMedicationImage() {
@@ -137,7 +134,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureNewMedicationStackView() {
-        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 14
+        let constraintConstant = viewModel.setConstraintConstant()
         
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)
@@ -157,17 +154,13 @@ final class NewMedicationSettingsView: UIView {
         newMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(medicationImageButton).offset(constraintConstant)
             make.leading.equalTo(medicationImageButton.snp.trailing).offset(constraintConstant)
-            make.trailing.equalTo(self)
+            make.trailing.equalTo(self).offset(-20)
             make.bottom.equalTo(medicationImageButton).offset(-constraintConstant)
         }
     }
     
     @objc private func textFieldFilter(_ textField: UITextField) {
-        if let text = textField.text, let intText = Int(text) {
-            textField.text = "\(intText)"
-        } else {
-            textField.text = ""
-        }
+        viewModel.setFilterForTextField(text: &textField.text)
     }
     
     private func configureCapacityLabel() {
@@ -224,11 +217,26 @@ final class NewMedicationSettingsView: UIView {
         
         programMedicationStackView.snp.makeConstraints { (make) in
             make.top.equalTo(newMedicationStackView.snp.bottom).offset(constraintConstant)
-            make.leading.trailing.equalTo(self)
+            make.leading.equalTo(addMedicationLbl.snp.leading)
+            make.trailing.equalTo(self).offset(-20)
         }
     }
     
-    private func createPickerView(withTextField: UITextField) {
+    func setSchedule(medicationModel: UserMedicationDetailModel) {
+        // TODO: LOGIC - how to put that in ViewModel?
+        if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
+            configureFirstDaySchedule(for: medicationModel)
+            configureSecondDaySchedule(for: medicationModel)
+            configureThirdDaySchedule(for: medicationModel)
+        } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
+            configureFirstDaySchedule(for: medicationModel)
+            configureSecondDaySchedule(for: medicationModel)
+        } else {
+            configureFirstDaySchedule(for: medicationModel)
+        }
+    }
+
+    private func createPickerView(withTextField: UITextField, pickerView: UIPickerView) {
         let toolBar = UIToolbar()
         let doneButton = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(onPickerDoneButtonTapped))
         let spaceButton = UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: nil, action: nil)
@@ -240,19 +248,20 @@ final class NewMedicationSettingsView: UIView {
         withTextField.inputAccessoryView = toolBar
     }
     
+    // TODO: LOGIC - how to put that in ViewModel?
     @objc private func onPickerDoneButtonTapped() {
         guard let textField = activeTextField else { return }
         
         if textField == frequencyTextField {
-            let row = pickerView.selectedRow(inComponent: 0)
+            let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsFrequencyRow)
+//            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
-            let row = pickerView.selectedRow(inComponent: 0)
+            let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsHowManyTimesRow)
+//            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -267,10 +276,10 @@ final class NewMedicationSettingsView: UIView {
                 break
             }
         } else {
-            let row = pickerView.selectedRow(inComponent: 0)
+            let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-//            userDefaults.set(row, forKey: Constants.defaultsDosageRow)
+//            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
@@ -297,39 +306,40 @@ final class NewMedicationSettingsView: UIView {
         let formatter = DateFormatter()
         formatter.timeStyle = .short
         
+        // TODO: LOGIC - how to put that in ViewModel?
         if activeTextField == whatTimeOnceADayTextField {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-            userDefaults.set(selectedOnce, forKey: Constants.defaultsWhatTimeOnceRow)
+//            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-//            userDefaults.set(selectedTwice, forKey: Constants.defaultsWhatTimeTwiceRow)
+//            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-//            userDefaults.set(selectedThree, forKey: Constants.defaultsWhatTimeThreeRow)
+//            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }
     
-    private func configureFirstDaySchedule(for medicationId: String?) {
-        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationId: medicationId)
+    private func configureFirstDaySchedule(for medicationModel: UserMedicationDetailModel?) {
+        let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .first, scheduleNotoficationData: scheduleFirstPill, medicationModel: medicationModel)
     }
     
-    private func configureSecondDaySchedule(for medicationId: String?) {
-        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationId: medicationId)
+    private func configureSecondDaySchedule(for medicationModel: UserMedicationDetailModel?) {
+        let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .second, scheduleNotoficationData: scheduleSecondPill, medicationModel: medicationModel)
     }
     
-    private func configureThirdDaySchedule(for medicationId: String?) {
-        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date, identifier: UUID().uuidString)
-        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationId: medicationId)
+    private func configureThirdDaySchedule(for medicationModel: UserMedicationDetailModel?) {
+        let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
+        appDelegate?.scheduleNotification(pillOfTheDay: .last, scheduleNotoficationData: scheduleThirdPill, medicationModel: medicationModel)
     }
 }
 
@@ -338,21 +348,21 @@ extension NewMedicationSettingsView: UIPickerViewDelegate, UIPickerViewDataSourc
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
-    
+    // TODO: LOGIC - how to put that in ViewModel?
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if activeTextField == frequencyTextField {
+        if pickerView == frequencyPickerView {
             return pillModel.frequency.count
-        } else if activeTextField == howManyTimesTextField {
+        } else if pickerView == howManyTimesPickerView {
             return pillModel.howManyTimesPerDay.count
         } else {
             return pillModel.dosage.count
         }
     }
-    
+    // TODO: LOGIC - how to put that in ViewModel?
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if activeTextField == frequencyTextField {
+        if pickerView == frequencyPickerView {
             return pillModel.frequency[row]
-        } else if activeTextField == howManyTimesTextField {
+        } else if pickerView == howManyTimesPickerView {
             return pillModel.howManyTimesPerDay[row]
         } else {
             return pillModel.dosage[row]
@@ -370,16 +380,11 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     }
     
     func capacityText(forContent text: String?) -> String {
-        guard let text = text, let amount = Int(text) else { return "" }
-        if amount <= 1 {
-            return Constants.pill
-        } else {
-            return Constants.pills
-        }
+        viewModel.setCapacityText(text)
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
-        
+        // TODO: LOGIC - how to put that in ViewModel?
         if textField == capacityTextField {
             capacityLabel.text = capacityText(forContent: textField.text)
             let capacityWidth = getWidth(text: textField.text)
@@ -392,7 +397,7 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         }
         
         guard let capacity = capacityTextField.text, let dose = doseTextField.text else { return }
-        
+        // TODO: LOGIC - how to put that in ViewModel?
         if !capacity.isEmpty {
             capacityLabel.isHidden = false
         } else {
@@ -416,7 +421,7 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
+        // TODO: LOGIC - how to put that in ViewModel?
         if textField == capacityTextField || textField == doseTextField {
             scrollView.isScrollEnabled = false
         } else {
@@ -426,9 +431,9 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         activeTextField = textField
         
         if textField == frequencyTextField {
-            createPickerView(withTextField: textField)
+            createPickerView(withTextField: textField, pickerView: frequencyPickerView)
         } else if textField == howManyTimesTextField {
-            createPickerView(withTextField: textField)
+            createPickerView(withTextField: textField, pickerView: howManyTimesPickerView)
         } else if textField == whatTimeOnceADayTextField {
             createDatePickerView(datePickerView: onceADayDatePickerView, withTextField: textField)
         } else if textField == whatTimeTwiceADayTextField {
@@ -436,26 +441,11 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         } else if textField == whatTimeThreeTimesADayTextField {
             createDatePickerView(datePickerView: threeTimesADayDatePickerView, withTextField: textField)
         } else if textField == dosageTextField {
-            createPickerView(withTextField: textField)
+            createPickerView(withTextField: textField, pickerView: dosagePickerView)
         }
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-    }
-}
-
-extension NewMedicationSettingsView {
-    func setSchedule(medicationId: String?) {
-        if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden && !whatTimeThreeTimesADayTextField.isHidden {
-            configureFirstDaySchedule(for: medicationId)
-            configureSecondDaySchedule(for: medicationId)
-            configureThirdDaySchedule(for: medicationId)
-        } else if !whatTimeOnceADayTextField.isHidden && !whatTimeTwiceADayTextField.isHidden {
-            configureFirstDaySchedule(for: medicationId)
-            configureSecondDaySchedule(for: medicationId)
-        } else {
-            configureFirstDaySchedule(for: medicationId)
-        }
     }
 }

@@ -8,29 +8,65 @@
 
 import Foundation
 
+protocol CurrentMedicationEventDelegate: AnyObject {
+    func imagePickerEvent()
+}
+
 final class CurrentMedicationSettingsViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    var medications: UserMedicationDetailModel?
+    
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
+    weak var currentMedicationDelegate: CurrentMedicationEventDelegate?
+    
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
+    
+    func setConstraintConstant() -> Float {
+        if DeviceTypes.isiPhoneSE {
+            return 0
+        } else {
+            return 14
+        }
+    }
+    
+    func setFilterForTextField(text: inout String?) {
+        if let filterText = text, let intText = Int(filterText) {
+            text = "\(intText)"
+        } else {
+            text = ""
+        }
+    }
+    
+    func setCapacityText(_ text: String?) -> String {
+        guard let text = text, let amount = Int(text) else { return "" }
+        if amount <= 1 {
+            return Constants.pill
+        } else {
+            return Constants.pills
+        }
+    }
     
     func updateMedicationInfo(data: Data, medicationDetail: UserMedicationDetailModel, completion: @escaping () -> Void) {
         if !data.isEmpty {
-            firebaseManager.saveImageToStorage(cellImage: data) { [weak self] (result) in
+            firebaseManagerEvents?.saveImageToStorage(cellImage: data) { [weak self] (result) in
                 guard let self = self else { return }
                 switch result {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                    self.firebaseManager.updateMedicationInfo(cellImage: url, medicationDetail: medicationDetail)
+                    self.firebaseManagerEvents?.updateMedicationInfo(cellImage: url, medicationDetail: medicationDetail)
                 }
                 completion()
             }
         } else {
-            self.firebaseManager.updateMedicationInfo(cellImage: nil, medicationDetail: medicationDetail)
+            self.firebaseManagerEvents?.updateMedicationInfo(cellImage: nil, medicationDetail: medicationDetail)
         }
         completion()
     }
     
     func removeImageFromStorage(url: String) {
-        firebaseManager.removeImageFromStorage(cellImage: url)
+        firebaseManagerEvents?.removeImageFromStorage(cellImage: url)
     }
 }

@@ -7,29 +7,30 @@
 //
 
 import UIKit
-import SnapKit
 
 class TakeAPillAlertController: UIViewController {
     
-    private let takeAPillView = TakeAPillView()
+    private let userDefaults = MedicationInfoDefaults()
+    lazy private(set) var viewModel = TakeAPillViewModel(userDefaults: userDefaults)
+    lazy private(set) var takeAPillView = TakeAPillView(viewModel: viewModel)
+    
+    override func loadView() {
+        self.view = takeAPillView
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTakeAPillAlertController()
-        configureTakeAPillView()
+        viewModel.takeAPillDelegate = self
     }
     
     private func configureTakeAPillAlertController() {
         view.backgroundColor = UIColor.black.withAlphaComponent(0.75)
     }
-    
-    private func configureTakeAPillView() {
-        view.addSubview(takeAPillView)
-        
-        takeAPillView.snp.makeConstraints { (make) in
-            make.centerX.centerY.equalTo(view)
-            make.height.equalTo(220)
-            make.width.equalTo(280)
-        }
+}
+
+extension TakeAPillAlertController: TakeAPillEventDelegate {
+    func onButtonTapped() {
+        self.dismiss(animated: true, completion: nil)
     }
 }

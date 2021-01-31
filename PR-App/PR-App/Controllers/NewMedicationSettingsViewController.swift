@@ -11,19 +11,25 @@ import UserNotifications
 
 final class NewMedicationSettingsViewController: UIViewController {
     
-    private let newMedicationView = NewMedicationSettingsView()
-    private var viewModel = NewMedicationViewModel()
-    private let tableView = UITableView()
+    private let firebaseManager = FirebaseManager()
+    private(set) var userDefaults = MedicationInfoDefaults()
+    
+    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel, userDefaults: userDefaults)
+    lazy private var viewModel = NewMedicationViewModel(firebaseManagerEvents: firebaseManager)
+    
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
+    private(set) var activityIndicator = UIActivityIndicatorView()
     
+    override func loadView() {
+        self.view = newMedicationView
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         configureViewController()
         configureNavBar()
-        configureMedicationView()
         createDismisKeyboardTapGesture()
-        newMedicationView.delegate = self
+        viewModel.newMedicationDelegate = self
     }
     
     private func configureViewController() {
@@ -52,11 +58,12 @@ final class NewMedicationSettingsViewController: UIViewController {
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
-            self.showLoadingSpinner(with: containerView)
-            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) {
-                self.dismissLoadingSpinner(with: self.containerView)
+            self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
+            viewModel.saveNewMedicationToFirebase(data: imageData, medicationDetail: medicationToSave) { (model) in
+                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true, completion: nil)
-                self.newMedicationView.setSchedule(medicationId: medicationToSave.userIdentifier)
+                self.newMedicationView.setSchedule(medicationModel: model)
+                self.userDefaults.storeLeftPill(value: medicationToSave.capacity, medicationModel: model)
             }
         }
     }
@@ -83,18 +90,6 @@ final class NewMedicationSettingsViewController: UIViewController {
         
         self.present(actionSheet, animated: true)
     }
-    
-    private func configureMedicationView() {
-        let leadingAndTrailingAnchorConstants: CGFloat = 20
-        
-        view.addSubview(newMedicationView)
-        
-        newMedicationView.snp.makeConstraints { (make) in
-            make.top.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.leading.equalTo(leadingAndTrailingAnchorConstants)
-            make.trailing.equalTo(-leadingAndTrailingAnchorConstants)
-        }
-    }
 }
 
 extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -113,7 +108,7 @@ extension NewMedicationSettingsViewController: UIImagePickerControllerDelegate, 
     }
 }
 
-extension NewMedicationSettingsViewController: UserMedicationDetailDelegate {
+extension NewMedicationSettingsViewController: NewMedicationEventDelegate {
     func imagePickerEvent() {
         configureImagePickerController()
     }

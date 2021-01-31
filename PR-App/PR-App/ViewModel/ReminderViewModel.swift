@@ -8,13 +8,24 @@
 
 import Foundation
 
+protocol ReminderViewEventDelegate: AnyObject {
+    func reloadReminders()
+}
+
 final class ReminderViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
+    private(set) var reminders: [UserMedicationDetailModel] = []
+    weak var reminderEvent: ReminderViewEventDelegate?
     
-    func downloadMedicationInfo(completion: @escaping ([UserMedicationDetailModel]) -> Void) {
-        firebaseManager.downloadMedicationInfo { (result) in
-            completion(result)
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
+    
+    func downloadReminders() {
+        firebaseManagerEvents?.downloadMedicationInfo { [weak self] (result) in
+            self?.reminders = result
+            self?.reminderEvent?.reloadReminders()
         }
     }
 }

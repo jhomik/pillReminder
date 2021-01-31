@@ -11,7 +11,21 @@ import FirebaseAuth
 import FirebaseStorage
 import FirebaseDatabase
 
-final class FirebaseManager {
+protocol FirebaseManagerEvents: AnyObject {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((UserMedicationDetailModel) -> Void))
+    func downloadMedicationInfo(completion: @escaping([UserMedicationDetailModel]) -> Void)
+    func updateMedicationInfo(cellImage: String?, medicationDetail: UserMedicationDetailModel?)
+    func saveImageToStorage(cellImage: Data?, completion: @escaping(Result<String, Error>) -> Void)
+    func removeDataFromFirebase(model: UserMedicationDetailModel)
+    func removeImageFromStorage(cellImage: String)
+    func downloadImage(with urlString: String, completion: @escaping(UIImage?) -> Void)
+    func setUserName(completion: @escaping(Result<String, Error>) -> Void)
+    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void)
+    func signInUser(userModel: UserModel, completion: ((Result<Bool, Error>) -> Void)?)
+    func createUser(userModel: UserModel, completion: ((Result<Void, Error>) -> Void)?)
+}
+
+final class FirebaseManager: FirebaseManagerEvents {
     
     private let refDatabase = Database.database().reference()
     private let refStorage = Storage.storage().reference()
@@ -168,7 +182,7 @@ final class FirebaseManager {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?) {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((UserMedicationDetailModel) -> Void)) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]
@@ -205,8 +219,12 @@ final class FirebaseManager {
         }
         
         let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()
-        
+    
         child.setValue(values)
+        
+        let model = UserMedicationDetailModel(userIdentifier: child.key ?? "", dictionary: values)
+        
+        completion(model)
     }
     
     // MARK: Observing Username
@@ -225,8 +243,8 @@ final class FirebaseManager {
     
     // MARK: Reset password
     
-    func resetUserPassword(with userModel: UserModel, completion: @escaping(Result<Void, Error>) -> Void) {
-        auth.sendPasswordReset(withEmail: userModel.email) { (error) in
+    func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void) {
+        auth.sendPasswordReset(withEmail: email) { (error) in
             if let error = error {
                 completion(.failure(error))
             } else {

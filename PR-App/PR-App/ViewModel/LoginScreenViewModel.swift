@@ -19,9 +19,14 @@ protocol LoginScreenEvents: AnyObject {
 
 final class LoginScreenViewModel {
     
-    private let firebaseManager = FirebaseManager()
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
     weak var loginEvents: LoginScreenEvents?
+    
     private(set) var isSignUp = false
+    
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
+    }
     
     func newPasswordCheck(passOne: String, passTwo: String) -> Bool {
         if passOne == passTwo {
@@ -29,6 +34,22 @@ final class LoginScreenViewModel {
         } else {
             loginEvents?.isPasswordMatch()
             return false
+        }
+    }
+    
+    func setHeightAnchorMulitplier() -> Float {
+        if DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard {
+            return 0.42
+        } else {
+            return 0.34
+        }
+    }
+    
+    func setWidthAnchorMultiplier() -> Float {
+        if DeviceTypes.isiPhoneSE {
+            return 0.82
+        } else {
+            return 0.8
         }
     }
     
@@ -53,7 +74,7 @@ final class LoginScreenViewModel {
     }
     
     func signInUser(userModel: UserModel) {
-        firebaseManager.signInUser(userModel: userModel, completion: { [weak self] result in
+        firebaseManagerEvents?.signInUser(userModel: userModel, completion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let data):
@@ -70,7 +91,7 @@ final class LoginScreenViewModel {
     }
     
     func createNewUser(userModel: UserModel) {
-        firebaseManager.createUser(userModel: userModel, completion: { [weak self] result in
+        firebaseManagerEvents?.createUser(userModel: userModel, completion: { [weak self] result in
             DispatchQueue.main.async {
                 switch result {
                 case .success:

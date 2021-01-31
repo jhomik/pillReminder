@@ -11,12 +11,12 @@ import FirebaseAuth
 
 final class UserMedicationInfoViewController: UIViewController {
     
-    private var viewModel = UserMedicationInfoViewModel()
+    private let firebaseManager = FirebaseManager()
     private let containerView = UIView()
+    private let spinner = UIActivityIndicatorView()
     
+    lazy private(set) var viewModel = UserMedicationInfoViewModel(firebaseManagerEvents: firebaseManager)
     lazy private(set) var userMedicationInfoView = UserMedicationInfoView(viewModel: viewModel)
-//    lazy private(set) var userMedicationDataSource = UserMedicationInfoDataSource(viewModel: viewModel)
-//    lazy private(set) var userMedicationDelegate = UserMedicationInfoDelegate(viewModel: viewModel)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +70,14 @@ final class UserMedicationInfoViewController: UIViewController {
 }
 
 extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
+    func isLoading(_ loading: Bool) {
+        if loading {
+            showLoadingSpinner(with: containerView, spinner: spinner)
+        } else {
+            dismissLoadingSpinner(with: containerView, spinner: spinner)
+        }
+    }
+    
     func pushNewMedicationSettingsController() {
         let newMedicationSettings = NewMedicationSettingsViewController()
         present(UINavigationController(rootViewController: newMedicationSettings), animated: true, completion: nil)
@@ -77,7 +85,7 @@ extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
     
     func pushUserMedicationDetailController(with medications: UserMedicationDetailModel) {
         let userMedicationDetail = UserMedicationDetailViewController()
-        userMedicationDetail.medications = medications
+        userMedicationDetail.viewModel.medications = medications
         self.navigationController?.pushViewController(userMedicationDetail, animated: true)
     }
     

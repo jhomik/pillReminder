@@ -8,19 +8,18 @@
 
 import UIKit
 
-protocol DecreasePillValueDelegate: AnyObject {
-    func decrease()
-}
-
 class TakeAPillView: UIView {
 
-    private let titleLabel = PillReminderMainCustomLabel(text: "Did you take a pill?", alignment: .center, size: 24, weight: .bold, color: .black)
-    private let buttonTookAPill = PillReminderMainCustomButton(text: "Yes")
-    private let buttonSnoozeAPill = PillReminderMainCustomButton(text: "Snooze for 5 minutes")
-    weak var delegate: DecreasePillValueDelegate?
+    lazy private(set) var titleLabel = PillReminderMainCustomLabel(text: Constants.didYouTakePill + "\(viewModel.medications?.pillName ?? "") ?", alignment: .center, size: 24, weight: .bold, color: .black)
+    private let buttonTookAPill = PillReminderMainCustomButton(text: Constants.yes)
+    private let buttonSnoozeAPill = PillReminderMainCustomButton(text: Constants.snoozeFor5Minutes)
+    private let containerView = UIView()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    var viewModel: TakeAPillViewModel
+    
+    init(viewModel: TakeAPillViewModel) {
+        self.viewModel = viewModel
+        super.init(frame: .zero)
         configureContainerView()
         configureTitleLabel()
         configureButtonTookAPill()
@@ -32,14 +31,23 @@ class TakeAPillView: UIView {
     }
     
     private func configureContainerView() {
-        self.backgroundColor = UIColor.backgroundColor
-        self.layer.cornerRadius = 12
-        self.layer.borderColor = UIColor.systemBackground.cgColor
-        self.layer.borderWidth = 2
+        self.addSubview(containerView)
+        containerView.backgroundColor = UIColor.backgroundColor
+        containerView.layer.cornerRadius = 12
+        containerView.layer.borderColor = UIColor.systemBackground.cgColor
+        containerView.layer.borderWidth = 2
+        
+        containerView.snp.makeConstraints { (make) in
+            make.centerX.centerY.equalTo(self)
+            make.height.equalTo(220)
+            make.width.equalTo(280)
+        }
     }
     
     private func configureTitleLabel() {
-        self.addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
+        titleLabel.numberOfLines = 0
+        titleLabel.adjustsFontSizeToFitWidth = true
         
         titleLabel.snp.makeConstraints { (make) in
             make.top.equalTo(20)
@@ -50,7 +58,7 @@ class TakeAPillView: UIView {
     }
     
     private func configureButtonTookAPill() {
-        self.addSubview(buttonTookAPill)
+        containerView.addSubview(buttonTookAPill)
         buttonTookAPill.addTarget(self, action: #selector(tookAPillButtonTapped), for: .touchUpInside)
         
         buttonTookAPill.snp.makeConstraints { (make) in
@@ -61,11 +69,13 @@ class TakeAPillView: UIView {
     }
     
     @objc private func tookAPillButtonTapped() {
-        delegate?.decrease()
+        viewModel.decreasePillValue {
+            viewModel.takeAPillDelegate?.onButtonTapped()
+        }
     }
     
     private func configureButtonSnoozeAPill() {
-        self.addSubview(buttonSnoozeAPill)
+        containerView.addSubview(buttonSnoozeAPill)
         buttonSnoozeAPill.addTarget(self, action: #selector(snoozeAPillButtonTapped), for: .touchUpInside)
         
         buttonSnoozeAPill.snp.makeConstraints { (make) in
