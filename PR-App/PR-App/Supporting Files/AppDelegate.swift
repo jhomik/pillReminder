@@ -89,7 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.badge = badgeCount
         content.userInfo["medicationID"] = medicationModel?.userIdentifier ?? ""
         content.userInfo["medicationModel"] = try? JSONEncoder().encode(medicationModel)
-        content.categoryIdentifier = UUID().uuidString
         
         switch pillOfTheDay {
         case .first:
@@ -116,6 +115,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print(triggerDate)
             print(request.identifier)
         }
+    }
+    
+    func snoozeNotification(for minutes: Int, completion: () -> Void) {
+        notificationCenter.getPendingNotificationRequests { (request) in
+            for item in request {
+                let time = Date()
+                let content = item.content
+                var triggerDate = Calendar.current.dateComponents([.hour, .minute], from: time)
+                triggerDate.minute = (triggerDate.minute ?? 0) + minutes
+                
+                let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: false)
+                let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+                self.notificationCenter.add(request) { error in
+                    if let error = error {
+                        print("Reschduling failed", error.localizedDescription)
+                    }
+                }
+            }
+        }
+        completion()
     }
     
     func nextTriggerDate(label: UILabel, for medicationId: String?) {
@@ -214,18 +233,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: UNUserNotificationCenterDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
-        guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
-        let userInfoDecode = notification.request.content.userInfo["medicationModel"]
         
-        guard let userInfo = userInfoDecode as? Data, let model = try? JSONDecoder().decode(UserMedicationDetailModel.self, from: userInfo) else { return }
-        
-        let takeAPillVC = TakeAPillAlertController()
-        takeAPillVC.modalPresentationStyle = .overFullScreen
-        takeAPillVC.modalTransitionStyle = .crossDissolve
-        takeAPillVC.viewModel.medications = model
-        rootViewController.present(takeAPillVC, animated: true)
-        
-        completionHandler([.badge, .sound])
+        completionHandler([.badge, .sound, .alert])
     }
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {

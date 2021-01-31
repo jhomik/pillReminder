@@ -14,6 +14,7 @@ class TakeAPillView: UIView {
     private let buttonTookAPill = PillReminderMainCustomButton(text: Constants.yes)
     private let buttonSnoozeAPill = PillReminderMainCustomButton(text: Constants.snoozeFor5Minutes)
     private let containerView = UIView()
+    private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
     var viewModel: TakeAPillViewModel
     
@@ -86,6 +87,8 @@ class TakeAPillView: UIView {
     }
     
     @objc private func snoozeAPillButtonTapped() {
-        print("test")
+        appDelegate?.snoozeNotification(for: 5, completion: {
+            viewModel.takeAPillDelegate?.onButtonTapped()
+        })
     }
 }
