@@ -9,12 +9,6 @@
 import UIKit
 
 struct Constants {
-    static let defaultsFrequencyRow = UUID().uuidString
-    static let defaultsHowManyTimesRow = UUID().uuidString
-    static let defaultsWhatTimeOnceRow = UUID().uuidString
-    static let defaultsWhatTimeTwiceRow = UUID().uuidString
-    static let defaultsWhatTimeThreeRow = UUID().uuidString
-    static let defaultsDosageRow = UUID().uuidString
     static let reminderCellId = "reminderCellId"
     static let customCellId = "customCellId"
     static let users = "users"
