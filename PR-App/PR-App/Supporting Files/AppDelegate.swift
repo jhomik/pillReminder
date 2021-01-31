@@ -89,21 +89,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         content.badge = badgeCount
         content.userInfo["medicationID"] = medicationModel?.userIdentifier ?? ""
         content.userInfo["medicationModel"] = try? JSONEncoder().encode(medicationModel)
+        content.categoryIdentifier = UUID().uuidString
         
         switch pillOfTheDay {
         case .first:
             content.title = Constants.firstPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
+            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         case .second:
             content.title = Constants.secondPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
+            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         case .last:
             content.title = Constants.thirdPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
+            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         }
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
-        let request = UNNotificationRequest(identifier: UUID().uuidString, content: content, trigger: trigger)
+        let request = UNNotificationRequest(identifier: UUID().uuidString + "\(pillOfTheDay.rawValue)", content: content, trigger: trigger)
         
         notificationCenter.add(request) { (error) in
             if let error = error {

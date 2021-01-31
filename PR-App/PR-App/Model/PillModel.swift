@@ -15,7 +15,7 @@ struct PillModel {
     let dosage = ["1", "1/2", "1/4"]
 }
 
-enum PillOfTheDay {
+enum PillOfTheDay: String {
     case first
     case second
     case last
