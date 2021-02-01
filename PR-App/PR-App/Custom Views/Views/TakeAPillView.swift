@@ -10,7 +10,7 @@ import UIKit
 
 class TakeAPillView: UIView {
 
-    lazy private(set) var titleLabel = PillReminderMainCustomLabel(text: Constants.didYouTakePill + "\(viewModel.medications?.pillName ?? "") ?", alignment: .center, size: 24, weight: .bold, color: .black)
+    lazy private(set) var titleLabel = PillReminderMainCustomLabel(text: Constants.didYouTakePill + "\(viewModel.medications?.pillName ?? "") ?", alignment: .center, size: 24, weight: .bold, color: UIColor.textFieldUnderline)
     private let buttonTookAPill = PillReminderMainCustomButton(text: Constants.yes)
     private let buttonSnoozeAPill = PillReminderMainCustomButton(text: Constants.snoozeFor5Minutes)
     private let containerView = UIView()
@@ -33,7 +33,7 @@ class TakeAPillView: UIView {
     
     private func configureContainerView() {
         self.addSubview(containerView)
-        containerView.backgroundColor = UIColor.backgroundColor
+        containerView.backgroundColor = UIColor.cellBackgroundColor
         containerView.layer.cornerRadius = 12
         containerView.layer.borderColor = UIColor.systemBackground.cgColor
         containerView.layer.borderWidth = 2

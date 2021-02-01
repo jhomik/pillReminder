@@ -23,14 +23,6 @@ final class CurrentMedicationSettingsViewModel {
         self.firebaseManagerEvents = firebaseManagerEvents
     }
     
-    func setConstraintConstant() -> Float {
-        if DeviceTypes.isiPhoneSE {
-            return 0
-        } else {
-            return 14
-        }
-    }
-    
     func setFilterForTextField(text: inout String?) {
         if let filterText = text, let intText = Int(filterText) {
             text = "\(intText)"

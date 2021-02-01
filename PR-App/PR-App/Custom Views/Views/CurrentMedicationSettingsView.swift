@@ -112,7 +112,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureChangeMedicationLbl() {
-        let topAnchorConstant: CGFloat = 20
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 2 : 16
         let heightAnchorConstant: CGFloat = 30
         
         scrollView.addSubview(changeMedicationLbl)
@@ -128,8 +128,8 @@ final class CurrentMedicationSettingsView: UIView {
     private func configureMedicationImageView() {
         let medicationImageButtonCornerRadius: CGFloat = 16
         let constraintConstant: CGFloat = 20
-        let widthAnchorMultiplier: CGFloat = 0.42
-        let heightAnchorMultiplier: CGFloat = 0.24
+        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.38 : 0.42
+        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0.22 : 0.24
         
         currentMedicationImage.backgroundColor = .tertiarySystemFill
         currentMedicationImage.layer.cornerRadius = medicationImageButtonCornerRadius
@@ -170,7 +170,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureCurrentMedicationStackview() {
-        let constraintConstant = viewModel.setConstraintConstant()
+        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 8 : 14
         
         currentMedicationStackView.addArrangedSubview(nameTextField)
         currentMedicationStackView.addArrangedSubview(capacityTextField)
@@ -188,10 +188,10 @@ final class CurrentMedicationSettingsView: UIView {
         scrollView.addSubview(currentMedicationStackView)
         
         currentMedicationStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(currentMedicationImage).offset(constraintConstant)
+            make.top.equalTo(currentMedicationImage.snp.top)
             make.leading.equalTo(currentMedicationImage.snp.trailing).offset(constraintConstant)
             make.trailing.equalTo(self).offset(-20)
-            make.bottom.equalTo(currentMedicationImage).offset(-constraintConstant)
+            make.bottom.equalTo(currentMedicationImage.snp.bottom)
         }
     }
     
@@ -246,7 +246,8 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureProgramMedicationStackView() {
-        let constraintConstant: CGFloat = 30
+        let constraintConstant: CGFloat = 16
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 4 : 10
         
         currentProgramMedicationStackView.addArrangedSubview(frequencyLabel)
         currentProgramMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -271,7 +272,7 @@ final class CurrentMedicationSettingsView: UIView {
         
         currentProgramMedicationStackView.axis = .vertical
         currentProgramMedicationStackView.distribution = .fillEqually
-        currentProgramMedicationStackView.spacing = 10
+        currentProgramMedicationStackView.spacing = stackViewSpacing
         
         scrollView.addSubview(currentProgramMedicationStackView)
         
@@ -279,6 +280,7 @@ final class CurrentMedicationSettingsView: UIView {
             make.top.equalTo(currentMedicationStackView.snp.bottom).offset(constraintConstant)
             make.leading.equalTo(changeMedicationLbl.snp.leading)
             make.trailing.equalTo(self).offset(-20)
+            make.bottom.equalTo(scrollView.snp.bottom)
         }
     }
     
@@ -301,12 +303,10 @@ final class CurrentMedicationSettingsView: UIView {
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-            //            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-            //            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -359,17 +359,6 @@ final class CurrentMedicationSettingsView: UIView {
             datePickerView.preferredDatePickerStyle = .wheels
         }
         
-//        if datePickerView == onceADayDatePickerView {
-//            let selectedRow = formatter.date(from: viewModel.medications?.whatTimeOnceRow ?? "")
-//            datePickerView.date = selectedRow ?? Date()
-//        } else if datePickerView == twiceADayDatePickerView {
-//            let selectedRow = formatter.date(from: viewModel.medications?.whatTimeTwiceRow ?? "")
-//            datePickerView.date = selectedRow ?? Date()
-//        } else if datePickerView == threeTimesADayDatePickerView {
-//            let selectedRow = formatter.date(from: viewModel.medications?.whatTimeThreeRow ?? "")
-//            datePickerView.date = selectedRow ?? Date()
-//        }
-        
         withTextField.inputView = datePickerView
         withTextField.inputAccessoryView = toolBar
         toolBar.sizeToFit()
@@ -397,19 +386,16 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureFirstDaySchedule(medicationModel: UserMedicationDetailModel?) {
-//        appDelegate?.deletePendingNotification(medicationID: medicationModel?.userIdentifier)
         let scheduleFirstPill = ScheduleNotoficationData(textField: whatTimeOnceADayTextField, pillName: nameTextField.text ?? "", time: onceADayDatePickerView.date)
         appDelegate?.updateNotofication(pillOfTheDay: .first, schedule: scheduleFirstPill, medicationModel: medicationModel)
     }
     
     private func configureSecondDaySchedule(medicationModel: UserMedicationDetailModel?) {
-//        appDelegate?.deletePendingNotification(medicationID: medicationModel?.userIdentifier)
         let scheduleSecondPill = ScheduleNotoficationData(textField: whatTimeTwiceADayTextField, pillName: nameTextField.text ?? "", time: twiceADayDatePickerView.date)
         appDelegate?.updateNotofication(pillOfTheDay: .second, schedule: scheduleSecondPill, medicationModel: medicationModel)
     }
     
     private func configureThirdDaySchedule(medicationModel: UserMedicationDetailModel?) {
-//        appDelegate?.deletePendingNotification(medicationID: medicationModel?.userIdentifier)
         let scheduleThirdPill = ScheduleNotoficationData(textField: whatTimeThreeTimesADayTextField, pillName: nameTextField.text ?? "", time: threeTimesADayDatePickerView.date)
         appDelegate?.updateNotofication(pillOfTheDay: .last, schedule: scheduleThirdPill, medicationModel: medicationModel)
     }
@@ -505,8 +491,10 @@ extension CurrentMedicationSettingsView: UITextFieldDelegate {
         
         if textField == capacityTextField || textField == doseTextField {
             scrollView.isScrollEnabled = false
-        } else {
+        } else if textField == frequencyTextField || textField == howManyTimesTextField {
             scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        } else {
+            scrollView.setContentOffset(CGPoint(x: 0, y: 280), animated: true)
         }
         
         activeTextField = textField

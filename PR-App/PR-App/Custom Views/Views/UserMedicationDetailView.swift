@@ -91,20 +91,20 @@ final class UserMedicationDetailView: UIView {
     
     private func configurePillImageView() {
         let widthAnchorMultiplier: CGFloat = 0.4
+        let heightAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 160 : 180
         
         self.addSubview(pillImageView)
         
         pillImageView.snp.makeConstraints { (make) in
             make.top.leading.equalTo(safeAreaLayoutGuide).offset(30)
-            make.height.equalTo(180)
+            make.height.equalTo(heightAnchorConstant)
             make.width.equalTo(self).multipliedBy(widthAnchorMultiplier)
         }
     }
     
     private func configureMedicationStackView() {
-        let constraintConstant: CGFloat = 30
-        let heightAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 160 : 180
-        
+        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 16 : 30
+    
         medicationStackView.axis = .vertical
         medicationStackView.distribution = .equalSpacing
         self.addSubview(medicationStackView)
@@ -122,7 +122,7 @@ final class UserMedicationDetailView: UIView {
     
     private func configureDosageMedicationStackView() {
         let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 15 : 30
-        let heightAnchorConstant: CGFloat = 200
+        let heightAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 160 : 200
         
         dosageMedicationStackView.axis = .vertical
         dosageMedicationStackView.distribution = .equalSpacing

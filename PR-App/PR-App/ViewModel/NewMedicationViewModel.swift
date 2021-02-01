@@ -57,12 +57,4 @@ final class NewMedicationViewModel {
             text = ""
         }
     }
-    
-    func setConstraintConstant() -> Float {
-        if DeviceTypes.isiPhoneSE {
-            return 0
-        } else {
-            return 14
-        }
-    }
 }

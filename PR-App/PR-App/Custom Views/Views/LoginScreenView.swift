@@ -144,7 +144,7 @@ final class LoginScreenView: UIView {
     
     private func configureButton() {
         let heightAnchorConstant: CGFloat = 40
-        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 14 : 25
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 9 : 25
         
         mainButtonEvent.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         scrollView.addSubview(mainButtonEvent)

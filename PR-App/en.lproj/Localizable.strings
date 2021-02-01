@@ -16,7 +16,7 @@
 "changeMedications" = "Change Medications";
 "tapToChange" = "Tap to change";
 "pillName" = "Pill name";
-"capacity" = "Capacity";
+"capacity" = "Capacity left";
 "program" = "Program";
 "yourName" = "Your name";
 "emailAddress" = "Email Address";
@@ -55,8 +55,8 @@
 "onceADay" = "Once a day";
 "twiceADay" = "Twice a day | Morning, evening";
 "threeTimesADay" = "Three times a day | Morning, noon, evening";
-"pillsLeft" = " pills left";
-"pillLeft" = " pill left";
+"pillsLeft" = "";
+"pillLeft" = "";
 "pills" = " pills";
 "pill" = " pill";
 "selectFrequencyInput" = "Select frequency";

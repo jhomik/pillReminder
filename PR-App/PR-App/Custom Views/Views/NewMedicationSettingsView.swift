@@ -77,7 +77,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureAddMedicationLbl() {
-        let topAnchorConstant: CGFloat = 12
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 2: 20
         let heightAnchorConstant: CGFloat = 30
         
         scrollView.addSubview(addMedicationLbl)
@@ -94,8 +94,8 @@ final class NewMedicationSettingsView: UIView {
         let settingsCellConfig = UIImage.SymbolConfiguration(pointSize: 25, weight: .regular)
         let medicationImageButtonCornerRadius: CGFloat = 16
         let constraintConstant: CGFloat = 20
-        let widthAnchorMultiplier: CGFloat = 0.42
-        let heightAnchorMultiplier: CGFloat = 0.24
+        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0.38 : 0.42
+        let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0.22 : 0.24
         
         medicationImageButton.backgroundColor = .systemGray5
         medicationImageButton.addTarget(self, action: #selector(imageCameraButtonTapped), for: .touchUpInside)
@@ -134,7 +134,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureNewMedicationStackView() {
-        let constraintConstant = viewModel.setConstraintConstant()
+        let constraintConstant = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 8 : 14
         
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)
@@ -152,10 +152,10 @@ final class NewMedicationSettingsView: UIView {
         scrollView.addSubview(newMedicationStackView)
         
         newMedicationStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(medicationImageButton).offset(constraintConstant)
+            make.top.equalTo(medicationImageButton.snp.top)
             make.leading.equalTo(medicationImageButton.snp.trailing).offset(constraintConstant)
             make.trailing.equalTo(self).offset(-20)
-            make.bottom.equalTo(medicationImageButton).offset(-constraintConstant)
+            make.bottom.equalTo(medicationImageButton.snp.bottom)
         }
     }
     
@@ -186,7 +186,8 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureProgramMedicationStackView() {
-        let constraintConstant: CGFloat = 30
+        let constraintConstant: CGFloat = 16
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 4 : 10
         
         programMedicationStackView.addArrangedSubview(frequencyLabel)
         programMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -211,7 +212,7 @@ final class NewMedicationSettingsView: UIView {
         
         programMedicationStackView.axis = .vertical
         programMedicationStackView.distribution = .fillEqually
-        programMedicationStackView.spacing = 10
+        programMedicationStackView.spacing = stackViewSpacing
         
         scrollView.addSubview(programMedicationStackView)
         
@@ -219,6 +220,7 @@ final class NewMedicationSettingsView: UIView {
             make.top.equalTo(newMedicationStackView.snp.bottom).offset(constraintConstant)
             make.leading.equalTo(addMedicationLbl.snp.leading)
             make.trailing.equalTo(self).offset(-20)
+            make.bottom.equalTo(scrollView.snp.bottom)
         }
     }
     
@@ -256,12 +258,10 @@ final class NewMedicationSettingsView: UIView {
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
-//            userDefaults.storeRowInfo(row: row)
         } else if textField == howManyTimesTextField {
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
-//            userDefaults.storeRowInfo(row: row)
             switch row {
             case 0:
                 whatTimeTwiceADayTextField.isHidden = true
@@ -279,7 +279,6 @@ final class NewMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
-//            userDefaults.storeRowInfo(row: row)
         }
         self.endEditing(true)
     }
@@ -311,18 +310,15 @@ final class NewMedicationSettingsView: UIView {
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedOnce)
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedTwice)
         } else {
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
-//            userDefaults.storeDateInfo(date: selectedThree)
         }
         self.endEditing(true)
     }
@@ -424,8 +420,10 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         // TODO: LOGIC - how to put that in ViewModel?
         if textField == capacityTextField || textField == doseTextField {
             scrollView.isScrollEnabled = false
-        } else {
+        } else if textField == frequencyTextField || textField == howManyTimesTextField {
             scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        } else {
+            scrollView.setContentOffset(CGPoint(x: 0, y: 280), animated: true)
         }
         
         activeTextField = textField
