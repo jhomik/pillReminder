@@ -36,8 +36,12 @@ class PillReminderImageView: UIImageView {
     public func downloadImage(with url: String) {
         firebaseManager.downloadImage(with: url) { [weak self] (image) in
             guard let self = self else { return }
-            DispatchQueue.main.async {
+            if Thread.isMainThread {
                 self.image = image
+            } else {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
             }
         }
     }

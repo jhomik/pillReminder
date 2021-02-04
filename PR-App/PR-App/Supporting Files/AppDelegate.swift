@@ -22,7 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     let notificationCenter = UNUserNotificationCenter.current()
     private(set) var badgeCount = NSNumber(value: UIApplication.shared.applicationIconBadgeNumber + 1)
-        
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         let options: UNAuthorizationOptions = [.alert, .sound, .badge]
         notificationCenter.delegate = self
@@ -117,11 +117,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func snoozeNotification(for minutes: Int, completion: () -> Void) {
-        notificationCenter.getPendingNotificationRequests { (request) in
-            for item in request {
+    func snoozeNotification(for minutes: Int, medicationID: String, completion: () -> Void) {
+        notificationCenter.getPendingNotificationRequests { (requests) in
+            if let request = requests.last, let medID = request.content.userInfo["medicationID"] as? String, medID == medicationID {
                 let time = Date()
-                let content = item.content
+                let content = request.content
                 var triggerDate = Calendar.current.dateComponents([.hour, .minute], from: time)
                 triggerDate.minute = (triggerDate.minute ?? 0) + minutes
                 
@@ -147,8 +147,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             for item in requests {
                 let userInfo = item.content.userInfo
                 if let medId = userInfo["medicationID"] as? String, medId == medicationId,
-                    let trigger = item.trigger as? UNCalendarNotificationTrigger,
-                    let triggerDate = trigger.nextTriggerDate() {
+                   let trigger = item.trigger as? UNCalendarNotificationTrigger,
+                   let triggerDate = trigger.nextTriggerDate() {
                     let dates = dateFormmater.string(from: triggerDate)
                     nextDate.append(dates)
                 }
