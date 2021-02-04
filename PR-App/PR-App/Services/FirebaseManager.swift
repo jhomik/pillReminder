@@ -90,7 +90,7 @@ final class FirebaseManager: FirebaseManagerEvents {
         refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(medicationDetail?.userIdentifier ?? "").updateChildValues(values)
     }
     
-    // MARK: Saving and downloading image to storage
+    // MARK: Saving and downloading image
     
     func saveImageToStorage(cellImage: Data?, completion: @escaping(Result<String, Error>) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid, let data = cellImage else { return }
