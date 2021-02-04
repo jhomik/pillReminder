@@ -112,7 +112,7 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureChangeMedicationLbl() {
-        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 2 : 16
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0 : 20
         let heightAnchorConstant: CGFloat = 30
         
         scrollView.addSubview(changeMedicationLbl)
@@ -247,7 +247,7 @@ final class CurrentMedicationSettingsView: UIView {
     
     private func configureProgramMedicationStackView() {
         let constraintConstant: CGFloat = 16
-        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 4 : 10
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 4 : 12
         
         currentProgramMedicationStackView.addArrangedSubview(frequencyLabel)
         currentProgramMedicationStackView.addArrangedSubview(frequencyTextField)

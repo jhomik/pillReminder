@@ -17,6 +17,7 @@ final class NewMedicationSettingsViewController: UIViewController {
     lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel, userDefaults: userDefaults)
     lazy private var viewModel = NewMedicationViewModel(firebaseManagerEvents: firebaseManager)
     
+    private let pillModel = PillModel()
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
     private(set) var activityIndicator = UIActivityIndicatorView()
@@ -54,6 +55,9 @@ final class NewMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         
         if medicationToSave.anyEmpty {
+            if medicationToSave.howManyTimesPerDay == pillModel.howManyTimesPerDay[2] {
+                
+            }
             textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.whatTimeOnceADayTextField, newMedicationView.whatTimeTwiceADayTextField, newMedicationView.whatTimeThreeTimesADayTextField, newMedicationView.dosageTextField)
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false

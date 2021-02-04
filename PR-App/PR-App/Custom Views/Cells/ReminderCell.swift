@@ -58,7 +58,7 @@ class ReminderCell: UITableViewCell {
     
     private func configureLabelText() {
         let padding: CGFloat = 12
-        let height: CGFloat = 20
+        let height: CGFloat = 24
         self.addSubview(labelText)
         self.labelText.font = UIFont.systemFont(ofSize: 22, weight: .semibold)
         
@@ -78,7 +78,7 @@ class ReminderCell: UITableViewCell {
         self.detailLabelText.numberOfLines = 2
         
         detailLabelText.snp.makeConstraints { (make) in
-            make.top.equalTo(labelText.snp.bottom).offset(4)
+            make.top.equalTo(labelText.snp.bottom)
             make.leading.equalTo(imageCell.snp.trailing).offset(padding)
             make.trailing.equalTo(self)
             make.height.equalTo(height)

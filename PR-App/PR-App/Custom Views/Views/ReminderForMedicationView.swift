@@ -33,6 +33,7 @@ class ReminderForMedicationView: UIView {
         tableView.rowHeight = 80
         tableView.dataSource = remindersDataSource
         tableView.register(ReminderCell.self, forCellReuseIdentifier: Constants.reminderCellId)
+        tableView.isUserInteractionEnabled = false
         
         tableView.snp.makeConstraints { (make) in
             make.top.left.right.bottom.equalTo(self)

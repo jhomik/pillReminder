@@ -77,7 +77,7 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureAddMedicationLbl() {
-        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 2: 20
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0: 20
         let heightAnchorConstant: CGFloat = 30
         
         scrollView.addSubview(addMedicationLbl)
@@ -86,7 +86,7 @@ final class NewMedicationSettingsView: UIView {
             make.leading.equalTo(20)
             make.trailing.equalTo(self)
             make.height.equalTo(heightAnchorConstant)
-            make.top.equalTo(scrollView).offset(topAnchorConstant)
+            make.top.equalTo(scrollView.snp.top).offset(topAnchorConstant)
         }
     }
     
@@ -187,7 +187,7 @@ final class NewMedicationSettingsView: UIView {
     
     private func configureProgramMedicationStackView() {
         let constraintConstant: CGFloat = 16
-        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 4 : 10
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 4 : 12
         
         programMedicationStackView.addArrangedSubview(frequencyLabel)
         programMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -445,5 +445,29 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+            if textField == frequencyTextField {
+                howManyTimesTextField.becomeFirstResponder()
+            } else if textField == howManyTimesTextField {
+                whatTimeOnceADayTextField.becomeFirstResponder()
+            } else if textField == whatTimeOnceADayTextField {
+                whatTimeTwiceADayTextField.becomeFirstResponder()
+                
+//                if viewModel.checkIfSignUp() {
+//                    confirmTextField.becomeFirstResponder()
+//                } else {
+//                    passwordTextField.resignFirstResponder()
+//                    buttonTapped()
+//                }
+            } else if textField == whatTimeTwiceADayTextField {
+                whatTimeThreeTimesADayTextField.becomeFirstResponder()
+            } else if textField == whatTimeThreeTimesADayTextField {
+                dosageTextField.becomeFirstResponder()
+            } else {
+                dosageTextField.resignFirstResponder()
+            }
+            return true
     }
 }

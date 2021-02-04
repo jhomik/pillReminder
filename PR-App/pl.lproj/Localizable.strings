@@ -59,8 +59,8 @@
 "pillLeft" = "Pozostała ";
 "pills" = " tabletki";
 "pill" = " tabletka";
-"selectFrequencyInput" = "Wybierz jak często";
-"howManyTimesPerDayInput" = "Wybierz ile razy dziennie";
+"selectFrequencyInput" = "Wybierz, jak często";
+"howManyTimesPerDayInput" = "Wybierz, ile razy dziennie";
 "whatTimeInput" = "Wybierz godzinę";
 "chooseDosage" = "Wybierz dawkę";
 "frequencyTitle" = "Częstotliwość";
