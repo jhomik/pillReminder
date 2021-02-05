@@ -22,7 +22,7 @@ struct UserMedicationDetailModel: Codable {
     var dosage: String
     
     var anyEmpty: Bool {
-        return pillName.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty
+        return pillName.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty || whatTimeOnceRow.isEmpty 
     }
     
     init(userIdentifier: String, dictionary: [String: AnyObject]) {

@@ -55,10 +55,11 @@ final class NewMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         
         if medicationToSave.anyEmpty {
-            if medicationToSave.howManyTimesPerDay == pillModel.howManyTimesPerDay[2] {
-                
-            }
-            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.whatTimeOnceADayTextField, newMedicationView.whatTimeTwiceADayTextField, newMedicationView.whatTimeThreeTimesADayTextField, newMedicationView.dosageTextField)
+            textFieldShaker(newMedicationView.nameTextField, newMedicationView.capacityTextField, newMedicationView.doseTextField, newMedicationView.frequencyTextField, newMedicationView.howManyTimesTextField, newMedicationView.dosageTextField, newMedicationView.whatTimeOnceADayTextField)
+            
+        } else if (medicationToSave.whatTimeTwiceRow.isEmpty && !newMedicationView.whatTimeTwiceADayTextField.isHidden) || (medicationToSave.whatTimeThreeRow.isEmpty && !newMedicationView.whatTimeThreeTimesADayTextField.isHidden) {
+            textFieldShaker(newMedicationView.whatTimeTwiceADayTextField, newMedicationView.whatTimeThreeTimesADayTextField)
+        
         } else {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false

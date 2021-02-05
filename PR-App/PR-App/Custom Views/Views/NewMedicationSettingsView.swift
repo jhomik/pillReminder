@@ -124,7 +124,6 @@ final class NewMedicationSettingsView: UIView {
         
         medicationImage.layer.masksToBounds = true
         medicationImage.layer.cornerRadius = medicationImageCornerRadius
-        medicationImage.contentMode = .scaleToFill
         medicationImage.backgroundColor = UIColor.secondarySystemFill
         medicationImageButton.addSubview(medicationImage)
         
