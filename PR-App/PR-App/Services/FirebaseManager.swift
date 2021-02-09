@@ -143,17 +143,13 @@ final class FirebaseManager: FirebaseManagerEvents {
         }
         
         guard let url = model.cellImage else { return }
-        if !url.isEmpty {
-            let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
-            storageRef.delete { (error) in
-                if let error = error {
-                    print("image not deleted:" + error.localizedDescription)
-                } else {
-                    print("File successfully deleted!")
-                }
+        let storageRef = FirebaseStorage.Storage.storage().reference(forURL: url)
+        storageRef.delete { (error) in
+            if let error = error {
+                print("image not deleted:" + error.localizedDescription)
+            } else {
+                print("File successfully deleted!")
             }
-        } else {
-            print("no URL image in Firebase")
         }
     }
     

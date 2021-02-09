@@ -48,14 +48,16 @@ final class CurrentMedicationSettingsViewModel {
                 case .failure(let error):
                     print(error.localizedDescription)
                 case .success(let url):
-                    if medicationDetail.cellImage != url || medicationDetail.cellImage != nil {
+                    if medicationDetail.cellImage == nil {
+                        self.firebaseManagerEvents?.updateMedicationInfo(cellImage: url, medicationDetail: medicationDetail)
+                    } else if medicationDetail.cellImage != url {
                         self.removeImageFromStorage(url: self.medications?.cellImage ?? "")
                         self.firebaseManagerEvents?.updateMedicationInfo(cellImage: url, medicationDetail: medicationDetail)
                     } else {
                         self.firebaseManagerEvents?.updateMedicationInfo(cellImage: url, medicationDetail: medicationDetail)
                     }
+                    completion()
                 }
-                completion()
             }
         } else {
             self.firebaseManagerEvents?.updateMedicationInfo(cellImage: nil, medicationDetail: medicationDetail)

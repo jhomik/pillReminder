@@ -72,9 +72,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate) {
-                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.appDelegate?.deletePendingNotification(medicationID: medicationToUpdate.userIdentifier)
                 self.currentMedicationSettingsView.setSchedule(medicationModel: medicationToUpdate)
+                self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true) {
                     self.popViewDelegate?.popViewController()
                 }
