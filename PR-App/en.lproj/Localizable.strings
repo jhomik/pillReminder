@@ -40,7 +40,7 @@
 "userSignOUt" = "Are you sure you want to log out from account?";
 "userForgotPassword" = "Your link with password reset has been sent!";
 "userSessionActive" = "Welcome back!";
-"photoSource" = "Photo Source";
+"photoSource" = "From what source you want to add photo?";
 "camera" = "Camera";
 "photoLibrary" = "Photo Library";
 "cancel" = "Cancel";

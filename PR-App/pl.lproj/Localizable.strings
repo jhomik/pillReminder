@@ -40,7 +40,7 @@
 "userSignOUt" = "Jesteś pewny, że chcesz się wylogować?";
 "userForgotPassword" = "Mail z linkiem do resetowania hasła został wysłany, sprawdź skrzynkę.";
 "userSessionActive" = "Witaj ponownie!";
-"photoSource" = "Źródło";
+"photoSource" = "Z jakiego źródła chcesz dodać zdjęcie?";
 "camera" = "Aparat";
 "photoLibrary" = "Biblioteka zdjęć";
 "cancel" = "Anuluj";
