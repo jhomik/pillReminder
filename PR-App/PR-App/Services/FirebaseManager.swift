@@ -23,6 +23,7 @@ protocol FirebaseManagerEvents: AnyObject {
     func resetUserPassword(with email: String, completion: @escaping(Result<Void, Error>) -> Void)
     func signInUser(userModel: UserModel, completion: ((Result<Bool, Error>) -> Void)?)
     func createUser(userModel: UserModel, completion: ((Result<Void, Error>) -> Void)?)
+    func updateLeftCapacity(medicationID: String, leftCapacity: String?)
 }
 
 final class FirebaseManager: FirebaseManagerEvents {
@@ -86,8 +87,23 @@ final class FirebaseManager: FirebaseManagerEvents {
         if let dosage = medicationDetail?.dosage {
             values["dosage"] = dosage as AnyObject
         }
+        if let leftCapacity = medicationDetail?.leftCapacity {
+            values["leftCapacity"] = leftCapacity as AnyObject
+        }
         
         refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(medicationDetail?.userIdentifier ?? "").updateChildValues(values)
+    }
+    
+    func updateLeftCapacity(medicationID: String, leftCapacity: String?) {
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        
+        var values: [String: AnyObject] = [:]
+        
+        if let leftCapacity = leftCapacity {
+            values["leftCapacity"] = leftCapacity as AnyObject
+        }
+        
+        refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).child(medicationID).updateChildValues(values)
     }
     
     // MARK: Saving and downloading image
@@ -156,26 +172,21 @@ final class FirebaseManager: FirebaseManagerEvents {
     
     // MARK: Downloading image from Firebase
     func downloadImage(with urlString: String, completion: @escaping(UIImage?) -> Void) {
+        guard let url = URL(string: urlString) else { return }
         let cacheKey = NSString(string: urlString)
-        if !urlString.isEmpty {
-            if let image = cache.object(forKey: cacheKey) {
-                completion(image)
-            } else {
-                
-            }
-            
-            guard let url = URL(string: urlString) else { return }
-            
+        
+        if let image = cache.object(forKey: cacheKey) {
+            completion(image)
+            print("got this from CACHE")
+        } else {
             let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
                 guard let data = data, let image = UIImage(data: data), let response = response as? HTTPURLResponse, response.statusCode == 200, error == nil else { return }
                 
                 self.cache.setObject(image, forKey: cacheKey)
-                print("cache image: \(image)")
                 completion(image)
                 print("got this from firebase")
             }
             task.resume()
-        } else {
             print("no image to download")
         }
     }
@@ -216,6 +227,10 @@ final class FirebaseManager: FirebaseManagerEvents {
         }
         if let dosage = medicationDetail?.dosage {
             values["dosage"] = dosage as AnyObject
+        }
+        
+        if let leftCapacity = medicationDetail?.leftCapacity {
+            values["leftCapacity"] = leftCapacity as AnyObject
         }
         
         let child = refDatabase.child(Constants.users).child(uid).child(Constants.medicationData).childByAutoId()

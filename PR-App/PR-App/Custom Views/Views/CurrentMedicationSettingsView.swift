@@ -45,13 +45,11 @@ final class CurrentMedicationSettingsView: UIView {
     private(set) var doseLeadingConstraint: Constraint?
     
     var viewModel: CurrentMedicationSettingsViewModel
-    var userDefaults: MedicationInfoDefaults
     
     private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
     
-    init(viewModel: CurrentMedicationSettingsViewModel, userDefaults: MedicationInfoDefaults) {
+    init(viewModel: CurrentMedicationSettingsViewModel) {
         self.viewModel = viewModel
-        self.userDefaults = userDefaults
         super.init(frame: .zero)
         updateUI()
         configureScrollView()
@@ -171,6 +169,7 @@ final class CurrentMedicationSettingsView: UIView {
     
     private func configureCurrentMedicationStackview() {
         let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 8 : 14
+        let topAndBottomConstraint: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 8
         
         currentMedicationStackView.addArrangedSubview(nameTextField)
         currentMedicationStackView.addArrangedSubview(capacityTextField)
@@ -188,10 +187,10 @@ final class CurrentMedicationSettingsView: UIView {
         scrollView.addSubview(currentMedicationStackView)
         
         currentMedicationStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(currentMedicationImage.snp.top)
+            make.top.equalTo(currentMedicationImage.snp.top).offset(topAndBottomConstraint)
             make.leading.equalTo(currentMedicationImage.snp.trailing).offset(constraintConstant)
             make.trailing.equalTo(self).offset(-20)
-            make.bottom.equalTo(currentMedicationImage.snp.bottom)
+            make.bottom.equalTo(currentMedicationImage.snp.bottom).offset(-topAndBottomConstraint)
         }
     }
     
@@ -246,8 +245,8 @@ final class CurrentMedicationSettingsView: UIView {
     }
     
     private func configureProgramMedicationStackView() {
-        let constraintConstant: CGFloat = 16
-        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 4 : 12
+        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 10 : 16
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 6 : 12
         
         currentProgramMedicationStackView.addArrangedSubview(frequencyLabel)
         currentProgramMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -300,10 +299,12 @@ final class CurrentMedicationSettingsView: UIView {
         guard let textField = activeTextField else { return }
         
         if textField == frequencyTextField {
+            howManyTimesTextField.becomeFirstResponder()
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
         } else if textField == howManyTimesTextField {
+            whatTimeOnceADayTextField.becomeFirstResponder()
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
@@ -324,8 +325,9 @@ final class CurrentMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
+            dosageTextField.resignFirstResponder()
+            self.endEditing(true)
         }
-        self.endEditing(true)
     }
     
     private func loadDefaultDatePicker(datePickerView: UIDatePicker) {
@@ -370,19 +372,29 @@ final class CurrentMedicationSettingsView: UIView {
         formatter.timeStyle = .short
         
         if activeTextField == whatTimeOnceADayTextField {
+            if !whatTimeTwiceADayTextField.isHidden {
+                whatTimeTwiceADayTextField.becomeFirstResponder()
+            } else {
+                dosageTextField.becomeFirstResponder()
+            }
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
         } else if activeTextField == whatTimeTwiceADayTextField {
+            if !whatTimeThreeTimesADayTextField.isHidden {
+                whatTimeThreeTimesADayTextField.becomeFirstResponder()
+            } else {
+                dosageTextField.becomeFirstResponder()
+            }
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
         } else {
+            dosageTextField.becomeFirstResponder()
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
         }
-        self.endEditing(true)
     }
     
     private func configureFirstDaySchedule(medicationModel: UserMedicationDetailModel?) {

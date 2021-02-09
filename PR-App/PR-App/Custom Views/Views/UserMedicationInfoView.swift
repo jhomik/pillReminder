@@ -74,7 +74,6 @@ extension UserMedicationInfoView: UpdateCollectionViewDelegate {
     func reloadCollectionView() {
         DispatchQueue.main.async {
             self.collectionView?.reloadData()
-            print("reloadMyCollectionView")
         }
     }
 }

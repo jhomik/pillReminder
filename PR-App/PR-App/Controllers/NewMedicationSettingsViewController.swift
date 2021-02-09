@@ -12,9 +12,8 @@ import UserNotifications
 final class NewMedicationSettingsViewController: UIViewController {
     
     private let firebaseManager = FirebaseManager()
-    private(set) var userDefaults = MedicationInfoDefaults()
     
-    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel, userDefaults: userDefaults)
+    lazy private(set) var newMedicationView = NewMedicationSettingsView(viewModel: viewModel)
     lazy private var viewModel = NewMedicationViewModel(firebaseManagerEvents: firebaseManager)
     
     private let pillModel = PillModel()
@@ -68,7 +67,6 @@ final class NewMedicationSettingsViewController: UIViewController {
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.dismiss(animated: true, completion: nil)
                 self.newMedicationView.setSchedule(medicationModel: model)
-                self.userDefaults.storeLeftPill(value: medicationToSave.capacity, medicationModel: model)
             }
         }
     }

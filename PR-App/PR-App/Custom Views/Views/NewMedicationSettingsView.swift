@@ -30,7 +30,6 @@ final class NewMedicationSettingsView: UIView {
     private let threeTimesADayDatePickerView = UIDatePicker()
     
     private(set) var viewModel: NewMedicationViewModel
-    private(set) var userDefaults: MedicationInfoDefaults
     private(set) var nameTextField = PillReminderMainCustomTextField(placeholderText: Constants.nameMedication, isPassword: false)
     private(set) var capacityTextField = PillReminderMainCustomTextField(placeholderText: Constants.capacityMedication, isPassword: false)
     private(set) var doseTextField = PillReminderMainCustomTextField(placeholderText: Constants.doseMedication, isPassword: false)
@@ -48,9 +47,8 @@ final class NewMedicationSettingsView: UIView {
     
     private weak var appDelegate = UIApplication.shared.delegate as? AppDelegate
    
-    init(viewModel: NewMedicationViewModel, userDefaults: MedicationInfoDefaults) {
+    init(viewModel: NewMedicationViewModel) {
         self.viewModel = viewModel
-        self.userDefaults = userDefaults
         super.init(frame: .zero)
         configureScrollView()
         configureAddMedicationLbl()
@@ -134,6 +132,7 @@ final class NewMedicationSettingsView: UIView {
     
     private func configureNewMedicationStackView() {
         let constraintConstant = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 8 : 14
+        let topAndBottomConstraint: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 8
         
         newMedicationStackView.addArrangedSubview(nameTextField)
         newMedicationStackView.addArrangedSubview(capacityTextField)
@@ -151,10 +150,10 @@ final class NewMedicationSettingsView: UIView {
         scrollView.addSubview(newMedicationStackView)
         
         newMedicationStackView.snp.makeConstraints { (make) in
-            make.top.equalTo(medicationImageButton.snp.top)
+            make.top.equalTo(medicationImageButton.snp.top).offset(topAndBottomConstraint)
             make.leading.equalTo(medicationImageButton.snp.trailing).offset(constraintConstant)
             make.trailing.equalTo(self).offset(-20)
-            make.bottom.equalTo(medicationImageButton.snp.bottom)
+            make.bottom.equalTo(medicationImageButton.snp.bottom).offset(-topAndBottomConstraint)
         }
     }
     
@@ -185,8 +184,8 @@ final class NewMedicationSettingsView: UIView {
     }
     
     private func configureProgramMedicationStackView() {
-        let constraintConstant: CGFloat = 16
-        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 4 : 12
+        let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 10 : 16
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 6 : 12
         
         programMedicationStackView.addArrangedSubview(frequencyLabel)
         programMedicationStackView.addArrangedSubview(frequencyTextField)
@@ -254,10 +253,12 @@ final class NewMedicationSettingsView: UIView {
         guard let textField = activeTextField else { return }
         
         if textField == frequencyTextField {
+            howManyTimesTextField.becomeFirstResponder()
             let row = frequencyPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.frequency[row]
             textField.text = rowSelected
         } else if textField == howManyTimesTextField {
+            whatTimeOnceADayTextField.becomeFirstResponder()
             let row = howManyTimesPickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.howManyTimesPerDay[row]
             textField.text = rowSelected
@@ -278,8 +279,9 @@ final class NewMedicationSettingsView: UIView {
             let row = dosagePickerView.selectedRow(inComponent: 0)
             let rowSelected = pillModel.dosage[row]
             textField.text = rowSelected
+            dosageTextField.resignFirstResponder()
+            self.endEditing(true)
         }
-        self.endEditing(true)
     }
     
     private func createDatePickerView(datePickerView: UIDatePicker, withTextField: UITextField) {
@@ -306,20 +308,30 @@ final class NewMedicationSettingsView: UIView {
         
         // TODO: LOGIC - how to put that in ViewModel?
         if activeTextField == whatTimeOnceADayTextField {
+            if !whatTimeTwiceADayTextField.isHidden {
+                whatTimeTwiceADayTextField.becomeFirstResponder()
+            } else {
+                dosageTextField.becomeFirstResponder()
+            }
             let selectedOnce = onceADayDatePickerView.date
             let time = formatter.string(from: selectedOnce)
             whatTimeOnceADayTextField.text = time
             print(selectedOnce)
         } else if activeTextField == whatTimeTwiceADayTextField {
+            if !whatTimeThreeTimesADayTextField.isHidden {
+                whatTimeThreeTimesADayTextField.becomeFirstResponder()
+            } else {
+                dosageTextField.becomeFirstResponder()
+            }
             let selectedTwice = twiceADayDatePickerView.date
             let time = formatter.string(from: selectedTwice)
             whatTimeTwiceADayTextField.text = time
         } else {
+            dosageTextField.becomeFirstResponder()
             let selectedThree = threeTimesADayDatePickerView.date
             let time = formatter.string(from: selectedThree)
             whatTimeThreeTimesADayTextField.text = time
         }
-        self.endEditing(true)
     }
     
     private func configureFirstDaySchedule(for medicationModel: UserMedicationDetailModel?) {
@@ -444,29 +456,5 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
-    }
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-            if textField == frequencyTextField {
-                howManyTimesTextField.becomeFirstResponder()
-            } else if textField == howManyTimesTextField {
-                whatTimeOnceADayTextField.becomeFirstResponder()
-            } else if textField == whatTimeOnceADayTextField {
-                whatTimeTwiceADayTextField.becomeFirstResponder()
-                
-//                if viewModel.checkIfSignUp() {
-//                    confirmTextField.becomeFirstResponder()
-//                } else {
-//                    passwordTextField.resignFirstResponder()
-//                    buttonTapped()
-//                }
-            } else if textField == whatTimeTwiceADayTextField {
-                whatTimeThreeTimesADayTextField.becomeFirstResponder()
-            } else if textField == whatTimeThreeTimesADayTextField {
-                dosageTextField.becomeFirstResponder()
-            } else {
-                dosageTextField.resignFirstResponder()
-            }
-            return true
     }
 }

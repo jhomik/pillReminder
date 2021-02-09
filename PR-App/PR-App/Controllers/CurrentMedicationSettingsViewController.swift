@@ -16,9 +16,8 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     
     private let firebaseManager = FirebaseManager()
     
-    lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel, userDefaults: userDefaults)
+    lazy private(set) var currentMedicationSettingsView = CurrentMedicationSettingsView(viewModel: viewModel)
     lazy private(set) var viewModel = CurrentMedicationSettingsViewModel(firebaseManagerEvents: firebaseManager)
-    private let userDefaults = MedicationInfoDefaults()
     
     private(set) var imageData = Data()
     private(set) var containerView = UIView()
@@ -56,8 +55,9 @@ final class CurrentMedicationSettingsViewController: UIViewController {
     }
     
     @objc private func updateSettings() {
-        guard let meds = viewModel.medications, let userId = meds.userIdentifier, let cellImage = meds.cellImage else { return }
-        let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, medicationToSave: currentMedicationSettingsView)
+        guard let meds = viewModel.medications, let userId = meds.userIdentifier else { return }
+        
+        let medicationToUpdate = UserMedicationDetailModel(userIdentifier: userId, leftCapacity: meds.leftCapacity, medicationToSave: currentMedicationSettingsView)
         
         view.endEditing(true)
         
@@ -71,10 +71,6 @@ final class CurrentMedicationSettingsViewController: UIViewController {
             navigationItem.rightBarButtonItem?.isEnabled = false
             navigationItem.leftBarButtonItem?.isEnabled = false
             self.showLoadingSpinner(with: containerView, spinner: activityIndicator)
-            //            if !imageData.isEmpty {
-            //                viewModel.removeImageFromStorage(url: cellImage)
-            //            }
-            
             viewModel.updateMedicationInfo(data: imageData, medicationDetail: medicationToUpdate) {
                 self.dismissLoadingSpinner(with: self.containerView, spinner: self.activityIndicator)
                 self.appDelegate?.deletePendingNotification(medicationID: medicationToUpdate.userIdentifier)

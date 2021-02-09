@@ -19,14 +19,9 @@ final class UserMedicationDetailViewModel {
     var medications: UserMedicationDetailModel?
     
     weak var buttonTappedDelegate: EditButtonEventDelegate?
-    var userDefaults: MedicationInfoDefaults
     
     var leftCapacity: String? {
-        return userDefaults.getLeftPillInfo(medicationModel: medications)
-    }
-    
-    init(userDefaults: MedicationInfoDefaults) {
-        self.userDefaults = userDefaults
+        return medications?.leftCapacity
     }
     
     func setPackageSuffixLabel(_ value: String) -> String {

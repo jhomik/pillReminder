@@ -46,10 +46,10 @@
 "cancel" = "Cancel";
 "medicine" = "Medicine";
 "reminder" = "Reminders";
-"firstPill" = "It's time to take todays first pill ";
-"secondPill" = "It's time to take second pill ";
-"thirdPill" = "It's time to take the last pill ";
-"tapNotification" = "Tap to take it!";
+"firstPill" = "It's time to take todays first pill of ";
+"secondPill" = "It's time to take second pill of ";
+"thirdPill" = "It's time to take the last pill of ";
+"tapNotification" = "Tap for action!";
 "passwordMatch" = "Passwords do not match";
 "everyDay" = "Everyday";
 "onceADay" = "Once a day";

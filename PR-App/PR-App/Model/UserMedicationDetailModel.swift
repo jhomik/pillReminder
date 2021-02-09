@@ -12,6 +12,7 @@ struct UserMedicationDetailModel: Codable {
     var userIdentifier: String?
     var pillName: String
     var capacity: String
+    var leftCapacity: String
     var dose: String
     var cellImage: String?
     var frequency: String
@@ -37,6 +38,7 @@ struct UserMedicationDetailModel: Codable {
         self.whatTimeTwiceRow = dictionary["whatTimeTwiceRow"] as? String ?? ""
         self.whatTimeThreeRow = dictionary["whatTimeThreeRow"] as? String ?? ""
         self.dosage = dictionary["dosage"] as? String ?? ""
+        self.leftCapacity = dictionary["leftCapacity"] as? String ?? ""
     }
     
     init(medicationToSave: NewMedicationSettingsView?) {
@@ -49,9 +51,10 @@ struct UserMedicationDetailModel: Codable {
         self.whatTimeTwiceRow = medicationToSave?.whatTimeTwiceADayTextField.text ?? ""
         self.whatTimeThreeRow = medicationToSave?.whatTimeThreeTimesADayTextField.text ?? ""
         self.dosage = medicationToSave?.dosageTextField.text ?? ""
+        self.leftCapacity = medicationToSave?.capacityTextField.text ?? ""
     }
     
-    init(userIdentifier: String, medicationToSave: CurrentMedicationSettingsView?) {
+    init(userIdentifier: String, leftCapacity: String, medicationToSave: CurrentMedicationSettingsView?) {
         self.userIdentifier = userIdentifier
         self.pillName = medicationToSave?.nameTextField.text ?? ""
         self.capacity = medicationToSave?.capacityTextField.text ?? ""
@@ -62,5 +65,6 @@ struct UserMedicationDetailModel: Codable {
         self.whatTimeTwiceRow = medicationToSave?.whatTimeTwiceADayTextField.text ?? ""
         self.whatTimeThreeRow = medicationToSave?.whatTimeThreeTimesADayTextField.text ?? ""
         self.dosage = medicationToSave?.dosageTextField.text ?? ""
+        self.leftCapacity = leftCapacity
     }
 }

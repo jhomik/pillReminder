@@ -87,7 +87,7 @@ class TakeAPillView: UIView {
     }
     
     @objc private func snoozeAPillButtonTapped() {
-        appDelegate?.snoozeNotification(for: 1, medicationID: viewModel.medications?.userIdentifier ?? "", completion: {
+        appDelegate?.snoozeNotification(for: 5, medicationID: viewModel.medications?.userIdentifier ?? "", completion: {
             viewModel.takeAPillDelegate?.onButtonTapped()
         })
     }

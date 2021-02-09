@@ -10,8 +10,8 @@ import UIKit
 
 class TakeAPillAlertController: UIViewController {
     
-    private let userDefaults = MedicationInfoDefaults()
-    lazy private(set) var viewModel = TakeAPillViewModel(userDefaults: userDefaults)
+    private let firebaseManager = FirebaseManager()
+    lazy private(set) var viewModel = TakeAPillViewModel(firebaseManagerEvents: firebaseManager)
     lazy private(set) var takeAPillView = TakeAPillView(viewModel: viewModel)
     
     override func loadView() {

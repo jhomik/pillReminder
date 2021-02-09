@@ -16,20 +16,20 @@ final class TakeAPillViewModel {
     
     var medications: UserMedicationDetailModel?
     var pillModel = PillModel()
-    var userDefaults: MedicationInfoDefaults
+    weak var firebaseManagerEvents: FirebaseManagerEvents?
     
     var leftCapacity: String? {
-        return userDefaults.getLeftPillInfo(medicationModel: medications)
+        return medications?.leftCapacity
     }
     
     weak var takeAPillDelegate: TakeAPillEventDelegate?
     
-    init(userDefaults: MedicationInfoDefaults) {
-        self.userDefaults = userDefaults
+    init(firebaseManagerEvents: FirebaseManagerEvents) {
+        self.firebaseManagerEvents = firebaseManagerEvents
     }
     
     func decreasePillValue(completion: () -> Void) {
-        guard var newValue = Double(leftCapacity ?? ""), let medication = medications else { return }
+        guard var newValue = Double(leftCapacity ?? ""), let medication = medications, newValue != 0 else { return }
         
         if medication.dosage == pillModel.dosage[0] {
             newValue -= 1
@@ -38,7 +38,8 @@ final class TakeAPillViewModel {
         } else {
             newValue -= 0.25
         }
-        userDefaults.storeLeftPill(value: String("\(newValue.clean)"), medicationModel: medication)
+        
+        firebaseManagerEvents?.updateLeftCapacity(medicationID: medications?.userIdentifier ?? "", leftCapacity: newValue.clean)
         completion()
     }
 }
