@@ -53,6 +53,14 @@ final class LoginScreenViewModel {
         }
     }
     
+    func isSignUpLoginPage() -> Bool {
+        if isSignUp {
+            return true
+        } else {
+            return false
+        }
+    }
+    
     func toogleIsSignUp() {
         isSignUp.toggle()
     }

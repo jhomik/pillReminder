@@ -189,7 +189,7 @@ final class FirebaseManager: FirebaseManagerEvents {
     
     // MARK: Saving Medication to Firebase DB
     
-    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping ((UserMedicationDetailModel) -> Void)) {
+    func saveUserMedicationDetail(cellImage: String?, medicationDetail: UserMedicationDetailModel?, completion: @escaping (UserMedicationDetailModel) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
         
         var values: [String: AnyObject] = [:]

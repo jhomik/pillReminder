@@ -90,7 +90,7 @@ final class LoginScreenView: UIView {
     private func configureSegmentedView() {
         let selectedSegmentIndexValue: Int = 0
         let heightAnchorConstant: CGFloat = 30
-        let topAnchorConstant: CGFloat = 10
+        let topAnchorConstant: CGFloat = DeviceTypes.isiPhoneSE ? 0 : 10
         
         segmentedController = UISegmentedControl(items: [Constants.signIn, Constants.createAccount])
         segmentedController.apportionsSegmentWidthsByContent = false
@@ -125,6 +125,7 @@ final class LoginScreenView: UIView {
         passwordTextField.delegate = self
         confirmTextField.delegate = self
         emailTextField.keyboardType = .emailAddress
+        emailTextField.autocapitalizationType = .none
         
         stackViewLoginData.addArrangedSubview(userNameTextField)
         stackViewLoginData.addArrangedSubview(emailTextField)
@@ -238,7 +239,7 @@ extension LoginScreenView: UITextFieldDelegate {
         } else if textField == emailTextField {
             passwordTextField.becomeFirstResponder()
         } else if textField == passwordTextField {
-            if viewModel.checkIfSignUp() {
+            if viewModel.isSignUpLoginPage() {
                 confirmTextField.becomeFirstResponder()
             } else {
                 passwordTextField.resignFirstResponder()
@@ -252,7 +253,8 @@ extension LoginScreenView: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        scrollView.setContentOffset(CGPoint(x: 0, y: 150), animated: true)
+        let yCordinateValue: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 200 : 150
+        scrollView.setContentOffset(CGPoint(x: 0, y: yCordinateValue), animated: true)
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {

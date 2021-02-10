@@ -40,7 +40,8 @@ final class ForgotPasswordView: UIView {
         pillReminderLogo.snp.makeConstraints { (make) in
             make.top.equalTo(self.safeAreaLayoutGuide).offset(constraintConstant)
             make.height.leading.equalTo(heightAnchorConstant)
-            make.trailing.equalTo(self).offset(-constraintConstant)
+            make.leading.equalTo(self).offset(30)
+            make.trailing.equalTo(self).offset(-30)
         }
     }
     
@@ -61,6 +62,7 @@ final class ForgotPasswordView: UIView {
         let heightAnchorConstant: CGFloat = 20
         
         self.addSubview(emailTextField)
+        emailTextField.autocapitalizationType = .none
         
         emailTextField.snp.makeConstraints { (make) in
             make.leading.trailing.equalTo(pillReminderLogo)
