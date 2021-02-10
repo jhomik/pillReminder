@@ -141,13 +141,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
         
         notificationCenter.getPendingNotificationRequests { (requests) in
-            print("My pending requests: \(requests)")
             var nextDate: [String] = []
-            for item in requests {
-                let userInfo = item.content.userInfo
-                if let medId = userInfo["medicationID"] as? String, medId == medicationId,
-                   let trigger = item.trigger as? UNCalendarNotificationTrigger,
-                   let triggerDate = trigger.nextTriggerDate() {
+            if let request = requests.last, let medID = request.content.userInfo["medicationID"] as? String, medID == medicationId {
+                let trigger = request.trigger as? UNCalendarNotificationTrigger
+                if let triggerDate = trigger?.nextTriggerDate() {
                     let dates = dateFormmater.string(from: triggerDate)
                     nextDate.append(dates)
                 }
@@ -155,6 +152,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     label.text = Constants.nextPill + "\(nextDate.min() ?? "")"
                 }
             }
+            print("My pending requests: \(requests)")
         }
     }
     

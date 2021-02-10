@@ -126,7 +126,7 @@ final class CurrentMedicationSettingsView: UIView {
     private func configureMedicationImageView() {
         let medicationImageButtonCornerRadius: CGFloat = 16
         let constraintConstant: CGFloat = 20
-        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.38 : 0.42
+        let widthAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard  ? 0.34 : 0.42
         let heightAnchorMultiplier: CGFloat = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 0.22 : 0.24
         
         currentMedicationImage.backgroundColor = .tertiarySystemFill
@@ -246,7 +246,7 @@ final class CurrentMedicationSettingsView: UIView {
     
     private func configureProgramMedicationStackView() {
         let constraintConstant: CGFloat = DeviceTypes.isiPhoneSE ? 10 : 16
-        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 6 : 12
+        let stackViewSpacing: CGFloat = DeviceTypes.isiPhoneSE ? 6 : 14
         
         currentProgramMedicationStackView.addArrangedSubview(frequencyLabel)
         currentProgramMedicationStackView.addArrangedSubview(frequencyTextField)

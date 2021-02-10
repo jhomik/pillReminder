@@ -19,13 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
-	<string>170</string>
+	<string>210</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Accept please</string>
+	<string>Please allow access to use your camera</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Please allow access to your Photo Library</string>
+	<string>Please allow access to user your photo library</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

@@ -30,6 +30,7 @@ class PillReminderImageView: UIImageView {
         self.contentMode = .scaleAspectFill
         self.layer.masksToBounds = true
         self.layer.cornerRadius = pillImageCornerRadius
+        self.sizeToFit()
     }
     
     // TODO: Change location of calling method downloadImage()

@@ -23,7 +23,7 @@ class PillReminderProgramCustomTextFields: UITextField {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.frame.size.height = 30
+        self.frame.size.height = DeviceTypes.isiPhoneSE || DeviceTypes.isiPhone8Standard ? 30 : 35
         self.layer.cornerRadius = 10
     }
     
