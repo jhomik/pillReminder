@@ -121,7 +121,7 @@ final class NewMedicationSettingsView: UIView {
     private func configureMedicationImage() {
         let medicationImageCornerRadius: CGFloat = 16
         
-        medicationImage.layer.masksToBounds = true
+        medicationImage.contentMode = .scaleAspectFill
         medicationImage.layer.cornerRadius = medicationImageCornerRadius
         medicationImage.backgroundColor = UIColor.secondarySystemFill
         medicationImageButton.addSubview(medicationImage)

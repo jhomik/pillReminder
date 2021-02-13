@@ -34,7 +34,6 @@ final class NewMedicationSettingsViewController: UIViewController {
     
     private func configureViewController() {
         view.backgroundColor = UIColor.backgroundColor
-        self.isModalInPresentation = true
     }
     
     private func configureNavBar() {

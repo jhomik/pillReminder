@@ -93,15 +93,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case .first:
             content.title = Constants.firstPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
-            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         case .second:
             content.title = Constants.secondPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
-            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         case .last:
             content.title = Constants.thirdPill + "\(schedule.pillName)"
             schedule.textField.text = DateFormatter().string(from: schedule.time)
-            content.categoryIdentifier = pillOfTheDay.rawValue + UUID().uuidString
         }
         
         let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDate, repeats: true)
@@ -141,10 +138,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dateFormmater.dateFormat = "EEEE, MM-dd-yyyy HH:mm"
         
         notificationCenter.getPendingNotificationRequests { (requests) in
+            print("My pending requests: \(requests)")
             var nextDate: [String] = []
-            if let request = requests.last, let medID = request.content.userInfo["medicationID"] as? String, medID == medicationId {
-                let trigger = request.trigger as? UNCalendarNotificationTrigger
-                if let triggerDate = trigger?.nextTriggerDate() {
+            for item in requests {
+                let userInfo = item.content.userInfo
+                if let medId = userInfo["medicationID"] as? String, medId == medicationId,
+                   let trigger = item.trigger as? UNCalendarNotificationTrigger,
+                   let triggerDate = trigger.nextTriggerDate() {
                     let dates = dateFormmater.string(from: triggerDate)
                     nextDate.append(dates)
                 }
@@ -152,7 +152,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     label.text = Constants.nextPill + "\(nextDate.min() ?? "")"
                 }
             }
-            print("My pending requests: \(requests)")
         }
     }
     
@@ -195,12 +194,13 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         
         guard let userInfo = userInfoDecode as? Data, let model = try? JSONDecoder().decode(UserMedicationDetailModel.self, from: userInfo) else { return }
         
+        rootViewController.dismiss(animated: true, completion: nil)
         let takeAPillVC = TakeAPillAlertController()
         takeAPillVC.modalPresentationStyle = .overFullScreen
         takeAPillVC.modalTransitionStyle = .crossDissolve
         takeAPillVC.viewModel.medications = model
-        rootViewController.present(takeAPillVC, animated: true)
-        
-        completionHandler()
+        rootViewController.present(takeAPillVC, animated: true) {
+            completionHandler()
+        }
     }
 }

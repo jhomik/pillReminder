@@ -29,6 +29,7 @@ class PillReminderImageView: UIImageView {
         self.backgroundColor = .tertiarySystemFill
         self.contentMode = .scaleAspectFill
         self.layer.masksToBounds = true
+        self.clipsToBounds = true
         self.layer.cornerRadius = pillImageCornerRadius
         self.sizeToFit()
     }
