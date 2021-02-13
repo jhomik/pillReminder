@@ -1,39 +1,14 @@
-## Welcome to GitHub Pages
+## Welcome to PillReminder pages
 
-You can use the [editor on GitHub](https://github.com/jhomik/pillReminder/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Forgot to take a pill ? Now you can save all your medications and be up to date with Pill Reminder! 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Small app can do a lot! 
 
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jhomik/pillReminder/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+Features included:
+- create your own account and save all medication that you need,
+- unlimited medications on every account,
+- create medications with all necessary details including notification for a proper time,
+- schedule notification once, twice or even three times a day - it is your decision on what time,
+- update your medications anytime you need to,
+- check in Reminders when you need to take next pills,
+- Pill Reminder will calculate for you how many pills left you have
