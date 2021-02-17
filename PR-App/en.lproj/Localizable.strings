@@ -9,7 +9,7 @@
 "addMedication" = "Add Medication";
 "nameMedication" = "Name e.g. Metocard";
 "capacityMedication" = "Package capacity";
-"doseMedication" = "Dose e.g. 50 (mg)";
+"doseMedication" = "Dose in Mg (optional)";
 "dose" = "Pill dose";
 "dosage" = "Dosage";
 "changeSettings" = "Change settings";

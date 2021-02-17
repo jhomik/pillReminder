@@ -9,7 +9,7 @@
 "addMedication" = "Dodaj lek";
 "nameMedication" = "Nazwa leku";
 "capacityMedication" = "Pojemność opakowania";
-"doseMedication" = "Dawka";
+"doseMedication" = "Dawka (opcjonalnie)";
 "changeSettings" = "Edytuj ustawienia leku";
 "changeMedications" = "Edytuj lek";
 "tapToChange" = "Zmień";

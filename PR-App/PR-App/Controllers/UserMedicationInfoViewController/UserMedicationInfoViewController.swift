@@ -70,6 +70,15 @@ final class UserMedicationInfoViewController: UIViewController {
 }
 
 extension UserMedicationInfoViewController: UserMedicationInfoEventDelegate {
+    
+    func isInteractionEnabled(_ enabled: Bool) {
+        if enabled {
+            userMedicationInfoView.isUserInteractionEnabled = false
+        } else {
+            userMedicationInfoView.isUserInteractionEnabled = true
+        }
+    }
+    
     func isLoading(_ loading: Bool) {
         if loading {
             showLoadingSpinner(with: containerView, spinner: spinner)

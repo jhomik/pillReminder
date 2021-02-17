@@ -81,7 +81,7 @@ final class UserMedicationDetailView: UIView {
         guard let medications = viewModel.medications else { return }
         updatePillNameValue(medications.pillName)
         updatePackageCapacityValue(medications.capacity)
-        updatePillDoseValue(medications.dose)
+        updatePillDoseValue(medications.dose ?? "")
         downloadImage(medication: medications)
         updateDoseProgram()
         if let leftPills = viewModel.leftCapacity {

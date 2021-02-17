@@ -13,7 +13,7 @@ struct UserMedicationDetailModel: Codable {
     var pillName: String
     var capacity: String
     var leftCapacity: String
-    var dose: String
+    var dose: String?
     var cellImage: String?
     var frequency: String
     var howManyTimesPerDay: String
@@ -23,7 +23,7 @@ struct UserMedicationDetailModel: Codable {
     var dosage: String
     
     var anyEmpty: Bool {
-        return pillName.isEmpty || capacity.isEmpty || dose.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty || whatTimeOnceRow.isEmpty 
+        return pillName.isEmpty || capacity.isEmpty || frequency.isEmpty || howManyTimesPerDay.isEmpty || dosage.isEmpty || whatTimeOnceRow.isEmpty 
     }
     
     init(userIdentifier: String, dictionary: [String: AnyObject]) {

@@ -49,12 +49,4 @@ final class NewMedicationViewModel {
             return Constants.pills
         }
     }
-    
-    func setFilterForTextField(text: inout String?) {
-        if let filterText = text, let intText = Int(filterText) {
-            text = "\(intText)"
-        } else {
-            text = ""
-        }
-    }
 }

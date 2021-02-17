@@ -23,14 +23,6 @@ final class CurrentMedicationSettingsViewModel {
         self.firebaseManagerEvents = firebaseManagerEvents
     }
     
-    func setFilterForTextField(text: inout String?) {
-        if let filterText = text, let intText = Int(filterText) {
-            text = "\(intText)"
-        } else {
-            text = ""
-        }
-    }
-    
     func setCapacityText(_ text: String?) -> String {
         guard let text = text, let amount = Int(text) else { return "" }
         if amount <= 1 {

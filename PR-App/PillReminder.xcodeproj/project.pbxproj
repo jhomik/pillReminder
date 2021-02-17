@@ -1001,6 +1001,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
 				PRODUCT_MODULE_NAME = PillReminder;
 				PRODUCT_NAME = PillReminder;
@@ -1022,6 +1023,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jakubhomik.PR-App";
 				PRODUCT_MODULE_NAME = PillReminder;
 				PRODUCT_NAME = PillReminder;

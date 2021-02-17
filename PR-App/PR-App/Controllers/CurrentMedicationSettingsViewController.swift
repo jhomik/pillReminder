@@ -61,7 +61,7 @@ final class CurrentMedicationSettingsViewController: UIViewController {
         view.endEditing(true)
         
         if medicationToUpdate.anyEmpty {
-            textFieldShaker(currentMedicationSettingsView.nameTextField, currentMedicationSettingsView.capacityTextField, currentMedicationSettingsView.doseTextField, currentMedicationSettingsView.frequencyTextField, currentMedicationSettingsView.howManyTimesTextField, currentMedicationSettingsView.whatTimeOnceADayTextField, currentMedicationSettingsView.whatTimeTwiceADayTextField, currentMedicationSettingsView.whatTimeThreeTimesADayTextField, currentMedicationSettingsView.dosageTextField)
+            textFieldShaker(currentMedicationSettingsView.nameTextField, currentMedicationSettingsView.capacityTextField, currentMedicationSettingsView.frequencyTextField, currentMedicationSettingsView.howManyTimesTextField, currentMedicationSettingsView.whatTimeOnceADayTextField, currentMedicationSettingsView.whatTimeTwiceADayTextField, currentMedicationSettingsView.whatTimeThreeTimesADayTextField, currentMedicationSettingsView.dosageTextField)
             
         } else if (medicationToUpdate.whatTimeTwiceRow.isEmpty && !currentMedicationSettingsView.whatTimeTwiceADayTextField.isHidden) || (medicationToUpdate.whatTimeThreeRow.isEmpty && !currentMedicationSettingsView.whatTimeThreeTimesADayTextField.isHidden) {
     textFieldShaker(currentMedicationSettingsView.whatTimeTwiceADayTextField, currentMedicationSettingsView.whatTimeThreeTimesADayTextField)

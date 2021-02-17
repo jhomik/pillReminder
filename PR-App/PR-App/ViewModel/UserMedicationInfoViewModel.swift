@@ -10,6 +10,7 @@ import Foundation
 
 protocol UserMedicationInfoEventDelegate: AnyObject {
     func isLoading(_ loading: Bool)
+    func isInteractionEnabled(_ enabled: Bool)
     func updateBarButtonItem()
     func pushUserMedicationDetailController(with medications: UserMedicationDetailModel)
     func pushNewMedicationSettingsController()
@@ -76,6 +77,11 @@ final class UserMedicationInfoViewModel {
     
     func toggleEditButton() {
         isActiveEditButton.toggle()
+        if isActiveEditButton {
+            delegateMedicationInfo?.isInteractionEnabled(true)
+        } else {
+            delegateMedicationInfo?.isInteractionEnabled(false)
+        }
     }
 
     func setUserName(completion: @escaping (String) -> Void) {

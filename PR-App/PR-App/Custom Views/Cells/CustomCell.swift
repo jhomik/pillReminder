@@ -14,7 +14,6 @@ final class CustomCell: UICollectionViewCell {
     private let imageCell = PillReminderImageView(frame: .zero)
     private let newMedsTitle = UILabel()
     var deleteButton = UIButton()
-    private let firebaseManager = FirebaseManager()
     var deleteButtonEvent: () -> Void = {}
     
     var customMedicationCell: UserMedicationDetailModel? {
@@ -64,6 +63,7 @@ final class CustomCell: UICollectionViewCell {
         deleteButton.backgroundColor = UIColor.backgroundColor
         deleteButton.layer.cornerRadius = deleteButton.bounds.width / 2
         self.addSubview(deleteButton)
+        deleteButton.isEnabled = true
         
         deleteButton.snp.makeConstraints { (make) in
             make.top.equalTo(-topAnchorConstant)

@@ -142,11 +142,9 @@ final class NewMedicationSettingsView: UIView {
         newMedicationStackView.distribution = .equalSpacing
         
         capacityTextField.keyboardType = .numberPad
-        doseTextField.keyboardType = .numberPad
+        doseTextField.keyboardType = .decimalPad
         capacityTextField.delegate = self
         doseTextField.delegate = self
-        capacityTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
-        doseTextField.addTarget(self, action: #selector(textFieldFilter), for: .editingChanged)
         
         scrollView.addSubview(newMedicationStackView)
         
@@ -156,10 +154,6 @@ final class NewMedicationSettingsView: UIView {
             make.trailing.equalTo(self).offset(-20)
             make.bottom.equalTo(medicationImageButton.snp.bottom).offset(-topAndBottomConstraint)
         }
-    }
-    
-    @objc private func textFieldFilter(_ textField: UITextField) {
-        viewModel.setFilterForTextField(text: &textField.text)
     }
     
     private func configureCapacityLabel() {
@@ -423,9 +417,9 @@ extension NewMedicationSettingsView: UITextFieldDelegate {
         guard let text = textField.text else { return true }
         
         let newLength = text.count + string.count - range.length
-        let invalidCharactersIn = CharacterSet(charactersIn: "0123456789").inverted
+        let invalidCharactersIn = CharacterSet(charactersIn: "0123456789.").inverted
         
-        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 3
+        return (string.rangeOfCharacter(from: invalidCharactersIn) == nil) && newLength <= 4
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {

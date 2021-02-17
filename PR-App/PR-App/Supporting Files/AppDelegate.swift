@@ -191,16 +191,17 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         guard let rootViewController = (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.window?.rootViewController else { return }
         let userInfoDecode = response.notification.request.content.userInfo["medicationModel"]
+        let takeAPillVC = TakeAPillAlertController()
         
         guard let userInfo = userInfoDecode as? Data, let model = try? JSONDecoder().decode(UserMedicationDetailModel.self, from: userInfo) else { return }
         
-        rootViewController.dismiss(animated: true, completion: nil)
-        let takeAPillVC = TakeAPillAlertController()
-        takeAPillVC.modalPresentationStyle = .overFullScreen
-        takeAPillVC.modalTransitionStyle = .crossDissolve
-        takeAPillVC.viewModel.medications = model
-        rootViewController.present(takeAPillVC, animated: true) {
-            completionHandler()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            takeAPillVC.modalPresentationStyle = .overFullScreen
+            takeAPillVC.modalTransitionStyle = .crossDissolve
+            takeAPillVC.viewModel.medications = model
+            rootViewController.present(takeAPillVC, animated: true) {
+                completionHandler()
+            }
         }
     }
 }
